@@ -74,7 +74,7 @@ Playlist-Beschreibung, z. B. für „Farben lernen“:
 | 1 | Hopsi Hase zählt bis zehn ✅ | Zählen |
 | 2 | Bruno Bär putzt die Zähne ✅ | Routinen |
 | 3 | Bruno Bär wäscht die Hände ✅ | Routinen |
-| 4 | Bella und der Regenbogen (alle Farben) | Farben |
+| 4 | Bella und der Regenbogen ✅ | Farben |
 | 5 | Hopsi und die Formen (Kreis, Dreieck, Viereck) | Zählen |
 | 6 | Schlaf gut, Bruno – Gute-Nacht-Lied | Gute Nacht |
 | 7 | Die Tiere auf der Liederwiese (Tierstimmen) | – |

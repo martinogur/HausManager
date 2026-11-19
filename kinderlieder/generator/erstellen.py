@@ -71,7 +71,7 @@ def anzeigen_planen(lied):
         if not bild:
             continue
         neu = {"start": z["start"] - 0.35, "ende": ende, "typ": "bild", "wert": bild, "farbe": farbe,
-               "wort": teil.get("wort"), "landen": bool(info.get("landen"))}
+               "wort": info.get("wort", teil.get("wort")), "landen": bool(info.get("landen"))}
         alt = res[-1] if res else None
         if alt and alt["typ"] == "bild" and alt["wert"] == bild and abs(alt["ende"] - neu["start"]) < 0.5:
             alt["ende"] = neu["ende"]  # gleiches Bild weiter zeigen
@@ -273,10 +273,15 @@ class Szene:
             for spr, x0, y, v in self.wolken:
                 x = (x0 + t * v) % (W + spr.width) - spr.width
                 frame.paste(spr, (int(x), int(y)), spr)
-        # Blumen (nehmen in Farb-Strophen die Strophenfarbe an)
+        # Blumen (nehmen in Farb-Strophen die aktuelle Farbe an)
+        akt_a = next((a for a in self.anzeigen if a["start"] <= t < a["ende"]), None)
+        farbig = None
+        if akt_a and akt_a.get("wort") and akt_a.get("farbe") and not teil.get("nacht"):
+            farbig = akt_a["farbe"]
+        elif teil.get("wort") and teil.get("farbe") and not teil.get("nacht"):
+            farbig = teil["farbe"]
         for x, y, k in self.blumen_pos:
-            spr = self.blume(teil.get("farbe") if teil.get("wort") and not teil.get("nacht")
-                             else self.blumen_farben[k])
+            spr = self.blume(farbig or self.blumen_farben[k])
             dy = -abs(math.sin(math.pi * (beat + k * 0.5) / 2)) * H * 0.012
             frame.paste(spr, (int(x - spr.width / 2), int(y + dy - spr.height * 0.3)), spr)
 

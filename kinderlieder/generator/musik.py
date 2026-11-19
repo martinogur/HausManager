@@ -60,6 +60,12 @@ MELODIEN = {
         "strophe": [[2, 2, 4, 4, 3, 3, 2], [1, 1, 3, 3, 2, 1, 4],
                     [2, 2, 4, 4, 5, 5, 4], [5, 4, 3, 2, 1, 1, 0]],
     },
+    "E": {  # Bogen: steigt auf und fällt wie ein Regenbogen
+        "refrain": [[7, 7, 6, 5, 4, 5, 4], [3, 3, 2, 3, 4, 2, 1],
+                    [7, 7, 6, 5, 4, 5, 7], [6, 5, 4, 3, 2, 1, 0]],
+        "strophe": [[0, 2, 4, 5, 4, 2, 4], [3, 3, 2, 2, 1, 2, 4],
+                    [0, 2, 4, 5, 4, 2, 7], [6, 5, 4, 2, 1, 1, 0]],
+    },
     "C": {  # hüpfend, große Sprünge
         "refrain": [[0, 4, 0, 4, 2, 4, 7], [6, 5, 4, 3, 2, 3, 4],
                     [0, 4, 0, 4, 2, 4, 7], [6, 5, 4, 2, 1, 1, 0]],
@@ -663,6 +669,14 @@ def effekt_klang(typ):
             ton = _ton(f, f * 2.2, 0.1) * 0.7
             teile[s:s + len(ton)] += ton
         x = teile
+    elif typ == "quak":
+        teile = []
+        for f in (150, 130):
+            n = int(SR * 0.22)
+            tt = np.arange(n) / SR
+            h = np.sin(np.pi * tt / 0.22) * (0.6 + 0.4 * (np.sin(2 * np.pi * 30 * tt) > 0))
+            teile += [_ton(f, f * 0.8, 0.22, "rechteck", h) * 0.45, np.zeros(int(SR * 0.08))]
+        x = np.concatenate(teile)
     elif typ == "gaehn":
         x = _ton(520, 260, 0.8, "sinus", np.sin(np.pi * np.arange(int(SR * 0.8)) / (SR * 0.8))) * 0.5
     else:

@@ -427,6 +427,96 @@ ANIMIERT.update({"haende", "wasserhahn", "seife", "handtuch"})
 HINTERGRUND.update({"wasserhahn": (227, 242, 253, 255)})
 
 
+REGENBOGEN = [(229, 57, 53, 255), (251, 140, 0, 255), (253, 216, 53, 255), (67, 160, 71, 255),
+              (30, 136, 229, 255), (142, 36, 170, 255)]
+
+
+def _regenbogen(z, f, t):
+    for k, farbe in enumerate(REGENBOGEN):
+        r = 40 - k * 5
+        z.d.arc([z.P(50 - r, 72 - r), z.P(50 + r, 72 + r)], 180, 360, fill=farbe, width=int(5.2 * z.u))
+    for cx in (16, 84):
+        x = cx + math.sin(t * 1.2) * 1.5
+        for dx, dy, r in ((-7, 0, 7), (0, -4, 9), (8, 0, 7), (0, 3, 7)):
+            z.ell(x + dx, 72 + dy, r * 1.15, r, WEISS, outline=None)
+    for k in range(4):
+        a = t * 2.5 + k * 1.7
+        z.stern(26 + k * 16, 18 + 6 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+def _blatt(z, f, t):
+    gruen, dunkel = (67, 160, 71, 255), (46, 125, 50, 255)
+    w = math.sin(t * 2) * 6
+    pts = []
+    for i in range(41):
+        u = i / 40
+        pts.append((50 + 26 * math.sin(math.pi * u), 14 + 68 * u))
+    for i in range(41):
+        u = 1 - i / 40
+        pts.append((50 - 26 * math.sin(math.pi * u), 14 + 68 * u))
+    c, s_ = math.cos(math.radians(w)), math.sin(math.radians(w))
+    pts = [(50 + (x - 50) * c - (y - 50) * s_, 50 + (x - 50) * s_ + (y - 50) * c) for x, y in pts]
+    z.poly(pts, gruen, outline=dunkel)
+    def R(x, y):
+        return (50 + (x - 50) * c - (y - 50) * s_, 50 + (x - 50) * s_ + (y - 50) * c)
+    z.linie([R(50, 16), R(50, 92)], dunkel, 1.6)
+    for y in (30, 44, 58, 70):
+        z.linie([R(50, y + 6), R(36, y)], dunkel, 1.2)
+        z.linie([R(50, y + 6), R(64, y)], dunkel, 1.2)
+    _ = f
+
+
+def _frosch(z, f, t):
+    gruen, hell, linie = (124, 201, 107, 255), (216, 245, 198, 255), (47, 90, 38, 255)
+    quak = max(0.0, math.sin(t * 5)) ** 3
+    z.ell(50, 64, 34, 24, gruen, outline=linie)
+    z.ell(50, 74, 22, 12, hell, outline=None)
+    for sx in (-1, 1):
+        z.ell(50 + sx * 17, 36, 12, 12, gruen, outline=linie)
+        z.ell(50 + sx * 17, 36, 8, 8.5, WEISS, outline=None)
+        z.ell(50 + sx * 17 + 1, 37, 4.2, 5, LINIE, outline=None)
+        z.ell(50 + sx * 17, 35, 1.5, 1.5, WEISS, outline=None)
+        z.ell(50 + sx * 26, 58, 4.5, 2.8, (255, 140, 160, 140), outline=None)
+    if quak > 0.2:
+        z.ell(50, 70 + quak * 4, 12 * quak + 4, 9 * quak + 3, (255, 182, 193, 230), outline=(200, 110, 130, 255))
+    z.d.arc([z.P(32, 50), z.P(68, 66)], 20, 160, fill=linie, width=z.lw + 1)
+    fnt = schrift(z.S * 0.1)
+    if quak > 0.3:
+        z.d.text(z.P(37, 8), "Quak!", font=fnt, fill=(46, 125, 50, 255))
+
+
+def _traube(z, f, t):
+    lila, dunkel = (142, 36, 170, 255), (90, 20, 110, 255)
+    z.linie([(50, 22), (54, 10)], (110, 80, 50, 255), 2.5)
+    z.ell(64, 18, 11, 6, (67, 160, 71, 255), outline=(46, 125, 50, 255), winkel=-20)
+    reihen = [(30, [38, 50, 62]), (41, [32, 44, 56, 68]), (52, [38, 50, 62]), (63, [44, 56]), (73, [50])]
+    for y, xs in reihen:
+        for x in xs:
+            z.ell(x, y, 7, 7, lila, outline=dunkel)
+            z.ell(x - 2.2, y - 2.2, 1.8, 1.8, (230, 190, 245, 255), outline=None)
+    for sx in (-1, 1):
+        z.ell(50 + sx * 6, 46, 1.8, 2.4, WEISS, outline=None)
+    z.d.arc([z.P(45, 49), z.P(55, 55)], 20, 160, fill=WEISS, width=z.lw)
+
+
+def _pflaume(z, f, t):
+    lila, dunkel = (106, 27, 154, 255), (70, 15, 100, 255)
+    z.linie([(50, 26), (52, 12)], (110, 80, 50, 255), 2.5)
+    z.ell(62, 16, 12, 6, (67, 160, 71, 255), outline=(46, 125, 50, 255), winkel=-25)
+    z.ell(50, 56, 28, 30, lila, outline=dunkel)
+    z.d.arc([z.P(46, 28), z.P(58, 86)], 100, 260, fill=dunkel, width=z.lw)
+    z.ell(38, 44, 5, 8, (200, 150, 230, 180), outline=None, winkel=20)
+    for sx in (-1, 1):
+        z.ell(50 + sx * 8, 56, 2, 2.6, WEISS, outline=None)
+    z.d.arc([z.P(43, 59), z.P(57, 67)], 20, 160, fill=WEISS, width=z.lw)
+
+
+ZEICHNER.update({"regenbogen": _regenbogen, "blatt": _blatt, "frosch": _frosch, "traube": _traube,
+                 "pflaume": _pflaume})
+ANIMIERT.update({"regenbogen", "blatt", "frosch"})
+HINTERGRUND.update({"regenbogen": (225, 242, 255, 255)})
+
+
 def bild_sprite(typ, groesse, farbe=None, t=0.0):
     """Rundes Bild mit Rahmen. farbe = Rahmenfarbe (und Blumenfarbe)."""
     f = rgb(farbe) if farbe else None
