@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+  <h1 style="margin:0">Dashboard</h1>
+  <form method="post" action="{{ url_for('automatik') }}"><button class="big">⚡ Automatik jetzt ausführen</button></form>
+</div>
+
+<h2>Meine Immobilien</h2>
+<div class="kpis">
+  <div class="kpi"><b>{{ k.ist|eur }}</b><span>von {{ k.soll|eur }} Soll diesen Monat eingegangen</span></div>
+  <div class="kpi"><b class="{{ 'bad' if k.offen > 0.01 }}">{{ k.offen|eur }}</b><span>offene Mieten (fällig)</span></div>
+  <div class="kpi"><b>{{ k.vermietet }} / {{ k.einheiten }}</b><span>Einheiten vermietet{% if k.einheiten - k.vermietet > 0 %} – <span class="bad">{{ k.einheiten - k.vermietet }} Leerstand</span>{% endif %}</span></div>
+  <div class="kpi"><b>{{ '%.2f'|format(k.rendite) }} %</b><span>Bruttomietrendite ({{ k.jahresmiete|eur }} Kaltmiete p. a.)</span></div>
+  <div class="kpi"><b>{{ k.tickets }}</b><span>offene Tickets</span></div>
+</div>
+
+<h2>🦸 Hausmeister Helden – Pipeline</h2>
+<div class="pipeline">
+  {% for s in ['neu','kontaktiert','interessiert','angebot','gewonnen'] %}
+  <a href="{{ url_for('akquise', status=s) }}"><b>{{ pipeline.get(s, 0) }}</b> {{ s }}</a>
+  {% endfor %}
+  <a href="{{ url_for('postausgang') }}"><b>{{ k.entwuerfe }}</b> Nachrichten warten im Postausgang</a>
+</div>
+
+<div class="card">
+  <h2>Aufgaben ({{ aufgaben|length }})</h2>
+  <table>
+    {% for a in aufgaben %}
+    <tr>
+      <td style="width:90px" class="{{ 'bad' if a.faellig and a.faellig <= heute }}">{{ a.faellig|datum }}</td>
+      <td><span class="tag">{{ 'Akquise' if a.bereich=='akquise' else 'Immobilien' }}</span> {{ a.titel }}</td>
+      <td style="width:60px"><form class="inline" method="post" action="{{ url_for('aufgabe_erledigt', aid=a.id) }}"><button class="mini sec">✓</button></form></td>
+    </tr>
+    {% else %}
+    <tr><td class="muted">Keine offenen Aufgaben. 🎉</td></tr>
+    {% endfor %}
+  </table>
+  <form class="row" method="post" action="{{ url_for('aufgabe_neu') }}" style="margin-top:10px">
+    <select name="bereich"><option value="immobilien">Immobilien</option><option value="akquise">Akquise</option></select>
+    <input name="titel" placeholder="Neue Aufgabe…" required style="flex:1">
+    <input type="date" name="faellig">
+    <button class="sec">Hinzufügen</button>
+  </form>
+</div>
+{% endblock %}

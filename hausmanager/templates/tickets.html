@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tickets & Reparaturen</h1>
+<div class="card">
+  <form class="row" method="post">
+    <select name="objekt_id"><option value="">– Objekt –</option>{% for o in objekte %}<option value="{{ o.id }}">{{ o.name }}</option>{% endfor %}</select>
+    <input name="titel" placeholder="Was ist kaputt?" required style="flex:1">
+    <input name="beschreibung" placeholder="Details / Mieter / Telefon" style="flex:1">
+    <select name="prioritaet"><option>normal</option><option>hoch</option><option>niedrig</option></select>
+    <button>Ticket anlegen</button>
+  </form>
+</div>
+<div class="card">
+  <table>
+    <tr><th>Seit</th><th>Objekt</th><th>Titel</th><th>Prio</th><th>Status</th></tr>
+    {% for t in tickets %}
+    <tr class="{{ 'muted' if t.status=='erledigt' }}">
+      <td>{{ t.erstellt|datum }}</td><td>{{ t.objekt or '' }}</td>
+      <td>{{ t.titel }}{% if t.beschreibung %}<br><span class="muted">{{ t.beschreibung }}</span>{% endif %}</td>
+      <td><span class="tag {{ t.prioritaet }}">{{ t.prioritaet }}</span></td>
+      <td><form class="inline" method="post" action="{{ url_for('ticket_status', tid=t.id) }}">
+        <select name="status" onchange="this.form.submit()">{% for s in ['offen','beauftragt','erledigt'] %}<option {{ 'selected' if s==t.status }}>{{ s }}</option>{% endfor %}</select>
+      </form></td>
+    </tr>
+    {% else %}<tr><td colspan="5" class="muted">Keine Tickets.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

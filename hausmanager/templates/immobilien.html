@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Meine Immobilien</h1>
+
+<div class="card">
+  <h2>Mietverträge</h2>
+  <table>
+    <tr><th>Objekt / Einheit</th><th>Mieter</th><th>Laufzeit</th><th class="num">Kalt</th><th class="num">NK</th><th class="num">Offen</th><th></th></tr>
+    {% for v in vertraege %}
+    <tr>
+      <td>{{ v.objekt }} – {{ v.bezeichnung }}</td>
+      <td>{{ v.name }}<br><span class="muted">{{ v.email or '' }} {{ v.telefon or '' }}</span></td>
+      <td>{{ v.beginn|datum }} – {{ v.ende|datum if v.ende else 'unbefristet' }}{% if v.letzte_erhoehung %}<br><span class="muted">letzte Erhöhung {{ v.letzte_erhoehung|datum }}</span>{% endif %}</td>
+      <td class="num">{{ v.kaltmiete|eur }}</td>
+      <td class="num">{{ v.nebenkosten|eur }}</td>
+      <td class="num {{ 'bad' if v.offen > 0.01 }}">{{ v.offen|eur }}</td>
+      <td>
+        <details><summary class="muted" style="font-weight:400">ändern</summary>
+          <form class="stack" method="post" action="{{ url_for('vertrag_erhoehung', vid=v.id) }}">
+            <label>Neue Kaltmiete<input name="kaltmiete" value="{{ v.kaltmiete }}"></label>
+            <label>gültig ab<input type="date" name="ab" required></label>
+            <button class="mini">Mieterhöhung speichern</button>
+          </form>
+          <form class="stack" method="post" action="{{ url_for('vertrag_beenden', vid=v.id) }}" style="margin-top:8px">
+            <label>Vertragsende<input type="date" name="ende" value="{{ v.ende or '' }}" required></label>
+            <button class="mini sec">Ende setzen</button>
+          </form>
+        </details>
+      </td>
+    </tr>
+    {% else %}<tr><td colspan="7" class="muted">Noch keine Verträge. Lege unten zuerst ein Objekt und eine Einheit an.</td></tr>{% endfor %}
+  </table>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>1. Objekt anlegen</h2>
+    <form class="stack" method="post" action="{{ url_for('objekt_neu') }}">
+      <label>Name<input name="name" placeholder="z. B. MFH Lindenstraße" required></label>
+      <label>Adresse<input name="adresse"></label>
+      <label>Kaufpreis (für Renditeberechnung)<input name="kaufpreis" placeholder="350000"></label>
+      <button>Objekt speichern</button>
+    </form>
+    <ul>{% for o in objekte %}<li>{{ o.name }} <span class="muted">{{ o.adresse }}</span></li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2>2. Einheit anlegen</h2>
+    <form class="stack" method="post" action="{{ url_for('einheit_neu') }}">
+      <label>Objekt<select name="objekt_id" required>{% for o in objekte %}<option value="{{ o.id }}">{{ o.name }}</option>{% endfor %}</select></label>
+      <label>Bezeichnung<input name="bezeichnung" placeholder="z. B. EG links / WE 3" required></label>
+      <label>Fläche m²<input name="flaeche"></label>
+      <button {{ 'disabled' if not objekte }}>Einheit speichern</button>
+    </form>
+    <ul>{% for e in einheiten %}<li>{{ e.objekt }} – {{ e.bezeichnung }}{% if e.flaeche %} ({{ e.flaeche|int }} m²){% endif %}: {% if e.mieter %}{{ e.mieter }}{% else %}<span class="bad">leer</span>{% endif %}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2>3. Mietvertrag anlegen</h2>
+    <form class="stack" method="post" action="{{ url_for('vertrag_neu') }}">
+      <label>Einheit<select name="einheit_id" required>{% for e in einheiten %}<option value="{{ e.id }}">{{ e.objekt }} – {{ e.bezeichnung }}</option>{% endfor %}</select></label>
+      <label>Mieter (Name)<input name="name" required></label>
+      <label>E-Mail (für automatische Erinnerungen)<input type="email" name="email"></label>
+      <label>Telefon<input name="telefon"></label>
+      <label>Mietbeginn<input type="date" name="beginn" required></label>
+      <label>Vertragsende (leer = unbefristet)<input type="date" name="ende"></label>
+      <label>Kaltmiete €<input name="kaltmiete" required></label>
+      <label>NK-Vorauszahlung €<input name="nebenkosten" value="0"></label>
+      <label>Kaution €<input name="kaution" value="0"></label>
+      <label>Fällig am (Tag im Monat)<input type="number" name="faellig_tag" value="3" min="1" max="28"></label>
+      <label>Letzte Mieterhöhung (optional)<input type="date" name="letzte_erhoehung"></label>
+      <button {{ 'disabled' if not einheiten }}>Vertrag speichern</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

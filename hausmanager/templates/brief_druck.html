@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Serienbrief ({{ liste|length }})</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='brief.css') }}"></head>
+<body>
+<div class="noprint">
+  {{ liste|length }} Briefe · <button onclick="window.print()">🖨 Drucken / als PDF speichern</button>
+  · <a href="{{ url_for('postausgang') }}">zurück</a>
+</div>
+{% for n in liste %}
+<section class="seite">
+  <div class="absender">{{ cfg.firma_name if n.lead_id else cfg.vermieter_name }} · {{ cfg.firma_adresse }}</div>
+  <div class="anschrift">{{ n.empfaenger }}</div>
+  {% if n.lead_id %}<div class="kopf"><b>{{ cfg.firma_name }}</b><br>{{ cfg.firma_adresse }}<br>Tel. {{ cfg.firma_telefon }}<br>{{ cfg.firma_email }}<br>{{ cfg.firma_web }}</div>{% endif %}
+  <div class="datum">{{ datum }}</div>
+  <div class="betreff">{{ n.betreff }}</div>
+  <div class="text">{{ n.text }}</div>
+</section>
+{% else %}
+<p class="noprint">Keine Briefe zum Drucken.</p>
+{% endfor %}
+</body></html>

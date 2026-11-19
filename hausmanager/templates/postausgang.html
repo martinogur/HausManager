@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Postausgang</h1>
+<div class="pipeline">
+  {% for s in ['entwurf','gesendet','gedruckt','verworfen'] %}<a href="{{ url_for('postausgang', status=s) }}" class="{{ 'on' if s==status }}">{{ s }}</a>{% endfor %}
+</div>
+
+{% if status == 'entwurf' %}
+<div class="card noprint">
+  <div class="row" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <a class="btn big" href="{{ url_for('briefe_druck') }}" target="_blank">🖨 Alle Briefe als Serienbrief drucken</a>
+    <form class="inline" method="post" action="{{ url_for('briefe_alle_gedruckt') }}"><button class="sec">Alle Briefe als „gedruckt“ markieren</button></form>
+    {% if not smtp_ok %}<span class="muted">E-Mail-Versand: SMTP noch nicht eingerichtet (siehe README).</span>
+    {% elif cfg.auto_senden != '1' %}<span class="muted">E-Mails werden nach Freigabe gesendet (automatisches Senden in Einstellungen aktivierbar).</span>{% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% for n in liste %}
+<div class="card">
+  <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+    <div>
+      <b>{{ '✉ E-Mail' if n.kanal=='email' else '📮 Brief' }}</b> an
+      {% if n.lead_id %}<a href="{{ url_for('lead', lid=n.lead_id) }}">{{ n.firma }}</a>{% else %}{{ n.mieter }} <span class="tag">Mieter</span>{% endif %}
+      <span class="muted">· {{ n.erstellt|datum }}{% if n.kanal=='email' %} · {{ n.empfaenger }}{% endif %}</span>
+    </div>
+    {% if n.status == 'entwurf' %}
+    <div>
+      {% if n.kanal == 'email' %}<form class="inline" method="post" action="{{ url_for('nachricht_aktion', nid=n.id, aktion='senden') }}"><button {{ 'disabled' if not smtp_ok }}>Senden</button></form>
+      {% else %}<a class="btn" href="{{ url_for('briefe_druck', id=n.id) }}" target="_blank">Drucken</a>
+      <form class="inline" method="post" action="{{ url_for('nachricht_aktion', nid=n.id, aktion='gedruckt') }}"><button class="sec">✓ gedruckt</button></form>{% endif %}
+      <form class="inline" method="post" action="{{ url_for('nachricht_aktion', nid=n.id, aktion='verwerfen') }}"><button class="sec">Verwerfen</button></form>
+    </div>
+    {% endif %}
+  </div>
+  <details>
+    <summary>{{ n.betreff }}</summary>
+    {% if n.status == 'entwurf' %}
+    <form class="stack" method="post" action="{{ url_for('nachricht_aktion', nid=n.id, aktion='bearbeiten') }}">
+      <input name="betreff" value="{{ n.betreff }}">
+      <textarea name="text" style="min-height:300px">{{ n.text }}</textarea>
+      <button class="sec">Änderungen speichern</button>
+    </form>
+    {% else %}<pre class="msg">{{ n.text }}</pre>{% endif %}
+  </details>
+</div>
+{% else %}<p class="muted">Keine Nachrichten mit Status „{{ status }}“.</p>{% endfor %}
+{% endblock %}

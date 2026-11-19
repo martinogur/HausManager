@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Einstellungen</h1>
+<form method="post" class="grid">
+  <div class="card stack" style="display:grid;gap:8px">
+    <h2>Hausmeister Helden (Absender Akquise & Website)</h2>
+    {% for k, label in [('firma_name','Firmenname'),('firma_inhaber','Inhaber / Unterschrift'),('firma_adresse','Adresse'),('firma_telefon','Telefon'),('firma_email','E-Mail'),('firma_web','Website'),('einsatzgebiet','Einsatzgebiet (für Texte)')] %}
+    <label>{{ label }}<input name="{{ k }}" value="{{ cfg[k] }}"></label>
+    {% endfor %}
+  </div>
+  <div class="card" style="display:grid;gap:8px;align-content:start">
+    <h2>Vermietung & Automatik</h2>
+    <label>Vermieter (Absender Mieterbriefe)<input name="vermieter_name" value="{{ cfg.vermieter_name }}"></label>
+    <label>IBAN für Mietzahlungen<input name="vermieter_iban" value="{{ cfg.vermieter_iban }}"></label>
+    <label>Zahlungserinnerung nach … Tagen Verzug<input type="number" name="mahnung_tage_1" value="{{ cfg.mahnung_tage_1 }}"></label>
+    <label>Mahnung nach … Tagen Verzug<input type="number" name="mahnung_tage_2" value="{{ cfg.mahnung_tage_2 }}"></label>
+    <label>Akquise: Abstände zwischen Kontakten (Tage, kommagetrennt)<input name="followup_tage" value="{{ cfg.followup_tage }}"></label>
+    <label style="display:flex;gap:6px;align-items:center;color:var(--text)"><input type="checkbox" name="auto_senden" value="1" {{ 'checked' if cfg.auto_senden=='1' }}> E-Mails automatisch versenden (ohne manuelle Freigabe)</label>
+    <p class="muted">SMTP-Status: {{ '✅ eingerichtet' if smtp_ok else '❌ nicht eingerichtet – SMTP_HOST, SMTP_USER, SMTP_PASS in .env setzen' }}</p>
+    <button>Speichern</button>
+  </div>
+</form>
+{% endblock %}

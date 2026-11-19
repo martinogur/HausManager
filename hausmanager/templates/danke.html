@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danke – {{ cfg.firma_name }}</title>
+<style>body{margin:0;font:18px/1.6 system-ui,sans-serif;background:#12263f;color:#fff;display:grid;place-items:center;min-height:100vh;text-align:center;padding:20px}a{color:#fdba74}</style></head>
+<body><div>
+  <h1>🦸 Vielen Dank!</h1>
+  <p>Ihre Anfrage ist bei uns eingegangen. Wir melden uns innerhalb von 24 Stunden.</p>
+  <p>Eilig? Rufen Sie uns an: <a href="tel:{{ cfg.firma_telefon|replace(' ', '') }}">{{ cfg.firma_telefon }}</a></p>
+  <p><a href="{{ url_for('landing') }}">← zurück</a></p>
+</div></body></html>

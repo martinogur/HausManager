@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}HausManager{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="top">
+  <a class="logo" href="{{ url_for('dashboard') }}">🏠 HausManager</a>
+  <a href="{{ url_for('dashboard') }}" class="{{ 'on' if request.endpoint=='dashboard' }}">Dashboard</a>
+  <span class="sep">|</span>
+  <a href="{{ url_for('immobilien') }}" class="{{ 'on' if request.endpoint=='immobilien' }}">Immobilien</a>
+  <a href="{{ url_for('zahlungen') }}" class="{{ 'on' if request.endpoint=='zahlungen' }}">Mieten</a>
+  <a href="{{ url_for('tickets') }}" class="{{ 'on' if request.endpoint=='tickets' }}">Tickets</a>
+  <span class="sep">|</span>
+  <a href="{{ url_for('akquise') }}" class="{{ 'on' if request.endpoint in ('akquise','lead','angebot') }}">🦸 Akquise</a>
+  <a href="{{ url_for('landing') }}" target="_blank">Website ↗</a>
+  <span class="sep">|</span>
+  <a href="{{ url_for('postausgang') }}" class="{{ 'on' if request.endpoint=='postausgang' }}">Postausgang</a>
+  <a href="{{ url_for('einstellungen') }}" class="{{ 'on' if request.endpoint=='einstellungen' }}">Einstellungen</a>
+</nav>
+<main>
+  {% for m in get_flashed_messages() %}<div class="flash">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>
