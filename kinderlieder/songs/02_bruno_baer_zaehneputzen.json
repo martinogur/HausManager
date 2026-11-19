@@ -1,0 +1,33 @@
+{
+  "titel": "Bruno Bär putzt die Zähne – Das Zahnputzlied",
+  "kurztitel": "Bruno Bär putzt die Zähne",
+  "figur": {"typ": "baer", "name": "Bruno"},
+  "tempo": 112,
+  "tonart": "C",
+  "instrument": "marimba",
+  "begleitung": "gitarre",
+  "seed": 11,
+  "teile": {
+    "refrain": {"art": "refrain", "zeilen": [
+      "Schrubbe, schrubbe, hin und her,",
+      "Zähneputzen ist nicht schwer.",
+      "Oben, unten, rundherum,",
+      "Bruno Bär macht schrumm, schrumm, schrumm!"
+    ]},
+    "morgens": {"art": "strophe", "zeige": {"text": "MORGENS", "farbe": "#fb8c00"}, "zeilen": [
+      "Morgens, wenn die Sonne lacht,",
+      "ist der Bruno aufgewacht.",
+      "Nimmt die Bürste in die Hand,",
+      "Zahnpasta drauf, ganz gespannt!"
+    ]},
+    "abends": {"art": "strophe", "zeige": {"text": "ABENDS", "farbe": "#5e35b1"}, "zeilen": [
+      "Abends, wenn der Mond erwacht,",
+      "wird noch einmal sauber gemacht.",
+      "Dann ins Bett und Augen zu,",
+      "gute Nacht, und Ruh, Ruh, Ruh."
+    ]}
+  },
+  "ablauf": ["refrain", "morgens", "refrain", "abends", "refrain"],
+  "beschreibung": "Bruno Bär zeigt, wie Zähneputzen Spaß macht – morgens und abends, oben, unten, rundherum! Ein Zahnputzlied zum Mitsingen für Kinder.",
+  "tags": ["Kinderlied", "Zähneputzen", "Zahnputzlied", "Bär", "Kinderlieder zum Mitsingen", "Kleinkinder", "Kita", "Routine"]
+}

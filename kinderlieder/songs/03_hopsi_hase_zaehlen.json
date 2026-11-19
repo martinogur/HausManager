@@ -1,0 +1,33 @@
+{
+  "titel": "Hopsi Hase zählt bis zehn – Das Zähllied",
+  "kurztitel": "Hopsi Hase zählt bis zehn",
+  "figur": {"typ": "hase", "name": "Hopsi"},
+  "tempo": 108,
+  "tonart": "F",
+  "instrument": "xylophon",
+  "begleitung": "klavier",
+  "seed": 5,
+  "teile": {
+    "refrain": {"art": "refrain", "zeilen": [
+      "Hopsi Hase, hopp, hopp, hopp,",
+      "springt im Garten ohne Stopp.",
+      "Zählen wir zusammen mit?",
+      "Hopsi zählt bei jedem Schritt!"
+    ]},
+    "vorwaerts": {"art": "strophe", "zeilen": [
+      {"text": "Eins, zwei, drei, ein Möhrchen hier,", "zeige": {"text": "1 2 3", "farbe": "#e53935"}},
+      {"text": "vier, fünf, sechs, das freut das Tier.", "zeige": {"text": "4 5 6", "farbe": "#fb8c00"}},
+      {"text": "Sieben, acht, im grünen Gras,", "zeige": {"text": "7 8", "farbe": "#43a047"}},
+      {"text": "neun und zehn, das macht ihm Spaß!", "zeige": {"text": "9 10", "farbe": "#1e88e5"}}
+    ]},
+    "rueckwaerts": {"art": "strophe", "zeilen": [
+      {"text": "Zehn, neun, acht, jetzt rückwärts, schau,", "zeige": {"text": "10 9 8", "farbe": "#1e88e5"}},
+      {"text": "sieben, sechs, der Himmel blau,", "zeige": {"text": "7 6", "farbe": "#43a047"}},
+      {"text": "fünf und vier und drei, juchhe,", "zeige": {"text": "5 4 3", "farbe": "#fb8c00"}},
+      {"text": "zwei und eins und hopp, olé!", "zeige": {"text": "2 1", "farbe": "#e53935"}}
+    ]}
+  },
+  "ablauf": ["refrain", "vorwaerts", "refrain", "rueckwaerts", "refrain"],
+  "beschreibung": "Hopsi Hase hüpft durch den Garten und zählt von 1 bis 10 – und wieder zurück! Ein Zähllied zum Mitsingen und Mitzählen für Kinder.",
+  "tags": ["Kinderlied", "Zählen lernen", "Zahlen 1 bis 10", "Hase", "Lernlied", "Kinderlieder zum Mitsingen", "Kita", "Vorschule"]
+}

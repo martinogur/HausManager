@@ -1,0 +1,39 @@
+{
+  "titel": "Bella, die Biene – Das Farbenlied",
+  "kurztitel": "Bella, die Biene",
+  "figur": {"typ": "biene", "name": "Bella"},
+  "tempo": 104,
+  "tonart": "D",
+  "instrument": "glockenspiel",
+  "begleitung": "klavier",
+  "seed": 3,
+  "teile": {
+    "refrain": {"art": "refrain", "zeilen": [
+      "Bella fliegt im Sonnenschein,",
+      "summ, summ, summ, so klein, so fein.",
+      "Sie besucht die Blumen bunt,",
+      "jede Farbe, kunterbunt!"
+    ]},
+    "rot": {"art": "strophe", "zeige": {"text": "ROT", "farbe": "#e53935", "blume": true}, "zeilen": [
+      "Da ist eine Blume rot,",
+      "rot wie Erdbeern auf dem Brot.",
+      "Bella landet, sagt: Hallo!",
+      "Rote Blumen mag sie so!"
+    ]},
+    "gelb": {"art": "strophe", "zeige": {"text": "GELB", "farbe": "#fbc02d", "blume": true}, "zeilen": [
+      "Da ist eine Blume gelb,",
+      "gelb wie Sonne überm Feld.",
+      "Bella landet, sagt: Hallo!",
+      "Gelbe Blumen mag sie so!"
+    ]},
+    "blau": {"art": "strophe", "zeige": {"text": "BLAU", "farbe": "#1e88e5", "blume": true}, "zeilen": [
+      "Da ist eine Blume blau,",
+      "blau wie Himmel, ganz genau.",
+      "Bella landet, sagt: Hallo!",
+      "Blaue Blumen mag sie so!"
+    ]}
+  },
+  "ablauf": ["refrain", "rot", "refrain", "gelb", "refrain", "blau", "refrain"],
+  "beschreibung": "Bella, die kleine Biene, fliegt von Blume zu Blume und lernt dabei die Farben Rot, Gelb und Blau. Ein fröhliches Mitsing-Lied für Kinder ab 2 Jahren.",
+  "tags": ["Kinderlied", "Farben lernen", "Biene", "Lernlied", "Kinderlieder zum Mitsingen", "Kleinkinder", "Kita", "Farbenlied"]
+}
