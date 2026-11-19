@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Mieten & Zahlungen</h1>
+
+<div class="grid">
+  <div class="card">
+    <h2>Kontoauszug importieren (CSV)</h2>
+    <p class="muted">Im Online-Banking die Umsätze als CSV exportieren und hier hochladen. Zahlungen werden automatisch über den Mieternamen den Verträgen zugeordnet, verbucht und überfällige Mieten angemahnt.</p>
+    <form class="row" method="post" action="{{ url_for('zahlungen_import') }}" enctype="multipart/form-data">
+      <input type="file" name="datei" accept=".csv,text/csv" required>
+      <button>Importieren</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Zahlung manuell erfassen</h2>
+    <form class="row" method="post" action="{{ url_for('zahlung_neu') }}">
+      <select name="vertrag_id" required>{% for v in vertraege %}<option value="{{ v.id }}">{{ v.name }} – {{ v.bezeichnung }}</option>{% endfor %}</select>
+      <input type="date" name="datum" value="{{ heute }}" required>
+      <input name="betrag" placeholder="Betrag €" required size="8">
+      <input name="verwendungszweck" placeholder="Verwendungszweck">
+      <button>Speichern</button>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Offene Posten</h2>
+  <table>
+    <tr><th>Fällig</th><th>Monat</th><th>Mieter / Einheit</th><th class="num">Soll</th><th class="num">Bezahlt</th><th class="num">Offen</th><th>Mahnstufe</th></tr>
+    {% for s in offene %}
+    <tr>
+      <td class="{{ 'bad' if s.faellig_am < heute }}">{{ s.faellig_am|datum }}</td><td>{{ s.monat }}</td>
+      <td>{{ s.name }} <span class="muted">{{ s.objekt }} – {{ s.bezeichnung }}</span></td>
+      <td class="num">{{ s.betrag|eur }}</td><td class="num">{{ s.bezahlt|eur }}</td><td class="num"><b>{{ (s.betrag - s.bezahlt)|eur }}</b></td>
+      <td>{% if s.mahnstufe == 1 %}<span class="tag">Erinnerung</span>{% elif s.mahnstufe == 2 %}<span class="tag bad">Mahnung</span>{% endif %}</td>
+    </tr>
+    {% else %}<tr><td colspan="7" class="muted">Alles bezahlt. 👍</td></tr>{% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2>Zahlungseingänge</h2>
+  <table>
+    <tr><th>Datum</th><th>Auftraggeber</th><th>Verwendungszweck</th><th class="num">Betrag</th><th>Zuordnung</th></tr>
+    {% for z in liste %}
+    <tr>
+      <td>{{ z.datum|datum }}</td><td>{{ z.auftraggeber or '' }}</td><td>{{ z.verwendungszweck or '' }}</td><td class="num">{{ z.betrag|eur }}</td>
+      <td>
+        <form class="inline" method="post" action="{{ url_for('zahlung_zuordnen', zid=z.id) }}">
+          <select name="vertrag_id" onchange="this.form.submit()">
+            <option value="">{{ '— nicht zugeordnet —' if not z.vertrag_id else '— lösen —' }}</option>
+            {% for v in vertraege %}<option value="{{ v.id }}" {{ 'selected' if v.id == z.vertrag_id }}>{{ v.name }} – {{ v.bezeichnung }}</option>{% endfor %}
+          </select>
+        </form>
+      </td>
+    </tr>
+    {% else %}<tr><td colspan="5" class="muted">Noch keine Zahlungen.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>🦸 Hausmeister Helden – Akquise</h1>
+
+<div class="warnbox">
+  <b>So läuft die Automatik:</b> Jeder neue Lead bekommt automatisch 3 Anschreiben (Erstkontakt → Nachfassen nach {{ cfg.followup_tage.split(',')[0] }} Tagen → letzter Impuls),
+  plus Anruf-Aufgaben. <b>E-Mail nur bei Einwilligung</b> (UWG § 7 – Werbe-Mails ohne Einwilligung sind auch an Firmen abmahnfähig), sonst automatisch als <b>Brief</b> (Serienbrief-Druck im Postausgang).
+  Sobald ein Lead reagiert, Status auf „interessiert“ setzen – die Sequenz stoppt dann.
+</div>
+
+<div class="pipeline">
+  <a href="{{ url_for('akquise') }}" class="{{ 'on' if not aktiv }}">Alle <b>{{ zahlen.values()|sum }}</b></a>
+  {% for s in status_liste %}<a href="{{ url_for('akquise', status=s) }}" class="{{ 'on' if aktiv==s }}">{{ s }} <b>{{ zahlen.get(s, 0) }}</b></a>{% endfor %}
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>Firma</th><th>Ansprechpartner</th><th>Ort</th><th>Kanal</th><th>Status</th><th>Schritt</th><th>Nächster Kontakt</th></tr>
+    {% for l in leads %}
+    <tr>
+      <td><a href="{{ url_for('lead', lid=l.id) }}"><b>{{ l.firma }}</b></a><br><span class="muted">{{ l.typ }}{% if l.einheiten_geschaetzt %} · ~{{ l.einheiten_geschaetzt }} Einheiten{% endif %}</span></td>
+      <td>{{ l.anrede or '' }} {{ l.ansprechpartner or '' }}<br><span class="muted">{{ l.telefon or '' }}</span></td>
+      <td>{{ l.plz_ort or '' }}</td>
+      <td>{{ '✉ E-Mail' if l.einwilligung_email and l.email else '📮 Brief' }}</td>
+      <td><span class="tag {{ l.status }}">{{ l.status }}</span></td>
+      <td>{{ l.schritt }}/3</td>
+      <td>{{ l.naechster_kontakt|datum if l.naechster_kontakt else 'sofort' }}</td>
+    </tr>
+    {% else %}<tr><td colspan="7" class="muted">Noch keine Leads – unten anlegen oder CSV importieren.</td></tr>{% endfor %}
+  </table>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Lead anlegen</h2>
+    {% set l = {} %}
+    {% include "_lead_form.html" %}
+  </div>
+  <div class="card">
+    <h2>Leads per CSV importieren</h2>
+    <p class="muted">Spalten (Trennzeichen ; oder ,):<br><code>firma;ansprechpartner;anrede;email;telefon;strasse;plz_ort;typ;quelle;einwilligung_email;einheiten_geschaetzt</code></p>
+    <p class="muted">Vorlage: <code>beispiele/leads_vorlage.csv</code>. Quellen für Hausverwaltungen: Google Maps („Hausverwaltung + Stadt“), Gelbe Seiten, Mitgliederlisten von VDIV-Landesverbänden, Impressum der Verwaltungs-Websites.</p>
+    <form class="row" method="post" action="{{ url_for('leads_import') }}" enctype="multipart/form-data">
+      <input type="file" name="datei" accept=".csv,text/csv" required>
+      <button>Importieren</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

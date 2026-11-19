@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Angebot {{ nr }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='brief.css') }}"></head>
+<body onload="window.print()">
+<section class="seite">
+  <div class="absender">{{ cfg.firma_name }} · {{ cfg.firma_adresse }}</div>
+  <div class="anschrift">{{ l.firma }}<br>{% if l.ansprechpartner %}{{ l.anrede or '' }} {{ l.ansprechpartner }}<br>{% endif %}{{ l.strasse or '' }}<br>{{ l.plz_ort or '' }}</div>
+  <div class="kopf"><b>{{ cfg.firma_name }}</b><br>{{ cfg.firma_adresse }}<br>Tel. {{ cfg.firma_telefon }}<br>{{ cfg.firma_email }}<br>{{ cfg.firma_web }}</div>
+  <div class="datum">{{ heute|datum }}</div>
+  <h3>Angebot Nr. {{ nr }} – Hausmeisterservice</h3>
+  <p>{{ briefanrede }},</p>
+  <p>vielen Dank für Ihr Interesse. Gerne bieten wir Ihnen folgende Leistungen als monatliche Pauschale an:</p>
+  <table class="pos">
+    <tr><th>Pos.</th><th>Leistung</th><th class="num">Menge</th><th class="num">Einzelpreis</th><th class="num">Gesamt / Monat</th></tr>
+    {% for p in positionen %}<tr><td>{{ loop.index }}</td><td>{{ p.text }}</td><td class="num">{{ '%g'|format(p.menge) }}</td><td class="num">{{ p.preis|eur }}</td><td class="num">{{ p.summe|eur }}</td></tr>{% endfor %}
+    <tr class="sum"><td></td><td>Summe netto</td><td></td><td></td><td class="num">{{ netto|eur }}</td></tr>
+    <tr><td></td><td>zzgl. 19 % MwSt.</td><td></td><td></td><td class="num">{{ (netto*0.19)|eur }}</td></tr>
+    <tr class="sum"><td></td><td><b>Gesamt brutto / Monat</b></td><td></td><td></td><td class="num"><b>{{ (netto*1.19)|eur }}</b></td></tr>
+  </table>
+  <p>Leistungsbeginn nach Absprache. Vertragslaufzeit 12 Monate, danach monatlich kündbar. Alle Einsätze werden digital mit Fotos dokumentiert.
+  Dieses Angebot ist 30 Tage gültig.</p>
+  <p>Für Rückfragen erreichen Sie mich jederzeit unter {{ cfg.firma_telefon }}.</p>
+  <p>Mit freundlichen Grüßen<br><br>{{ cfg.firma_inhaber }}<br>{{ cfg.firma_name }}</p>
+</section>
+</body></html>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<p><a href="{{ url_for('lead', lid=l.id) }}">← {{ l.firma }}</a></p>
+<h1>Angebot für {{ l.firma }}</h1>
+<div class="grid">
+  <div class="card">
+    <h2>Positionen</h2>
+    <p class="muted">Eine Zeile pro Leistung: <code>Beschreibung;Menge;Preis pro Monat netto</code></p>
+    <form method="post" class="stack">
+      <textarea name="positionen" style="min-height:200px">{{ zeilen_text }}</textarea>
+      <div class="row" style="display:flex;gap:8px">
+        <button class="sec" name="vorschau" value="1">Neu berechnen</button>
+        <button class="big" name="drucken" value="1" formtarget="_blank">Angebot drucken / PDF</button>
+      </div>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Vorschau</h2>
+    <table>
+      {% for p in positionen %}<tr><td>{{ p.text }}</td><td class="num">{{ '%g'|format(p.menge) }} ×</td><td class="num">{{ p.summe|eur }}</td></tr>{% endfor %}
+      <tr><th>Summe netto / Monat</th><td></td><th class="num">{{ netto|eur }}</th></tr>
+      <tr><td>zzgl. 19 % MwSt.</td><td></td><td class="num">{{ (netto*0.19)|eur }}</td></tr>
+      <tr><th>Brutto / Monat</th><td></td><th class="num">{{ (netto*1.19)|eur }}</th></tr>
+      <tr><td class="muted">Jahreswert netto</td><td></td><td class="num muted">{{ (netto*12)|eur }}</td></tr>
+    </table>
+  </div>
+</div>
+{% endblock %}

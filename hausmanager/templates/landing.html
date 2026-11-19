@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ cfg.firma_name }} – Hausmeisterservice für Hausverwaltungen in {{ cfg.einsatzgebiet }}</title>
+<meta name="description" content="{{ cfg.firma_name }}: zuverlässiger Hausmeisterservice, Treppenhausreinigung, Grünpflege und Winterdienst für Hausverwaltungen und WEGs in {{ cfg.einsatzgebiet }}. Kostenloser Objekt-Check.">
+<style>
+  :root { --o: #e85d04; --n: #12263f; --l: #f4f6f9; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1d2330; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  header { background: var(--n); color: #fff; padding: 18px 0; }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header b { font-size: 20px; } header a { color: #fff; font-weight: 600; text-decoration: none; }
+  .hero { background: linear-gradient(135deg, var(--n) 0%, #1e3a5f 60%, #2c4f7c 100%); color: #fff; padding: 70px 0 80px; }
+  .hero h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.15; margin: 0 0 18px; max-width: 760px; }
+  .hero p { font-size: 20px; opacity: .9; max-width: 640px; margin: 0 0 28px; }
+  .cta { display: inline-block; background: var(--o); color: #fff; padding: 14px 26px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+  .cta.ghost { background: transparent; border: 2px solid #fff; margin-left: 8px; }
+  section { padding: 60px 0; } section.alt { background: var(--l); }
+  h2 { font-size: 30px; margin: 0 0 28px; color: var(--n); }
+  .cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .c { background: #fff; border-radius: 12px; padding: 22px; border: 1px solid #e3e6eb; }
+  .c h3 { margin: 6px 0 6px; color: var(--n); font-size: 18px; } .c p { margin: 0; font-size: 15px; color: #4b5563; }
+  .ico { font-size: 28px; }
+  ol.steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  ol.steps li { counter-increment: s; background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e3e6eb; }
+  ol.steps li::before { content: counter(s); display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--o); color: #fff; font-weight: 700; margin-bottom: 8px; }
+  form { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; background: #fff; padding: 24px; border-radius: 12px; border: 1px solid #e3e6eb; }
+  form .full { grid-column: 1 / -1; }
+  input, select, textarea { font: inherit; padding: 10px 12px; border: 1px solid #cfd4dc; border-radius: 8px; width: 100%; }
+  textarea { min-height: 110px; }
+  button { font: inherit; font-weight: 700; background: var(--o); color: #fff; border: 0; border-radius: 8px; padding: 14px; cursor: pointer; }
+  .hp { position: absolute; left: -9999px; }
+  .flash { background: #fee2e2; padding: 10px; border-radius: 8px; }
+  footer { background: var(--n); color: #cbd5e1; padding: 30px 0; font-size: 14px; }
+  @media (max-width: 640px) { form { grid-template-columns: 1fr; } .cta.ghost { margin: 10px 0 0; } }
+</style>
+</head>
+<body>
+<header><div class="wrap"><b>🦸 {{ cfg.firma_name }}</b><a href="tel:{{ cfg.firma_telefon|replace(' ', '') }}">📞 {{ cfg.firma_telefon }}</a></div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>Der Hausmeister, auf den sich Ihre Verwaltung verlassen kann.</h1>
+  <p>Objektbetreuung, Reinigung, Grünpflege und Winterdienst für Hausverwaltungen, WEGs und Eigentümer in {{ cfg.einsatzgebiet }} – mit festem Ansprechpartner und digitalem Fotoprotokoll.</p>
+  <a class="cta" href="#anfrage">Kostenlosen Objekt-Check anfordern</a>
+  <a class="cta ghost" href="tel:{{ cfg.firma_telefon|replace(' ', '') }}">Jetzt anrufen</a>
+</div></div>
+
+<section><div class="wrap">
+  <h2>Unsere Leistungen</h2>
+  <div class="cards">
+    <div class="c"><div class="ico">🏢</div><h3>Objektbetreuung</h3><p>Regelmäßige Begehungen, Mängelmeldungen mit Fotos, Zählerablesung, Schlüsselverwaltung.</p></div>
+    <div class="c"><div class="ico">🧽</div><h3>Treppenhausreinigung</h3><p>Feste Intervalle, Reinigungsnachweis im Treppenhaus – sichtbar für jeden Mieter.</p></div>
+    <div class="c"><div class="ico">🌳</div><h3>Grün- & Außenanlagen</h3><p>Rasen, Hecken, Laub, Müllplätze – Ihre Liegenschaft macht den ersten guten Eindruck.</p></div>
+    <div class="c"><div class="ico">❄️</div><h3>Winterdienst</h3><p>Räum- und Streupflicht inkl. lückenloser Dokumentation – für Ihre Haftungssicherheit.</p></div>
+    <div class="c"><div class="ico">🔧</div><h3>Kleinreparaturen</h3><p>Leuchtmittel, Türschließer, Silikonfugen, kleinere Schäden – schnell und ohne Handwerkerkette.</p></div>
+    <div class="c"><div class="ico">🗑️</div><h3>Mülltonnenservice</h3><p>Bereitstellung und Rückholung, Sauberkeit der Standplätze, Sperrmüll-Koordination.</p></div>
+  </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Warum Verwaltungen zu uns wechseln</h2>
+  <div class="cards">
+    <div class="c"><h3>⏱ Erreichbar</h3><p>Rückmeldung innerhalb von 24 Stunden – garantiert.</p></div>
+    <div class="c"><h3>📸 Dokumentiert</h3><p>Jeder Einsatz mit Fotoprotokoll – ideal für Eigentümerversammlungen.</p></div>
+    <div class="c"><h3>👤 Ein Ansprechpartner</h3><p>Kein Callcenter, keine wechselnden Teams.</p></div>
+    <div class="c"><h3>💶 Transparent</h3><p>Monatliche Pauschalen, keine versteckten Anfahrtskosten.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>So einfach geht's</h2>
+  <ol class="steps">
+    <li><b>Anfrage senden</b><br>Formular unten ausfüllen oder anrufen.</li>
+    <li><b>Kostenloser Objekt-Check</b><br>Wir sehen uns Ihre Liegenschaft an – mit Bericht.</li>
+    <li><b>Angebot in 48 h</b><br>Klare Monatspauschale, keine Überraschungen.</li>
+    <li><b>Entspannt zurücklehnen</b><br>Wir kümmern uns – Sie erhalten die Protokolle.</li>
+  </ol>
+</div></section>
+
+<section class="alt" id="anfrage"><div class="wrap">
+  <h2>Kostenlosen Objekt-Check anfordern</h2>
+  {% for m in get_flashed_messages() %}<p class="flash">{{ m }}</p>{% endfor %}
+  <form method="post" action="{{ url_for('anfrage') }}">
+    <input name="firma" placeholder="Firma / Verwaltung">
+    <input name="ansprechpartner" placeholder="Ihr Name *" required>
+    <input name="telefon" placeholder="Telefon *" required>
+    <input type="email" name="email" placeholder="E-Mail">
+    <input name="plz_ort" placeholder="PLZ / Ort des Objekts">
+    <select name="typ"><option>Hausverwaltung</option><option>WEG-Verwaltung</option><option>Wohnungsbaugesellschaft</option><option>Gewerbe/Büro</option><option>Privater Eigentümer</option></select>
+    <input name="einheiten" placeholder="Anzahl Wohneinheiten (ca.)" class="full">
+    <textarea name="nachricht" class="full" placeholder="Worum geht es? (z. B. Treppenhausreinigung + Winterdienst für 3 Objekte)"></textarea>
+    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label class="full" style="font-size:14px;color:#4b5563"><input type="checkbox" required style="width:auto"> Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden (siehe Datenschutzerklärung).</label>
+    <button class="full">Anfrage absenden</button>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <b>{{ cfg.firma_name }}</b> · {{ cfg.firma_inhaber }} · {{ cfg.firma_adresse }} · {{ cfg.firma_telefon }} · {{ cfg.firma_email }}
+  <br><a href="#" style="color:#cbd5e1">Impressum</a> · <a href="#" style="color:#cbd5e1">Datenschutz</a>
+</div></footer>
+</body>
+</html>

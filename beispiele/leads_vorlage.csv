@@ -1,0 +1,3 @@
+firma;ansprechpartner;anrede;email;telefon;strasse;plz_ort;typ;quelle;einwilligung_email;einheiten_geschaetzt
+Muster Hausverwaltung GmbH;Anna Beispiel;Frau;info@muster-hv.example;0123 111111;Hauptstraße 5;12345 Musterstadt;Hausverwaltung;Google Maps;nein;250
+WEG-Verwaltung Schmidt;Peter Schmidt;Herr;p.schmidt@weg-schmidt.example;0123 222222;Bahnhofstr. 12;12345 Musterstadt;WEG-Verwaltung;Empfehlung;ja;80

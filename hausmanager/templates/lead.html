@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<p><a href="{{ url_for('akquise') }}">← Alle Leads</a></p>
+<h1>{{ l.firma }} <span class="tag {{ l.status }}">{{ l.status }}</span></h1>
+
+<div class="card">
+  <form class="row" method="post" action="{{ url_for('lead_status', lid=l.id) }}">
+    <label>Status ändern
+      <select name="status">{% for s in status_liste %}<option {{ 'selected' if s==l.status }}>{{ s }}</option>{% endfor %}</select>
+    </label>
+    <button>Übernehmen</button>
+    <a class="btn big" href="{{ url_for('angebot', lid=l.id) }}">Angebot erstellen</a>
+    {% if l.telefon %}<a class="btn sec" href="tel:{{ l.telefon }}">📞 {{ l.telefon }}</a>{% endif %}
+  </form>
+  <p class="muted" style="margin:8px 0 0">Sequenz: Schritt {{ l.schritt }}/3 · nächster automatischer Kontakt: {{ l.naechster_kontakt|datum if l.naechster_kontakt else 'beim nächsten Automatik-Lauf' }}</p>
+</div>
+
+<div class="grid">
+  <div class="card"><h2>Stammdaten</h2>{% include "_lead_form.html" %}</div>
+  <div class="card">
+    <h2>Nachrichten</h2>
+    {% for n in nachrichten %}
+      <details>
+        <summary>{{ n.erstellt|datum }} · {{ '✉' if n.kanal=='email' else '📮' }} {{ n.betreff }} <span class="tag">{{ n.status }}</span></summary>
+        <pre class="msg">{{ n.text }}</pre>
+      </details>
+    {% else %}<p class="muted">Noch keine. Beim nächsten Automatik-Lauf wird das erste Anschreiben erzeugt.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

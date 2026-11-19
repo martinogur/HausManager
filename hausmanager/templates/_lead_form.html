@@ -1,0 +1,17 @@
+<form class="stack" method="post" action="{{ url_for('lead', lid=l.id) if l.id else url_for('lead_neu') }}">
+  <label>Firma<input name="firma" value="{{ l.firma or '' }}" required></label>
+  <div class="row" style="display:flex;gap:8px">
+    <label>Anrede<select name="anrede">{% for a in ['', 'Herr', 'Frau'] %}<option {{ 'selected' if (l.anrede or '')==a }}>{{ a }}</option>{% endfor %}</select></label>
+    <label style="flex:1">Ansprechpartner<input name="ansprechpartner" value="{{ l.ansprechpartner or '' }}"></label>
+  </div>
+  <label>Straße<input name="strasse" value="{{ l.strasse or '' }}"></label>
+  <label>PLZ Ort<input name="plz_ort" value="{{ l.plz_ort or '' }}"></label>
+  <label>Telefon<input name="telefon" value="{{ l.telefon or '' }}"></label>
+  <label>E-Mail<input type="email" name="email" value="{{ l.email or '' }}"></label>
+  <label style="display:flex;gap:6px;align-items:center;color:var(--text)"><input type="checkbox" name="einwilligung_email" value="1" {{ 'checked' if l.einwilligung_email }}> Einwilligung für Werbe-E-Mails liegt vor</label>
+  <label>Typ<select name="typ">{% for t in ['Hausverwaltung','WEG-Verwaltung','Wohnungsbaugesellschaft','Genossenschaft','Gewerbe/Büro','Privater Eigentümer'] %}<option {{ 'selected' if l.typ==t }}>{{ t }}</option>{% endfor %}</select></label>
+  <label>Einheiten (geschätzt)<input name="einheiten_geschaetzt" value="{{ l.einheiten_geschaetzt or '' }}"></label>
+  <label>Quelle<input name="quelle" value="{{ l.quelle or '' }}" placeholder="Google Maps, Empfehlung, Messe…"></label>
+  <label>Notiz<textarea name="notiz" style="min-height:60px">{{ l.notiz or '' }}</textarea></label>
+  <button>Speichern</button>
+</form>
