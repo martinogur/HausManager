@@ -54,6 +54,12 @@ MELODIEN = {
         "strophe": [[4, 4, 2, 2, 3, 3, 1], [2, 2, 0, 0, 1, 2, 4],
                     [4, 4, 2, 2, 3, 3, 5], [4, 4, 3, 1, 2, 1, 0]],
     },
+    "D": {  # wiegend, Dreiklang-Hüpfer
+        "refrain": [[0, 2, 4, 2, 0, 2, 4], [5, 4, 3, 2, 1, 2, 4],
+                    [0, 2, 4, 2, 0, 2, 4], [5, 5, 4, 4, 2, 1, 0]],
+        "strophe": [[2, 2, 4, 4, 3, 3, 2], [1, 1, 3, 3, 2, 1, 4],
+                    [2, 2, 4, 4, 5, 5, 4], [5, 4, 3, 2, 1, 1, 0]],
+    },
     "C": {  # hüpfend, große Sprünge
         "refrain": [[0, 4, 0, 4, 2, 4, 7], [6, 5, 4, 3, 2, 3, 4],
                     [0, 4, 0, 4, 2, 4, 7], [6, 5, 4, 2, 1, 1, 0]],
@@ -643,6 +649,20 @@ def effekt_klang(typ):
         t = np.arange(n) / SR
         f = 210 + 12 * np.sin(2 * np.pi * 5 * t)
         x = _ton(f, None, 0.9, "rechteck", np.sin(np.pi * t / 0.9)) * 0.35
+    elif typ == "platsch":
+        rng = np.random.default_rng(3)
+        n = int(SR * 0.5)
+        t = np.arange(n) / SR
+        rausch = rng.standard_normal(n)
+        rausch = np.convolve(rausch, np.ones(8) / 8, "same")
+        x = rausch * np.exp(-t * 9) * 0.8 + _ton(900, 300, 0.5) * 0.4
+    elif typ == "blubb":
+        teile = np.zeros(int(SR * 0.7))
+        for k, f in enumerate([300, 420, 360, 520]):
+            s = int(SR * 0.14 * k)
+            ton = _ton(f, f * 2.2, 0.1) * 0.7
+            teile[s:s + len(ton)] += ton
+        x = teile
     elif typ == "gaehn":
         x = _ton(520, 260, 0.8, "sinus", np.sin(np.pi * np.arange(int(SR * 0.8)) / (SR * 0.8))) * 0.5
     else:

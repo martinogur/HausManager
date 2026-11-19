@@ -38,7 +38,7 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 {
   "titel": "…", "kurztitel": "…",
   "figur": {"typ": "biene|baer|hase|katze|frosch", "name": "…", "farbe": "#…" /* optional */},
-  "melodie": "A|B|C",          // A = singend, B = Fanfare, C = hüpfend
+  "melodie": "A|B|C|D",        // A = singend, B = Fanfare, C = hüpfend, D = wiegend
   "tempo": 100, "tonart": "C|D|F|G…",
   "instrument": "glockenspiel|marimba|xylophon|musikbox|celesta|klavier|floete",
   "begleitung": "klavier|gitarre",
@@ -58,13 +58,14 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 
 - **Zeilen:** 7 Silben sind ideal (Melodie-Grundmaß), 5 bis 9 gehen auch (höchstens 15). Paarreime.
 - **Bilder** (`bild`): `blume`, `erdbeere`, `feuerwehr`, `sonne`, `banane`, `kueken`, `himmel`, `meer`, `fisch`,
-  `wecker`, `zahnbuerste`, `zahnpasta`, `zaehneputzen` (animiert), `mond`, `bett`, `sterne`, `moehre`
+  `wecker`, `zahnbuerste`, `zahnpasta`, `zaehneputzen` (animiert), `mond`, `bett`, `sterne`, `moehre`, `haende`, `wasserhahn`, `seife`, `handtuch`
 - **Teil-Optionen:**
   - `"zahlen": true`: Jedes gesungene Zahlwort (eins … zwölf, null) erscheint groß mit genau so vielen Möhren.
   - `"nacht": true`: Nachthimmel mit Mond und Sternen.
   - `"putzen": true`: Die Figur putzt sich mit einer Zahnbürste die Zähne.
+  - `"seifenblasen": true`: Seifenblasen steigen im ganzen Bild auf.
   - `"melodie": [[…], …]`: eigene Tonfolge (Tonstufen 0 = do … 7 = do') pro Zeile.
-- **Effekte** (`effekt`): `tatue`, `piep`, `boing`, `schrubb`, `glitzer`, `klingel`, `gaehn`, `summ`, `plopp`.
+- **Effekte** (`effekt`): `tatue`, `piep`, `boing`, `schrubb`, `glitzer`, `klingel`, `gaehn`, `summ`, `plopp`, `platsch`, `blubb`.
   Bei jeder neuen Einblendung ertönt automatisch ein „Plopp“.
 - Der Kanalname, der oben links im Video steht, wird in `kanal.json` eingestellt.
 

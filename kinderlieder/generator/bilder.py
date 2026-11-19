@@ -330,6 +330,103 @@ HINTERGRUND = {"himmel": (100, 181, 246, 255), "meer": (187, 222, 251, 255), "mo
                "sterne": (40, 53, 107, 255), "bett": (225, 230, 255, 255)}
 
 
+HAUT = (242, 199, 165, 255)
+HAUT_LINIE = (150, 100, 70, 255)
+
+
+def _hand(z, cx, cy, winkel, spiegel=1, g=1.35):
+    """Einfache Kinderhand (Handfläche + 4 Finger + Daumen)."""
+    c, s_ = math.cos(math.radians(winkel)), math.sin(math.radians(winkel))
+
+    def R(px, py):
+        px *= spiegel * g
+        py *= g
+        return (cx + px * c - py * s_, cy + px * s_ + py * c)
+
+    def fl(fx, fy, rx, ry, w):
+        pts = [R(x, y) for x, y in ellipse_poly(fx, fy, rx, ry, w * spiegel)]
+        z.poly(pts, HAUT, outline=HAUT_LINIE)
+    for dx, fy, l, w in [(-8.5, -16, 8, -8), (-2.8, -18.5, 9.5, -2), (3, -18, 9, 3), (8.5, -15, 7, 9)]:
+        fl(dx, fy, 3.2, l, w)
+    fl(-13, -2, 3.4, 7.5, -55)
+    fl(0, -2, 12.5, 11.5, 0)
+
+
+def _blasen(z, t, anzahl=8, bereich=(15, 85, 20, 80), seed=2):
+    rng = random.Random(seed)
+    for k in range(anzahl):
+        x0 = rng.uniform(bereich[0], bereich[1])
+        r = rng.uniform(3, 7)
+        ph = (t * rng.uniform(0.25, 0.5) + rng.random()) % 1
+        y = bereich[3] - ph * (bereich[3] - bereich[2])
+        x = x0 + math.sin(t * 2 + k) * 3
+        z.ell(x, y, r, r, (200, 235, 255, 110), outline=(120, 190, 240, 255), breite=2)
+        z.ell(x - r * 0.35, y - r * 0.35, r * 0.25, r * 0.25, (255, 255, 255, 230), outline=None)
+
+
+def _haende(z, f, t):
+    reib = math.sin(t * 9) * 5
+    _hand(z, 42 + reib, 58, -20, 1)
+    _hand(z, 58 - reib, 60, 20, -1)
+    rng = random.Random(int(t * 6))
+    for _ in range(10):
+        x, y = rng.uniform(32, 68), rng.uniform(48, 72)
+        r = rng.uniform(2.5, 5)
+        z.ell(x, y, r, r, (255, 255, 255, 235), outline=(190, 215, 240, 255), breite=2)
+    _blasen(z, t, 6, (20, 80, 10, 45))
+
+
+def _wasserhahn(z, f, t):
+    grau, dunkel = (176, 190, 197, 255), (120, 135, 145, 255)
+    z.rrect(16, 32, 36, 50, 3, grau, outline=dunkel)
+    z.rrect(34, 36, 62, 46, 4, grau, outline=dunkel)
+    z.rrect(54, 36, 66, 54, 4, grau, outline=dunkel)
+    z.rrect(22, 22, 30, 32, 2, (229, 57, 53, 255))
+    z.rrect(16, 19, 36, 23, 2, (229, 57, 53, 255))
+    # Wasserstrahl
+    z.rrect(56.5, 54, 63.5, 82, 3, (100, 181, 246, 230), outline=None)
+    for k in range(6):
+        y = 54 + ((t * 60 + k * 7) % 28)
+        z.ell(60, y, 1.6, 3, (255, 255, 255, 200), outline=None)
+    # Becken und Spritzer
+    z.ell(60, 86, 26, 6, (144, 202, 249, 255), outline=(100, 160, 220, 255))
+    for k in range(5):
+        ph = (t * 2.5 + k / 5) % 1
+        a = math.radians(200 + k * 35)
+        z.ell(60 + math.cos(a) * ph * 18, 84 - math.sin(math.radians(60 + k * 15)) * ph * 14 * (1 - ph) * 2,
+              2, 2, (100, 181, 246, 255), outline=None)
+
+
+def _seife(z, f, t):
+    _blasen(z, t, 9, (15, 85, 8, 55), seed=5)
+    z.rrect(20, 52, 80, 82, 12, (244, 143, 177, 255), outline=(194, 84, 120, 255))
+    z.rrect(26, 56, 74, 64, 4, (248, 187, 208, 255), outline=None)
+    fnt = schrift(z.S * 0.1)
+    z.d.text(z.P(31, 64), "SEIFE", font=fnt, fill=(255, 255, 255, 255))
+    for x in (38, 62):
+        z.ell(x, 50, 6, 5, WEISS, outline=(190, 215, 240, 255), breite=2)
+
+
+def _handtuch(z, f, t):
+    blau = (66, 165, 245, 255)
+    z.linie([(12, 20), (88, 20)], (150, 110, 80, 255), 3)
+    w = math.sin(t * 2) * 2
+    z.poly([(22, 20), (78, 20), (80 + w, 86), (20 + w, 86)], blau, outline=(30, 110, 190, 255))
+    for y in (68, 74):
+        z.poly([(21 + w * (y - 20) / 66, y), (79 + w * (y - 20) / 66, y), (79.3 + w * (y - 20) / 66, y + 3),
+                (20.7 + w * (y - 20) / 66, y + 3)], WEISS, outline=None)
+    z.ell(50, 44, 9, 9, WEISS, outline=None)
+    z.stern(50, 44, 6, (255, 214, 64, 255))
+    for k in range(3):
+        a = t * 3 + k * 2.1
+        z.stern(30 + k * 20, 12 + 3 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+ZEICHNER.update({"haende": _haende, "wasserhahn": _wasserhahn, "seife": _seife, "handtuch": _handtuch})
+ANIMIERT.update({"haende", "wasserhahn", "seife", "handtuch"})
+HINTERGRUND.update({"wasserhahn": (227, 242, 253, 255)})
+
+
 def bild_sprite(typ, groesse, farbe=None, t=0.0):
     """Rundes Bild mit Rahmen. farbe = Rahmenfarbe (und Blumenfarbe)."""
     f = rgb(farbe) if farbe else None

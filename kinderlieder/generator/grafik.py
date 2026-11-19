@@ -434,3 +434,13 @@ def zahnbuerste_klein(laenge):
         d.ellipse([S * (0.02 + k * 0.05), h * (0.0 + (k % 2) * 0.1), S * (0.02 + k * 0.05) + h * 0.22,
                    h * (0.22 + (k % 2) * 0.1)], fill=(255, 255, 255, 240))
     return img.resize((S // 2, h // 2), Image.LANCZOS)
+
+
+def seifenblase(r):
+    S = r * 4
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.ellipse([2, 2, S - 3, S - 3], fill=(200, 235, 255, 70), outline=(140, 200, 245, 220), width=max(2, S // 25))
+    d.arc([S * 0.18, S * 0.18, S * 0.82, S * 0.82], 200, 260, fill=(255, 255, 255, 230), width=max(2, S // 14))
+    d.ellipse([S * 0.62, S * 0.6, S * 0.72, S * 0.7], fill=(255, 200, 240, 160))
+    return img.resize((S // 2, S // 2), Image.LANCZOS)

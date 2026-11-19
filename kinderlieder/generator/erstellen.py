@@ -184,6 +184,12 @@ class Szene:
                                           randbreite=2) if kanal else None
         self.buerste = G.zahnbuerste_klein(int(self.fgroesse * 0.42))
         self.blasen = {}
+        self.seifenblasen = []
+        rng2 = random.Random(11)
+        for k in range(16):
+            r = int(H * rng2.uniform(0.015, 0.04))
+            self.seifenblasen.append((G.seifenblase(r), rng2.uniform(0.05, 0.95), rng2.uniform(0.06, 0.12),
+                                      rng2.random(), rng2.uniform(0, 6)))
         self.statisch = {}
         self.wort_cache = {}
         rng = random.Random(3)
@@ -262,7 +268,7 @@ class Szene:
             frame.paste(self.mond, (int(W * 0.88 - self.mond.width / 2), int(H * 0.17 - self.mond.height / 2)),
                         self.mond)
         else:
-            s = self.sonne.rotate(-t * 12, resample=Image.BICUBIC)
+            s = self.sonne.rotate(8 * math.sin(t * 1.5), resample=Image.BICUBIC)
             frame.paste(s, (int(W * 0.88 - s.width / 2), int(H * 0.17 - s.height / 2)), s)
             for spr, x0, y, v in self.wolken:
                 x = (x0 + t * v) % (W + spr.width) - spr.width
@@ -330,6 +336,14 @@ class Szene:
             mx = x0 + sw * 0.5 + math.sin(t * 14) * sw * 0.05 - br.width * 0.06
             my = y0 + sh * 0.565 - br.height * 0.55
             frame.paste(br, (int(mx), int(my)), br)
+
+        # Seifenblasen
+        if teil.get("seifenblasen"):
+            for spr_b, x0, v, ph, wph in self.seifenblasen:
+                p_ = (t * v + ph) % 1.0
+                x = W * x0 + math.sin(t * 1.5 + wph) * W * 0.02
+                y = H * (0.95 - p_ * 1.05)
+                frame.paste(spr_b, (int(x), int(y)), spr_b)
 
         # Noten-Partikel
         for (t0, spr_n, dx, v) in self.partikel:

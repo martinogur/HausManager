@@ -73,7 +73,7 @@ Playlist-Beschreibung, z. B. für „Farben lernen“:
 | 1 | Bella, die Biene – Das Farbenlied ✅ | Farben |
 | 1 | Hopsi Hase zählt bis zehn ✅ | Zählen |
 | 2 | Bruno Bär putzt die Zähne ✅ | Routinen |
-| 3 | Bruno Bär wäscht die Hände (Händewaschen) | Routinen |
+| 3 | Bruno Bär wäscht die Hände ✅ | Routinen |
 | 4 | Bella und der Regenbogen (alle Farben) | Farben |
 | 5 | Hopsi und die Formen (Kreis, Dreieck, Viereck) | Zählen |
 | 6 | Schlaf gut, Bruno – Gute-Nacht-Lied | Gute Nacht |
