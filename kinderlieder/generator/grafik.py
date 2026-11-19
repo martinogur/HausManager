@@ -349,3 +349,88 @@ def gestapelt(sprites, abstand=0.9):
         img.alpha_composite(s, ((w - s.width) // 2, int(y)))
         y += s.height * abstand
     return img
+
+
+NACHT = ("#0f1b4c", "#3b4a8c", "#2e6b3a", "#244f2c")
+
+
+def mond(r):
+    S = int(r * 2.4) * 2
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    c, R = S / 2, r * 2
+    d.ellipse([c - R * 1.15, c - R * 1.15, c + R * 1.15, c + R * 1.15], fill=(255, 240, 160, 50))
+    d.ellipse([c - R, c - R, c + R, c + R], fill=(255, 228, 120, 255))
+    d.ellipse([c - R * 0.2, c - R * 1.25, c + R * 1.5, c + R * 0.55], fill=(0, 0, 0, 0))
+    d.arc([c - R * 0.75, c - R * 0.15, c - R * 0.35, c + R * 0.15], 200, 340, fill=(90, 60, 20, 255), width=int(R * 0.07))
+    d.arc([c - R * 0.8, c + R * 0.15, c - R * 0.3, c + R * 0.5], 20, 160, fill=(90, 60, 20, 255), width=int(R * 0.07))
+    return img.resize((S // 2, S // 2), Image.LANCZOS)
+
+
+def stern(r, farbe=(255, 236, 140, 255)):
+    S = int(r * 2.2) * 2
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    c, R = S / 2, r * 2
+    pts = []
+    for i in range(10):
+        rr = R if i % 2 == 0 else R * 0.45
+        a = math.radians(-90 + i * 36)
+        pts.append((c + rr * math.cos(a), c + rr * math.sin(a)))
+    d.polygon(pts, fill=farbe)
+    return img.resize((S // 2, S // 2), Image.LANCZOS)
+
+
+def sprechblase(text, H, max_zeichen=24):
+    fnt = schrift(H * 0.05)
+    woerter, zeilen, akt = text.split(), [], ""
+    for w in woerter:
+        if len(akt) + len(w) + 1 > max_zeichen and akt:
+            zeilen.append(akt)
+            akt = w
+        else:
+            akt = (akt + " " + w).strip()
+    zeilen.append(akt)
+    d0 = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    zh = H * 0.062
+    bw = int(max(d0.textlength(z, font=fnt) for z in zeilen) + H * 0.08)
+    bh = int(zh * len(zeilen) + H * 0.06)
+    schw = int(H * 0.07)
+    img = Image.new("RGBA", ((bw + 10) * 2, (bh + schw + 10) * 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    rand = (90, 80, 110, 255)
+    lw = max(3, int(H * 0.006))
+    # Schatten
+    d.rounded_rectangle([10, 16, bw * 2 + 10, bh * 2 + 16], radius=bh * 0.5, fill=(0, 0, 0, 40))
+    d.polygon([(bw * 2 - bh * 0.9, bh * 2 - 4), (bw * 2 - bh * 0.3, bh * 2 - 4), (bw * 2 + 4, (bh + schw) * 2)],
+              fill=(255, 255, 255, 255), outline=rand, width=lw)
+    d.rounded_rectangle([0, 0, bw * 2, bh * 2], radius=min(bh, bw) * 0.5 * 2 * 0.5, fill=(255, 255, 255, 255),
+                        outline=rand, width=lw)
+    d.polygon([(bw * 2 - bh * 0.9 + lw, bh * 2 - lw * 2), (bw * 2 - bh * 0.3 - lw, bh * 2 - lw * 2),
+               (bw * 2 - bh * 0.6, bh * 2 + lw)], fill=(255, 255, 255, 255))
+    img = img.resize((img.width // 2, img.height // 2), Image.LANCZOS)
+    d = ImageDraw.Draw(img)
+    for i, z in enumerate(zeilen):
+        w = d.textlength(z, font=fnt)
+        d.text(((bw - w) / 2, H * 0.025 + i * zh), z, font=fnt, fill=(60, 50, 80, 255))
+    return img
+
+
+def zahnbuerste_klein(laenge):
+    """Zahnbürste waagerecht, Kopf links (für die Figur)."""
+    S = laenge * 2
+    h = int(S * 0.3)
+    img = Image.new("RGBA", (S, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    lw = max(2, S // 80)
+    d.rounded_rectangle([S * 0.25, h * 0.45, S - 2, h * 0.75], radius=h * 0.15, fill=(33, 150, 243, 255),
+                        outline=(40, 40, 60, 255), width=lw)
+    d.rounded_rectangle([2, h * 0.42, S * 0.3, h * 0.78], radius=h * 0.08, fill=(255, 255, 255, 255),
+                        outline=(40, 40, 60, 255), width=lw)
+    for k in range(6):
+        x = 6 + k * S * 0.045
+        d.rectangle([x, h * 0.05, x + S * 0.03, h * 0.42], fill=(130, 210, 255, 255))
+    for k in range(5):
+        d.ellipse([S * (0.02 + k * 0.05), h * (0.0 + (k % 2) * 0.1), S * (0.02 + k * 0.05) + h * 0.22,
+                   h * (0.22 + (k % 2) * 0.1)], fill=(255, 255, 255, 240))
+    return img.resize((S // 2, h // 2), Image.LANCZOS)
