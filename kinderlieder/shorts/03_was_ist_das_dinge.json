@@ -1,0 +1,21 @@
+{
+  "titel": "Was ist das? Rate mal mit Bruno Bär 🐻 Ratespiel für Kinder",
+  "figur": {"typ": "baer"},
+  "banner": "WAS IST DAS?",
+  "akzent": "#1e88e5",
+  "palette": 1,
+  "tempo": 116,
+  "tonart": "C",
+  "instrument": "marimba",
+  "start": "Was ist das? Rate mal!",
+  "dinge": [
+    {"bild": "feuerwehr", "wort": "FEUERWEHR", "antwort": "Die Feuerwehr! Tatü, tata!", "farbe": "#e53935"},
+    {"bild": "wecker", "wort": "WECKER", "antwort": "Ein Wecker! Ring, ring!", "farbe": "#e53935"},
+    {"bild": "regenbogen", "wort": "REGENBOGEN", "antwort": "Ein Regenbogen!", "farbe": "#8e24aa"},
+    {"bild": "geschenk", "wort": "GESCHENK", "antwort": "Ein Geschenk! Juhu!", "farbe": "#1e88e5"},
+    {"bild": "ball", "wort": "BALL", "antwort": "Ein Ball! Boing, boing!", "farbe": "#43a047"}
+  ],
+  "ende": "Wie viele hast du erraten?",
+  "beschreibung": "Was versteckt sich im Schatten? Rate mit Bruno Bär! 3, 2, 1 – und los! Ein Ratespiel für Kinder ab 2 Jahren.",
+  "tags": ["Ratespiel für Kinder", "Was ist das", "Rate mal", "Kinder Quiz", "Kleinkinder", "Liederwiese"]
+}

@@ -1,0 +1,53 @@
+{
+  "titel": "Bella, die Biene – Das Farbenlied",
+  "kurztitel": "Bella, die Biene",
+  "figur": {"typ": "biene", "name": "Bella"},
+  "melodie": "A",
+  "tempo": 100,
+  "tonart": "D",
+  "instrument": "glockenspiel",
+  "begleitung": "klavier",
+  "akzent": "#e5398f",
+  "teile": {
+    "refrain": {"art": "refrain", "zeilen": [
+      "Summ, summ, summ, ich flieg herum,",
+      "flieg im Kreis und rundherum.",
+      "Welche Farbe siehst du hier?",
+      "Komm und flieg ein Stück mit mir!"
+    ]},
+    "rot": {"art": "strophe", "farbe": "#e53935", "wort": "ROT", "zeilen": [
+      {"text": "Rot, rot, rot, die Blume hier,", "bild": "blume", "landen": true},
+      {"text": "rot wie Erdbeern, glaub es mir!", "bild": "erdbeere"},
+      {"text": "Rot ist auch die Feuerwehr,", "bild": "feuerwehr"},
+      {"text": "tatü, tata, hin und her!", "bild": "feuerwehr", "effekt": "tatue"}
+    ]},
+    "gelb": {"art": "strophe", "farbe": "#f9b800", "wort": "GELB", "zeilen": [
+      {"text": "Gelb, gelb, gelb, die Blume hier,", "bild": "blume", "landen": true},
+      {"text": "gelb wie Sonne, glaub es mir!", "bild": "sonne"},
+      {"text": "Gelb ist die Banane, schau,", "bild": "banane"},
+      {"text": "und das Küken: piep, genau!", "bild": "kueken", "effekt": {"typ": "piep", "wort": "piep"}}
+    ]},
+    "blau": {"art": "strophe", "farbe": "#1e88e5", "wort": "BLAU", "zeilen": [
+      {"text": "Blau, blau, blau, die Blume hier,", "bild": "blume", "landen": true},
+      {"text": "blau wie Himmel, glaub es mir!", "bild": "himmel"},
+      {"text": "Blau ist auch das große Meer,", "bild": "meer"},
+      {"text": "Fische schwimmen hin und her.", "bild": "fisch"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo Kinder! Ich bin Bella, die Biene. Summ, summ! Kommt ihr mit? Wir suchen Farben!"},
+    "refrain",
+    {"sprich": "Schau mal, eine Blume! Welche Farbe hat sie?"},
+    "rot",
+    "refrain",
+    {"sprich": "Oh, noch eine Blume! Welche Farbe ist das?"},
+    "gelb",
+    "refrain",
+    {"sprich": "Und hier? Welche Farbe siehst du jetzt?"},
+    "blau",
+    "refrain"
+  ],
+  "tschuess": "Rot, Gelb und Blau. Super gemacht! Tschüss, bis bald!",
+  "beschreibung": "Bella, die kleine Biene, fliegt von Blume zu Blume und entdeckt die Farben Rot, Gelb und Blau – mit Erdbeere, Feuerwehr, Banane, Küken, Himmel und Meer. Ein fröhliches Mitsing-Lied für Kinder ab 2 Jahren.",
+  "tags": ["Kinderlied", "Farben lernen", "Biene", "Lernlied", "Kinderlieder zum Mitsingen", "Kleinkinder", "Kita", "Farbenlied"]
+}

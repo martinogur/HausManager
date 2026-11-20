@@ -1,0 +1,44 @@
+{
+  "titel": "Bruno Bär wäscht die Hände – Das Händewaschlied",
+  "kurztitel": "Bruno Bär wäscht Hände",
+  "figur": {"typ": "baer", "name": "Bruno"},
+  "melodie": "D",
+  "tempo": 104,
+  "tonart": "D",
+  "instrument": "musikbox",
+  "begleitung": "gitarre",
+  "akzent": "#00897b",
+  "teile": {
+    "refrain": {"art": "refrain", "seifenblasen": true, "bild": "haende", "zeilen": [
+      "Wasser an und Seife drauf,",
+      "reiben, reiben, hört nicht auf!",
+      {"text": "Blubber, blubber, Schaum, Schaum, Schaum,", "effekt": "blubb"},
+      {"text": "saubre Hände, wie im Traum!", "effekt": "glitzer"}
+    ]},
+    "wasser": {"art": "strophe", "farbe": "#1e88e5", "wort": "WASSER & SEIFE", "zeilen": [
+      {"text": "Erst das Wasser, plitsch und platsch,", "bild": "wasserhahn", "effekt": {"typ": "platsch", "wort": "platsch"}},
+      {"text": "nasse Hände, klitsche-klatsch!", "bild": "wasserhahn"},
+      {"text": "Dann die Seife in die Hand,", "bild": "seife"},
+      {"text": "Seifenschaum im ganzen Land!", "bild": "seife", "effekt": "blubb"}
+    ]},
+    "gruendlich": {"art": "strophe", "seifenblasen": true, "farbe": "#00897b", "wort": "GANZ GRÜNDLICH", "zeilen": [
+      {"text": "Zwischen Fingern hin und her,", "bild": "haende"},
+      {"text": "auch die Daumen, bitte sehr!", "bild": "haende"},
+      {"text": "Abspülen, der Schaum geht weg,", "bild": "wasserhahn", "effekt": "platsch"},
+      {"text": "Handtuch, weg ist jeder Fleck!", "bild": "handtuch", "effekt": "glitzer"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo, ich bin's wieder, Bruno Bär! Ich habe im Garten gespielt. Schau mal, meine Hände sind ganz schmutzig! Was machen wir jetzt?"},
+    "refrain",
+    {"sprich": "Zuerst machen wir das Wasser an. Und dann nehmen wir Seife!"},
+    "wasser",
+    "refrain",
+    {"sprich": "Jetzt ganz gründlich: zwischen den Fingern und die Daumen nicht vergessen!"},
+    "gruendlich",
+    "refrain"
+  ],
+  "tschuess": "Schau mal, ganz sauber! Vor dem Essen und nach der Toilette: Hände waschen! Tschüss!",
+  "beschreibung": "Bruno Bär hat im Garten gespielt und seine Hände sind ganz schmutzig! Zusammen lernen wir Schritt für Schritt, wie Händewaschen geht: Wasser an, Seife drauf, gründlich reiben, abspülen und abtrocknen. Ein Mitmach-Lied für Kinder ab 2 Jahren – perfekt vor dem Essen und nach der Toilette.",
+  "tags": ["Kinderlied", "Händewaschen", "Händewaschlied", "Hygiene für Kinder", "Bär", "Kinderlieder zum Mitsingen", "Kita", "Routine"]
+}

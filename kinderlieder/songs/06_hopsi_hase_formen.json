@@ -1,0 +1,53 @@
+{
+  "titel": "Hopsi und die Formen – Kreis, Dreieck, Viereck",
+  "kurztitel": "Hopsi und die Formen",
+  "figur": {"typ": "hase", "name": "Hopsi"},
+  "melodie": "F",
+  "tempo": 104,
+  "tonart": "F",
+  "instrument": "marimba",
+  "begleitung": "klavier",
+  "akzent": "#f4511e",
+  "teile": {
+    "refrain": {"art": "refrain", "bild": "formen", "zeilen": [
+      {"text": "Formen, Formen, groß und klein,", "effekt": "boing"},
+      "rund und eckig, das ist fein!",
+      "Hopsi hüpft und sucht im Haus:",
+      "welche Form, die sieht so aus?"
+    ]},
+    "kreis": {"art": "strophe", "farbe": "#e53935", "wort": "KREIS", "zeilen": [
+      {"text": "Kreis, der Kreis ist kugelrund,", "bild": "kreis"},
+      {"text": "rollt und rollt, ganz kunterbunt.", "bild": "ball"},
+      {"text": "Wie ein Ball, der springt, juchhe,", "bild": "ball", "effekt": {"typ": "boing", "wort": "springt"}},
+      {"text": "wie die Sonne in der Höh!", "bild": "sonne"}
+    ]},
+    "dreieck": {"art": "strophe", "farbe": "#43a047", "wort": "DREIECK", "zeilen": [
+      {"text": "Dreieck hat drei Ecken, schau:", "bild": "dreieck"},
+      {"text": "eins und zwei und drei, genau!", "zahlen": true, "zaehlobjekt": "punkt"},
+      {"text": "Wie ein Hut zum Partyfest,", "bild": "partyhut"},
+      {"text": "Pizza schmeckt uns allerbest!", "bild": "pizza"}
+    ]},
+    "viereck": {"art": "strophe", "farbe": "#1e88e5", "wort": "VIERECK", "zeilen": [
+      {"text": "Viereck hat vier Ecken, sieh:", "bild": "viereck"},
+      {"text": "eins, zwei, drei, vier, vergiss sie nie!", "zahlen": true, "zaehlobjekt": "punkt"},
+      {"text": "Wie ein Fenster, groß und hell,", "bild": "fenster"},
+      {"text": "ein Geschenk, mach auf, ganz schnell!", "bild": "geschenk", "effekt": "glitzer"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo, ich bin's, Hopsi Hase! Hopp, hopp! Heute suchen wir Formen: Kreis, Dreieck und Viereck. Kommst du mit?"},
+    "refrain",
+    {"sprich": "Schau mal, was ist das? Das ist ganz rund!"},
+    "kreis",
+    "refrain",
+    {"sprich": "Und das hier hat Ecken! Zähl mal mit!"},
+    "dreieck",
+    "refrain",
+    {"sprich": "Und jetzt? Wie viele Ecken hat das hier?"},
+    "viereck",
+    "refrain"
+  ],
+  "tschuess": "Kreis, Dreieck und Viereck. Jetzt kennst du die Formen! Hopp, hopp, tschüss!",
+  "beschreibung": "Hopsi Hase hüpft durchs Haus und sucht Formen: den runden Kreis, das Dreieck mit drei Ecken und das Viereck mit vier Ecken – mit Ball, Sonne, Partyhut, Pizza, Fenster und Geschenk. Die Ecken werden mitgezählt! Ein Formen-Lernlied zum Mitsingen für Kinder ab 2 Jahren.",
+  "tags": ["Kinderlied", "Formen lernen", "Kreis Dreieck Viereck", "Hase", "Lernlied", "Kinderlieder zum Mitsingen", "Kita", "Vorschule"]
+}

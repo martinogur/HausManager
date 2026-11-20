@@ -1,0 +1,44 @@
+{
+  "titel": "Bruno Bär putzt die Zähne – Das Zahnputzlied",
+  "kurztitel": "Bruno Bär putzt Zähne",
+  "figur": {"typ": "baer", "name": "Bruno"},
+  "melodie": "B",
+  "tempo": 106,
+  "tonart": "C",
+  "instrument": "marimba",
+  "begleitung": "gitarre",
+  "akzent": "#1e88e5",
+  "teile": {
+    "refrain": {"art": "refrain", "putzen": true, "bild": "zaehneputzen", "zeilen": [
+      {"text": "Schrubbe, schrubbe, hin und her,", "effekt": "schrubb"},
+      "Zähneputzen ist nicht schwer!",
+      {"text": "Oben, unten, rundherum,", "effekt": "schrubb"},
+      {"text": "alle Zähne, schrubb, schrubb, schrumm!", "effekt": "glitzer"}
+    ]},
+    "morgens": {"art": "strophe", "farbe": "#fb8c00", "wort": "MORGENS", "zeilen": [
+      {"text": "Morgens, wenn die Sonne lacht,", "bild": "sonne"},
+      {"text": "ist der Bruno aufgewacht.", "bild": "wecker", "effekt": "klingel"},
+      {"text": "Nimmt die Bürste in die Hand,", "bild": "zahnbuerste"},
+      {"text": "Zahnpasta drauf, ganz elegant!", "bild": "zahnpasta"}
+    ]},
+    "abends": {"art": "strophe", "nacht": true, "farbe": "#5e35b1", "wort": "ABENDS", "zeilen": [
+      {"text": "Abends, wenn der Mond erwacht,", "bild": "mond"},
+      {"text": "wird noch mal sauber gemacht.", "bild": "zaehneputzen", "effekt": "schrubb"},
+      {"text": "Dann ins Bett und Augen zu,", "bild": "bett", "effekt": "gaehn"},
+      {"text": "gute Nacht, und Ruh, Ruh, Ruh.", "bild": "sterne"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo! Ich bin Bruno, der Bär. Weißt du, was ich jeden Tag mache? Zähne putzen! Machst du mit?"},
+    "refrain",
+    {"sprich": "Guten Morgen! Die Sonne scheint. Ab ins Bad!"},
+    "morgens",
+    "refrain",
+    {"sprich": "Und am Abend? Da putzen wir noch einmal. Dann geht es ab ins Bett."},
+    "abends",
+    "refrain"
+  ],
+  "tschuess": "Juhu, meine Zähne glänzen! Tschüss und gute Nacht!",
+  "beschreibung": "Bruno Bär zeigt, wie Zähneputzen Spaß macht – morgens und abends, oben, unten, rundherum! Ein Zahnputzlied zum Mitsingen und Mitputzen für Kinder ab 2 Jahren.",
+  "tags": ["Kinderlied", "Zähneputzen", "Zahnputzlied", "Bär", "Kinderlieder zum Mitsingen", "Kleinkinder", "Kita", "Abendroutine"]
+}

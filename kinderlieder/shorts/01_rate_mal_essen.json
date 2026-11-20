@@ -1,0 +1,21 @@
+{
+  "titel": "Rate mal! Welches Essen ist das? 🍓 Ratespiel für Kinder",
+  "figur": {"typ": "biene"},
+  "banner": "RATE MAL!",
+  "akzent": "#e5398f",
+  "palette": 0,
+  "tempo": 118,
+  "tonart": "D",
+  "instrument": "glockenspiel",
+  "start": "Rate mal! Was ist das?",
+  "dinge": [
+    {"bild": "erdbeere", "wort": "ERDBEERE", "antwort": "Eine Erdbeere! Lecker!", "farbe": "#e53935"},
+    {"bild": "banane", "wort": "BANANE", "antwort": "Eine Banane!", "farbe": "#f9b800"},
+    {"bild": "pizza", "wort": "PIZZA", "antwort": "Pizza! Mmmh!", "farbe": "#fb8c00"},
+    {"bild": "traube", "wort": "TRAUBEN", "antwort": "Trauben!", "farbe": "#8e24aa"},
+    {"bild": "moehre", "wort": "MÖHRE", "antwort": "Eine Möhre! Knack!", "farbe": "#fb8c00"}
+  ],
+  "ende": "Wie viele hast du erraten?",
+  "beschreibung": "Rate mal mit Bella, der Biene! Welches Essen versteckt sich hinter dem Schatten? Zähl mit: 3, 2, 1 – und los! Ein Ratespiel für Kinder ab 2 Jahren.",
+  "tags": ["Ratespiel für Kinder", "Rate mal", "Kinder Quiz", "Obst lernen", "Kleinkinder", "Liederwiese"]
+}
