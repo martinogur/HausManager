@@ -85,3 +85,24 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 - Lizenzen: Der FluidR3-Soundfont (MIT) und die Schrift Quicksand (OFL) sind auch kommerziell frei. Die Lizenz der
   MBROLA-Stimme de7 (DFKI) verbietet nur den Verkauf der Stimmdatenbank selbst. Bevor der Kanal Geld verdient, solltest du
   trotzdem auf eine Stimme mit eindeutiger kommerzieller Lizenz umsteigen.
+
+## Shorts („Rate mal!“-Quiz, hochkant)
+
+```bash
+python3 generator/short.py --alle                          # alle Shorts in shorts/
+python3 generator/short.py shorts/01_rate_mal_essen.json
+```
+
+Ergebnis: `ausgabe/shorts/<name>/short.mp4` (1080×1920, 30 bis 45 Sekunden) und `youtube_text.txt`.
+
+**Ablauf pro Rätsel:** Schattenbild erscheint mit „?“ → Figur fragt → Countdown 3-2-1 (Ticken) → Auflösung mit
+Strahlen, Konfetti und Tusch → Figur sagt die Antwort. Danach kommt das nächste Rätsel. Das Ende („Wie viele hast du
+erraten?“) geht nahtlos in den Anfang über, damit das Short in Schleife läuft.
+
+**Warum das funktioniert:** Gleich im ersten Bild steht eine Frage (Aufhänger), Kinder raten aktiv mit, alle 6 bis 7
+Sekunden passiert etwas Neues, und das Video ist kurz und läuft gern mehrmals.
+
+Aufbau der Datei (`shorts/*.json`): `titel`, `figur`, `banner`, `akzent`, `palette` (0–4), `tempo`, `instrument`,
+`start` (erste Frage), `fragen` (weitere Fragen), `dinge` (Liste mit `bild`, `wort`, `antwort`, `farbe`), `ende`.
+Als `bild` gehen alle Bilder von oben sowie `figur:biene`, `figur:baer`, `figur:hase`, `figur:katze` und `figur:frosch`.
+Mit **4 bis 5 Rätseln** bleibt das Short unter 60 Sekunden.

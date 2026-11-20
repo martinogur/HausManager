@@ -1,0 +1,22 @@
+{
+  "titel": "Wer bin ich? Tiere raten mit Hopsi 🐰 Ratespiel für Kinder",
+  "figur": {"typ": "hase"},
+  "banner": "WER BIN ICH?",
+  "akzent": "#43a047",
+  "palette": 3,
+  "tempo": 116,
+  "tonart": "F",
+  "instrument": "xylophon",
+  "start": "Wer bin ich? Rate mal!",
+  "fragen": ["Und wer ist das?", "Wer ist das hier?", "Weißt du es?", "Und jetzt?"],
+  "dinge": [
+    {"bild": "figur:biene", "wort": "BIENE", "antwort": "Bella, die Biene! Summ, summ!", "farbe": "#f9b800"},
+    {"bild": "kueken", "wort": "KÜKEN", "antwort": "Ein Küken! Piep, piep!", "farbe": "#f9b800"},
+    {"bild": "fisch", "wort": "FISCH", "antwort": "Ein Fisch! Blubb, blubb!", "farbe": "#1e88e5"},
+    {"bild": "frosch", "wort": "FROSCH", "antwort": "Ein Frosch! Quak, quak!", "farbe": "#43a047"},
+    {"bild": "figur:baer", "wort": "BÄR", "antwort": "Bruno Bär! Hallo, Bruno!", "farbe": "#8d6e63"}
+  ],
+  "ende": "Wie viele Tiere hast du erraten?",
+  "beschreibung": "Wer versteckt sich da? Rate mit Hopsi Hase, welches Tier im Schatten steckt! 3, 2, 1 – und los! Ein Tier-Ratespiel für Kinder ab 2 Jahren.",
+  "tags": ["Ratespiel für Kinder", "Wer bin ich", "Tiere raten", "Tiere für Kinder", "Kinder Quiz", "Liederwiese"]
+}

@@ -683,6 +683,23 @@ def effekt_klang(typ):
             h = np.sin(np.pi * tt / 0.22) * (0.6 + 0.4 * (np.sin(2 * np.pi * 30 * tt) > 0))
             teile += [_ton(f, f * 0.8, 0.22, "rechteck", h) * 0.45, np.zeros(int(SR * 0.08))]
         x = np.concatenate(teile)
+    elif typ == "tick":
+        x = _ton(1500, 1200, 0.05) * 0.8
+    elif typ == "tada":
+        teile = np.zeros(int(SR * 1.0))
+        for k, f in enumerate([523, 659, 784, 1047]):
+            s = int(SR * 0.07 * k)
+            dl = 0.8 - 0.07 * k
+            ton = _ton(f, f, dl, "rechteck") * 0.25 + _ton(f * 2, f * 2, dl) * 0.2
+            teile[s:s + len(ton)] += ton
+        x = teile
+    elif typ == "wusch":
+        rng = np.random.default_rng(5)
+        n = int(SR * 0.35)
+        tt = np.arange(n) / SR
+        r = rng.standard_normal(n)
+        r = np.convolve(r, np.ones(4) / 4, "same")
+        x = r * np.sin(np.pi * tt / 0.35) * 0.35
     elif typ == "gaehn":
         x = _ton(520, 260, 0.8, "sinus", np.sin(np.pi * np.arange(int(SR * 0.8)) / (SR * 0.8))) * 0.5
     else:

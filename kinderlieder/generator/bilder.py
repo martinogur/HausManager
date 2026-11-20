@@ -649,8 +649,17 @@ ANIMIERT.update({"kreis", "dreieck", "viereck", "formen", "ball", "partyhut", "f
 FORMFARBE = {"kreis", "dreieck", "viereck"}
 
 
-def bild_sprite(typ, groesse, farbe=None, t=0.0):
-    """Rundes Bild mit Rahmen. farbe = Rahmenfarbe (und Blumenfarbe)."""
+def schatten(img, farbe=(70, 50, 110)):
+    """Schattenbild (Silhouette) für Rätsel: gleiche Form, eine Farbe."""
+    a = img.getchannel("A")
+    s = Image.new("RGBA", img.size, farbe + (255,))
+    s.putalpha(a)
+    return s
+
+
+def bild_sprite(typ, groesse, farbe=None, t=0.0, silhouette=False):
+    """Rundes Bild mit Rahmen. farbe = Rahmenfarbe (und Blumenfarbe).
+    silhouette=True: Inhalt als einfarbiges Schattenbild (für Rate-Spiele)."""
     f = rgb(farbe) if farbe else None
     z = Zeichner(groesse)
     rahmen = f or (255, 183, 77, 255)
@@ -659,6 +668,8 @@ def bild_sprite(typ, groesse, farbe=None, t=0.0):
     z.ell(50, 50, 47, 47, hg, outline=rahmen, breite=int(2.6 * z.u))
     if typ == "sonne":
         s = sonne_sprite(int(z.S * 0.25)).rotate(-t * 20, resample=Image.BICUBIC)
+        if silhouette:
+            s = schatten(s)
         z.img.alpha_composite(s, ((z.S - s.width) // 2, (z.S - s.height) // 2))
     elif typ in ZEICHNER:
         # Inhalt auf eigene Ebene zeichnen und auf den Kreis beschneiden
@@ -668,7 +679,7 @@ def bild_sprite(typ, groesse, farbe=None, t=0.0):
         ImageDraw.Draw(maske).ellipse([z.P(4.5, 4.5), z.P(95.5, 95.5)], fill=255)
         alpha = Image.composite(inhalt.img.getchannel("A"), Image.new("L", z.img.size, 0), maske)
         inhalt.img.putalpha(alpha)
-        z.img.alpha_composite(inhalt.img)
+        z.img.alpha_composite(schatten(inhalt.img) if silhouette else inhalt.img)
     return z.fertig()
 
 
