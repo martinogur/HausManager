@@ -517,6 +517,138 @@ ANIMIERT.update({"regenbogen", "blatt", "frosch"})
 HINTERGRUND.update({"regenbogen": (225, 242, 255, 255)})
 
 
+def _gesicht(z, cx, cy, gr=1.0, farbe=LINIE):
+    for sx in (-1, 1):
+        z.ell(cx + sx * 7 * gr, cy, 3.2 * gr, 3.8 * gr, WEISS, outline=None)
+        z.ell(cx + sx * 7 * gr, cy + 0.6 * gr, 2 * gr, 2.4 * gr, farbe, outline=None)
+        z.ell(cx + sx * 12 * gr, cy + 6 * gr, 3 * gr, 1.8 * gr, (255, 140, 160, 150), outline=None)
+    z.d.arc([z.P(cx - 5 * gr, cy + 3 * gr), z.P(cx + 5 * gr, cy + 9 * gr)], 20, 160, fill=farbe, width=z.lw + 1)
+
+
+def _form_farbe(f, standard):
+    return f if f else standard
+
+
+def _kreis(z, f, t):
+    farbe = _form_farbe(f, (229, 57, 53, 255))
+    s = 1 + 0.04 * math.sin(t * 4)
+    z.ell(50, 52, 32 * s, 32 * s, farbe, outline=mischen(farbe, (0, 0, 0, 255), 0.3))
+    _gesicht(z, 50, 48, 1.6)
+
+
+def _dreieck(z, f, t):
+    farbe = _form_farbe(f, (67, 160, 71, 255))
+    w = math.sin(t * 3) * 4
+    c, s_ = math.cos(math.radians(w)), math.sin(math.radians(w))
+    ecken = [(50, 18), (82, 78), (18, 78)]
+    pts = [(50 + (x - 50) * c - (y - 55) * s_, 55 + (x - 50) * s_ + (y - 55) * c) for x, y in ecken]
+    z.poly(pts, farbe, outline=mischen(farbe, (0, 0, 0, 255), 0.3))
+    for k, (x, y) in enumerate(pts):  # Ecken leuchten nacheinander auf
+        if int(t * 2) % 3 == k:
+            z.stern(x, y, 7, (255, 214, 64, 255))
+    _gesicht(z, 50, 58, 1.4)
+
+
+def _viereck(z, f, t):
+    farbe = _form_farbe(f, (30, 136, 229, 255))
+    w = math.sin(t * 3) * 4
+    c, s_ = math.cos(math.radians(w)), math.sin(math.radians(w))
+    ecken = [(20, 22), (80, 22), (80, 82), (20, 82)]
+    pts = [(50 + (x - 50) * c - (y - 52) * s_, 52 + (x - 50) * s_ + (y - 52) * c) for x, y in ecken]
+    z.poly(pts, farbe, outline=mischen(farbe, (0, 0, 0, 255), 0.3))
+    for k, (x, y) in enumerate(pts):
+        if int(t * 2) % 4 == k:
+            z.stern(x, y, 7, (255, 214, 64, 255))
+    _gesicht(z, 50, 48, 1.6)
+
+
+def _formen(z, f, t):
+    for k, (fn, x, y, gr) in enumerate([("k", 28, 40, 1), ("d", 70, 36, 1), ("v", 48, 72, 1)]):
+        hops = abs(math.sin(t * 4 + k * 1.2)) * 4
+        if fn == "k":
+            z.ell(x, y - hops, 16, 16, (229, 57, 53, 255), outline=(150, 30, 30, 255))
+        elif fn == "d":
+            z.poly([(x, y - 18 - hops), (x + 17, y + 13 - hops), (x - 17, y + 13 - hops)], (67, 160, 71, 255),
+                   outline=(40, 100, 40, 255))
+        else:
+            z.poly([(x - 15, y - 15 - hops), (x + 15, y - 15 - hops), (x + 15, y + 15 - hops),
+                    (x - 15, y + 15 - hops)], (30, 136, 229, 255), outline=(20, 80, 150, 255))
+        _gesicht(z, x, y - hops + (4 if fn == "d" else 0), 0.55)
+
+
+def _ball(z, f, t):
+    hops = abs(math.sin(t * 4)) * 14
+    z.ell(50, 88, 22 - hops * 0.5, 4, (0, 0, 0, 50), outline=None)
+    cy = 62 - hops
+    farben = [(229, 57, 53, 255), (253, 216, 53, 255), (30, 136, 229, 255), WEISS, (67, 160, 71, 255), WEISS]
+    for k, farbe in enumerate(farben):
+        a0 = k * 60 + t * 90
+        pts = [(50, cy)] + [(50 + 24 * math.cos(math.radians(a)), cy + 24 * math.sin(math.radians(a)))
+                            for a in range(int(a0), int(a0) + 61, 6)]
+        z.poly(pts, farbe, outline=None)
+    z.ell(50, cy, 24, 24, None)
+    z.ell(42, cy - 9, 5, 3, (255, 255, 255, 180), outline=None, winkel=-30)
+
+
+def _partyhut(z, f, t):
+    z.poly([(50, 12), (76, 84), (24, 84)], (171, 71, 188, 255))
+    for k, y in enumerate((34, 52, 70)):
+        b = (y - 12) / 72 * 26
+        z.poly([(50 - b, y), (50 + b, y), (50 + b + 2, y + 6), (50 - b - 2, y + 6)],
+               (253, 216, 53, 255) if k % 2 == 0 else (77, 208, 225, 255), outline=None)
+    z.poly([(50, 12), (76, 84), (24, 84)], None)
+    for k in range(5):
+        a = t * 4 + k * 1.3
+        z.ell(50 + math.cos(a) * 6, 10 + math.sin(a) * 3, 3, 3, [(229, 57, 53, 255), (253, 216, 53, 255),
+              (30, 136, 229, 255), (67, 160, 71, 255), (255, 112, 67, 255)][k], outline=None)
+    z.rrect(20, 82, 80, 88, 3, (255, 214, 64, 255))
+
+
+def _pizza(z, f, t):
+    z.poly([(50, 88), (14, 20), (86, 20)], (255, 213, 128, 255), outline=(200, 140, 60, 255))
+    z.poly([(50, 80), (20, 26), (80, 26)], (229, 75, 50, 255), outline=None)
+    z.rrect(12, 14, 88, 24, 5, (214, 150, 70, 255), outline=(170, 110, 50, 255))
+    for x, y in ((38, 36), (60, 34), (50, 52), (44, 64), (58, 50)):
+        z.ell(x, y, 5, 5, (180, 30, 40, 255), outline=(130, 20, 30, 255))
+    for x, y in ((30, 30), (68, 40), (52, 70)):
+        z.ell(x, y, 2.5, 4, (255, 245, 200, 255), outline=None)
+
+
+def _fenster(z, f, t):
+    z.rrect(16, 14, 84, 84, 3, (161, 110, 70, 255))
+    z.rrect(22, 20, 78, 78, 1, (144, 202, 249, 255), outline=(120, 80, 50, 255))
+    z.ell(62, 34, 7, 7, (255, 214, 64, 255), outline=None)
+    for cx in (34, 50):
+        x = cx + math.sin(t * 0.8) * 3
+        z.ell(x, 58, 9, 5, WEISS, outline=None)
+    z.rrect(48, 20, 52, 78, 0, (161, 110, 70, 255), outline=None)
+    z.rrect(22, 47, 78, 51, 0, (161, 110, 70, 255), outline=None)
+    w = math.sin(t * 1.5) * 2
+    z.poly([(16, 12), (32 + w, 12), (24 + w, 86), (14, 86)], (239, 83, 80, 255))
+    z.poly([(84, 12), (68 - w, 12), (76 - w, 86), (86, 86)], (239, 83, 80, 255))
+    z.rrect(10, 84, 90, 90, 2, (161, 110, 70, 255))
+
+
+def _geschenk(z, f, t):
+    w = math.sin(t * 5) * 2
+    z.rrect(18, 40, 82, 88, 3, (30, 136, 229, 255))
+    z.rrect(14, 30 + w * 0.3, 86, 42 + w * 0.3, 3, (66, 165, 245, 255))
+    z.rrect(45, 30, 55, 88, 0, (229, 57, 53, 255), outline=None)
+    z.rrect(18, 58, 82, 66, 0, (229, 57, 53, 255), outline=None)
+    for sx in (-1, 1):
+        z.ell(50 + sx * 10, 24 + w * 0.3, 10, 6, (229, 57, 53, 255), winkel=sx * 25)
+    z.ell(50, 27 + w * 0.3, 4, 4, (198, 40, 40, 255))
+    for k in range(3):
+        a = t * 3 + k * 2.1
+        z.stern(20 + k * 30, 14 + 3 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+ZEICHNER.update({"kreis": _kreis, "dreieck": _dreieck, "viereck": _viereck, "formen": _formen, "ball": _ball,
+                 "partyhut": _partyhut, "pizza": _pizza, "fenster": _fenster, "geschenk": _geschenk})
+ANIMIERT.update({"kreis", "dreieck", "viereck", "formen", "ball", "partyhut", "fenster", "geschenk"})
+FORMFARBE = {"kreis", "dreieck", "viereck"}
+
+
 def bild_sprite(typ, groesse, farbe=None, t=0.0):
     """Rundes Bild mit Rahmen. farbe = Rahmenfarbe (und Blumenfarbe)."""
     f = rgb(farbe) if farbe else None
@@ -531,7 +663,7 @@ def bild_sprite(typ, groesse, farbe=None, t=0.0):
     elif typ in ZEICHNER:
         # Inhalt auf eigene Ebene zeichnen und auf den Kreis beschneiden
         inhalt = Zeichner(groesse)
-        ZEICHNER[typ](inhalt, f if typ in ("blume", "fisch") else None, t)
+        ZEICHNER[typ](inhalt, f if typ in ("blume", "fisch") or typ in FORMFARBE else None, t)
         maske = Image.new("L", z.img.size, 0)
         ImageDraw.Draw(maske).ellipse([z.P(4.5, 4.5), z.P(95.5, 95.5)], fill=255)
         alpha = Image.composite(inhalt.img.getchannel("A"), Image.new("L", z.img.size, 0), maske)
@@ -562,7 +694,11 @@ def zahl_sprite(zahl, groesse, farbe, objekt="moehre"):
         pro = min(5, zahl)
         feld = (B * 2 - 10) / 5.3
         z = Zeichner(int(feld / 2))
-        _moehre(z, None, 0, x=55, y=50, s=1.2, winkel=-60)
+        if objekt == "punkt":
+            z.ell(50, 50, 40, 40, f, outline=mischen(f, (0, 0, 0, 255), 0.25))
+            z.ell(38, 38, 11, 11, (255, 255, 255, 150), outline=None)
+        else:
+            _moehre(z, None, 0, x=55, y=50, s=1.2, winkel=-60)
         m = z.fertig().resize((int(feld), int(feld)), Image.LANCZOS)
         for i in range(zahl):
             r, c = divmod(i, 5)

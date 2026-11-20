@@ -59,14 +59,16 @@ def anzeigen_planen(lied):
         gleich = naechste is not None and naechste["abschnitt"] == z["abschnitt"]
         ende = (naechste["start"] - 0.35) if gleich else z["ende"] + 0.9
         farbe = info.get("farbe", teil.get("farbe"))
-        if teil.get("zahlen"):
+        if teil.get("zahlen") or info.get("zahlen"):
+            objekt = info.get("zaehlobjekt", teil.get("zaehlobjekt", "moehre"))
             zahlen = [(ZAHLWOERTER[M.wort_sauber(w).lower()], a) for (w, a, e) in z["woerter"]
                       if a is not None and M.wort_sauber(w).lower() in ZAHLWOERTER]
             for k, (n, a) in enumerate(zahlen):
                 e2 = zahlen[k + 1][1] - 0.02 if k + 1 < len(zahlen) else ende
-                res.append({"start": a - 0.08, "ende": e2, "typ": "zahl", "wert": n,
+                res.append({"start": a - 0.08, "ende": e2, "typ": "zahl", "wert": n, "objekt": objekt,
                             "farbe": farbe or "#43a047", "wort": None, "landen": False})
-            continue
+            if zahlen:
+                continue
         bild = info.get("bild", teil.get("bild"))
         if not bild:
             continue
@@ -219,9 +221,10 @@ class Szene:
 
     def bild_fuer(self, a, t):
         if a["typ"] == "zahl":
-            key = ("zahl", a["wert"], a["farbe"])
+            key = ("zahl", a["wert"], a["farbe"], a.get("objekt"))
             if key not in self.statisch:
-                self.statisch[key] = BI.zahl_sprite(a["wert"], int(self.H * 0.42), a["farbe"])
+                self.statisch[key] = BI.zahl_sprite(a["wert"], int(self.H * 0.42), a["farbe"],
+                                                    a.get("objekt", "moehre"))
             return self.statisch[key]
         typ = a["wert"]
         if typ in BI.ANIMIERT or typ == "sonne":
@@ -477,7 +480,7 @@ def vorschaubild(szene, pfad, cfg):
             continue
         gezeigt.append(key)
         if a["typ"] == "zahl":
-            sp = BI.zahl_sprite(a["wert"], int(H * 0.22), a["farbe"])
+            sp = BI.zahl_sprite(a["wert"], int(H * 0.22), a["farbe"], a.get("objekt", "moehre"))
         else:
             sp = BI.bild_sprite(a["wert"], int(H * 0.25), a["farbe"], 1.0)
         bg.paste(sp, (int(x), int(H * 0.72)), sp)

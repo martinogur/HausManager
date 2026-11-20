@@ -38,7 +38,7 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 {
   "titel": "…", "kurztitel": "…",
   "figur": {"typ": "biene|baer|hase|katze|frosch", "name": "…", "farbe": "#…" /* optional */},
-  "melodie": "A|B|C|D|E",      // A = singend, B = Fanfare, C = hüpfend, D = wiegend, E = Bogen
+  "melodie": "A|B|C|D|E|F",    // A = singend, B = Fanfare, C = hüpfend, D = wiegend, E = Bogen, F = verspielt
   "tempo": 100, "tonart": "C|D|F|G…",
   "instrument": "glockenspiel|marimba|xylophon|musikbox|celesta|klavier|floete",
   "begleitung": "klavier|gitarre",
@@ -58,9 +58,9 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 
 - **Zeilen:** 7 Silben sind ideal (Melodie-Grundmaß), 5 bis 9 gehen auch (höchstens 15). Paarreime.
 - **Bilder** (`bild`): `blume`, `erdbeere`, `feuerwehr`, `sonne`, `banane`, `kueken`, `himmel`, `meer`, `fisch`,
-  `wecker`, `zahnbuerste`, `zahnpasta`, `zaehneputzen` (animiert), `mond`, `bett`, `sterne`, `moehre`, `haende`, `wasserhahn`, `seife`, `handtuch`, `regenbogen`, `blatt`, `frosch`, `traube`, `pflaume`
+  `wecker`, `zahnbuerste`, `zahnpasta`, `zaehneputzen` (animiert), `mond`, `bett`, `sterne`, `moehre`, `haende`, `wasserhahn`, `seife`, `handtuch`, `regenbogen`, `blatt`, `frosch`, `traube`, `pflaume`, `kreis`, `dreieck`, `viereck`, `formen`, `ball`, `partyhut`, `pizza`, `fenster`, `geschenk`
 - **Teil-Optionen:**
-  - `"zahlen": true`: Jedes gesungene Zahlwort (eins … zwölf, null) erscheint groß mit genau so vielen Möhren.
+  - `"zahlen": true` (für einen Teil oder eine einzelne Zeile): Jedes gesungene Zahlwort (eins … zwölf, null) erscheint groß mit genau so vielen Möhren. Mit `"zaehlobjekt": "punkt"` werden stattdessen Punkte gezeigt.
   - `"nacht": true`: Nachthimmel mit Mond und Sternen.
   - `"putzen": true`: Die Figur putzt sich mit einer Zahnbürste die Zähne.
   - `"seifenblasen": true`: Seifenblasen steigen im ganzen Bild auf.

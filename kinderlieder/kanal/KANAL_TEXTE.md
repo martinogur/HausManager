@@ -75,7 +75,7 @@ Playlist-Beschreibung, z. B. für „Farben lernen“:
 | 2 | Bruno Bär putzt die Zähne ✅ | Routinen |
 | 3 | Bruno Bär wäscht die Hände ✅ | Routinen |
 | 4 | Bella und der Regenbogen ✅ | Farben |
-| 5 | Hopsi und die Formen (Kreis, Dreieck, Viereck) | Zählen |
+| 5 | Hopsi und die Formen ✅ | Zählen |
 | 6 | Schlaf gut, Bruno – Gute-Nacht-Lied | Gute Nacht |
 | 7 | Die Tiere auf der Liederwiese (Tierstimmen) | – |
 | 8 | Zusammenschnitt „15 Minuten Liederwiese“ | Alle |
