@@ -24,6 +24,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bilder as BI  # noqa: E402
+import youtube_meta as YM  # noqa: E402
 import grafik as G   # noqa: E402
 import musik as M    # noqa: E402
 
@@ -564,6 +565,7 @@ def erstellen(song_pfad, vorschau=False, nur_audio=False):
         szene = Szene(lied, cfg, kanal, anzeigen, W, H, fps)
         vorschaubild(szene, ziel / "vorschaubild.png", cfg)
         youtube_text(cfg, kanal_cfg, lied, ziel / "youtube_text.txt")
+        YM.schreiben(YM.lied_meta(cfg, kanal_cfg, lied.dauer), ziel)
         print(f"  • Animation ({n} Bilder, {W}x{H}) …")
         ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
                                "-s", f"{W}x{H}", "-r", str(fps), "-i", "-", "-i", str(tmp / "mix.wav"),

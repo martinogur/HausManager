@@ -1,0 +1,109 @@
+# Liederwiese: neue Lieder/Shorts automatisch rendern und zu YouTube hochladen.
+# Startet, sobald eine neue Datei in kinderlieder/songs/ oder kinderlieder/shorts/ gepusht wird,
+# oder von Hand (Actions → "Liederwiese YouTube" → Run workflow).
+name: Liederwiese YouTube
+
+on:
+  push:
+    paths:
+      - "kinderlieder/songs/*.json"
+      - "kinderlieder/shorts/*.json"
+  workflow_dispatch:
+    inputs:
+      dateien:
+        description: "Lied-/Short-Dateien (mit Leerzeichen getrennt), z. B. kinderlieder/songs/07_xyz.json"
+        required: true
+      hochladen:
+        description: "Zu YouTube hochladen?"
+        type: boolean
+        default: true
+
+concurrency:
+  group: liederwiese-youtube
+  cancel-in-progress: false
+
+jobs:
+  video:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Neue Dateien finden
+        id: neu
+        env:
+          VORHER: ${{ github.event.before }}
+          EINGABE: ${{ github.event.inputs.dateien }}
+        run: |
+          if [ -n "$EINGABE" ]; then
+            DATEIEN="$EINGABE"
+          else
+            if [ -z "$VORHER" ] || [ "$VORHER" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$VORHER" 2>/dev/null; then
+              VORHER="HEAD~1"
+            fi
+            DATEIEN=$(git diff --name-only --diff-filter=A "$VORHER" HEAD -- \
+              'kinderlieder/songs/[0-9]*.json' 'kinderlieder/shorts/[0-9]*.json' | tr '\n' ' ')
+          fi
+          echo "dateien=$DATEIEN" >> "$GITHUB_OUTPUT"
+          echo "Neue Dateien: ${DATEIEN:-keine}"
+
+      - name: Programme installieren
+        if: steps.neu.outputs.dateien != ''
+        run: |
+          sudo add-apt-repository -y multiverse
+          sudo apt-get update -q
+          sudo apt-get install -y -q ffmpeg fluidsynth fluid-soundfont-gm espeak-ng mbrola mbrola-de7
+          pip install mido numpy pillow google-api-python-client google-auth
+
+      - name: Videos erstellen
+        if: steps.neu.outputs.dateien != ''
+        working-directory: kinderlieder
+        env:
+          DATEIEN: ${{ steps.neu.outputs.dateien }}
+        run: |
+          ORDNER=""
+          for f in $DATEIEN; do
+            rel="${f#kinderlieder/}"
+            name=$(basename "$rel" .json)
+            case "$rel" in
+              shorts/*) python3 generator/short.py "$rel"; ORDNER="$ORDNER ausgabe/shorts/$name" ;;
+              *)        python3 generator/erstellen.py "$rel"; ORDNER="$ORDNER ausgabe/$name" ;;
+            esac
+          done
+          echo "ORDNER=$ORDNER" >> "$GITHUB_ENV"
+
+      - name: Videos zum Herunterladen ablegen
+        if: steps.neu.outputs.dateien != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: liederwiese-videos
+          path: |
+            kinderlieder/ausgabe/**/*.mp4
+            kinderlieder/ausgabe/**/*.mp3
+            kinderlieder/ausgabe/**/*.png
+            kinderlieder/ausgabe/**/beschreibung.txt
+          retention-days: 30
+
+      - name: Zu YouTube hochladen
+        if: steps.neu.outputs.dateien != '' && (github.event_name == 'push' || github.event.inputs.hochladen == 'true')
+        working-directory: kinderlieder
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_SICHTBARKEIT: ${{ vars.YT_SICHTBARKEIT || 'private' }}
+          YT_PLAYLIST_LIEDER: ${{ vars.YT_PLAYLIST_LIEDER }}
+          YT_PLAYLIST_SHORTS: ${{ vars.YT_PLAYLIST_SHORTS }}
+        run: |
+          if [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "::warning::YouTube-Zugang fehlt noch (Secrets YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN). Videos liegen als Download unter 'Artifacts'."
+            exit 0
+          fi
+          python3 generator/youtube_upload.py $ORDNER
+          for o in $ORDNER; do
+            [ -f "$o/youtube.json" ] && echo "### $(jq -r .url "$o/youtube.json") ($(jq -r .titel "$o/meta.json"))" >> "$GITHUB_STEP_SUMMARY"
+          done

@@ -26,6 +26,7 @@ import bilder as BI      # noqa: E402
 import erstellen as E    # noqa: E402
 import grafik as G       # noqa: E402
 import musik as M        # noqa: E402
+import youtube_meta as YM  # noqa: E402
 
 BASIS = Path(__file__).resolve().parent.parent
 W, H, FPS = 1080, 1920, 30
@@ -351,6 +352,7 @@ def erstellen(pfad):
         f"TAGS\n{', '.join(tags)}\n\nEINSTELLUNGEN\n- Zielgruppe: Ja, speziell für Kinder\n"
         f"- Länge: {plan['dauer']:.0f} Sekunden (Short)\n"
         "- Als Short hochladen: einfach das hochkant-Video in der YouTube-App hochladen\n")
+    YM.schreiben(YM.short_meta(cfg, kanal_cfg, plan["dauer"]), ziel)
     print(f"  ✔ {plan['dauer']:.0f}s, fertig in {time.time() - t0:.0f}s → {ziel}")
 
 
