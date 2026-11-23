@@ -18,6 +18,10 @@ Pro Lied entstehen in `ausgabe/<lied>/`:
 - `youtube_text.txt`: Titel, Beschreibung mit Liedtext, Tags und die richtigen Upload-Einstellungen
 - `lied.mp3`: nur das Lied
 
+## Automatik
+
+Jeden Morgen ein neues Lied + Short und automatischer YouTube-Upload: siehe **[AUTOMATIK.md](AUTOMATIK.md)** (Themenliste in [IDEEN.md](IDEEN.md)).
+
 ## Benutzung
 
 ```bash
