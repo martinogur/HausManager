@@ -57,3 +57,12 @@ klar ist, dass sie geprüft wurden.
 - Referenzen vergleichbarer Objekte: [OFFEN] (nur echte!)
 - Unbedenklichkeitsbescheinigungen (Finanzamt, Krankenkasse, Berufsgenossenschaft): [OFFEN]
 - Tariftreue-/Mindestlohnerklärung nach TVgG NRW: wird bei NRW-Aufträgen gefordert
+
+## Nachtrag 24.11.2026 (lead-finder, E-Mail-Lauf)
+Neu geprüft (TED, service.bund.de, Vergabemarktplatz NRW, Gemeinde Herzebrock-Clarholz). **Weiterhin keine passende offene Ausschreibung im Umkreis.**
+
+| Frist (Abgabe) | Auftraggeber | Leistung | Ort | Eignung | Quelle |
+|---|---|---|---|---|---|
+| 16.12.2026, 23:59 Uhr | Handwerkskammer OWL zu Bielefeld | „Außenanlagen“ Campus Handwerk: Neubau-Landschaftsbau (Erd-, Kanal-, Pflasterarbeiten) | Bielefeld | **nein**, Bauleistung, keine Pflege | TED 799846-2026, vergabe-westfalen.de/VMPSatellite/notice/CXPWYY3LKS9 |
+| 18.12.2026, 12:00 Uhr | Universität Paderborn | Grün- und Außenanlagenpflege, 48 Monate | Paderborn | **nein**, außerhalb des Umkreises, EU-Verfahren | TED 803377-2026, evergabe.nrw.de/VMPSatellite/notice/CXS0YYPDY5J1PJNP |
+| 07.01.2027 | Stadt Bielefeld (für Studieninstitut Westfalen-Lippe) | Unterhalts- und Ergänzungsreinigung, 2 Objekte | Münster | **nein**, Leistungsort Münster | service.bund.de, vergabe-westfalen.de/VMPSatellite/notice/CXX0YYDDYH0L9RLU |

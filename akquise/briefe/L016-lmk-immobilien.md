@@ -6,7 +6,7 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Bestandshalter mit wachsendem Bestand |
 | grund (Leadliste) | Kauft laut Webseite gezielt Mehrfamilienhäuser und Wohnungspakete ab 4 Einheiten |
-| vor Versand prüfen | PLZ, Ansprechpartner (unbekannt), Preise netto/brutto |
+| vor Versand prüfen | PLZ, Ansprechpartner (unbekannt) |
 
 ---
 
@@ -32,7 +32,7 @@ Hausmeister Helden aus Gütersloh übernimmt das für Sie:
 - **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. So haben Sie gerade bei neu gekauften Häusern schnell einen Überblick, wo etwas zu tun ist.
 - **Treppenhausreinigung, Winterdienst, Mülltonnen-Service, Gartenarbeit und Kleinreparaturen** aus einer Hand, für jedes neue Objekt nach demselben Muster.
 - **Ein fester Ansprechpartner:** ich als Inhaber. Reaktion innerhalb von 24 Stunden, per Telefon und WhatsApp.
-- **Planbare Kosten:** zum Beispiel Treppenhausreinigung ab 8 € pro Einheit und Woche, Mülltonnen-Service 5 € pro Einheit und Monat laut Webseite [OFFEN: netto/brutto].
+- **Planbare Kosten:** ein fester Monatspreis pro Objekt, berechnet nach Aufwand statt nach Wohnungszahl. Zum Beispiel kostet ein Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, der Mülltonnen-Service für ein typisches Mehrfamilienhaus meist 70–100 € netto im Monat.
 
 **Mein Vorschlag:** Ich sehe mir eines Ihrer Häuser kostenlos an und schicke Ihnen ein unverbindliches Angebot. Bei künftigen Zukäufen rufen Sie einfach an.
 

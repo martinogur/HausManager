@@ -19,24 +19,26 @@ saubere Treppenhäuser bedeuten weniger Beschwerden von Mietern und weniger Arbe
 Unser Angebot:
 
 ### 1. Objekt
-{{WE}} Einheiten · {{Anzahl}} Treppenhäuser · {{Etagen}} Etagen · Bodenbelag {{Stein/Fliese/PVC/Holz}} ·
+{{Anzahl}} Treppenhäuser · {{Etagen}} Etagen je Treppenhaus · Bodenbelag {{Stein/Fliese/PVC/Holz}} ·
 Aufzug {{ja/nein}} · Keller {{ja/nein}}
 
 ### 2. Preis
 | Pos. | Leistung | Intervall | Satz netto | Monat netto |
 |---|---|---|---|---|
-| 1 | Unterhaltsreinigung lt. Leistungsverzeichnis | ☐ wöchentlich ☐ 14-täglich | ab 8,00 € / Einheit / Einsatz | {{WE × 8 × Einsätze/Monat}} € |
-| 2 | Treuerabatt 10 % (nur bei wöchentlicher Reinigung) | | –10 % | {{–€}} |
-| 3 | Zuschlag weiteres Treppenhaus / Aufzug | | [OFFEN] | {{€}} |
-| 4 | Keller- und Dachbodengänge (optional) | ☐ monatlich ☐ quartalsweise | [OFFEN] | {{€}} |
+| 1 | Unterhaltsreinigung lt. Leistungsverzeichnis, Grundpreis | ☐ wöchentlich ☐ 14-täglich | 12,00 € je Treppenhaus und Reinigung | {{Treppenhäuser × 12 € × Reinigungen/Monat}} € |
+| 2 | … je Etage | | 8,00 € je Etage und Reinigung | {{Etagen gesamt × 8 € × Reinigungen/Monat}} € |
+| 3 | … Aufzugkabine | | 4,45 € je Aufzug und Reinigung | {{€}} |
+| 4 | Zuschlag 14-tägliche Reinigung (mehr Schmutz je Einsatz) | nur bei 14-täglich | + 15 % auf Pos. 1–3 | {{€}} |
+| 5 | Keller- und Dachbodengänge (optional) | ☐ monatlich ☐ quartalsweise | [OFFEN] | {{€}} |
 | | **Monatspreis netto** | | | **{{€}}** |
-| | zzgl. USt. {{19 %}} [OFFEN: Kleinunternehmer?] | | | {{€}} |
+| | zzgl. 19 % USt. | | | {{€}} |
 | | **Monatspreis brutto** | | | **{{€}}** |
 
-Berechnung: Wöchentlich bedeutet 52 Einsätze im Jahr, also im Schnitt 4,33 Einsätze pro Monat.
-14-täglich bedeutet 26 Einsätze im Jahr, im Schnitt 2,17 pro Monat.
-[OFFEN: Rechnet der Webseiten-Preisrechner mit 4 oder mit 4,33 Einsätzen pro Monat? Wir sollten
-einheitlich rechnen.]
+Berechnung: Wöchentlich bedeutet 52 Reinigungen im Jahr, also im Schnitt 4,33 pro Monat.
+14-täglich bedeutet 26 Reinigungen im Jahr, im Schnitt 2,17 pro Monat.
+Beispiel: 1 Treppenhaus mit 3 Etagen, wöchentlich: (12 € + 3 × 8 €) × 4,33 ≈ 156 € netto im Monat.
+Alle Preise netto zzgl. 19 % MwSt. (Preisliste vom 24.11.2026). Abgerechnet wird nach Treppenhaus und Etage,
+nicht pro Wohneinheit. [OFFEN: Kleinunternehmerregelung § 19 UStG mit Steuerberater klären.]
 
 Optional: Grundreinigung mit Einpflege der Böden einmalig für {{€}} netto [OFFEN: Satz] und
 Glasreinigung (Treppenhausfenster, Haustür) {{quartalsweise}} für {{€}} netto [OFFEN].
@@ -48,8 +50,8 @@ Glasreinigung (Treppenhausfenster, Haustür) {{quartalsweise}} für {{€}} nett
 - **Zahlungsziel:** {{14}} Tage netto [OFFEN] · **Abrechnung:** monatlich
 - **Feiertage:** Fällt ein Termin auf einen Feiertag, reinigen wir am nächsten Werktag.
 - **Wasser / Strom** stellt der Auftraggeber. Reinigungsmittel und Geräte bringen wir mit.
-- **Nachweis:** Reinigungsplan im Treppenhaus, abgezeichnet nach jedem Einsatz. Gebäudekontrolle mit
-  Protokoll ist inklusive.
+- **Nachweis:** Reinigungsplan im Treppenhaus, abgezeichnet nach jedem Einsatz. Sichtkontrolle mit
+  Mängelmeldung ist inklusive.
 
 Mit freundlichen Grüßen
 Martin Ogur, Hausmeister Helden

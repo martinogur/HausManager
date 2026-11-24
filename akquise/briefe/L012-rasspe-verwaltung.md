@@ -32,7 +32,7 @@ Hausmeister Helden aus Gütersloh ist auch in Steinhagen im Einsatz. Mein Vorsch
 - **Treppenhausreinigung, Winterdienst, Gartenarbeit, Mülltonnen-Service und Kleinreparaturen** aus einer Hand.
 - **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Wir melden Mängel, bevor Mieter anrufen.
 - **Ein fester Ansprechpartner:** ich als Inhaber. Reaktion innerhalb von 24 Stunden, per Telefon und WhatsApp.
-- **Treuerabatt:** 10 % bei wöchentlicher Reinigung (4× im Monat).
+- **Feste Preise nach Aufwand:** zum Beispiel Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, Winterdienst ab 220 € je Saison + 9,50 € je Meter, inklusive Einsatzprotokoll.
 
 **Mein Angebot:** Ich sehe mir Ihre Objekte in Steinhagen kostenlos an und schicke Ihnen danach ein unverbindliches Angebot für die ganze Tour.
 

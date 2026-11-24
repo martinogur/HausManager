@@ -27,7 +27,7 @@
 
 ## Leistungen (laut Webseite)
 - Treppenhausreinigung (Treppenhäuser, Flure, Gemeinschaftsbereiche)
-- Winterdienst (Räumen, Eis, Streuen; Saison Okt–März)
+- Winterdienst (Räumen, Eis, Streuen; Saison Nov–März, mit Einsatzprotokoll)
 - Gartenarbeit (Rasen, Hecken, Laub)
 - Kleinreparaturen (Türen, Beleuchtung, kleine Defekte)
 - Mülltonnen-Service (Bereitstellen, Zurückstellen, Müllplätze sauber halten)

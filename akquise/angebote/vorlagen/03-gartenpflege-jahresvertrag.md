@@ -28,19 +28,23 @@ Gern übernehmen wir die Pflege für das ganze Jahr.
 | Bäume (nur bis {{3}} m Arbeitshöhe) | {{Anzahl}} | |
 
 ### 2. Preis
-| Pos. | Leistung | Menge | Satz netto | Monat netto |
+| Pos. | Leistung | Menge pro Jahr | Satz netto | Jahr netto |
 |---|---|---|---|---|
-| 1 | Gartenpflege laut Leistungsverzeichnis | {{WE}} Einheiten | 30,00 € / Einheit / Monat | {{€}} |
-| 2 | Zuschlag große Grünfläche | {{m²}} | [OFFEN: Satz je m² oder Staffel] | {{€}} |
-| 3 | Grünschnitt-Entsorgung | {{pauschal}} | [OFFEN: inklusive oder nach Aufwand?] | {{€}} |
-| | **Monatspreis netto** | | | **{{€}}** |
-| | zzgl. USt. {{19 %}} [OFFEN: Kleinunternehmer?] | | | {{€}} |
+| 1 | Gartengänge (Rüstzeit, Geräte, Schnittgut laden) | {{z. B. 21}} Einsätze | 13,50 € je Einsatz | {{€}} |
+| 2 | Rasen mähen inkl. Kanten und Schnittgut | {{m²}} × {{z. B. 18}} Mahden | 0,14 € je m² und Mahd | {{€}} |
+| 3 | Beete / Pflaster: Unkraut, Pflegeschnitt | {{m²}} × {{z. B. 7}} Gänge | 0,45 € je m² und Gang | {{€}} |
+| 4 | Heckenschnitt bis 2,5 m | {{lfd. m}} × {{2}} Schnitte | 1,78 € je lfd. Meter und Schnitt | {{€}} |
+| 5 | Laub entfernen | {{m²}} × {{z. B. 3}} Einsätze | 0,05 € je m² und Einsatz | {{€}} |
+| 6 | Grünschnitt-Entsorgung | {{m²}} Grünfläche | 0,11 € je m² und Jahr | {{€}} |
+| | **Jahrespreis netto** | | | **{{€}}** |
+| | **Monatspreis netto (Jahrespreis / 12, ganzjährig gleiche Raten)** | | | **{{€}}** |
+| | zzgl. 19 % USt. | | | {{€}} |
 | | **Monatspreis brutto** | | | **{{€}}** |
-| | **Jahrespreis netto ({{12}} Monate)** | | | **{{€}}** |
 
-[OFFEN: Wird der Satz von 30 € / Einheit / Monat ganzjährig berechnet (12 Raten, gleichmäßig) oder nur
-in der Saison März bis November? Und bezieht sich „Einheit“ auf Wohneinheiten? Bei großen Anlagen
-ergibt das hohe Beträge, z. B. 12 WE = 360 € netto pro Monat.]
+Richtwert: meist 0,30–0,40 € netto je m² Grünfläche und Monat. Arbeiten außerhalb des Pflegekalenders
+nach Aufwand: 53,50 € netto je Stunde (je angefangene 15 Minuten 13,50 €).
+Alle Preise netto zzgl. 19 % MwSt. (Preisliste vom 24.11.2026). Abgerechnet wird nach Fläche, nicht pro
+Wohneinheit. [OFFEN: Kleinunternehmerregelung § 19 UStG mit Steuerberater klären.]
 
 ### 3. Pflegekalender (Richtwerte, wetterabhängig)
 | Monat | Leistung |
@@ -52,7 +56,7 @@ ergibt das hohe Beträge, z. B. 12 WE = 360 € netto pro Monat.]
 | Oktober–November | Laub entfernen ({{2–4}} Einsätze), Beete winterfest |
 | Dezember–Februar | Kontrollgänge, Pflegeschnitt Gehölze bei Bedarf (Radikalschnitt nur Okt–Feb erlaubt) |
 
-Gebäudekontrolle mit Protokoll ist bei jedem Einsatz inklusive.
+Eine Sichtkontrolle (Licht, Türen, Müllplatz) mit Mängelmeldung ist bei jedem Einsatz inklusive.
 
 ### 4. Vertragsbedingungen
 - **Angebot gültig bis:** {{Datum}} [OFFEN: Vorschlag 30 Tage]
