@@ -14,6 +14,10 @@ Kein Filmen nötig: Inhalt kommt aus einer JSON-Datei, z. B. marketing/instagram
     {"id": "02-mythen-reel", "format": "reel", "sekunden_pro_folie": 3, "folien": [...]}  # reel = 1080x1920 + MP4
   ]
 }
+Zusätzlich für Werbeanzeigen (marketing/instagram/werbung/anzeigen.json):
+  {"art": "anzeige", "kicker": "…", "titel": "…", "text": "…", "punkte": ["…"], "button": "…"}  # Einzelbild mit Button
+  Jede Folie optional "schrift": 110  -> Titelgröße in px erzwingen, falls ein langes Wort übersteht
+  Post-Option "story_rand": true  -> größerer Rand oben/unten (Story-/Reel-Bedienelemente verdecken nichts)
 Aufruf: python3 marketing/instagram/grafik.py marketing/instagram/2026-KW48.json
 Ergebnis: marketing/instagram/grafiken/<KW>/<post-id>/folie-01.png … (+ reel.mp4)
 """
@@ -77,13 +81,14 @@ def titel_html(t):
     return "".join(f"<em>{p}</em>" if i % 2 else p for i, p in enumerate(parts))
 
 
-def folie_html(f, i, n, reel):
+def folie_html(f, i, n, reel, story_rand=False):
     art = f.get("art", "punkt")
     w, h = (1080, 1920) if reel else (1080, 1350)
     lang = len(f.get("titel", ""))
     fs1 = 150 if lang < 18 else 124 if lang < 30 else 100
     if reel:
         fs1 += 20
+    fs1 = int(f.get("schrift", fs1))  # optional: Titelgröße in px erzwingen (bei langen Wörtern)
     css = (CSS.replace("FONTS", FONTS.as_uri()).replace("WPX", f"{w}px").replace("HPX", f"{h}px")
            .replace("FS1", str(fs1)).replace("FS2", "96"))
     if art == "titel":
@@ -97,6 +102,11 @@ def folie_html(f, i, n, reel):
     elif art == "mythos":
         body = (f'<div class="kicker">Mythos</div><h2 style="color:#8a948c;text-decoration:line-through;text-decoration-color:#7ccc13;text-decoration-thickness:8px">{esc(f.get("mythos"))}</h2>'
                 f'<div class="card"><div class="kicker" style="color:#3d6f08">Fakt</div><p style="font-size:40px;color:#111412">{esc(f.get("fakt"))}</p></div>')
+    elif art == "anzeige":
+        body = (f'<div class="kicker">{esc(f.get("kicker"))}</div><h1>{titel_html(f.get("titel"))}</h1>'
+                + (f'<p>{esc(f.get("text"))}</p>' if f.get("text") else "")
+                + ('<ul>' + "".join(f"<li>{esc(p)}</li>" for p in f.get("punkte", [])) + "</ul>" if f.get("punkte") else "")
+                + f'<div class="btn">{esc(f.get("button") or "WhatsApp " + TEL)}</div>')
     elif art == "cta":
         body = (f'<div class="card"><h2>{titel_html(f.get("titel"))}</h2>'
                 + (f'<p>{esc(f.get("text"))}</p>' if f.get("text") else "")
@@ -105,9 +115,12 @@ def folie_html(f, i, n, reel):
     else:
         raise ValueError(f"Unbekannte Folienart: {art}")
     swipe = '<span class="swipe">Wischen →</span>' if (not reel and i < n) else f"<span>{WEB}</span>"
+    count = f'<span class="count">{i}/{n}</span>' if n > 1 else ""
+    if story_rand:
+        css += ".wrap{padding:250px 88px 330px}"
     return f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><style>{css}</style></head><body>
 <div class="bg"></div><div class="grid"></div><div class="wrap">
-<div class="top">{HOUSE}<div>HAUSMEISTER<small>HELDEN</small></div><span class="count">{i}/{n}</span></div>
+<div class="top">{HOUSE}<div>HAUSMEISTER<small>HELDEN</small></div>{count}</div>
 <div class="main">{body}</div>
 <div class="foot"><span><b>{TEL}</b> · WhatsApp</span>{swipe}</div>
 </div></body></html>"""
@@ -136,12 +149,12 @@ def main(pfad):
         jobs = []
         for i, f in enumerate(folien, 1):
             h = ziel / f"_folie-{i:02d}.html"
-            h.write_text(folie_html(f, i, len(folien), reel), encoding="utf-8")
+            h.write_text(folie_html(f, i, len(folien), reel, post.get("story_rand", False)), encoding="utf-8")
             jobs.append([str(h), str(ziel / f"folie-{i:02d}.png"), 1080, 1920 if reel else 1350])
         render(jobs)
         for h in ziel.glob("_folie-*.html"):
             h.unlink()
-        if reel:
+        if reel and len(folien) > 1:  # Einzelbild (z. B. Story-Anzeige) braucht kein Video
             sek = float(post.get("sekunden_pro_folie", 3))
             liste = ziel / "_liste.txt"
             pngs = sorted(ziel.glob("folie-*.png"))
@@ -149,7 +162,7 @@ def main(pfad):
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(liste),
                             "-vf", "fps=30,format=yuv420p", "-c:v", "libx264", "-movflags", "+faststart", str(ziel / "reel.mp4")], check=True)
             liste.unlink()
-        print(f"{post['id']}: {len(folien)} Folien" + (" + reel.mp4" if reel else ""))
+        print(f"{post['id']}: {len(folien)} Folien" + (" + reel.mp4" if reel and len(folien) > 1 else ""))
 
 
 if __name__ == "__main__":

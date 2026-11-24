@@ -1,4 +1,4 @@
-# Instagram-Profil – Hausmeister Helden (Version 2, Stand 24.11.2026)
+# Instagram-Profil – Hausmeister Helden (Version 3, Stand 24.11.2026 – mit 15-Minuten-Checkliste)
 
 > Entwurf. Nichts davon ist live. Der Inhaber richtet das Profil selbst ein bzw. gibt es frei.
 > Grundlage: `firma/profil.md`. Fehlende Daten sind als `[OFFEN: …]` markiert.
@@ -97,7 +97,43 @@ Sobald es echte Aufträge gibt: Objektfotos (ohne Personen, Hausnummern, Kennzei
 - [ ] Erste 6 Beiträge posten, bevor aktiv kommentiert wird (Profil soll nicht leer wirken)
 - [ ] Highlights anlegen, sobald je 1 Story vorhanden ist
 
-## 7. Regeln
+## 7. In 15 Minuten einrichten (einmal komplett fertig machen)
+> Am Handy in der Instagram-App. Menünamen können je nach App-Version leicht abweichen.
+
+**Vorher bereitlegen:** Logo als Bild `[OFFEN: Logo-Datei]`, die 5 Highlight-Cover und die ersten 3 Posts aus
+`marketing/instagram/grafiken/2026-KW48/` aufs Handy laden.
+
+1. **Business-Konto (2 Min.):** Profil → ☰ → „Kontotyp und Tools“ → „Zu professionellem Konto wechseln“ → **Unternehmen**.
+2. **Kategorie (1 Min.):** „Hausmeisterdienst“ wählen, sonst „Gebäudedienstleister“ o. ä. → im Profil anzeigen: **an**.
+3. **Mit Facebook-Seite verbinden (2 Min.):** Profil bearbeiten → „Seite“ → Facebook-Seite „Hausmeister Helden“ verbinden
+   (nötig für Werbung und Planer, siehe `werbung/kampagne.md`).
+4. **Name & Benutzername (1 Min.):** Name: `Hausmeister Helden | Gütersloh` · Benutzername: `[OFFEN: z. B. @hausmeisterhelden_gt]`.
+5. **Bio zum Kopieren (1 Min.):**
+   ```
+   Hausmeisterservice Gütersloh & Umgebung
+   ❄️ Winterdienst · 🧹 Treppenhaus · 🌿 Garten · 🔧 Reparaturen
+   Antwort in 24 h
+   📲 Angebot per WhatsApp 👇
+   ```
+6. **Kontakt-Buttons (2 Min.):** Profil bearbeiten → „Kontaktoptionen“ → Telefon **05241 3389748**, E-Mail **info@haus-meister-helden.de**,
+   Adresse **Auf der Benkert 68, 33330 Gütersloh**. WhatsApp: unter „Kontaktoptionen“ bzw. „Links“ → **WhatsApp hinzufügen** → Nummer bestätigen.
+7. **Links (2 Min.):** Profil bearbeiten → „Links“ → in dieser Reihenfolge:
+   1. `📲 Angebot per WhatsApp` → `https://wa.me/4952413389748?text=Hallo%2C%20ich%20komme%20von%20Instagram%20und%20h%C3%A4tte%20gern%20ein%20Angebot.`
+   2. `Webseite & Preisrechner` → `https://www.haus-meister-helden.de`
+   3. `Impressum` → `[OFFEN: genaue Impressum-URL der Webseite]` (geschäftliche Profile brauchen ein leicht erreichbares Impressum)
+8. **Erste 3 Posts (3 Min.):** in **dieser** Reihenfolge posten (das zuletzt gepostete steht oben links):
+   1. `grafiken/2026-KW48/02-winterdienst-mythen/` (6 Folien)
+   2. `grafiken/2026-KW48/01-winterdienst-pflichten/` (5 Folien)
+   3. `grafiken/2026-KW48/04-objektbetreuung-ablauf/` (7 Folien) → danach **anheften** (⋯ → „An Profil anheften“), weil er erklärt, wie wir arbeiten.
+   Captions und Hashtags stehen in `2026-KW48.md`. Standort „Gütersloh“ taggen. Diese 3 Posts entfallen dann im KW48-Plan; das Reel (`03-wer-raeumt-reel`) wie geplant posten.
+9. **Highlights (2 Min.):** Die 5 Cover aus `grafiken/2026-KW48/00-highlight-cover/` nacheinander als Story posten → jede Story über „Highlight“ speichern:
+   `folie-01.png` → **Leistungen**, `folie-02.png` → **Ablauf**, `folie-03.png` → **Winterdienst**, `folie-04.png` → **FAQ**, `folie-05.png` → **Kontakt**.
+   Beim Titelbild den runden Ausschnitt auf den grünen Schriftzug ziehen.
+10. **Prüfen (1 Min.):** Vom Handy eines Bekannten oder ausgeloggt das Profil ansehen: WhatsApp-Link tippen → öffnet sich der Chat mit 05241 3389748?
+
+Danach: Wochenplan über die Meta Business Suite vorplanen (`automatisch-posten.md`), erst dann Werbung starten (`werbung/kampagne.md`).
+
+## 8. Regeln
 - Keine gekauften Follower/Likes, keine Follow/Unfollow-Bots (Sperrgefahr).
 - Keine erkennbaren Personen, Hausnummern, Klingelschilder oder Kfz-Kennzeichen ohne Einwilligung zeigen.
 - Keine erfundenen Kundenstimmen, Zahlen oder Zertifikate.
