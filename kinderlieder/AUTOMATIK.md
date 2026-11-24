@@ -66,9 +66,10 @@ Die Zugangsdaten (YouTube, ElevenLabs) liegen nur als **GitHub-Secrets** vor, ni
 4. Fertig. Der nächste Push erzeugt Lied und Short mit ElevenLabs. Im Workflow-Ergebnis steht je Lied die
    „Abweichung“ der Wortsynchronisation (kleiner ist besser); bei auffällig hohen Werten das Video kurz prüfen.
 
-Hinweis: Der Tagesagent in Claude rendert nur eine **Vorschau mit der kostenlosen Stimme** (er hat keinen
-ElevenLabs-Schlüssel). Die Endfassung mit ElevenLabs entsteht in GitHub Actions und liegt dort 30 Tage unter
-„Artifacts“ sowie privat in YouTube Studio.
+**Solange kein ElevenLabs-Schlüssel eingetragen ist** (aktueller Stand), nutzen Tagesagent und GitHub Actions
+automatisch die bisherige kostenlose Stimme (MBROLA). Es muss dafür nichts umgestellt werden; sobald das Secret
+`ELEVENLABS_API_KEY` existiert, singt in GitHub Actions automatisch ElevenLabs. Der Tagesagent in Claude rendert
+immer mit der kostenlosen Stimme (er hat keinen Schlüssel).
 
 **Testen:** GitHub → Actions → „Liederwiese YouTube“ → „Run workflow“ → bei `dateien` z. B.
 `kinderlieder/shorts/01_rate_mal_essen.json` eintragen.
@@ -171,7 +172,8 @@ ElevenLabs-Schlüssel). Die Endfassung mit ElevenLabs entsteht in GitHub Actions
   - vom Lied: `video.mp4`, `lied.mp3`, `vorschaubild.png`, `beschreibung.txt`
   - vom Short: `short.mp4`
 - Eine kurze Zusammenfassung auf Deutsch schreiben: Titel, Inhalt, Länge, was neu ist, ob etwas auffiel.
-  Ehrlich sagen, dass der Ton nicht angehört, sondern nur technisch geprüft wurde, und dass die geschickten Dateien
-  eine Vorschau mit der kostenlosen Stimme sind; die ElevenLabs-Fassung kommt aus GitHub Actions
-  (Refrain-Short entsteht dort automatisch, das Sammelvideo samstags).
+  Ehrlich sagen, dass der Ton nicht angehört, sondern nur technisch geprüft wurde. Das Refrain-Short entsteht
+  automatisch in GitHub Actions, das Sammelvideo samstags. Nur falls der Nutzer ElevenLabs eingerichtet hat: sagen,
+  dass die geschickten Dateien eine Vorschau mit der kostenlosen Stimme sind und die ElevenLabs-Fassung aus
+  GitHub Actions kommt.
 - **Nicht** selbst zu YouTube hochladen, keine Zugangsdaten anfassen, nichts löschen, was nicht vom Agenten selbst stammt.
