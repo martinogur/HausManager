@@ -1,6 +1,10 @@
 # Liederwiese: neue Lieder/Shorts automatisch rendern und zu YouTube hochladen.
-# Startet, sobald eine neue Datei in kinderlieder/songs/ oder kinderlieder/shorts/ gepusht wird,
-# oder von Hand (Actions → "Liederwiese YouTube" → Run workflow).
+# - Startet, sobald eine neue Datei in kinderlieder/songs/ oder kinderlieder/shorts/ gepusht wird,
+#   oder von Hand (Actions → "Liederwiese YouTube" → Run workflow).
+# - Zu jedem Lied entsteht zusätzlich ein Refrain-Short, das auf das ganze Lied verweist.
+# - Jeden Samstag entsteht automatisch ein Sammelvideo (~30 Minuten) aus den neuesten Liedern.
+# - Fertige Lied-Videos und die ElevenLabs-Tonspuren werden im Release "liederwiese-archiv" aufbewahrt
+#   (für Sammelvideos und damit ein erneutes Rendern kein ElevenLabs-Guthaben kostet).
 name: Liederwiese YouTube
 
 on:
@@ -8,26 +12,37 @@ on:
     paths:
       - "kinderlieder/songs/*.json"
       - "kinderlieder/shorts/*.json"
+  schedule:
+    - cron: "17 6 * * 6"   # samstags 06:17 UTC: Sammelvideo
   workflow_dispatch:
     inputs:
       dateien:
         description: "Lied-/Short-Dateien (mit Leerzeichen getrennt), z. B. kinderlieder/songs/07_xyz.json"
-        required: true
+        required: false
+        default: ""
       hochladen:
         description: "Zu YouTube hochladen?"
         type: boolean
         default: true
+      sammlung:
+        description: "Sammelvideo aus den neuesten Liedern erstellen?"
+        type: boolean
+        default: false
 
 concurrency:
   group: liederwiese-youtube
   cancel-in-progress: false
 
+env:
+  ARCHIV: liederwiese-archiv
+
 jobs:
   video:
+    if: github.event_name != 'schedule' && (github.event_name == 'push' || github.event.inputs.dateien != '')
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 180
     permissions:
-      contents: read
+      contents: write   # nur für das Archiv-Release (Videos/Tonspuren), nicht für den Code
     steps:
       - uses: actions/checkout@v4
         with:
@@ -57,38 +72,71 @@ jobs:
           sudo add-apt-repository -y multiverse
           sudo apt-get update -q
           sudo apt-get install -y -q ffmpeg fluidsynth fluid-soundfont-gm espeak-ng mbrola mbrola-de7
-          pip install mido numpy pillow google-api-python-client google-auth
+          pip install mido numpy pillow requests google-api-python-client google-auth
+
+      - name: Gespeicherte ElevenLabs-Tonspuren holen
+        if: steps.neu.outputs.dateien != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATEIEN: ${{ steps.neu.outputs.dateien }}
+        run: |
+          for f in $DATEIEN; do
+            rel="${f#kinderlieder/}"; name=$(basename "$rel" .json)
+            case "$rel" in shorts/*) ordner="kinderlieder/ausgabe/shorts/$name" ;; *) ordner="kinderlieder/ausgabe/$name" ;; esac
+            mkdir -p "$ordner"
+            if gh release download "$ARCHIV" -p "klang_${name}.tar.gz" -D /tmp 2>/dev/null; then
+              tar -xzf "/tmp/klang_${name}.tar.gz" -C "$ordner" && echo "♻ $name: gespeicherte Tonspur wird wiederverwendet"
+            fi
+          done
 
       - name: Videos erstellen
         if: steps.neu.outputs.dateien != ''
         working-directory: kinderlieder
         env:
           DATEIEN: ${{ steps.neu.outputs.dateien }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_STIMME: ${{ vars.ELEVENLABS_STIMME }}
+          ELEVENLABS_STIMME_BIENE: ${{ vars.ELEVENLABS_STIMME_BIENE }}
+          ELEVENLABS_STIMME_BAER: ${{ vars.ELEVENLABS_STIMME_BAER }}
+          ELEVENLABS_STIMME_HASE: ${{ vars.ELEVENLABS_STIMME_HASE }}
         run: |
-          ORDNER=""
+          LIEDER=""; SHORTS=""
           for f in $DATEIEN; do
             rel="${f#kinderlieder/}"
             name=$(basename "$rel" .json)
             case "$rel" in
-              shorts/*) python3 generator/short.py "$rel"; ORDNER="$ORDNER ausgabe/shorts/$name" ;;
-              *)        python3 generator/erstellen.py "$rel"; ORDNER="$ORDNER ausgabe/$name" ;;
+              shorts/*) python3 generator/short.py "$rel"; SHORTS="$SHORTS ausgabe/shorts/$name" ;;
+              *)        python3 generator/erstellen.py "$rel"; LIEDER="$LIEDER ausgabe/$name" ;;
             esac
           done
-          echo "ORDNER=$ORDNER" >> "$GITHUB_ENV"
+          echo "LIEDER=$LIEDER" >> "$GITHUB_ENV"
+          echo "SHORTS=$SHORTS" >> "$GITHUB_ENV"
 
-      - name: Videos zum Herunterladen ablegen
+      - name: Videos und Tonspuren im Archiv ablegen
         if: steps.neu.outputs.dateien != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: liederwiese-videos
-          path: |
-            kinderlieder/ausgabe/**/*.mp4
-            kinderlieder/ausgabe/**/*.mp3
-            kinderlieder/ausgabe/**/*.png
-            kinderlieder/ausgabe/**/beschreibung.txt
-          retention-days: 30
+        working-directory: kinderlieder
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$ARCHIV" >/dev/null 2>&1 || \
+            gh release create "$ARCHIV" --title "Liederwiese-Archiv" --prerelease \
+              --notes "Automatisch: fertige Lied-Videos (für Sammelvideos) und ElevenLabs-Tonspuren (kein erneutes Guthaben beim Neu-Rendern)."
+          for o in $LIEDER $SHORTS; do
+            name=$(basename "$o")
+            if [ -d "$o/elevenlabs" ]; then
+              tar -czf "/tmp/klang_${name}.tar.gz" -C "$o" elevenlabs
+              gh release upload "$ARCHIV" "/tmp/klang_${name}.tar.gz" --clobber
+            fi
+          done
+          for o in $LIEDER; do
+            name=$(basename "$o")
+            cp "$o/video.mp4" "/tmp/lied_${name}.mp4"; cp "$o/meta.json" "/tmp/lied_${name}.json"
+            cp "$o/vorschaubild.png" "/tmp/lied_${name}.png"
+            gh release upload "$ARCHIV" "/tmp/lied_${name}.mp4" "/tmp/lied_${name}.json" "/tmp/lied_${name}.png" --clobber
+          done
 
-      - name: Zu YouTube hochladen
+      - name: Lieder und Shorts zu YouTube hochladen
+        id: hochladen
         if: steps.neu.outputs.dateien != '' && (github.event_name == 'push' || github.event.inputs.hochladen == 'true')
         working-directory: kinderlieder
         env:
@@ -96,14 +144,124 @@ jobs:
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           YT_SICHTBARKEIT: ${{ vars.YT_SICHTBARKEIT || 'private' }}
+          YT_VEROEFFENTLICHEN_UM: ${{ vars.YT_VEROEFFENTLICHEN_UM }}
           YT_PLAYLIST_LIEDER: ${{ vars.YT_PLAYLIST_LIEDER }}
           YT_PLAYLIST_SHORTS: ${{ vars.YT_PLAYLIST_SHORTS }}
         run: |
           if [ -z "$YT_REFRESH_TOKEN" ]; then
             echo "::warning::YouTube-Zugang fehlt noch (Secrets YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN). Videos liegen als Download unter 'Artifacts'."
+            echo "ok=nein" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          python3 generator/youtube_upload.py $ORDNER
-          for o in $ORDNER; do
-            [ -f "$o/youtube.json" ] && echo "### $(jq -r .url "$o/youtube.json") ($(jq -r .titel "$o/meta.json"))" >> "$GITHUB_STEP_SUMMARY"
+          python3 generator/youtube_upload.py $LIEDER $SHORTS
+          echo "ok=ja" >> "$GITHUB_OUTPUT"
+
+      - name: Refrain-Shorts erstellen (mit Link zum ganzen Lied)
+        if: steps.neu.outputs.dateien != '' && env.LIEDER != ''
+        working-directory: kinderlieder
+        run: |
+          REFRAIN=""
+          for o in $LIEDER; do
+            python3 generator/refrain_short.py "$o" && REFRAIN="$REFRAIN ausgabe/shorts/$(basename "$o")_refrain"
           done
+          echo "REFRAIN=$REFRAIN" >> "$GITHUB_ENV"
+
+      - name: Refrain-Shorts hochladen
+        if: steps.hochladen.outputs.ok == 'ja' && env.REFRAIN != ''
+        working-directory: kinderlieder
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_SICHTBARKEIT: ${{ vars.YT_SICHTBARKEIT || 'private' }}
+          YT_VEROEFFENTLICHEN_UM: ${{ vars.YT_VEROEFFENTLICHEN_UM_SHORTS || vars.YT_VEROEFFENTLICHEN_UM }}
+          YT_PLAYLIST_SHORTS: ${{ vars.YT_PLAYLIST_SHORTS }}
+        run: python3 generator/youtube_upload.py $REFRAIN
+
+      - name: Ergebnis-Übersicht
+        if: always() && steps.neu.outputs.dateien != ''
+        working-directory: kinderlieder
+        run: |
+          for o in $LIEDER $SHORTS $REFRAIN; do
+            [ -f "$o/youtube.json" ] && echo "### $(jq -r .url "$o/youtube.json") ($(jq -r .titel "$o/meta.json"))" >> "$GITHUB_STEP_SUMMARY"
+            [ -f "$o/elevenlabs/info.json" ] && echo "- Ausrichtung $(basename "$o"): Abweichung $(jq -r .ausrichtung_abweichung "$o/elevenlabs/info.json")" >> "$GITHUB_STEP_SUMMARY"
+          done
+          true
+
+      - name: Videos zum Herunterladen ablegen
+        if: always() && steps.neu.outputs.dateien != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: liederwiese-videos
+          path: |
+            kinderlieder/ausgabe/**/*.mp4
+            kinderlieder/ausgabe/**/lied.mp3
+            kinderlieder/ausgabe/**/*.png
+            kinderlieder/ausgabe/**/beschreibung.txt
+          retention-days: 30
+
+  sammlung:
+    if: github.event_name == 'schedule' || github.event.inputs.sammlung == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Programme installieren
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q ffmpeg
+          pip install numpy pillow google-api-python-client google-auth
+
+      - name: Neueste Lied-Videos aus dem Archiv holen (~30 Minuten)
+        id: holen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MINUTEN: ${{ vars.SAMMEL_MINUTEN || '30' }}
+        run: |
+          mkdir -p kinderlieder/ausgabe/archiv
+          if ! gh release view "$ARCHIV" --json assets > /tmp/assets.json 2>/dev/null; then
+            echo "Noch kein Archiv – nichts zu tun."; echo "anzahl=0" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # neueste Lieder (nach Dateiname = Nummer), bis die gewünschte Länge erreicht ist (~3 min pro Lied)
+          ANZ=$(( (MINUTEN + 2) / 3 ))
+          NAMEN=$(jq -r '.assets[].name | select(startswith("lied_") and endswith(".mp4")) | sub("^lied_"; "") | sub("\\.mp4$"; "")' /tmp/assets.json | sort | tail -n "$ANZ")
+          for n in $NAMEN; do
+            gh release download "$ARCHIV" -p "lied_${n}.mp4" -p "lied_${n}.json" -p "lied_${n}.png" -D kinderlieder/ausgabe/archiv --clobber
+          done
+          echo "anzahl=$(echo $NAMEN | wc -w)" >> "$GITHUB_OUTPUT"
+
+      - name: Sammelvideo erstellen
+        if: steps.holen.outputs.anzahl >= 3
+        working-directory: kinderlieder
+        env:
+          MINUTEN: ${{ vars.SAMMEL_MINUTEN || '30' }}
+        run: python3 generator/sammelvideo.py --ordner ausgabe/archiv --minuten "$MINUTEN" --ziel ausgabe/sammlung
+
+      - name: Sammelvideo hochladen
+        if: steps.holen.outputs.anzahl >= 3
+        working-directory: kinderlieder
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_SICHTBARKEIT: ${{ vars.YT_SICHTBARKEIT || 'private' }}
+          YT_VEROEFFENTLICHEN_UM: ${{ vars.YT_VEROEFFENTLICHEN_UM }}
+          YT_PLAYLIST_SAMMLUNG: ${{ vars.YT_PLAYLIST_SAMMLUNG }}
+          YT_PLAYLIST_LIEDER: ${{ vars.YT_PLAYLIST_LIEDER }}
+        run: |
+          if [ -z "$YT_REFRESH_TOKEN" ]; then echo "::warning::YouTube-Zugang fehlt noch."; exit 0; fi
+          python3 generator/youtube_upload.py ausgabe/sammlung
+
+      - name: Sammelvideo zum Herunterladen ablegen
+        if: steps.holen.outputs.anzahl >= 3
+        uses: actions/upload-artifact@v4
+        with:
+          name: liederwiese-sammelvideo
+          path: |
+            kinderlieder/ausgabe/sammlung/video.mp4
+            kinderlieder/ausgabe/sammlung/vorschaubild.png
+            kinderlieder/ausgabe/sammlung/beschreibung.txt
+          retention-days: 30

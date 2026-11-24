@@ -5,9 +5,22 @@ Zwei Agenten arbeiten zusammen:
 | Agent | Was er tut | Wo er läuft |
 |---|---|---|
 | **1. Tagesagent** | Jeden Morgen: neues Lied **und** neues Short aus `IDEEN.md` schreiben, prüfen, rendern (Video, MP3, Thumbnail, Beschreibung), dir die Dateien schicken und ins Repository pushen | Claude-Cloud (geplante Aufgabe „Liederwiese: Tagesvideo“) |
-| **2. Upload-Agent** | Sobald ein neues Lied/Short gepusht wird: Video rendern, 30 Tage als Download ablegen und **zu YouTube hochladen** (Titel, Beschreibung, Tags, Thumbnail, „Für Kinder“, „KI-Inhalt“) | GitHub Actions (`.github/workflows/liederwiese-youtube.yml`) |
+| **2. Upload-Agent** | Sobald ein neues Lied/Short gepusht wird: Gesang und Sprache bei **ElevenLabs** erzeugen, Video in 1440p rendern, **zu YouTube hochladen** (Titel, Beschreibung, Tags, Thumbnail, „Für Kinder“, „KI-Inhalt“), danach ein **Refrain-Short** mit Link zum ganzen Lied. Jeden Samstag zusätzlich ein **Sammelvideo** (~30 Minuten, mit Kapiteln) | GitHub Actions (`.github/workflows/liederwiese-youtube.yml`) |
 
-Die YouTube-Zugangsdaten liegen nur als **GitHub-Secrets** vor, nie im Code und nie in Claude.
+Die Zugangsdaten (YouTube, ElevenLabs) liegen nur als **GitHub-Secrets** vor, nie im Code und nie in Claude.
+
+### Qualität und Reichweite – was automatisch passiert
+
+- **Ton:** Gesang und Sprechstimme von ElevenLabs (natürliche Stimme). Die Liedzeilen werden per Forced Alignment
+  Wort für Wort mit dem Gesang synchronisiert (Mitsingtext, Bilder, Zahlen, Effekte). Stereo-Hall und Mastering auf
+  −14 LUFS (YouTube-Standard). Ohne ElevenLabs-Schlüssel fällt der Generator auf die kostenlose Stimme zurück.
+- **Bild:** 2560×1440 (Shorts 1440×2560). YouTube verarbeitet Uploads ab 1440p mit einem besseren Codec, dadurch
+  sieht das Video auch in 1080p und auf dem Handy schärfer aus. Farben korrekt nach BT.709, hohe Bitrate.
+- **Reichweite:** suchoptimierte Titel (Liedname zuerst), Liedtext in der Beschreibung, Klassiker (gemeinfreie
+  Volkslieder) im Wechsel mit eigenen Liedern, zu jedem Lied ein Refrain-Short mit Link, wöchentlich ein langes
+  Sammelvideo mit Kapitelmarken, feste Veröffentlichungszeit (`YT_VEROEFFENTLICHEN_UM`).
+- **Kosten sparen:** Jede ElevenLabs-Tonspur wird im Release `liederwiese-archiv` gespeichert; erneutes Rendern
+  (z. B. nach Bildkorrekturen) kostet kein Guthaben.
 
 ---
 
@@ -33,7 +46,29 @@ Die YouTube-Zugangsdaten liegen nur als **GitHub-Secrets** vor, nie im Code und 
    „New repository secret“, und zwar die drei ausgegebenen Werte `YT_CLIENT_ID`, `YT_CLIENT_SECRET` und `YT_REFRESH_TOKEN`.
 7. Optional unter „Variables“:
    - `YT_SICHTBARKEIT`: `private` (Standard), `unlisted` oder `public`
-   - `YT_PLAYLIST_LIEDER` / `YT_PLAYLIST_SHORTS`: Playlist-IDs (aus der Playlist-URL `list=…`)
+   - `YT_PLAYLIST_LIEDER` / `YT_PLAYLIST_SHORTS` / `YT_PLAYLIST_SAMMLUNG`: Playlist-IDs (aus der Playlist-URL `list=…`)
+   - `YT_VEROEFFENTLICHEN_UM`: z. B. `16:30` – Videos werden zur nächsten solchen Uhrzeit (deutsche Zeit) öffentlich.
+     Empfehlung: Lieder `16:30` (nach der Kita), Shorts mit `YT_VEROEFFENTLICHEN_UM_SHORTS` z. B. `07:30`.
+     Wirkt nur mit `YT_SICHTBARKEIT=public`, also erst nach der Google-Prüfung (siehe unten).
+   - `SAMMEL_MINUTEN`: Länge des wöchentlichen Sammelvideos (Standard 30)
+
+## Einrichtung ElevenLabs (natürlicher Gesang und Sprechstimme, ca. 10 Minuten)
+
+1. Konto auf <https://elevenlabs.io> anlegen und ein **bezahltes Abo** wählen (erst ab einem bezahlten Abo dürfen
+   Musik und Stimmen kommerziell genutzt werden). Ein Lied von ~3 Minuten verbraucht ~3 Musik-Minuten; prüfe auf
+   <https://elevenlabs.io/pricing>, welches Abo zu ~1 Lied pro Tag passt (+ Sprachzeichen für Shorts).
+2. Profil → „API Keys“ → neuen Schlüssel erstellen (Rechte: Text to Speech, Music, Forced Alignment).
+3. GitHub → Settings → Secrets and variables → Actions:
+   - **Secret** `ELEVENLABS_API_KEY` = der Schlüssel
+   - **Variable** `ELEVENLABS_STIMME` = `voice_id` der Sprechstimme (freundliche, warme, deutsche Erzählerstimme aus der
+     Voice Library; die ID steht in der Stimm-Ansicht). Optional je Figur: `ELEVENLABS_STIMME_BIENE`,
+     `ELEVENLABS_STIMME_BAER`, `ELEVENLABS_STIMME_HASE`.
+4. Fertig. Der nächste Push erzeugt Lied und Short mit ElevenLabs. Im Workflow-Ergebnis steht je Lied die
+   „Abweichung“ der Wortsynchronisation (kleiner ist besser); bei auffällig hohen Werten das Video kurz prüfen.
+
+Hinweis: Der Tagesagent in Claude rendert nur eine **Vorschau mit der kostenlosen Stimme** (er hat keinen
+ElevenLabs-Schlüssel). Die Endfassung mit ElevenLabs entsteht in GitHub Actions und liegt dort 30 Tage unter
+„Artifacts“ sowie privat in YouTube Studio.
 
 **Testen:** GitHub → Actions → „Liederwiese YouTube“ → „Run workflow“ → bei `dateien` z. B.
 `kinderlieder/shorts/01_rate_mal_essen.json` eintragen.
@@ -65,7 +100,21 @@ Die YouTube-Zugangsdaten liegen nur als **GitHub-Secrets** vor, nie im Code und 
 - Arbeitsverzeichnis: `kinderlieder/`. `README.md` lesen (Dateiformat, Bilder, Effekte, Melodien).
 
 ### 1. Lied schreiben
-- Die erste offene Idee unter „Lieder“ in `IDEEN.md` nehmen. Nächste freie Nummer verwenden: `songs/NN_figur_thema.json`.
+- **Auswahl:** im Wechsel ein **Klassiker** (erste offene Idee unter „Klassiker“) und ein **eigenes Lied** (erste offene
+  Idee unter „Eigene Lieder“). Steht ein Klassiker zur Jahreszeit an (z. B. Nikolaus vor dem 6.12., Winterlieder im
+  Dezember), hat er Vorrang. Nächste freie Nummer verwenden: `songs/NN_figur_thema.json`.
+- **Klassiker:**
+  - Nur gemeinfreie Lieder (Urheber seit über 70 Jahren tot oder volkstümlich), traditioneller Text in der bekannten
+    Fassung, keine Zusatzstrophen moderner Bearbeiter. Bei Zweifel an der Herkunft: Lied überspringen und das im
+    Bericht sagen.
+  - `"herkunft"` eintragen (z. B. `"Text: Hoffmann von Fallersleben (†1874), Melodie: volkstümlich"`).
+  - `"kurztitel"` = genau der bekannte Liedname (danach suchen Eltern), `"titel"` = Liedname + Figur.
+  - Die traditionelle Melodie als eigene Tonfolge eintragen (`"melodie": [[…], …]` je Teil, Tonstufen 0 = do …
+    7 = do'), damit auch die Vorschau richtig klingt. Silbenzahl je Zeile kann vom Original abweichen
+    (6–8-Silben-Regel gilt hier nicht).
+  - Sprechteile und Bilder wie bei eigenen Liedern (eigene Figuren Bella, Bruno, Hopsi).
+- **Suchbegriffe:** `"suchbegriffe"` mit 3–6 Begriffen, nach denen Eltern suchen würden (z. B. `"Hänschen klein"`,
+  `"Hänschen klein Kinderlied"`, `"Hänschen klein Text"`). Sie kommen zuerst in die Tags.
 - **Qualität:**
   - Zielgruppe 2 bis 6 Jahre.
   - Jede Zeile hat 7 Silben (6 bis 8 sind okay), mit reinen Paarreimen.
@@ -80,7 +129,10 @@ Die YouTube-Zugangsdaten liegen nur als **GitHub-Secrets** vor, nie im Code und 
   - Die Figur passend zur Idee wählen (Bella, Bruno oder Hopsi; `katze`/`frosch` als neue Freunde erlaubt).
   - Länge 2 bis 3:30 Minuten.
 - **Verboten:**
-  - Bekannte Lieder, Melodien oder Figuren nachahmen (z. B. „Alle meine Entchen“, Disney oder Peppa).
+  - Geschützte Lieder, Melodien, Aufnahmen oder Figuren nachahmen (z. B. Disney, Peppa, LooLoo Kids, Cocomelon,
+    moderne Kinderlieder von lebenden oder vor weniger als 70 Jahren gestorbenen Autoren). Gemeinfreie Klassiker
+    (siehe oben) sind erlaubt.
+  - Videos anderer Kanäle wiederverwenden oder nachbauen.
   - Markennamen, Angst machende, gefährliche oder abwertende Inhalte.
   - Aufrufe an Kinder, etwas zu kaufen oder zu abonnieren.
 - **Neue Bilder:** Wenn ein benötigtes Bild fehlt, eine neue Zeichenfunktion in `generator/bilder.py` im Stil der vorhandenen
@@ -96,6 +148,8 @@ Die YouTube-Zugangsdaten liegen nur als **GitHub-Secrets** vor, nie im Code und 
 - `python3 generator/pruefen.py shorts/NN_….json` muss ohne ✘ durchlaufen.
 
 ### 3. Rendern und Qualität prüfen
+0. Lokal immer mit der kostenlosen Stimme rendern (`export LIEDERWIESE_KLANG=synth`), damit kein ElevenLabs-Guthaben
+   doppelt verbraucht wird. Die Endfassung mit ElevenLabs macht GitHub Actions.
 1. `python3 generator/erstellen.py songs/NN_….json --vorschau` ausführen. Danach aus `ausgabe/NN_…/vorschau.mp4` je
    Abschnitt ein Standbild ziehen (`ffmpeg -ss <sek> … -frames:v 1`) und **ansehen**:
    - Passt jedes Bild zur Zeile?
@@ -117,5 +171,7 @@ Die YouTube-Zugangsdaten liegen nur als **GitHub-Secrets** vor, nie im Code und 
   - vom Lied: `video.mp4`, `lied.mp3`, `vorschaubild.png`, `beschreibung.txt`
   - vom Short: `short.mp4`
 - Eine kurze Zusammenfassung auf Deutsch schreiben: Titel, Inhalt, Länge, was neu ist, ob etwas auffiel.
-  Ehrlich sagen, dass der Ton nicht angehört, sondern nur technisch geprüft wurde.
+  Ehrlich sagen, dass der Ton nicht angehört, sondern nur technisch geprüft wurde, und dass die geschickten Dateien
+  eine Vorschau mit der kostenlosen Stimme sind; die ElevenLabs-Fassung kommt aus GitHub Actions
+  (Refrain-Short entsteht dort automatisch, das Sammelvideo samstags).
 - **Nicht** selbst zu YouTube hochladen, keine Zugangsdaten anfassen, nichts löschen, was nicht vom Agenten selbst stammt.

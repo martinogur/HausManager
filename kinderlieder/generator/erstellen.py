@@ -10,6 +10,7 @@ Ergebnis in ausgabe/<liedname>/:
 """
 import argparse
 import json
+import os
 import math
 import random
 import subprocess
@@ -24,7 +25,9 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bilder as BI  # noqa: E402
-import youtube_meta as YM  # noqa: E402
+import youtube_meta as YM
+import technik as T  # noqa: E402
+import elevenlabs as EL  # noqa: E402
 import grafik as G   # noqa: E402
 import musik as M    # noqa: E402
 
@@ -87,6 +90,50 @@ def anzeigen_planen(lied):
 # Audio
 # --------------------------------------------------------------------------
 
+def klang_modus(cfg):
+    """'elevenlabs' (natürlicher Gesang, braucht ELEVENLABS_API_KEY) oder 'synth' (kostenlos, MBROLA)."""
+    wunsch = os.environ.get("LIEDERWIESE_KLANG") or cfg.get("klang") or "auto"
+    if wunsch == "auto":
+        return "elevenlabs" if EL.verfuegbar() else "synth"
+    if wunsch == "elevenlabs" and not EL.verfuegbar():
+        print("  ⚠ ELEVENLABS_API_KEY fehlt – nutze die kostenlose Stimme")
+        return "synth"
+    return wunsch
+
+
+def audio_elevenlabs(cfg, lied, tmp, ordner):
+    """Natürlicher Gesang + Sprechstimme von ElevenLabs. Passt die Zeiten in `lied` an."""
+    lied_wav, sprache, _, gesamt = EL.tonspur(cfg, lied, ordner, tmp)
+    anzeigen = anzeigen_planen(lied)
+    # Sprechteile zu einer Spur zusammenlegen
+    n = int((gesamt + 1) * 44100)
+    spur = np.zeros(n, np.float32)
+    for wav, st in sprache:
+        with wave.open(str(wav)) as w:
+            x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
+            x = x.reshape(-1, w.getnchannels()).mean(axis=1)
+        i0 = int(st * 44100)
+        x = x[: max(0, n - i0)]
+        spur[i0:i0 + len(x)] += x
+    with wave.open(str(tmp / "sprache_roh.wav"), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(44100)
+        w.writeframes((np.clip(spur, -1, 1) * 32767).astype(np.int16).tobytes())
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "sprache_roh.wav", "-af",
+                    "highpass=f=80,acompressor=threshold=-20dB:ratio=2.5:attack=5:release=120:makeup=1.5",
+                    tmp / "sprache.wav"], check=True)
+    effekte = list(lied.effekte) + [(a["start"] + 0.05, "plopp") for a in anzeigen]
+    M.effekte_rendern(effekte, gesamt, tmp / "effekte.wav")
+    T.mischen(lied_wav, tmp / "sprache.wav", tmp / "effekte.wav", tmp / "roh_mix.wav", tmp,
+              musik_pegel=1.0, stimme_pegel=1.3, effekt_pegel=0.6, hall_anteil=0.08)
+    d = lied.dauer
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "roh_mix.wav", "-af",
+                    f"apad=whole_dur={d:.2f},atrim=0:{d:.2f}", tmp / "roh_mix2.wav"], check=True)
+    T.mastern(tmp / "roh_mix2.wav", tmp / "mix.wav", d, ausblenden=2.0)
+    return anzeigen
+
+
 def audio_erstellen(lied, anzeigen, tmp):
     M.begleitung_midi(lied, tmp / "begleitung.mid")
     M.begleitung_rendern(tmp / "begleitung.mid", tmp / "begleitung.wav")
@@ -94,23 +141,13 @@ def audio_erstellen(lied, anzeigen, tmp):
     M.stimme_rendern(tmp / "stimme.pho", tmp / "stimme_roh.wav")
     effekte = list(lied.effekte) + [(a["start"] + 0.05, "plopp") for a in anzeigen]
     M.effekte_rendern(effekte, lied.dauer, tmp / "effekte.wav")
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "stimme_roh.wav", "-af",
-                    "highpass=f=130,lowpass=f=10000,"
-                    "equalizer=f=3200:t=o:w=1.4:g=4,equalizer=f=350:t=o:w=1:g=-2,"
-                    "acompressor=threshold=-22dB:ratio=3:attack=4:release=90:makeup=2,"
-                    "aecho=0.85:0.5:35:0.12",
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "stimme_roh.wav", "-af", T.STIMM_FILTER,
                     tmp / "stimme.wav"], check=True)
     d = lied.dauer
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "begleitung.wav", "-i", tmp / "stimme.wav",
-                    "-i", tmp / "effekte.wav", "-filter_complex",
-                    "[1:a]aresample=44100,asplit=2[v1][v2];"
-                    "[0:a]volume=0.8[m0];"
-                    "[m0][v1]sidechaincompress=threshold=0.04:ratio=3:attack=15:release=350:makeup=1[m];"
-                    "[v2]volume=2.0[v];[2:a]aresample=44100,volume=0.9[fx];"
-                    "[m][v][fx]amix=inputs=3:duration=longest:normalize=0,"
-                    f"apad=whole_dur={d:.2f},atrim=0:{d:.2f},"
-                    f"afade=t=out:st={d - 1.2:.2f}:d=1.2,loudnorm=I=-14:TP=-1.5:LRA=11",
-                    "-ar", "44100", "-ac", "2", tmp / "mix.wav"], check=True)
+    T.mischen(tmp / "begleitung.wav", tmp / "stimme.wav", tmp / "effekte.wav", tmp / "roh_mix.wav", tmp)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "roh_mix.wav", "-af",
+                    f"apad=whole_dur={d:.2f},atrim=0:{d:.2f}", tmp / "roh_mix2.wav"], check=True)
+    T.mastern(tmp / "roh_mix2.wav", tmp / "mix.wav", d)
 
 
 def huellkurve(wav, fps, n_frames):
@@ -558,16 +595,20 @@ def erstellen(song_pfad, vorschau=False, nur_audio=False):
     kanal = kanal_cfg.get("kanalname", "")
     ziel = BASIS / "ausgabe" / song_pfad.stem
     ziel.mkdir(parents=True, exist_ok=True)
-    W, H, fps = (640, 360, 20) if vorschau else (1920, 1080, 30)
+    W, H, fps = (640, 360, 20) if vorschau else (*T.groesse_quer(), 30)
     t0 = time.time()
     print(f"▶ {cfg['titel']}")
     lied = M.Lied(cfg)
-    anzeigen = anzeigen_planen(lied)
+    modus = klang_modus(cfg)
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)
-        print("  • Musik, Stimme und Geräusche …")
-        audio_erstellen(lied, anzeigen, tmp)
-        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "mix.wav", "-b:a", "192k", ziel / "lied.mp3"],
+        print(f"  • Musik, Stimme und Geräusche ({modus}) …")
+        if modus == "elevenlabs":
+            anzeigen = audio_elevenlabs(cfg, lied, tmp, ziel / "elevenlabs")
+        else:
+            anzeigen = anzeigen_planen(lied)
+            audio_erstellen(lied, anzeigen, tmp)
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "mix.wav", "-b:a", "256k", ziel / "lied.mp3"],
                        check=True)
         if nur_audio:
             subprocess.run(["cp", tmp / "stimme.wav", ziel / "nur_stimme.wav"], check=True)
@@ -576,14 +617,19 @@ def erstellen(song_pfad, vorschau=False, nur_audio=False):
         env = huellkurve(tmp / "stimme.wav", fps, n)
         szene = Szene(lied, cfg, kanal, anzeigen, W, H, fps)
         vorschaubild(szene, ziel / "vorschaubild.png", cfg)
+        (ziel / "zeiten.json").write_text(json.dumps({
+            "dauer": lied.dauer, "klang": modus, "breite": W, "hoehe": H,
+            "abschnitte": [{"start": lied.sek(a0), "ende": lied.sek(a1), "name": n, "art": art}
+                           for a0, a1, n, art, _ in lied.abschnitte],
+            "zeilen": [{"start": z["start"], "ende": z["ende"], "text": z["text"]} for z in lied.zeilen]},
+            ensure_ascii=False, indent=1))
         youtube_text(cfg, kanal_cfg, lied, ziel / "youtube_text.txt")
         YM.schreiben(YM.lied_meta(cfg, kanal_cfg, lied.dauer), ziel)
         print(f"  • Animation ({n} Bilder, {W}x{H}) …")
         ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
                                "-s", f"{W}x{H}", "-r", str(fps), "-i", "-", "-i", str(tmp / "mix.wav"),
-                               "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
-                               "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart",
-                               str(ziel / ("vorschau.mp4" if vorschau else "video.mp4"))], stdin=subprocess.PIPE)
+                               *T.video_kodierung(ziel / ("vorschau.mp4" if vorschau else "video.mp4"))],
+                              stdin=subprocess.PIPE)
         mund = 0.0
         for i in range(n):
             mund = max(env[i], mund * 0.6)

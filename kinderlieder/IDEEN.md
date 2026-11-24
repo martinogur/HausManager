@@ -1,9 +1,43 @@
 # Ideen-Liste für den Tagesagenten
 
-Der Tagesagent nimmt jeden Morgen die **erste offene Idee** (`[ ]`) aus jeder Liste, setzt sie danach auf `[x]` und trägt
+Der Tagesagent nimmt jeden Morgen die **erste offene Idee** (`[ ]`) aus der passenden Liste, setzt sie danach auf `[x]` und trägt
 Datum und Dateiname ein. Du kannst die Liste jederzeit umsortieren, ergänzen oder Ideen streichen.
 
-## Lieder (1 pro Tag)
+## Klassiker (gemeinfrei, Vorrang vor den eigenen Liedern)
+
+Nur Lieder, deren Text- und Melodie-Urheber seit über 70 Jahren tot sind oder die volkstümlich (traditionell) sind.
+Immer den traditionellen Text und die traditionelle Melodie verwenden, nie Bearbeitungen, Aufnahmen, Figuren oder
+Zusatzstrophen anderer Kanäle oder Verlage. Herkunft in der Lied-Datei unter `"herkunft"` eintragen.
+Reihenfolge nach Jahreszeit; der Tagesagent nimmt im Wechsel einen Klassiker und eine eigene Idee, bei passender
+Jahreszeit auch zwei Klassiker hintereinander.
+
+- [ ] **Lasst uns froh und munter sein** (Nikolaus, Hopsi) – Text und Melodie volkstümlich (19. Jh.) – vor dem 6. Dezember
+- [ ] **Schneeflöckchen, Weißröckchen** (Bella) – Text Hedwig Haberkern (†1902), Melodie volkstümlich
+- [ ] **Morgen kommt der Weihnachtsmann** (alle drei) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich (französisch)
+- [ ] **Kling, Glöckchen, klingelingeling** (Bella) – Text Karl Enslin (†1875), Melodie volkstümlich
+- [ ] **O Tannenbaum** (Bruno) – Text Ernst Anschütz (†1861), Melodie volkstümlich
+- [ ] **Weißt du, wie viel Sternlein stehen** (Bruno, Gute Nacht) – Text Wilhelm Hey (†1854), Melodie volkstümlich
+- [ ] **Alle meine Entchen** (Bella) – volkstümlich
+- [ ] **Hänschen klein** (Hopsi) – Text Franz Wiedemann (†1882), Melodie volkstümlich
+- [ ] **Summ, summ, summ, Bienchen summ herum** (Bella) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich
+- [ ] **Häschen in der Grube** (Hopsi) – Text Friedrich Fröbel (†1852), Melodie volkstümlich
+- [ ] **Guten Abend, gut' Nacht** (Bruno) – Melodie Johannes Brahms (†1897), Text volkstümlich (Des Knaben Wunderhorn)
+- [ ] **Backe, backe Kuchen** (Bruno) – volkstümlich
+- [ ] **Bruder Jakob** (Bruno) – volkstümlich
+- [ ] **Grün, grün, grün sind alle meine Kleider** (Bella, Farben) – volkstümlich
+- [ ] **Hopp, hopp, hopp, Pferdchen lauf Galopp** (Hopsi) – Text Karl Hahn, Melodie Carl Gottlieb Hering (†1853)
+- [ ] **Zeigt her eure Füße** (Hopsi) – volkstümlich
+- [ ] **Auf der Mauer, auf der Lauer** (Hopsi) – volkstümlich
+- [ ] **Wer will fleißige Handwerker sehn** (Bruno) – volkstümlich
+- [ ] **Kommt ein Vogel geflogen** (Bella) – volkstümlich
+- [ ] **Schlaf, Kindlein, schlaf** (Bruno) – volkstümlich
+- [ ] **Winter ade** (Hopsi, Ende Februar) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich
+- [ ] **Alle Vögel sind schon da** (Bella, Frühling) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich
+- [ ] **Kuckuck, Kuckuck, ruft's aus dem Wald** (Hopsi, Frühling) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich
+- [ ] **Ein Männlein steht im Walde** (Bruno, Herbst) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich
+- [ ] **Ein Vogel wollte Hochzeit machen** (Bella) – volkstümlich
+
+## Eigene Lieder (im Wechsel mit den Klassikern)
 
 - [x] **Schlaf gut, Bruno**: Gute-Nacht-Lied, ruhig und langsam (Tempo ~84), Nachtszene, Mond, Sterne, Kuscheltier, Gähnen
 - [ ] **Bella und der erste Schnee**: Winterlied, Schneeflocken zählen, Schneemann bauen, Mütze und Schal

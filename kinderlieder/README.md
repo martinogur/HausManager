@@ -7,13 +7,13 @@ Erstellt **vollautomatisch und kostenlos** fertige Kinderlied-Videos für YouTub
 | Liedtext + Sprechtexte | Claude (KI) schreibt sie in eine `songs/*.json` | 0 € |
 | Melodie | komponierte, eingängige Kinderlied-Melodien (3 Stile), passend zum Text, automatisch harmonisiert | 0 € |
 | Begleitung | Glockenspiel/Marimba/Xylophon, Klavier/Gitarre, Bass, Schlagzeug (FluidSynth) | 0 € |
-| Stimme | **Kinderstimme**: singt die Melodie und spricht zwischen den Strophen (espeak-ng + MBROLA, Formant-Verschiebung) | 0 € |
+| Gesang + Sprechstimme | **ElevenLabs** (Eleven Music + Text-to-Speech, natürliche Stimme; Wortzeiten per Forced Alignment). Ohne Schlüssel: kostenlose Kinderstimme (espeak-ng + MBROLA) | Abo ElevenLabs / 0 € |
 | Geräusche | Plopp, Tatü-Tata, Piep, Boing, Schrubb, Glitzer, Wecker, Gähnen (selbst erzeugt) | 0 € |
 | Animation | Figur mit Mundbewegung, Bilder zu jeder Zeile, Zahlen mit Möhren, Sprechblasen, Tag/Nacht, Mitsing-Text | 0 € |
 
 Pro Lied entstehen in `ausgabe/<lied>/`:
 
-- `video.mp4`: das fertige Video (1920×1080, 30 Bilder/s)
+- `video.mp4`: das fertige Video (2560×1440, 30 Bilder/s, BT.709; mit `LIEDERWIESE_AUFLOESUNG=1080` 1920×1080)
 - `vorschaubild.png`: das Thumbnail (1280×720)
 - `youtube_text.txt`: Titel, Beschreibung mit Liedtext, Tags und die richtigen Upload-Einstellungen
 - `lied.mp3`: nur das Lied
@@ -29,6 +29,14 @@ Jeden Morgen ein neues Lied + Short und automatischer YouTube-Upload: siehe **[A
 python3 generator/erstellen.py --alle               # alle Lieder (ca. 3 Min. pro Lied)
 python3 generator/erstellen.py songs/01_bella_biene_farben.json
 python3 generator/erstellen.py songs/xyz.json --vorschau   # schnelle Testversion
+```
+
+### Weitere Werkzeuge
+
+```bash
+python3 generator/refrain_short.py ausgabe/07_xyz            # Refrain-Short (hochkant) aus dem fertigen Lied
+python3 generator/sammelvideo.py --ordner ausgabe/archiv --minuten 30   # langer Mix mit Kapitelmarken
+LIEDERWIESE_KLANG=synth python3 generator/erstellen.py …    # kostenlose Stimme erzwingen (z. B. für Vorschauen)
 ```
 
 ## Ein neues Lied machen
@@ -56,7 +64,11 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
     ]}
   },
   "ablauf": [{"sprich": "Hallo Kinder! …"}, "refrain", {"sprich": "…"}, "rot", "refrain"],
-  "tschuess": "Tschüss, bis bald!"
+  "tschuess": "Tschüss, bis bald!",
+  "suchbegriffe": ["…"],       // Begriffe, nach denen Eltern suchen (kommen zuerst in die Tags)
+  "herkunft": "…",             // nur bei gemeinfreien Klassikern: Urheber + Todesjahr bzw. „volkstümlich“
+  "stil": ["…"],               // optional: zusätzliche (englische) Stilangaben für ElevenLabs
+  "klang": "auto"              // auto | elevenlabs | synth
 }
 ```
 
@@ -81,6 +93,11 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 2. Titel, Beschreibung und Tags aus `youtube_text.txt` kopieren.
 3. **Zielgruppe: „Ja, speziell für Kinder“.** Das ist Pflicht.
 4. „Veränderte oder synthetische Inhalte“: am besten „Ja“ angeben.
+
+## Grenzen
+
+- ElevenLabs erzeugt die Melodie selbst. Bei Klassikern wird die traditionelle Melodie im Stil verlangt, aber nicht
+  garantiert; die ersten Klassiker daher anhören. Ohne passenden Gesang: `"klang": "synth"` setzen.
 
 ## Grenzen der kostenlosen Version
 

@@ -45,12 +45,14 @@ def pruefe_lied(cfg):
             n = len(M.zeile_zu_silben(text)[0])
             if n > 15:
                 fehler.append(f"{tname}: {n} Silben – zu lang: „{text}“")
-            elif n not in (6, 7, 8):
+            elif n not in (6, 7, 8) and not cfg.get("herkunft"):
                 warn.append(f"{tname}: {n} Silben (ideal 7): „{text}“")
             eff = z.get("effekt") if isinstance(z, dict) else None
             typ = eff.get("typ") if isinstance(eff, dict) else eff
             if typ and typ not in EFFEKTE:
                 fehler.append(f"{tname}: unbekannter Effekt '{typ}'")
+    if not cfg.get("suchbegriffe"):
+        warn.append("Keine \"suchbegriffe\" – für mehr Reichweite 3–6 Suchbegriffe eintragen")
     if not fehler:
         lied = M.Lied(cfg)
         print(f"  Länge: {int(lied.dauer // 60)}:{int(lied.dauer % 60):02d} min")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""YouTube-Shorts im "Rate mal!"-Format (hochkant 1080x1920, unter 60 Sekunden).
+"""YouTube-Shorts im "Rate mal!"-Format (hochkant 1440x2560 bzw. 1080x1920, unter 60 Sekunden).
 
 Ablauf pro Rätsel: Schattenbild erscheint -> Figur fragt -> Countdown 3-2-1 -> bunte Auflösung
 mit Konfetti und Tusch -> Figur sagt die Antwort. Das Ende geht nahtlos in den Anfang über (Loop).
@@ -10,6 +10,7 @@ mit Konfetti und Tusch -> Figur sagt die Antwort. Das Ende geht nahtlos in den A
 import argparse
 import json
 import math
+import os
 import random
 import subprocess
 import sys
@@ -26,10 +27,13 @@ import bilder as BI      # noqa: E402
 import erstellen as E    # noqa: E402
 import grafik as G       # noqa: E402
 import musik as M        # noqa: E402
+import technik as T       # noqa: E402
+import elevenlabs as EL   # noqa: E402
 import youtube_meta as YM  # noqa: E402
 
 BASIS = Path(__file__).resolve().parent.parent
-W, H, FPS = 1080, 1920, 30
+W, H = T.groesse_hoch()
+FPS = 30
 TICK = 0.8  # Sekunden pro Countdown-Zahl
 
 
@@ -37,13 +41,21 @@ TICK = 0.8  # Sekunden pro Countdown-Zahl
 # Ablauf planen
 # --------------------------------------------------------------------------
 
-def planen(cfg):
+def planen(cfg, el_ordner=None):
+    """el_ordner gesetzt: Sprechstimme von ElevenLabs (wird dort zwischengespeichert), sonst MBROLA."""
     tempo = cfg.get("sprechtempo", 150)
     fragen = cfg.get("fragen", ["Was ist das?", "Und das hier?", "Und jetzt?", "Weißt du es?", "Und das?"])
     t = 0.15
     dinge, sprache, effekte = [], [], []
+    stimme = EL.stimme_fuer(cfg) if el_ordner else None
+    if el_ordner:
+        Path(el_ordner).mkdir(parents=True, exist_ok=True)
 
     def sprich(text, start):
+        if el_ordner:
+            wav, dauer = EL.sprechen(text, stimme, el_ordner)
+            sprache.append({"start": start, "ende": start + dauer, "text": text, "wav": wav})
+            return start + dauer
         pho = M.sprache_pho(text, tempo)
         dauer = sum(d for _, d, _ in pho) / 1000.0
         sprache.append({"start": start, "ende": start + dauer, "text": text, "pho": pho})
@@ -117,25 +129,42 @@ def musik_midi(cfg, dauer, pfad):
     mf.save(pfad)
 
 
+def _sprachspur(plan, pfad):
+    import wave
+    import numpy as np
+    n = int((plan["dauer"] + 1) * 44100)
+    spur = np.zeros(n, np.float32)
+    for sp in plan["sprache"]:
+        with wave.open(str(sp["wav"])) as w:
+            x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
+            x = x.reshape(-1, w.getnchannels()).mean(axis=1)
+        i0 = int(sp["start"] * 44100)
+        x = x[: max(0, n - i0)]
+        spur[i0:i0 + len(x)] += x
+    with wave.open(str(pfad), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(44100)
+        w.writeframes((np.clip(spur, -1, 1) * 32767).astype(np.int16).tobytes())
+
+
 def audio(cfg, plan, tmp):
     musik_midi(cfg, plan["dauer"], tmp / "musik.mid")
     M.begleitung_rendern(tmp / "musik.mid", tmp / "musik.wav")
-    M.stimme_pho(SimpleNamespace(silben=[], sprache=plan["sprache"]), tmp / "stimme.pho")
-    M.stimme_rendern(tmp / "stimme.pho", tmp / "stimme_roh.wav")
+    if plan["sprache"] and "wav" in plan["sprache"][0]:
+        _sprachspur(plan, tmp / "stimme_roh.wav")
+    else:
+        M.stimme_pho(SimpleNamespace(silben=[], sprache=plan["sprache"]), tmp / "stimme.pho")
+        M.stimme_rendern(tmp / "stimme.pho", tmp / "stimme_roh.wav")
     M.effekte_rendern(plan["effekte"], plan["dauer"], tmp / "effekte.wav")
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "stimme_roh.wav", "-af",
-                    "highpass=f=130,lowpass=f=10000,equalizer=f=3200:t=o:w=1.4:g=4,"
-                    "acompressor=threshold=-22dB:ratio=3:attack=4:release=90:makeup=2", tmp / "stimme.wav"],
-                   check=True)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "stimme_roh.wav", "-af", T.STIMM_FILTER,
+                    tmp / "stimme.wav"], check=True)
     d = plan["dauer"]
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "musik.wav", "-i", tmp / "stimme.wav",
-                    "-i", tmp / "effekte.wav", "-filter_complex",
-                    "[1:a]aresample=44100,asplit=2[v1][v2];[0:a]volume=0.6[m0];"
-                    "[m0][v1]sidechaincompress=threshold=0.03:ratio=4:attack=10:release=300[m];"
-                    "[v2]volume=2.2[v];[2:a]aresample=44100,volume=1.0[fx];"
-                    "[m][v][fx]amix=inputs=3:duration=longest:normalize=0,"
-                    f"atrim=0:{d:.2f},afade=t=in:d=0.05,afade=t=out:st={d - 0.6:.2f}:d=0.6,"
-                    "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "44100", "-ac", "2", tmp / "mix.wav"], check=True)
+    T.mischen(tmp / "musik.wav", tmp / "stimme.wav", tmp / "effekte.wav", tmp / "roh_mix.wav", tmp,
+              musik_pegel=0.6, stimme_pegel=2.2, effekt_pegel=1.0, hall_anteil=0.1)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp / "roh_mix.wav", "-af", f"atrim=0:{d:.2f}",
+                    tmp / "roh_mix2.wav"], check=True)
+    T.mastern(tmp / "roh_mix2.wav", tmp / "mix.wav", d, einblenden=0.05, ausblenden=0.6)
 
 
 # --------------------------------------------------------------------------
@@ -329,7 +358,9 @@ def erstellen(pfad):
     ziel.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     print(f"▶ {cfg['titel']}")
-    plan = planen(cfg)
+    el = EL.verfuegbar() and (os.environ.get("LIEDERWIESE_KLANG") or cfg.get("klang") or "auto") != "synth"
+    plan = planen(cfg, ziel / "elevenlabs" if el else None)
+    print(f"  • Stimme: {'ElevenLabs' if el else 'MBROLA (kostenlos)'}")
     if plan["dauer"] > 59:
         print(f"  ⚠ {plan['dauer']:.0f}s – länger als 59s, bitte weniger Rätsel verwenden")
     with tempfile.TemporaryDirectory() as td:
@@ -340,9 +371,7 @@ def erstellen(pfad):
         szene = ShortSzene(cfg, plan, kanal_cfg.get("kanalname", ""))
         ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
                                "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-i", str(tmp / "mix.wav"),
-                               "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
-                               "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart",
-                               str(ziel / "short.mp4")], stdin=subprocess.PIPE)
+                               *T.video_kodierung(ziel / "short.mp4")], stdin=subprocess.PIPE)
         mund = 0.0
         for i in range(n):
             mund = max(env[i], mund * 0.6)
