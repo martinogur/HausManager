@@ -62,9 +62,13 @@ def planen(cfg, el_ordner=None):
         return start + dauer
 
     for i, d in enumerate(cfg["dinge"]):
-        frage = cfg.get("start", "Rate mal! Was ist das?") if i == 0 else fragen[(i - 1) % len(fragen)]
+        frage = d.get("frage") or (cfg.get("start", "Rate mal! Was ist das?") if i == 0
+                                   else fragen[(i - 1) % len(fragen)])
         effekte.append((t, "wusch"))
         q_ende = sprich(frage, t + 0.1)
+        if d.get("geraeusch"):  # z. B. Tiergeräusch nach der Frage
+            effekte.append((q_ende + 0.05, d["geraeusch"]))
+            q_ende += 0.7
         cd = q_ende + 0.25
         for k in range(3):
             effekte.append((cd + k * TICK, "tick"))

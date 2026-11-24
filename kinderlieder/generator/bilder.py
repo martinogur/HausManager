@@ -747,6 +747,93 @@ ANIMIERT.update({"kuscheltier", "schaf", "lampe", "buch"})
 HINTERGRUND.update({"lampe": (40, 53, 107, 255), "kuscheltier": (225, 230, 255, 255)})
 
 
+# --- Nikolaus-Bilder --------------------------------------------------------
+
+def _nikolaus(z, f, t):
+    """Freundlicher Nikolaus: rote Bischofsmütze mit Stern, weißer Bart, lachendes Gesicht."""
+    wackel = math.sin(t * 2.5) * 2
+    rot, gold = (211, 47, 47, 255), (255, 202, 40, 255)
+    # Mütze (Mitra)
+    # spitze Bischofsmütze aus zwei Bögen, die sich oben treffen
+    spitze = (50 + wackel * 0.3, 5)
+    links = [(31 + 19 * (1 - math.cos(math.pi / 2 * k / 10)), 44 - 39 * math.sin(math.pi / 2 * k / 10))
+             for k in range(10)]
+    rechts = [(100 - x, y) for x, y in reversed(links)]
+    z.poly(links + [spitze] + rechts, rot)
+    z.poly([(47.5, 44), (47.5, 9), (52.5, 9), (52.5, 44)], gold, outline=None)
+    z.poly(links + [spitze] + rechts, None)
+    z.rrect(30, 38, 70, 46, 2, gold)
+    z.stern(50, 26, 6.5, WEISS)
+    # Gesicht
+    z.ell(50, 54, 18, 15, HAUT, outline=HAUT_LINIE)
+    # Bart (Wolken)
+    for x, y, r in ((34, 64, 8), (42, 72, 9), (50, 76, 10), (58, 72, 9), (66, 64, 8), (50, 66, 9)):
+        z.ell(x, y, r, r, WEISS, outline=(190, 190, 200, 255))
+    z.ell(50, 66, 14, 7, WEISS, outline=None)
+    # Schnurrbart + Mund
+    z.ell(44, 61, 6, 3, WEISS, outline=(190, 190, 200, 255), winkel=-15)
+    z.ell(56, 61, 6, 3, WEISS, outline=(190, 190, 200, 255), winkel=15)
+    z.ell(50, 65.5, 3.2, 2.2, (198, 40, 40, 255), outline=None)
+    # Augen (fröhlich zugekniffen) und Bäckchen
+    for sx in (-1, 1):
+        z.d.arc([z.P(50 + sx * 7 - 3, 50), z.P(50 + sx * 7 + 3, 55)], 200, 340, fill=LINIE, width=z.lw)
+        z.ell(50 + sx * 12, 57, 3.2, 2, (244, 143, 177, 255), outline=None)
+    z.ell(50, 57, 2.6, 2.2, (239, 154, 154, 255), outline=None)
+    for k, (x, y) in enumerate(((18, 26), (82, 30))):
+        a = t * 3 + k * 2.1
+        z.stern(x, y + 3 * math.sin(a), 4 * (0.6 + 0.4 * math.sin(a * 2)), gold)
+
+
+def _teller(z, f, t):
+    """Nikolausteller mit Mandarine, Apfel, Nüssen und Schokoladenstern."""
+    z.ell(50, 66, 40, 16, (144, 202, 249, 255), outline=(30, 136, 229, 255))
+    z.ell(50, 64, 31, 11, WEISS, outline=None)
+    # Nüsse
+    for x, y in ((28, 62), (34, 68), (70, 66)):
+        z.ell(x, y, 5, 4, (161, 110, 70, 255))
+        z.linie([(x - 3, y), (x + 3, y)], (120, 80, 50, 255), 0.8)
+    # Apfel
+    z.ell(62, 52, 12, 11, (229, 57, 53, 255))
+    z.linie([(62, 42), (63, 36)], (121, 85, 72, 255), 1.4)
+    z.ell(67, 38, 4, 2, (76, 175, 80, 255), winkel=-30)
+    z.ell(58, 48, 3, 2, (255, 255, 255, 140), outline=None)
+    # Mandarine
+    z.ell(42, 52, 12, 11, (255, 152, 0, 255))
+    for k in range(5):
+        a = math.radians(k * 72)
+        z.ell(42 + math.cos(a) * 6, 52 + math.sin(a) * 5, 0.9, 0.9, (230, 120, 0, 255), outline=None)
+    z.ell(42, 41.5, 2.5, 1.6, (76, 175, 80, 255), outline=None)
+    # Schokoladenstern
+    z.stern(52, 69, 7, (121, 85, 72, 255))
+    for k in range(3):
+        a = t * 3 + k * 2.1
+        z.stern(22 + k * 28, 18 + 3 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+def _herz(z, f, t):
+    """Lachendes Herz, das sanft pocht."""
+    s = 1 + 0.06 * max(0.0, math.sin(t * 5))
+    pts = []
+    for k in range(60):
+        a = 2 * math.pi * k / 60
+        x = 16 * math.sin(a) ** 3
+        y = -(13 * math.cos(a) - 5 * math.cos(2 * a) - 2 * math.cos(3 * a) - math.cos(4 * a))
+        pts.append((50 + x * 2.2 * s, 52 + y * 2.2 * s))
+    z.poly(pts, (233, 30, 99, 255))
+    z.ell(36, 38, 6, 4, (255, 255, 255, 120), outline=None, winkel=-35)
+    for sx in (-1, 1):
+        z.ell(50 + sx * 9, 48, 2.4, 3, LINIE, outline=None)
+        z.ell(50 + sx * 15, 56, 3.5, 2, (248, 187, 208, 255), outline=None)
+    z.d.arc([z.P(43, 50), z.P(57, 60)], 20, 160, fill=LINIE, width=z.lw + 1)
+    for k in range(3):
+        a = t * 3 + k * 2.1
+        z.stern(20 + k * 30, 14 + 3 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+ZEICHNER.update({"nikolaus": _nikolaus, "teller": _teller, "herz": _herz})
+ANIMIERT.update({"nikolaus", "teller", "herz"})
+
+
 def schatten(img, farbe=(70, 50, 110)):
     """Schattenbild (Silhouette) für Rätsel: gleiche Form, eine Farbe."""
     a = img.getchannel("A")

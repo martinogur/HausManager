@@ -287,7 +287,15 @@ class Lied:
         silben, wortinfo = zeile_zu_silben(text)
         n = len(silben)
         eigene = teil.get("melodie")
-        if eigene and slot < len(eigene) and len(eigene[slot]) == n:
+        if eigene and slot < len(eigene) and len(eigene[slot]) == n and all(
+                isinstance(x, (list, tuple)) for x in eigene[slot]):
+            # eigene Tonfolge MIT Rhythmus: [stufe, achtel] oder [stufe, achtel, stufe2] (Melisma: 2 Töne auf
+            # einer Silbe, der zweite ab der Hälfte); Summe der Achtel = 16 (2 Takte)
+            noten = [(x[0], x[1]) for x in eigene[slot]]
+            for s, x in zip(silben, eigene[slot]):
+                if len(x) > 2:
+                    s["stufe2"] = x[2]
+        elif eigene and slot < len(eigene) and len(eigene[slot]) == n:
             rh = [l for _, l in anpassen([(0, l) for l in GRUNDRHYTHMUS], n)]
             noten = list(zip(eigene[slot], rh))
         else:
@@ -363,7 +371,11 @@ class Lied:
                     midi = stufe_zu_midi(self.grund, st)
                     b0, dl = t + pos / 2, l / 2
                     pos += l
-                    self.noten_melodie.append((b0, dl, midi, True))
+                    if "stufe2" in s_obj:
+                        s_obj["midi2"] = stufe_zu_midi(self.grund, s_obj["stufe2"])
+                        self.noten_melodie += [(b0, dl / 2, midi, True), (b0 + dl / 2, dl / 2, s_obj["midi2"], True)]
+                    else:
+                        self.noten_melodie.append((b0, dl, midi, True))
                     s_obj.update({"start": self.sek(b0), "dauer": self.sek(dl), "midi": midi,
                                   "zeilenende": False})
                     self.silben.append(s_obj)
@@ -582,7 +594,13 @@ def stimme_pho(lied, pfad):
             ende = min(ende, nxt["start"] * 1000 - n_ons * 0.8)
         cod_t = sum(d for _, d in cod)
         vokal = max(70, ende - pos - cod_t)
-        ph(s["kern"][0], vokal, f, vib=True)
+        if s.get("midi2"):  # Melisma: Vokal gleitet zur Hälfte der Note auf den zweiten Ton
+            f2 = hz(s["midi2"])
+            mitte = min(85.0, max(15.0, 100 * (start + dauer / 2 - pos) / vokal))
+            raus(s["kern"][0], vokal, [(0, f * 0.985), (8, f), (mitte - 6, f), (mitte + 6, f2), (100, f2)])
+            f = f2
+        else:
+            ph(s["kern"][0], vokal, f, vib=True)
         for p, d in cod:
             ph(p, d, f)
     zeilen.append("_ 500")

@@ -11,7 +11,7 @@ Zusatzstrophen anderer Kanäle oder Verlage. Herkunft in der Lied-Datei unter `"
 Reihenfolge nach Jahreszeit; der Tagesagent nimmt im Wechsel einen Klassiker und eine eigene Idee, bei passender
 Jahreszeit auch zwei Klassiker hintereinander.
 
-- [ ] **Lasst uns froh und munter sein** (Nikolaus, Hopsi) – Text und Melodie volkstümlich (19. Jh.) – vor dem 6. Dezember
+- [x] **Lasst uns froh und munter sein** (Nikolaus, Hopsi) – Text und Melodie volkstümlich (19. Jh.) – vor dem 6. Dezember
 - [ ] **Schneeflöckchen, Weißröckchen** (Bella) – Text Hedwig Haberkern (†1902), Melodie volkstümlich
 - [ ] **Morgen kommt der Weihnachtsmann** (alle drei) – Text Hoffmann von Fallersleben (†1874), Melodie volkstümlich (französisch)
 - [ ] **Kling, Glöckchen, klingelingeling** (Bella) – Text Karl Enslin (†1875), Melodie volkstümlich
@@ -67,7 +67,7 @@ Jahreszeit auch zwei Klassiker hintereinander.
 ## Shorts (1 pro Tag, „Rate mal!“-Format)
 
 - [x] **Welche Farbe ist das?** (Dinge in einer Farbe → Farbe raten)
-- [ ] **Wer macht dieses Geräusch?** (Tiergeräusch hören → Tier erscheint)
+- [x] **Wer macht dieses Geräusch?** (Tiergeräusch hören → Tier erscheint)
 - [ ] **Wie viele sind das?** (Möhren, Sterne, Bälle zählen)
 - [ ] **Welche Form ist das?** (Kreis, Dreieck, Viereck, Stern, Herz)
 - [ ] **Was ist im Winter?** (Schneemann, Mütze, Schlitten, Schneeflocke)
@@ -82,3 +82,5 @@ Jahreszeit auch zwei Klassiker hintereinander.
 <!-- Der Tagesagent trägt hier ein: Datum – Titel – Datei -->
 - 2026-11-24 – Schlaf gut, Bruno – Das Gute-Nacht-Lied mit Bruno Bär – `songs/07_bruno_baer_gute_nacht.json`
 - 2026-11-24 – Welche Farbe ist das? Rate mal mit Bella Biene – `shorts/04_welche_farbe.json`
+- 2026-11-24 – Lasst uns froh und munter sein – Nikolauslied mit Hopsi Hase – `songs/08_hopsi_hase_nikolaus.json`
+- 2026-11-24 – Wer macht dieses Geräusch? Tierstimmen raten mit Bruno Bär – `shorts/05_wer_macht_geraeusch.json`

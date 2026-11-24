@@ -1,0 +1,21 @@
+{
+  "titel": "Wer macht dieses Geräusch? Tierstimmen raten mit Bruno Bär 🐻 Ratespiel für Kinder",
+  "figur": {"typ": "baer"},
+  "banner": "WER MACHT DAS?",
+  "akzent": "#fb8c00",
+  "palette": 4,
+  "tempo": 116,
+  "tonart": "F",
+  "instrument": "xylophon",
+  "dinge": [
+    {"bild": "schaf", "frage": "Mäh, mäh! Wer macht so? Rate mal!", "wort": "SCHAF", "antwort": "Das Schaf! Mäh, mäh!", "farbe": "#8d6e63"},
+    {"bild": "kueken", "frage": "Piep, piep! Wer ist das?", "geraeusch": "piep", "wort": "KÜKEN", "antwort": "Das Küken! Piep, piep!", "farbe": "#f9b800"},
+    {"bild": "frosch", "frage": "Quak, quak! Wer macht so?", "geraeusch": "quak", "wort": "FROSCH", "antwort": "Der Frosch! Quak, quak!", "farbe": "#43a047"},
+    {"bild": "figur:katze", "frage": "Miau! Wer ist das?", "wort": "KATZE", "antwort": "Die Katze! Miau, miau!", "farbe": "#f4511e"},
+    {"bild": "figur:biene", "frage": "Summ, summ! Wer fliegt da?", "geraeusch": "summ", "wort": "BIENE", "antwort": "Bella, die Biene! Summ, summ!", "farbe": "#f9b800"}
+  ],
+  "ende": "Wie viele Tiere hast du erraten?",
+  "beschreibung": "Mäh, piep, quak, miau oder summ – wer macht dieses Geräusch? Rate mit Bruno Bär die Tierstimmen! 3, 2, 1 – und los! Ein Tier-Ratespiel für Kinder ab 2 Jahren.",
+  "suchbegriffe": ["Tierstimmen für Kinder", "Tiergeräusche raten", "Wer macht dieses Geräusch", "Tierstimmen lernen"],
+  "tags": ["Ratespiel für Kinder", "Tiere für Kinder", "Kinder Quiz", "Rate mal", "Liederwiese"]
+}

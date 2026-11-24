@@ -74,14 +74,15 @@ Bitte Claude: *„Schreib ein neues Lied für den Kinderlieder-Generator über �
 
 - **Zeilen:** 7 Silben sind ideal (Melodie-Grundmaß), 5 bis 9 gehen auch (höchstens 15). Paarreime.
 - **Bilder** (`bild`): `blume`, `erdbeere`, `feuerwehr`, `sonne`, `banane`, `kueken`, `himmel`, `meer`, `fisch`,
-  `wecker`, `zahnbuerste`, `zahnpasta`, `zaehneputzen` (animiert), `mond`, `bett`, `sterne`, `moehre`, `haende`, `wasserhahn`, `seife`, `handtuch`, `regenbogen`, `blatt`, `frosch`, `traube`, `pflaume`, `kreis`, `dreieck`, `viereck`, `formen`, `ball`, `partyhut`, `pizza`, `fenster`, `geschenk`, `kuscheltier` (Schäfchen), `schaf`, `lampe` (Nachtlicht), `buch`
+  `wecker`, `zahnbuerste`, `zahnpasta`, `zaehneputzen` (animiert), `mond`, `bett`, `sterne`, `moehre`, `haende`, `wasserhahn`, `seife`, `handtuch`, `regenbogen`, `blatt`, `frosch`, `traube`, `pflaume`, `kreis`, `dreieck`, `viereck`, `formen`, `ball`, `partyhut`, `pizza`, `fenster`, `geschenk`, `kuscheltier` (Schäfchen), `schaf`, `lampe` (Nachtlicht), `buch`, `nikolaus`, `teller` (Nikolausteller), `herz`
 - **Teil-Optionen:**
   - `"zahlen": true` (für einen Teil oder eine einzelne Zeile): Jedes gesungene Zahlwort (eins … zwölf, null) erscheint groß mit genau so vielen Möhren. Mit `"zaehlobjekt": "punkt"` werden stattdessen Punkte gezeigt, mit `"schaf"` Schäfchen.
   - `"nacht": true`: Nachthimmel mit Mond und Sternen. Geht auch bei Sprechteilen (`{"sprich": "…", "nacht": true}`);
     `"ende_nacht": true` (oberste Ebene) zeigt auch den Schluss nachts.
   - `"putzen": true`: Die Figur putzt sich mit einer Zahnbürste die Zähne.
   - `"seifenblasen": true`: Seifenblasen steigen im ganzen Bild auf.
-  - `"melodie": [[…], …]`: eigene Tonfolge (Tonstufen 0 = do … 7 = do') pro Zeile.
+  - `"melodie": [[…], …]`: eigene Tonfolge (Tonstufen 0 = do … 7 = do') pro Zeile. Mit Rhythmus (für Klassiker):
+    je Silbe `[stufe, achtel]` oder `[stufe, achtel, stufe2]` (Melisma: zwei Töne auf einer Silbe), Summe 16 Achtel je Zeile.
 - **Effekte** (`effekt`): `tatue`, `piep`, `boing`, `schrubb`, `glitzer`, `klingel`, `gaehn`, `summ`, `plopp`, `platsch`, `blubb`, `quak`.
   Bei jeder neuen Einblendung ertönt automatisch ein „Plopp“.
 - **Vorschaubild:** `"vorschau_nacht": true` zeigt es als Nachtbild, `"vorschau_bilder": ["…", "…", "…"]` wählt die drei Bilder unten links selbst aus.
@@ -126,6 +127,7 @@ erraten?“) geht nahtlos in den Anfang über, damit das Short in Schleife läuf
 Sekunden passiert etwas Neues, und das Video ist kurz und läuft gern mehrmals.
 
 Aufbau der Datei (`shorts/*.json`): `titel`, `figur`, `banner`, `akzent`, `palette` (0–4), `tempo`, `instrument`,
-`start` (erste Frage), `fragen` (weitere Fragen), `dinge` (Liste mit `bild`, `wort`, `antwort`, `farbe`), `ende`.
+`start` (erste Frage), `fragen` (weitere Fragen), `dinge` (Liste mit `bild`, `wort`, `antwort`, `farbe`, optional
+`frage` (eigene Frage für dieses Rätsel) und `geraeusch` (Effekt nach der Frage, z. B. `quak`, `piep`, `summ`)), `ende`.
 Als `bild` gehen alle Bilder von oben sowie `figur:biene`, `figur:baer`, `figur:hase`, `figur:katze` und `figur:frosch`.
 Mit **4 bis 5 Rätseln** bleibt das Short unter 60 Sekunden.

@@ -35,7 +35,10 @@ def pruefe_lied(cfg):
         if isinstance(name, dict) and len(name.get("sprich", "")) > 160:
             warn.append(f"Sprechtext sehr lang ({len(name['sprich'])} Zeichen): {name['sprich'][:40]}…")
     for tname, teil in cfg.get("teile", {}).items():
-        if len(teil.get("zeilen", [])) != 4:
+        for i, mel in enumerate(teil.get("melodie", [])):
+            if mel and isinstance(mel[0], (list, tuple)) and sum(x[1] for x in mel) != 16:
+                fehler.append(f"{tname}: Melodie Zeile {i + 1} hat {sum(x[1] for x in mel)} statt 16 Achtel")
+        if len(teil.get("zeilen", [])) != 4 and not cfg.get("herkunft"):
             warn.append(f"{tname}: {len(teil.get('zeilen', []))} Zeilen (empfohlen: 4)")
         for b in [teil.get("bild")] + [z.get("bild") for z in teil["zeilen"] if isinstance(z, dict)]:
             if b and b not in BEKANNTE_BILDER:
@@ -67,6 +70,8 @@ def pruefe_short(cfg):
         b = d.get("bild", "")
         if not (b in BEKANNTE_BILDER or (b.startswith("figur:") and b.split(":")[1] in G.FIGUREN)):
             fehler.append(f"Bild '{b}' gibt es nicht")
+        if d.get("geraeusch") and d["geraeusch"] not in EFFEKTE:
+            fehler.append(f"Unbekanntes Geräusch '{d['geraeusch']}'")
     if not 3 <= len(cfg.get("dinge", [])) <= 5:
         warn.append(f"{len(cfg.get('dinge', []))} Rätsel (empfohlen 4–5)")
     if not fehler:
