@@ -1,0 +1,40 @@
+name: Webseite veroeffentlichen (GitHub Pages)
+
+# Veroeffentlicht webseite/public vom Branch "webseite-live".
+# Der Branch wird nur nach Freigabe des Inhabers ("Webseite freigeben") aktualisiert.
+# Laeuft alle 30 Minuten und auf Knopfdruck (Actions -> Run workflow).
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7,37 * * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Freigegebene Version holen
+        uses: actions/checkout@v4
+        with:
+          ref: webseite-live
+      - name: Pages vorbereiten
+        uses: actions/configure-pages@v5
+      - name: Ordner webseite/public hochladen
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: webseite/public
+      - name: Veroeffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v4
