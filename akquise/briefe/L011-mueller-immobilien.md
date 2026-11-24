@@ -33,7 +33,7 @@ Genau das übernimmt Hausmeister Helden, ein Betrieb aus Gütersloh:
 - **Treppenhausreinigung, Winterdienst, Gartenarbeit, Mülltonnen-Service und Kleinreparaturen** aus einer Hand.
 - **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Sie erfahren von Mängeln früh und schwarz auf weiß, bevor daraus ein größerer Schaden oder eine Mieterbeschwerde wird.
 - **Ein fester Ansprechpartner:** ich selbst, per Telefon und WhatsApp. Reaktion innerhalb von 24 Stunden.
-- **Offene Preise:** zum Beispiel Treppenhausreinigung ab 8 € pro Einheit und Woche, Mülltonnen-Service 5 € pro Einheit und Monat laut Webseite [OFFEN: netto/brutto].
+- **Offene Preise nach Aufwand:** zum Beispiel Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, Mülltonnen-Service für ein typisches Mehrfamilienhaus meist 70–100 € netto im Monat. Nach der Besichtigung nenne ich Ihnen einen festen Monatspreis.
 
 **Mein Vorschlag:** Ich sehe mir eines Ihrer Häuser kostenlos an und schicke Ihnen danach ein unverbindliches Angebot.
 

@@ -22,7 +22,7 @@ Wie besprochen, würden wir Ihre Objekte in Steinhagen auf eine feste Tour legen
 - Treppenhausreinigung, Winterdienst, Gartenarbeit, Mülltonnen-Service, Kleinreparaturen
 - Gebäudekontrolle mit Protokoll bei jedem Einsatz, kostenlos
 - ein fester Ansprechpartner (ich), Reaktion innerhalb von 24 Stunden
-- Treuerabatt 10 % bei wöchentlicher Reinigung (4× im Monat)
+- feste Monatspreise nach Aufwand, zum Beispiel Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, Winterdienst ab 220 € je Saison + 9,50 € je Meter inklusive Einsatzprotokoll
 
 [Wenn Termin vereinbart:] Die Besichtigung am [Datum, Uhrzeit] habe ich notiert. Bitte schicken Sie mir vorab die Adressen der Objekte, dann plane ich die Runde.
 [Wenn noch kein Termin:] Passt Ihnen [Termin 1] oder [Termin 2]?

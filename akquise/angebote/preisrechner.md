@@ -62,13 +62,13 @@ Objektdaten wie in `preiskalkulation.md` (Beispiel „MFH 6 WE“): 25 m Gehweg,
 |---|---|
 | Gesamt pro Monat netto | **359,98 €** (rund 360 €) |
 | zzgl. 19 % USt. | 68,40 € |
-| Gesamt pro Monat brutto | **428,37 €** |
+| Gesamt pro Monat brutto | **428,38 €** |
 | Jahreswert netto | 4.319,72 € |
 
 ### Varianten desselben Objekts
 | Variante | Monat netto | Monat brutto (19 %) |
 |---|---|---|
-| Nur Treppenhaus wöchentlich + Mülltonnen (typisches Einstiegspaket) | 226,34 € | 269,35 € |
+| Nur Treppenhaus wöchentlich + Mülltonnen (typisches Einstiegspaket) | 226,34 € | 269,34 € |
 | Treppenhaus **14-täglich**: (12 € + 3 × 8 €) × 1,15 × 26/12 = 89,70 € | 89,70 € | 106,74 € |
 | Kleinreparatur 45 Min. in Gütersloh: 3 × 13,50 € + 14,50 € Anfahrt (einmalig) | 55,00 € | 65,45 € |
 

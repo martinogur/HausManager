@@ -56,7 +56,7 @@ Bei „Nein, keine Zeit“: „Wann passt es Ihnen besser?“ Termin notieren un
 Bei Genossenschaften und Firmen mit eigenen Hausmeistern (L001, L018, L020): „Wir wollen Ihre Leute nicht ersetzen, sondern einspringen, wenn es eng wird.“
 
 **„Das ist uns zu teuer.“ / „Was kostet das?“**
-> „Verständlich. Unsere Richtpreise stehen offen auf der Webseite, zum Beispiel Treppenhausreinigung ab 8 € pro Einheit und Woche [OFFEN: netto/brutto]. Bei wöchentlicher Reinigung gibt es 10 % Treuerabatt. Und die Gebäudekontrolle mit Protokoll kostet nichts extra. Was genau es bei Ihrem Objekt kostet, kann ich erst nach der kostenlosen Besichtigung seriös sagen. Wann passt es Ihnen?“
+> „Verständlich. Wir rechnen nach Aufwand, nicht pauschal pro Wohnung. Ein Treppenhaus mit 3 Etagen kostet wöchentlich zum Beispiel ab ca. 156 € netto im Monat, Winterdienst ab 220 € je Saison plus 9,50 € je Meter, inklusive Einsatzprotokoll. Sie bekommen einen festen Monatspreis pro Objekt, aufgeteilt nach Betriebskostenarten. Was genau es bei Ihrem Objekt kostet, kann ich erst nach der kostenlosen Besichtigung seriös sagen. Wann passt es Ihnen?“
 Keine Rabatte oder Sonderpreise am Telefon zusagen.
 
 **„Schicken Sie mir was per Mail.“**
@@ -116,4 +116,4 @@ Ein „Ja“ gilt für diesen Zusammenhang, nicht für Newsletter oder regelmä�
 
 ## Verbesserungen für die nächste Version
 - Nach den ersten 10 Anrufen: Welche Einwände kamen am häufigsten? Was hat zum Termin geführt? Ergänzen.
-- Offene Punkte: Dauer der Besichtigung, netto oder brutto, Einsatzzeiten im Winterdienst (früh morgens, Sonn- und Feiertage), Nachweise (Betriebshaftpflicht).
+- Offene Punkte: Dauer der Besichtigung, Einsatzzeiten im Winterdienst (früh morgens, Sonn- und Feiertage), Nachweise (Betriebshaftpflicht).

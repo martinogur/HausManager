@@ -33,7 +33,7 @@ Ich schreibe Ihnen von Inhaber zu Inhaber. Hausmeister Helden kommt aus Gütersl
 - **Ein fester Ansprechpartner:** ich selbst. Sie rufen an oder schreiben per WhatsApp, und ich kümmere mich.
 - **Reaktion innerhalb von 24 Stunden.**
 - **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Wir melden Schäden, bevor Mieter anrufen.
-- **Transparente Preise:** Kleinreparaturen 35 € pro Stunde, Gartenarbeit 30 € pro Einheit und Monat laut unserer Webseite [OFFEN: netto/brutto].
+- **Transparente Preise nach Aufwand:** Kleinreparaturen 53,50 € netto je Stunde, abgerechnet in 15-Minuten-Schritten. Gartenpflege nach Fläche statt pauschal, meist 0,30–0,40 € netto je m² Grünfläche und Monat.
 
 **Mein Vorschlag:** Ich sehe mir ein Objekt in Verl kostenlos an und schicke Ihnen ein unverbindliches Angebot. Dann vergleichen Sie in Ruhe mit Ihren bisherigen Dienstleistern.
 

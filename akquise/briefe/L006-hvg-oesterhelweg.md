@@ -6,7 +6,7 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Große Verwaltung: Rahmenvereinbarung über mehrere Objekte |
 | grund (Leadliste) | Etablierte Hausverwaltung im Kreis Gütersloh für WEG-, Miet-, Büro- und Gewerbeobjekte. Gründungsjahr nur laut Verzeichnis, deshalb im Brief nicht genannt |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf, Preise netto/brutto |
+| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
 
 ---
 
@@ -33,7 +33,7 @@ Hausmeister Helden aus Gütersloh bietet Ihnen dafür eine **Rahmenvereinbarung 
 - **Reaktion innerhalb von 24 Stunden**, per Telefon und WhatsApp.
 - **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Sie wissen schriftlich, was vor Ort los ist, auch bei Gewerbeobjekten mit Publikumsverkehr.
 - **Treppenhausreinigung, Winterdienst, Gartenarbeit, Mülltonnen-Service und Kleinreparaturen** aus einer Hand.
-- **Transparente Preise:** Richtpreise offen auf unserer Webseite, zum Beispiel Kleinreparaturen 35 € pro Stunde [OFFEN: netto/brutto].
+- **Transparente Preise nach Aufwand:** Sie bekommen einen festen Monatspreis pro Objekt, getrennt nach Betriebskostenarten. Zum Beispiel kostet ein Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat. Kleinreparaturen rechnen wir getrennt ab (53,50 € netto je Stunde), damit die Nebenkostenabrechnung sauber bleibt.
 
 **Mein Vorschlag:** Wir beginnen mit einem Objekt Ihrer Wahl. Ich sehe es mir kostenlos an, Sie bekommen ein unverbindliches Angebot und sehen unsere Arbeit, bevor Sie weitere Objekte übertragen.
 

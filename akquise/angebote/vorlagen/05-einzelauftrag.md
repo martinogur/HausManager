@@ -22,19 +22,23 @@ vielen Dank für Ihre Anfrage. Für die folgenden Arbeiten an {{Objektadresse}} 
 ### 1. Arbeiten
 | Pos. | Beschreibung | Menge | Einheit | Satz netto | Betrag netto |
 |---|---|---|---|---|---|
-| 1 | {{z. B. Haustür nachstellen, Schließblech justieren}} | {{1,5}} | Std. | 35,00 € | {{€}} |
-| 2 | {{z. B. 3 Leuchtmittel / Bewegungsmelder tauschen}} | {{1}} | Std. | 35,00 € | {{€}} |
+| 1 | {{z. B. Haustür nachstellen, Schließblech justieren}} | {{1,5}} | Std. | 53,50 € | {{€}} |
+| 2 | {{z. B. 3 Leuchtmittel / Bewegungsmelder tauschen}} | {{1}} | Std. | 53,50 € | {{€}} |
 | 3 | Material lt. Beleg (geschätzt) | | | | {{€}} |
-| 4 | Anfahrt | 1 | pauschal | [OFFEN] | {{€}} |
-| 5 | *Entrümpelung:* Arbeitszeit | {{Personen × Std.}} | Std. | 35,00 € [OFFEN: gleicher Satz?] | {{€}} |
+| 4 | Anfahrt ☐ Gütersloh bis 10 km ☐ Umland 10–25 km | 1 | Fahrt | 14,50 € / 36,50 € | {{€}} |
+| 5 | *Entrümpelung:* Arbeitszeit | {{Personen × Std.}} | Std. | 53,50 € | {{€}} |
 | 6 | *Entrümpelung:* Entsorgung (Volumen ca. {{m³}}) | | | [OFFEN: Satz je m³ / nach Beleg] | {{€}} |
 | | **Summe netto** | | | | **{{€}}** |
-| | zzgl. USt. {{19 %}} [OFFEN: Kleinunternehmer?] | | | | {{€}} |
+| | zzgl. 19 % USt. | | | | {{€}} |
 | | **Summe brutto** | | | | **{{€}}** |
+
+Alle Preise netto zzgl. 19 % MwSt. (Preisliste vom 24.11.2026). Arbeitszeit 53,50 € je Stunde, abgerechnet
+je angefangene 15 Minuten (13,50 €), mindestens 30 Minuten (27,00 €) je Auftrag.
+[OFFEN: Kleinunternehmerregelung § 19 UStG mit Steuerberater klären.]
 
 ☐ **Festpreis** – der Betrag gilt verbindlich für den beschriebenen Umfang.
 ☐ **Kostenvoranschlag nach Aufwand** – abgerechnet wird die tatsächliche Zeit
-{{je angefangene 15 Minuten}} [OFFEN]. Wird der Betrag voraussichtlich um mehr als {{15–20}} %
+je angefangene 15 Minuten (13,50 € netto). Wird der Betrag voraussichtlich um mehr als {{15–20}} %
 überschritten, melde ich mich vorher bei Ihnen (§ 649 BGB).
 
 ### 2. Nicht enthalten

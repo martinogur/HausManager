@@ -1,4 +1,4 @@
-# Vorlage: Winterdienst-Saisonvertrag (Oktober bis März) mit Einsatzdokumentation
+# Vorlage: Winterdienst-Saisonvertrag (November bis März) mit Einsatzprotokoll
 
 > **Vor Verwendung rechtlich prüfen lassen.** Dies ist ein Vertragsmuster und keine Rechtsberatung.
 > Das gilt besonders für die Übernahme der Räum- und Streupflicht. Ohne bestätigte
@@ -33,14 +33,17 @@ dokumentieren jeden Einsatz.
 ### 2. Preis
 | Pos. | Leistung | Menge | Satz netto | Betrag netto |
 |---|---|---|---|---|
-| 1 | Winterdienst-Bereitschaft und Einsätze, 01.10.–31.03. (26 Wochen) | {{WE}} Einheiten | ab 8,00 € / Einheit / Woche | {{WE × 8 × 26}} € |
-| 2 | Zuschlag große Flächen (Gehweg über {{x}} m) | {{m}} | [OFFEN: Satz je m] | {{€}} |
-| 3 | Streumittel | pauschal | [OFFEN: inklusive oder nach Verbrauch?] | {{€}} |
+| 1 | Grundpauschale je Objekt: Bereitschaft, Wetterkontrolle, Kontrollfahrten, Einsatzprotokoll, Saison 01.11.–31.03. | 1 Objekt | 220,00 € je Saison | 220,00 € |
+| 2 | Räumen und Streuen je laufender Meter Gehweg/Zuweg (Summe Abschnitt 1), inkl. Streugut | {{lfd. m}} | 9,50 € je lfd. Meter und Saison | {{m × 9,50}} € |
 | | **Saisonpreis netto** | | | **{{€}}** |
-| | zzgl. USt. {{19 %}} [OFFEN: Kleinunternehmer?] | | | {{€}} |
+| | zzgl. 19 % USt. | | | {{€}} |
 | | **Saisonpreis brutto** | | | **{{€}}** |
 
-Zahlweise: {{6 Monatsraten Okt–März zu je … € netto}} oder {{einmalig zum 15.10.}} [OFFEN: Standard festlegen].
+Beispiel: 25 m Gehweg und Zuwege = 220 € + 25 × 9,50 € = 457,50 € netto je Saison.
+Einzeleinsatz ohne Vertrag (bis 25 m, Gütersloh): 43,50 € netto je Einsatz.
+Alle Preise netto zzgl. 19 % MwSt. (Preisliste vom 24.11.2026). [OFFEN: Kleinunternehmerregelung § 19 UStG mit Steuerberater klären.]
+
+Zahlweise: {{5 Monatsraten Nov–März zu je … € netto}} oder {{einmalig zum 15.11.}} [OFFEN: Standard festlegen].
 Der Preis ist eine Pauschale. Er gilt unabhängig davon, wie oft es schneit, weil wir die ganze
 Saison über einsatzbereit sind.
 
@@ -76,8 +79,8 @@ für die vereinbarten Flächen.*
 
 ### 5. Vertragsbedingungen
 - **Angebot gültig bis:** {{Datum}} [OFFEN: Vorschlag 14 Tage, weil die Saison läuft]
-- **Laufzeit:** eine Saison, {{01.10.2026}} bis {{31.03.2027}}. Bei Abschluss während der Saison gilt
-  der Preis anteilig für die verbleibenden Wochen.
+- **Laufzeit:** eine Saison, {{01.11.2026}} bis {{31.03.2027}}. Bei Abschluss während der Saison gilt
+  der Preis anteilig für die verbleibenden Monate.
 - **Verlängerung:** ☐ endet automatisch ☐ verlängert sich um eine Saison, wenn nicht bis
   {{31.07.}} in Textform gekündigt wird [OFFEN: Standard wählen; bei Verbrauchern § 309 Nr. 9 BGB beachten]
 - **Kündigung:** Während der Saison ist nur die außerordentliche Kündigung aus wichtigem Grund möglich.
@@ -86,6 +89,7 @@ für die vereinbarten Flächen.*
   nach Dringlichkeit. Zuerst sichern wir die Hauszugänge.
 
 ### 6. Dokumentation
+Das Einsatzprotokoll ist im Saisonpreis enthalten.
 Für jeden Einsatz halten wir Datum, Uhrzeit, Wetterlage, Maßnahme, Streumittel und Kürzel fest,
 auf Wunsch mit Zeitstempelfoto. Den Nachweis bekommen Sie monatlich per {{E-Mail}}. Im Schadensfall
 erhalten Sie ihn sofort. Wir bewahren die Unterlagen {{3}} Jahre auf (regelmäßige

@@ -26,11 +26,11 @@ Platzhalter in `[eckigen Klammern]` ersetzen.
 
 | Kürzel | Text |
 |---|---|
-| `/angebot` | Gern erstellen wir Ihnen ein kostenloses Angebot! Bitte senden Sie mir: Adresse, Art der Leistung, ungefähre Größe (Wohneinheiten / Fläche) und gewünschten Starttermin. Sie erhalten das Angebot innerhalb von 24 Stunden. |
-| `/preis` | Unsere Preise hängen von Objektgröße und Umfang ab. Damit ich Ihnen einen fairen Festpreis nennen kann: Wie viele Wohneinheiten bzw. wie viel Fläche hat das Objekt, und welche Leistungen wünschen Sie? |
-| `/winter` | Winterdienst ❄️: Wir räumen und streuen zuverlässig nach Ihrer Räum- und Streupflicht – mit Einsatzdokumentation, damit Sie haftungsrechtlich auf der sicheren Seite sind. Für welche Adresse und welche Gehweglänge darf ich Ihnen ein Saisonangebot machen? |
+| `/angebot` | Gern erstellen wir Ihnen ein kostenloses Angebot! Bitte senden Sie mir: Adresse, Art der Leistung, ungefähre Größe (Treppenhäuser und Etagen, Meter Gehweg, m² Grünfläche) und gewünschten Starttermin. Sie erhalten das Angebot innerhalb von 24 Stunden. |
+| `/preis` | Wir rechnen nach Aufwand, nicht pro Wohnung. Beispiele (netto zzgl. 19 % MwSt.): Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € im Monat, Winterdienst ab 220 € je Saison + 9,50 € je Meter, Kleinreparaturen 53,50 € je Stunde. Damit ich Ihnen einen festen Preis nennen kann: Wie viele Treppenhäuser und Etagen, wie viele Meter Gehweg bzw. m² Grünfläche hat das Objekt, und welche Leistungen wünschen Sie? |
+| `/winter` | Winterdienst ❄️: Wir räumen und streuen zuverlässig nach Ihrer Räum- und Streupflicht, inklusive Streugut und Einsatzprotokoll. Preis: ab 220 € je Saison + 9,50 € je Meter (netto zzgl. 19 % MwSt.). Für welche Adresse und welche Gehweglänge darf ich Ihnen ein Saisonangebot machen? |
 | `/garten` | Gartenpflege 🌿: Rasen mähen, Hecken schneiden, Laub entfernen, Grünschnitt-Entsorgung – einmalig oder als Jahresvertrag. Schicken Sie mir gern ein paar Fotos der Fläche, dann nenne ich Ihnen den Preis. |
-| `/objekt` | Objektbetreuung 🏢: Fester Ansprechpartner, regelmäßige Kontrollgänge, Kleinreparaturen, Treppenhaus, Außenanlagen, Mülltonnen – alles mit Fotodokumentation. Wie viele Objekte bzw. Einheiten betreuen Sie? Gern komme ich zu einer kostenlosen Objektbegehung vorbei. |
+| `/objekt` | Objektbetreuung 🏢: Fester Ansprechpartner, regelmäßige Kontrollgänge, Kleinreparaturen, Treppenhaus, Außenanlagen, Mülltonnen – alles mit Fotodokumentation. Wie viele Objekte betreuen Sie? Gern komme ich zu einer kostenlosen Objektbegehung vorbei. |
 | `/termin` | Perfekt, dann halte ich fest: **[Datum] um [Uhrzeit]** in **[Adresse]**. Wir melden uns kurz vorher. Bei Änderungen einfach hier schreiben. 👍 |
 | `/erinnerung` | Kurze Erinnerung: Morgen, [Datum], kommen wir um ca. [Uhrzeit] zu Ihnen in [Adresse]. Passt das weiterhin? |
 | `/fertig` | Erledigt ✅ Anbei die Fotos der durchgeführten Arbeiten. Wenn etwas nicht passt, sagen Sie bitte direkt Bescheid. Danke für Ihren Auftrag! |

@@ -65,11 +65,11 @@ Preise nur eintragen, wenn geklärt ist, ob sie **netto oder brutto** sind. [OFF
 
 | Leistung | Beschreibung (Vorschlag) | Preis (laut Webseite, erst nach Klärung eintragen) |
 |---|---|---|
-| Treppenhausreinigung | Regelmäßige Reinigung von Treppenhäusern, Fluren und Gemeinschaftsräumen in Mehrfamilienhäusern und Wohnanlagen. Wöchentlich oder nach Plan, mit Gebäudekontrolle inklusive. | ab 8 € / Einheit / Woche |
-| Winterdienst | Schnee räumen und Glätte streuen auf Gehwegen, Zugängen und Parkflächen – zuverlässig in der Saison Oktober bis März. Wir übernehmen die Räum- und Streupflicht für Ihr Objekt. [OFFEN: Haftungsübernahme vertraglich? Formulierung mit `angebots-profi` abstimmen] | ab 8 € / Einheit / Woche |
-| Gartenpflege | Rasen mähen, Hecken schneiden, Laub entfernen, Beete und Außenanlagen pflegen. | 30 € / Einheit / Monat |
-| Kleinreparaturen | Türen einstellen, Leuchtmittel wechseln, kleine Defekte beheben – schnell und unkompliziert. | 35 € / Stunde |
-| Mülltonnen-Service | Tonnen zur Abfuhr bereitstellen und zurückstellen, Müllplätze sauber halten. | 5 € / Einheit / Monat |
+| Treppenhausreinigung | Regelmäßige Reinigung von Treppenhäusern, Fluren und Gemeinschaftsräumen in Mehrfamilienhäusern und Wohnanlagen. Wöchentlich oder nach Plan, mit Gebäudekontrolle inklusive. | ab 12 € je Reinigung + 8 € je Etage (netto) |
+| Winterdienst | Schnee räumen und Glätte streuen auf Gehwegen, Zugängen und Parkflächen – zuverlässig in der Saison November bis März. Wir übernehmen die Räum- und Streupflicht für Ihr Objekt. Jeder Einsatz wird protokolliert. [OFFEN: Haftungsübernahme vertraglich?] | ab 220 € / Saison + 9,50 € je Meter (netto) |
+| Gartenpflege | Rasen mähen, Hecken schneiden, Laub entfernen, Beete und Außenanlagen pflegen. | nach Fläche, ca. 0,30–0,40 € je m² / Monat (netto) |
+| Kleinreparaturen | Türen einstellen, Leuchtmittel wechseln, kleine Defekte beheben – schnell und unkompliziert. | 53,50 € / Stunde (netto) |
+| Mülltonnen-Service | Tonnen zur Abfuhr bereitstellen und zurückstellen, Müllplätze sauber halten. | 6,50 € je Abfuhrtermin (netto) |
 | Gebäudekontrolle mit Protokoll | Regelmäßige Kontrollgänge mit schriftlichem Protokoll. Schäden werden gemeldet, bevor sie teuer werden. Kostenlos inklusive bei jeder Leistung. | kostenlos (inklusive) |
 | Kostenlose Objektbesichtigung | Wir schauen uns Ihr Objekt vor Ort an und erstellen ein unverbindliches Angebot. | kostenlos |
 
@@ -111,7 +111,7 @@ Für Gütersloh mit allen Stadtteilen und die Umgebung im Kreis Gütersloh, z. B
 Ja, Hausverwaltungen und Eigentümergemeinschaften sind unser Schwerpunkt. Sie haben mit Inhaber Martin Ogur einen festen Ansprechpartner. Bei jeder Leistung gibt es die Gebäudekontrolle mit Protokoll kostenlos dazu, damit Sie über den Zustand Ihrer Objekte immer im Bild sind.
 
 **4. Was kostet ein Hausmeisterservice bei Ihnen?**
-Das hängt vom Objekt ab. Richtwerte sind z. B. Treppenhausreinigung ab 8 € pro Einheit und Woche und Kleinreparaturen 35 € pro Stunde. Mit dem Preisrechner auf www.haus-meister-helden.de bekommen Sie eine erste Einschätzung, das genaue Angebot nach einer kostenlosen Besichtigung. [OFFEN: netto/brutto ergänzen, vorher nicht veröffentlichen]
+Das hängt vom Objekt ab. Richtwerte (netto zzgl. MwSt.): Treppenhausreinigung mit 3 Etagen wöchentlich ca. 156 € im Monat, Winterdienst ab 220 € je Saison plus 9,50 € je Meter Gehweg, Kleinreparaturen 53,50 € pro Stunde. Mit dem Preisrechner auf www.haus-meister-helden.de bekommen Sie eine erste Einschätzung, das genaue Angebot nach einer kostenlosen Besichtigung.
 
 **5. Was ist die kostenlose Gebäudekontrolle?**
 Bei jedem Einsatz achten wir auf Schäden und Auffälligkeiten, z. B. defekte Beleuchtung, Feuchtigkeit oder beschädigte Türen, und halten das in einem Protokoll fest. So erfahren Sie davon, bevor ein Mieter anruft oder ein größerer Schaden entsteht. Das kostet nichts extra.

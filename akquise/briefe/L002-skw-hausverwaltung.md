@@ -6,7 +6,7 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Große Verwaltung: Rahmenvereinbarung, Kontrollprotokoll, 24-h-Reaktion |
 | grund (Leadliste) | Tochter der Kreissparkasse Halle-Wiedenbrück und der Sparkasse Gütersloh-Rietberg-Versmold, WEG-, Miet- und Sondereigentumsverwaltung im ganzen Kreis Gütersloh |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf, Preise netto/brutto |
+| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
 
 ---
 
@@ -33,7 +33,7 @@ Hausmeister Helden aus Gütersloh bietet Ihnen dafür eine **Rahmenvereinbarung 
 - **Reaktion innerhalb von 24 Stunden**, per Telefon und WhatsApp.
 - **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Sie haben schriftlich, was geprüft wurde und was auffällt, zum Beispiel für die Eigentümerversammlung oder bei Rückfragen.
 - **Alles aus einer Hand:** Treppenhausreinigung, Winterdienst, Gartenarbeit, Mülltonnen-Service, Kleinreparaturen.
-- **Transparente Preise:** Unsere Richtpreise stehen offen auf der Webseite, zum Beispiel Treppenhausreinigung und Winterdienst ab 8 € pro Einheit und Woche [OFFEN: netto/brutto].
+- **Transparente Preise nach Aufwand:** Wir rechnen nach Treppenhaus, Etage und Gehweg-Meter, nicht pauschal pro Wohnung. Zum Beispiel kostet ein Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, der Winterdienst ab 220 € je Saison plus 9,50 € je Meter, inklusive Einsatzprotokoll. Sie bekommen einen festen Monatspreis pro Objekt, aufgeteilt nach Betriebskostenarten.
 
 **Mein Vorschlag für den Einstieg:** Nennen Sie mir ein Objekt, bei dem es gerade hakt. Ich sehe es mir kostenlos an und schicke Ihnen ein unverbindliches Angebot. So prüfen Sie unsere Arbeit an einem Objekt, bevor wir über weitere sprechen.
 
