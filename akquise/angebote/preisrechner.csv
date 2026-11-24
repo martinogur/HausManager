@@ -1,0 +1,35 @@
+Nr;Position;Wert;Einheit;Hinweis
+E1;EINGABE Wohneinheiten;12;Anzahl;Wohn-/Gewerbeeinheiten des Objekts
+E2;EINGABE Treppenhäuser;1;Anzahl;ab dem 2. Treppenhaus greift Zuschlag Z3
+E3;EINGABE Grünfläche;0;m²;nur relevant wenn Zuschlag Z1 festgelegt
+E4;EINGABE Gehwege Winterdienst;0;lfd. m;nur relevant wenn Zuschlag Z2 festgelegt
+E5;EINGABE Reinigungsintervall;1;1 oder 2;1 = wöchentlich (mit Treuerabatt) / 2 = 14-täglich
+E6;EINGABE Treppenhausreinigung gewünscht;1;1/0;1 = ja / 0 = nein
+E7;EINGABE Mülltonnen-Service gewünscht;1;1/0;1 = ja / 0 = nein
+E8;EINGABE Gartenpflege gewünscht;1;1/0;1 = ja / 0 = nein
+E9;EINGABE Winterdienst gewünscht;1;1/0;1 = ja / 0 = nein
+S1;SATZ Treppenhausreinigung;8;EUR/Einheit/Einsatz;Webseite: ab 8 EUR/Einheit/Woche - netto/brutto [OFFEN]
+S2;SATZ Winterdienst;8;EUR/Einheit/Woche;Webseite: ab 8 EUR - Saison Okt-März - netto/brutto [OFFEN]
+S3;SATZ Gartenpflege;30;EUR/Einheit/Monat;Webseite - ganzjährig oder saisonal [OFFEN]
+S4;SATZ Mülltonnen-Service;5;EUR/Einheit/Monat;Webseite
+S5;SATZ Treuerabatt;10;%;nur auf Treppenhausreinigung bei wöchentlichem Intervall [OFFEN: auch auf andere Positionen?]
+S6;SATZ Wochen Winterdienst-Saison;26;Wochen;01.10.-31.03.
+S7;SATZ Umsatzsteuer;19;%;[OFFEN] 0 eintragen falls Kleinunternehmer § 19 UStG
+Z1;ZUSCHLAG Grünfläche;0;EUR/m²/Monat;[OFFEN] Platzhalter - Inhaber legt fest
+Z2;ZUSCHLAG Gehweg Winterdienst;0;EUR/m/Woche;[OFFEN] Platzhalter - Inhaber legt fest
+Z3;ZUSCHLAG je weiteres Treppenhaus;0;EUR/Monat;[OFFEN] Platzhalter - Inhaber legt fest
+Z4;ANFAHRT pauschal;0;EUR/Monat;[OFFEN] Platzhalter - Inhaber legt fest
+R1;Einsätze Reinigung pro Monat;=52/12/C6;Einsätze;52 bzw. 26 Einsätze pro Jahr / 12 [OFFEN: Webseite rechnet evtl. mit 4]
+R2;Treppenhausreinigung pro Monat;=C7*(C2*C11*C22+(C3-1)*C20);EUR netto*;
+R3;Treuerabatt;=-C23*C15/100*(C6=1);EUR netto*;nur bei Intervall 1
+R4;Mülltonnen-Service pro Monat;=C8*C2*C14;EUR netto*;
+R5;Gartenpflege pro Monat;=C9*(C2*C13+C4*C18);EUR netto*;
+R6;Anfahrt pro Monat;=C21;EUR netto*;
+R7;MONATSPAUSCHALE ganzjährig netto*;=C23+C24+C25+C26+C27;EUR netto*;ohne Winterdienst
+R8;Winterdienst Saisonpreis;=C10*(C2*C12+C5*C19)*C16;EUR netto*;eigener Saisonvertrag
+R9;Winterdienst je Saisonmonat (6 Raten);=C29/6;EUR netto*;Okt-März
+R10;Winterdienst auf 12 Monate verteilt;=C29/12;EUR netto*;Alternative Zahlweise
+R11;GESAMT pro Monat inkl. Winterdienst (12-Monats-Verteilung) netto*;=C28+C31;EUR netto*;
+R12;zzgl. Umsatzsteuer;=C32*C17/100;EUR;
+R13;GESAMT pro Monat brutto;=C32+C33;EUR;
+X1;Hinweis;* netto unter Vorbehalt;;Ob die Webseitenpreise netto oder brutto sind ist [OFFEN]. Formeln: Datei in Excel/LibreOffice mit Trennzeichen Semikolon öffnen
