@@ -168,8 +168,12 @@ class ShortSzene:
         self.blumen = [(G.blume(int(W * 0.09), c), W * x, H * (0.83 + 0.015 * (i % 2)))
                        for i, (x, c) in enumerate(zip([0.06, 0.2, 0.8, 0.94],
                                                       ["#e53935", "#fbc02d", "#8e24aa", "#1e88e5"]))]
-        self.banner = G.text_sprite(cfg.get("banner", "RATE MAL!"), W * 0.13, G.rgb("#ffffff"),
+        groesse = W * 0.13
+        self.banner = G.text_sprite(cfg.get("banner", "RATE MAL!"), groesse, G.rgb("#ffffff"),
                                     rand=G.rgb(akzent), randbreite=int(W * 0.018))
+        if self.banner.width > W * 0.86:  # lange Banner verkleinern, damit sie (auch beim Pulsieren) ganz sichtbar sind
+            self.banner = G.text_sprite(cfg.get("banner"), groesse * W * 0.86 / self.banner.width, G.rgb("#ffffff"),
+                                        rand=G.rgb(akzent), randbreite=int(W * 0.018))
         self.frage = G.text_sprite("?", W * 0.28, G.rgb("#ffffff"), rand=G.rgb(akzent), randbreite=int(W * 0.02))
         self.zahlen = {n: G.text_sprite(str(n), W * 0.2, G.rgb("#ffffff"), rand=G.rgb(akzent),
                                         randbreite=int(W * 0.02)) for n in (1, 2, 3)}

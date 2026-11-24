@@ -5,7 +5,7 @@ Datum und Dateiname ein. Du kannst die Liste jederzeit umsortieren, ergänzen od
 
 ## Lieder (1 pro Tag)
 
-- [ ] **Schlaf gut, Bruno**: Gute-Nacht-Lied, ruhig und langsam (Tempo ~84), Nachtszene, Mond, Sterne, Kuscheltier, Gähnen
+- [x] **Schlaf gut, Bruno**: Gute-Nacht-Lied, ruhig und langsam (Tempo ~84), Nachtszene, Mond, Sterne, Kuscheltier, Gähnen
 - [ ] **Bella und der erste Schnee**: Winterlied, Schneeflocken zählen, Schneemann bauen, Mütze und Schal
 - [ ] **Hopsi wartet auf den Nikolaus**: Stiefel putzen, Nüsse, Mandarine, Apfel (rechtzeitig vor dem 6. Dezember)
 - [ ] **Bruno backt Plätzchen**: Mehl, Eier, Teig rühren, ausstechen (Stern, Herz, Mond), Formen wiederholen
@@ -32,7 +32,7 @@ Datum und Dateiname ein. Du kannst die Liste jederzeit umsortieren, ergänzen od
 
 ## Shorts (1 pro Tag, „Rate mal!“-Format)
 
-- [ ] **Welche Farbe ist das?** (Dinge in einer Farbe → Farbe raten)
+- [x] **Welche Farbe ist das?** (Dinge in einer Farbe → Farbe raten)
 - [ ] **Wer macht dieses Geräusch?** (Tiergeräusch hören → Tier erscheint)
 - [ ] **Wie viele sind das?** (Möhren, Sterne, Bälle zählen)
 - [ ] **Welche Form ist das?** (Kreis, Dreieck, Viereck, Stern, Herz)
@@ -46,3 +46,5 @@ Datum und Dateiname ein. Du kannst die Liste jederzeit umsortieren, ergänzen od
 ## Erledigt
 
 <!-- Der Tagesagent trägt hier ein: Datum – Titel – Datei -->
+- 2026-11-24 – Schlaf gut, Bruno – Das Gute-Nacht-Lied mit Bruno Bär – `songs/07_bruno_baer_gute_nacht.json`
+- 2026-11-24 – Welche Farbe ist das? Rate mal mit Bella Biene – `shorts/04_welche_farbe.json`

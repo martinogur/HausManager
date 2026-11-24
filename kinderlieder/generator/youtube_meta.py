@@ -35,7 +35,7 @@ def lied_meta(cfg, kanal_cfg, dauer_s):
         "",
         kanal_cfg.get("hinweis_ki", ""),
         "",
-        " ".join("#" + t.replace(" ", "") for t in tags[:3]),
+        " ".join("#" + t.replace(" ", "").replace("-", "") for t in tags[:3]),
     ]).strip()
     return {"titel": titel, "beschreibung": beschreibung[:4900], "tags": tags, "kategorie": "27",
             "fuer_kinder": True, "ki_inhalt": True, "art": "lied", "dauer_s": round(dauer_s, 1)}

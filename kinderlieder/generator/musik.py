@@ -301,14 +301,15 @@ class Lied:
         for k in range(takte):
             self.akkorde.append((t + 4 * k, folge[k % 4], art))
 
-    def _sprechen(self, t, text):
+    def _sprechen(self, t, text, nacht=False):
         pho = sprache_pho(text, self.cfg.get("sprechtempo", 145))
         dauer = sum(d for _, d, _ in pho) / 1000.0
         takt = self.sek(4)
         takte = max(2, math.ceil((dauer + 0.9) / takt))
         start = self.sek(t) + 0.35
         self.sprache.append({"start": start, "ende": start + dauer, "text": text, "pho": pho})
-        self.abschnitte.append((t, t + 4 * takte, f"sprechen{len(self.sprache)}", "sprechen", {}))
+        self.abschnitte.append((t, t + 4 * takte, f"sprechen{len(self.sprache)}", "sprechen",
+                                {"nacht": True} if nacht else {}))
         self._vamp(t, takte)
         return t + 4 * takte
 
@@ -334,7 +335,7 @@ class Lied:
         vorher_gesprochen = False
         for si, eintrag in enumerate(ablauf):
             if isinstance(eintrag, dict):
-                t = self._sprechen(t, eintrag["sprich"])
+                t = self._sprechen(t, eintrag["sprich"], eintrag.get("nacht", False))
                 vorher_gesprochen = True
                 continue
             name = eintrag
@@ -381,7 +382,7 @@ class Lied:
                 t += 8
             self.abschnitte.append((start, t, name, art, teil))
         # Outro: Instrument spielt die letzten zwei Zeilen des Refrains
-        self.abschnitte.append((t, t + 20, "outro", "outro", {}))
+        self.abschnitte.append((t, t + 20, "outro", "outro", {"nacht": True} if cfg.get("ende_nacht") else {}))
         ref_name = next((n for n in ablauf if isinstance(n, str) and teile[n].get("art") == "refrain"),
                         erstes_name)
         ref = teile[ref_name]

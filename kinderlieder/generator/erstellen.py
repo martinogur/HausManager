@@ -457,9 +457,19 @@ class Szene:
 def vorschaubild(szene, pfad, cfg):
     """Thumbnail 1280x720: Figur groß, Titel groß, Bilder aus dem Lied."""
     W, H = 1280, 720
-    bg = G.hintergrund(W, H, G.PALETTEN[random.Random(cfg.get("titel", "")).randrange(len(G.PALETTEN))])
-    s = szene.sonne.resize((int(H * 0.25), int(H * 0.25)))
-    bg.paste(s, (int(W * 0.82), int(H * 0.04)), s)
+    if cfg.get("vorschau_nacht"):
+        # Nachtbild (z. B. für Gute-Nacht-Lieder): dunkler Himmel, Sterne und Mond
+        bg = G.hintergrund(W, H, G.NACHT)
+        rng = random.Random(3)
+        for _ in range(22):
+            st = G.stern(int(H * rng.uniform(0.012, 0.024)))
+            bg.paste(st, (int(W * rng.uniform(0.02, 0.97)), int(H * rng.uniform(0.02, 0.6))), st)
+        m = G.mond(int(H * 0.07))
+        bg.paste(m, (int(W * 0.97 - m.width), int(H * 0.03)), m)
+    else:
+        bg = G.hintergrund(W, H, G.PALETTEN[random.Random(cfg.get("titel", "")).randrange(len(G.PALETTEN))])
+        s = szene.sonne.resize((int(H * 0.25), int(H * 0.25)))
+        bg.paste(s, (int(W * 0.82), int(H * 0.04)), s)
     fs = int(H * 0.95)
     fig = szene.figur.sprite(fs, mund=0.75, arm=0.8, fluegel=1.0).resize((fs, fs), Image.LANCZOS)
     bg.paste(fig, (int(W * 0.5), int(H * 0.08)), fig)
@@ -475,7 +485,9 @@ def vorschaubild(szene, pfad, cfg):
         y += tx.height * 0.92
     # bis zu drei Bilder aus dem Lied unten links
     gezeigt, x = [], W * 0.03
-    for a in szene.anzeigen:
+    wunsch = cfg.get("vorschau_bilder")  # optional: eigene Auswahl, z. B. ["kuscheltier", "mond", "sterne"]
+    anzeigen = ([{"typ": "bild", "wert": w, "farbe": akzent} for w in wunsch] if wunsch else szene.anzeigen)
+    for a in anzeigen:
         key = (a["typ"], a["wert"])
         if key in gezeigt or len(gezeigt) >= 3:
             continue
@@ -512,7 +524,7 @@ def youtube_text(cfg, kanal_cfg, lied, pfad):
         zeilen += [M._zeilentext(z) for z in teil["zeilen"]]
         zeilen.append("")
     tags = cfg.get("tags", [])
-    hashtags = " ".join("#" + t.replace(" ", "") for t in tags[:3])
+    hashtags = " ".join("#" + t.replace(" ", "").replace("-", "") for t in tags[:3])
     text = f"""TITEL
 {titel[:100]}
 

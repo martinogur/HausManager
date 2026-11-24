@@ -324,7 +324,8 @@ def _moehre(z, f, t, x=50, y=50, s=1.0, winkel=-25):
 ZEICHNER = {"blume": _blume, "erdbeere": _erdbeere, "feuerwehr": _feuerwehr, "banane": _banane,
             "kueken": _kueken, "himmel": _himmel, "meer": _meer, "fisch": _fisch, "wecker": _wecker,
             "zahnbuerste": _zahnbuerste, "zahnpasta": _zahnpasta, "zaehneputzen": _zaehneputzen,
-            "mond": _mond, "bett": _bett, "sterne": _sterne, "moehre": _moehre}
+            "mond": _mond, "bett": _bett, "sterne": _sterne,
+            "moehre": lambda z, f, t: _moehre(z, f, t, x=56, y=48, s=0.95, winkel=-45)}  # schräg und etwas kleiner, damit nichts abgeschnitten wird
 
 HINTERGRUND = {"himmel": (100, 181, 246, 255), "meer": (187, 222, 251, 255), "mond": (40, 53, 107, 255),
                "sterne": (40, 53, 107, 255), "bett": (225, 230, 255, 255)}
@@ -649,6 +650,103 @@ ANIMIERT.update({"kreis", "dreieck", "viereck", "formen", "ball", "partyhut", "f
 FORMFARBE = {"kreis", "dreieck", "viereck"}
 
 
+# --- Gute-Nacht-Bilder ----------------------------------------------------
+
+def _schaf_zeichnen(z, cx, cy, s=1.0, t=0.0, augen_zu=True):
+    """Kuscheliges Schäfchen (Wolle aus Kreisen, dunkler Kopf)."""
+    wolle = (250, 248, 240, 255)
+    rand = (170, 160, 150, 255)
+    for dx in (-14, 14):
+        z.rrect(cx + dx * s - 3 * s, cy + 10 * s, cx + dx * s + 3 * s, cy + 24 * s, 2 * s, (90, 75, 80, 255))
+    z.ell(cx, cy + 2 * s, 24 * s, 16 * s, wolle, outline=rand)
+    for k in range(10):
+        a = math.radians(k * 36)
+        z.ell(cx + math.cos(a) * 21 * s, cy + 2 * s + math.sin(a) * 13 * s, 7 * s, 7 * s, wolle, outline=rand)
+    z.ell(cx, cy + 2 * s, 20 * s, 12 * s, wolle, outline=None)
+    kx, ky = cx - 20 * s, cy - 6 * s
+    z.ell(kx - 8 * s, ky - 2 * s, 6 * s, 3 * s, (110, 90, 95, 255), winkel=-25)
+    z.ell(kx + 8 * s, ky - 2 * s, 6 * s, 3 * s, (110, 90, 95, 255), winkel=25)
+    z.ell(kx, ky + 3 * s, 9 * s, 11 * s, (110, 90, 95, 255))
+    for k in range(4):
+        z.ell(kx - 6 * s + k * 4 * s, ky - 7 * s, 4 * s, 4 * s, wolle, outline=rand)
+    if augen_zu:
+        z.d.arc([z.P(kx - 6 * s, ky), z.P(kx - 1 * s, ky + 4 * s)], 20, 160, fill=WEISS, width=z.lw)
+        z.d.arc([z.P(kx + 1 * s, ky), z.P(kx + 6 * s, ky + 4 * s)], 20, 160, fill=WEISS, width=z.lw)
+    else:
+        for ax in (-3.5, 3.5):
+            z.ell(kx + ax * s, ky + 2 * s, 2 * s, 2.4 * s, WEISS, outline=None)
+            z.ell(kx + ax * s, ky + 2.5 * s, 1.1 * s, 1.4 * s, LINIE, outline=None)
+    z.ell(kx - 5.5 * s, ky + 8 * s, 2.2 * s, 1.4 * s, (255, 150, 170, 255), outline=None)
+    z.ell(kx + 5.5 * s, ky + 8 * s, 2.2 * s, 1.4 * s, (255, 150, 170, 255), outline=None)
+
+
+def _kuscheltier(z, f, t):
+    """Kuscheltier: ein Schäfchen mit Schleife, das sanft atmet."""
+    atem = 1 + 0.03 * math.sin(t * 2)
+    z.ell(50, 86, 30, 4, (0, 0, 0, 40), outline=None)
+    _schaf_zeichnen(z, 56, 56, 1.25 * atem, t)
+    z.ell(36, 66, 5, 3.5, (229, 57, 53, 255), winkel=30)
+    z.ell(26, 66, 5, 3.5, (229, 57, 53, 255), winkel=-30)
+    z.ell(31, 66, 2.2, 2.2, (198, 40, 40, 255))
+    for k in range(2):
+        a = (t * 0.6 + k / 2) % 1
+        z.stern(76 + 6 * k, 22 - 10 * a, 4 * (1 - a * 0.5), (255, 214, 64, int(255 * (1 - a))))
+
+
+def _schaf(z, f, t):
+    """Schäfchen mit offenen Augen (zum Schäfchen-Zählen), hüpft leicht."""
+    hops = abs(math.sin(t * 3)) * 5
+    z.ell(50, 88, 26, 4, (0, 0, 0, 40), outline=None)
+    _schaf_zeichnen(z, 56, 54 - hops, 1.3, t, augen_zu=False)
+
+
+def _lampe(z, f, t):
+    """Kleines Nachtlicht in Mondform, das warm leuchtet."""
+    glanz = 0.8 + 0.2 * math.sin(t * 1.5)
+    lay = Image.new("RGBA", z.img.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    for k in range(6, 0, -1):
+        r = 14 + k * 5
+        d.ellipse([z.P(50 - r, 42 - r), z.P(50 + r, 42 + r)], fill=(255, 220, 120, int(28 * glanz)))
+    z.img.alpha_composite(lay)
+    z.rrect(30, 74, 70, 84, 4, (121, 134, 203, 255))
+    z.rrect(44, 62, 56, 76, 2, (159, 168, 218, 255))
+    z.ell(50, 42, 22, 22, (255, 236, 150, 255), outline=(240, 190, 70, 255))
+    z.ell(42, 32, 6, 4, (255, 252, 230, 220), outline=None, winkel=-35)
+    z.d.arc([z.P(40, 40), z.P(46, 45)], 20, 160, fill=LINIE, width=z.lw)
+    z.d.arc([z.P(50, 40), z.P(56, 45)], 20, 160, fill=LINIE, width=z.lw)
+    z.d.arc([z.P(44, 47), z.P(52, 52)], 20, 160, fill=LINIE, width=z.lw)
+    z.ell(41, 50, 2.5, 1.6, (255, 150, 170, 255), outline=None)
+    z.ell(56, 50, 2.5, 1.6, (255, 150, 170, 255), outline=None)
+
+
+def _buch(z, f, t):
+    """Aufgeschlagenes Bilderbuch mit Mond und Stern."""
+    blatt = math.sin(t * 1.2) * 3
+    z.ell(50, 84, 36, 4, (0, 0, 0, 40), outline=None)
+    z.poly([(12, 30), (50, 36), (88, 30), (88, 78), (50, 84), (12, 78)], (30, 136, 229, 255))
+    z.poly([(15, 28), (50, 34), (50, 80), (15, 74)], (255, 252, 240, 255))
+    z.poly([(50, 34), (85, 28 + blatt), (85, 74 + blatt), (50, 80)], (255, 252, 240, 255))
+    z.linie([(50, 34), (50, 80)], LINIE, 1.2)
+    lay = Image.new("RGBA", z.img.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    d.ellipse([z.P(22, 40), z.P(42, 60)], fill=(255, 214, 64, 255))
+    d.ellipse([z.P(28, 36), z.P(46, 56)], fill=(0, 0, 0, 0))
+    z.img.alpha_composite(lay)
+    z.stern(38, 66, 4, (255, 214, 64, 255))
+    for k in range(4):
+        y = 44 + k * 7 + blatt * (k / 4)
+        z.linie([(57, y), (78, y - 1)], (160, 160, 180, 255), 1.6)
+    for k in range(3):
+        a = t * 2.5 + k * 2.1
+        z.stern(26 + k * 24, 16 + 3 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+ZEICHNER.update({"kuscheltier": _kuscheltier, "schaf": _schaf, "lampe": _lampe, "buch": _buch})
+ANIMIERT.update({"kuscheltier", "schaf", "lampe", "buch"})
+HINTERGRUND.update({"lampe": (40, 53, 107, 255), "kuscheltier": (225, 230, 255, 255)})
+
+
 def schatten(img, farbe=(70, 50, 110)):
     """Schattenbild (Silhouette) für Rätsel: gleiche Form, eine Farbe."""
     a = img.getchannel("A")
@@ -708,6 +806,8 @@ def zahl_sprite(zahl, groesse, farbe, objekt="moehre"):
         if objekt == "punkt":
             z.ell(50, 50, 40, 40, f, outline=mischen(f, (0, 0, 0, 255), 0.25))
             z.ell(38, 38, 11, 11, (255, 255, 255, 150), outline=None)
+        elif objekt == "schaf":
+            _schaf_zeichnen(z, 56, 50, 1.45, augen_zu=False)
         else:
             _moehre(z, None, 0, x=55, y=50, s=1.2, winkel=-60)
         m = z.fertig().resize((int(feld), int(feld)), Image.LANCZOS)
