@@ -12,24 +12,30 @@ Vertrauen und Anfragen – nicht nur Likes.
 - Bio: Leistung + Ort + Nutzen + Aufruf („📲 Angebot per WhatsApp“), Link zur Webseite / WhatsApp
 - Story-Highlights: Leistungen, Vorher/Nachher, Bewertungen, Team, Winterdienst, Kontakt
 
-## Wochenplan (`marketing/instagram/JJJJ-KW<nr>.md`)
-- **4–5 Posts/Woche**, davon mind. 3 Reels; tägliche Stories.
-- Pro Beitrag: Format, Hook (erste 2 Sekunden, Text auf dem Bild), Drehanleitung in
-  einfachen Schritten (mit dem Handy, max. 30 Sek. Aufwand pro Clip), Caption, 5–10
-  Hashtags (lokal + Branche), Aufruf zur Aktion, beste Uhrzeit.
-- Bewährte Formate: Vorher/Nachher (Laub, Grünschnitt, Treppenhaus, Entrümpelung),
-  „Ein Tag als Hausmeister-Held“, Tipps für Vermieter/Verwalter („3 Pflichten beim
-  Winterdienst“), Fehler-Mythen, Team-Vorstellung, Kundenstimmen, Saison-Themen,
-  Trend-Sounds mit Branchenbezug.
-- Lokalbezug in jedem Beitrag (Ort taggen, Stadtteile nennen).
-- Engagement-Routine für den Inhaber: täglich 10 Min. lokale Accounts (Hausverwaltungen,
-  Makler, Stadtseiten) kommentieren.
+## Grundsatz: keine Videos vom Inhaber, kein Filmen nötig
+Der Inhaber möchte **nicht selbst im Bild sein** und hat aktuell **keine laufenden Aufträge** zum Filmen.
+Deshalb besteht der Content aus **fertig gestalteten Grafiken**, die du selbst erzeugst:
+- Plan als JSON: `marketing/instagram/JJJJ-KW<nr>.json` (Format siehe Kopf von `marketing/instagram/grafik.py`).
+  Folienarten: `titel`, `punkt`, `liste`, `mythos`, `cta`. Mit `*wort*` wird ein Wort grün hervorgehoben.
+- Rendern: `python3 marketing/instagram/grafik.py marketing/instagram/JJJJ-KW<nr>.json`
+  → PNGs (Karussell 1080×1350) und für `"format": "reel"` Folien in 1080×1920 plus `reel.mp4`
+  (Text-Reel ohne Ton; Trend-Sound fügt der Inhaber beim Posten in der App hinzu).
+- Ergebnisse ansehen (mindestens Folie 1 jedes Posts) und bei Problemen (Text zu lang, Umbrüche) kürzen und neu rendern.
+
+## Wochenplan (`marketing/instagram/JJJJ-KW<nr>.md` + `.json`)
+- **4 Posts/Woche**: 2–3 Karussells + 1–2 Text-Reels. Dazu 3–5 Story-Ideen, die nur aus Text/Umfrage-/Quiz-Stickern bestehen.
+- Pro Post im .md: Ziel, Caption (mit Lokalbezug Gütersloh, Aufruf zur Aktion: WhatsApp 05241 3389748), 5–10 Hashtags, beste Uhrzeit, Pfad zu den fertigen Dateien.
+- Bewährte Formate ohne Filmen: Checklisten für Vermieter/Verwalter, Mythos vs. Fakt, „3 Fehler bei …“, Saison-Kalender,
+  „So läuft eine Objektbetreuung ab“ (Ablauf in 4 Schritten), Preisbeispiele (nur mit freigegebenen Preisen),
+  Fragen aus der Praxis (FAQ), Ratgeber-Artikel der Webseite als Karussell zusammengefasst.
+- Keine Vorher/Nachher-Bilder oder Einsatzfotos vortäuschen, keine Stockfotos als „unsere Arbeit“ ausgeben,
+  keine erfundenen Kundenstimmen oder Auftragszahlen.
+- Sobald es echte Aufträge gibt: Fotos nur von Objekten (ohne Personen, Hausnummern, Kennzeichen) mit Einwilligung des Auftraggebers – dann als zusätzliches Format.
+- Engagement-Routine für den Inhaber: täglich 10 Min. lokale Accounts (Hausverwaltungen, Makler, Stadtseiten) kommentieren.
 
 ## Regeln
 - Keine gekauften Follower/Likes, keine Bots für Follow/Unfollow (Kontosperre-Risiko).
-- Keine erkennbaren Personen, Kennzeichen oder Hausnummern ohne Einwilligung zeigen.
 - Veröffentlichen macht der Inhaber (oder ein freigegebenes Planungstool).
 
 ## Abschluss
-Bericht `berichte/JJJJ-MM-TT-instagram-manager.md`: Plan der Woche, Drehliste für einen
-einzigen Drehtag (alles auf einmal filmen).
+Bericht `berichte/JJJJ-MM-TT-instagram-manager.md`: Plan der Woche mit Posting-Zeiten und Pfaden zu den fertigen Grafiken/Reels.
