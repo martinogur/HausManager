@@ -1,17 +1,19 @@
 # Firmenprofil – Hausmeister Helden
 
-> **Bitte ausfüllen.** Alle Agenten arbeiten mit diesen Daten. Je genauer, desto besser
-> die Ergebnisse. Ersetze jedes `[OFFEN]`.
+> Stand 24.11.2026 – Daten vom Inhaber und von www.haus-meister-helden.de übernommen.
+> Alles mit `[OFFEN]` bitte noch ergänzen.
 
 ## Basisdaten
 - Firmenname: Hausmeister Helden
-- Inhaber: [OFFEN]
+- Inhaber: Martin Ogur (fester Ansprechpartner)
 - Rechtsform: [OFFEN] (z. B. Einzelunternehmen, GmbH)
-- Adresse: [OFFEN]
-- Telefon: [OFFEN]
-- WhatsApp Business Nummer: [OFFEN]
-- E-Mail: [OFFEN]
-- Webseite: [OFFEN]
+- Adresse: Auf der Benkert 68, 33330 Gütersloh
+- Telefon: 05241 3389748
+- WhatsApp Business Nummer: 05241 3389748 (Festnetz) – Link: https://wa.me/4952413389748
+- E-Mail: info@haus-meister-helden.de
+- Webseite: https://www.haus-meister-helden.de (gehostet bei IONOS, Website-Baukasten)
+- Geschäftszeiten / Erreichbarkeit: Mo–Sa, 7:00–20:00 Uhr
+- Slogan Webseite: „Ihr Haus. Unsere Pflicht.“
 - Instagram: [OFFEN] (@…)
 - Facebook / LinkedIn / TikTok: [OFFEN]
 - Google-Unternehmensprofil vorhanden? [OFFEN] (ja/nein, Link)
@@ -19,21 +21,20 @@
 - Anzahl Mitarbeiter: [OFFEN]
 
 ## Einsatzgebiet
-- Hauptstadt / Region: [OFFEN]
-- Umkreis in km: [OFFEN]
+- Hauptstadt / Region: Gütersloh & Umgebung (Kreis Gütersloh)
+- Umkreis in km: [OFFEN] (Vorschlag: 25 km – Rheda-Wiedenbrück, Harsewinkel, Verl, Herzebrock-Clarholz, Steinhagen, Halle, Schloß Holte-Stukenbrock, Bielefeld-Süd)
 - Wichtige Stadtteile / Nachbarorte: [OFFEN]
 
-## Leistungen (Zutreffendes behalten, Fehlendes ergänzen)
-- Hausmeisterservice / Objektbetreuung
-- Treppenhausreinigung / Gebäudereinigung
-- Gartenpflege, Rasen, Hecken, Baumschnitt
-- Winterdienst (Räumen & Streuen)
-- Kleinreparaturen, Montagen
-- Müllmanagement / Tonnendienst
-- Entrümpelung
-- Kontrollgänge, Zählerablesung
-- Notdienst: [OFFEN] (ja/nein, Zeiten)
-- Sonstiges: [OFFEN]
+## Leistungen (laut Webseite)
+- Treppenhausreinigung (Treppenhäuser, Flure, Gemeinschaftsbereiche)
+- Winterdienst (Räumen, Eis, Streuen; Saison Okt–März)
+- Gartenarbeit (Rasen, Hecken, Laub)
+- Kleinreparaturen (Türen, Beleuchtung, kleine Defekte)
+- Mülltonnen-Service (Bereitstellen, Zurückstellen, Müllplätze sauber halten)
+- Gebäudekontrolle mit Protokoll – kostenlos inklusive bei jeder Leistung
+- Kostenloser Ersttermin / Objektbesichtigung, Angebot unverbindlich
+- Notdienst: [OFFEN]
+- Weitere (Entrümpelung, Zählerablesung …): [OFFEN]
 
 ## Zielkunden (Priorität 1 = am wichtigsten)
 1. Hausverwaltungen / WEG-Verwaltungen
@@ -42,15 +43,22 @@
 4. Gewerbe: Büros, Praxen, Arztzentren, Supermärkte, Hotels
 5. Privatkunden (Garten, Winterdienst, Entrümpelung)
 
-## Preise (Richtwerte, intern)
-- Stundensatz: [OFFEN] €
-- Monatspauschale Objektbetreuung ab: [OFFEN] €
-- Winterdienst Saison ab: [OFFEN] €
+## Preise (laut Webseite, Richtwerte netto?/brutto? [OFFEN])
+- Treppenhausreinigung: ab 8 € / Einheit / Woche
+- Winterdienst: ab 8 € / Einheit / Woche (Okt–März)
+- Gartenarbeit: 30 € / Einheit / Monat
+- Kleinreparaturen: 35 € / Stunde
+- Mülltonnen-Service: 5 € / Einheit / Monat
+- Gebäudekontrolle: kostenlos inklusive
+- Treuerabatt: 10 % bei wöchentlicher Reinigung (4× im Monat)
 - Anfahrt: [OFFEN]
+- Kleinunternehmer nach § 19 UStG? [OFFEN]
 
 ## Stärken / Alleinstellung (was macht euch besser?)
-- [OFFEN] (z. B. Reaktion innerhalb 24 h, fester Ansprechpartner, Fotodokumentation, digitale Berichte)
-- [OFFEN]
+- Reaktion innerhalb 24 h, per Telefon und WhatsApp erreichbar
+- Inhaber persönlich als fester Ansprechpartner, kein Callcenter
+- Proaktiv: regelmäßige Kontrollen inklusive
+- Faire, transparente Preise, Preisrechner auf der Webseite, Erstbesichtigung gratis
 
 ## Referenzen (nur echte!)
 - [OFFEN] (z. B. „betreuen 25 Objekte in …“, Kundenzitate mit Erlaubnis)

@@ -13,6 +13,17 @@ Du bist der Webseiten-Bauer von **Hausmeister Helden**. Die Webseite hat genau e
   Botschaft, Kontaktwege, Vertrauen, SEO (Titel, Meta, Überschriften, Ort), Rechtliches
   (Impressum, Datenschutz, Cookie-Banner).
 
+## Hosting bei IONOS
+Die aktuelle Seite läuft im IONOS-Website-Baukasten. Du kannst dort nicht selbst
+veröffentlichen. Liefere daher:
+- `webseite/aenderungen-ionos.md`: konkrete Änderungen zum Einpflegen im Baukasten
+  (Text, wo genau, warum), sortiert nach Wirkung.
+- Optional eine neue statische Seite in `webseite/`, die der Inhaber per
+  IONOS-Webspace/SFTP hochladen kann, wenn er den Baukasten ablösen will.
+- Bekannte Punkte vom 24.11.2026: Die Zähler „Objekte betreut / % Zufriedenheit /
+  Leistungen / H Erreichbarkeit“ zeigen ohne Animation „0“ (schlecht für Google und
+  Vertrauen) → echte feste Zahlen oder entfernen. „100 % zuverlässig“ nur, wenn belegbar.
+
 ## Bauen in `webseite/`
 - Statische Seite (HTML + CSS, wenig JS) – schnell, günstig zu hosten, leicht zu ändern.
 - Seiten: Start, Leistungen (je Leistung eine Unterseite für SEO, z. B.
