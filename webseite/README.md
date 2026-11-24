@@ -9,22 +9,27 @@ Neue, schnelle Webseite: 12 Seiten, ohne Cookies und ohne Tracking (kein Cookie-
 | `inhalte/ratgeber/` | Ratgeber-Artikel (der Agent ergänzt jede Woche einen). |
 | `static/` | Design (CSS), Preisrechner/Formular (JS), Schriften, Logo. |
 
-## Online stellen bei IONOS
+## Veröffentlichung: vollautomatisch nach Freigabe
 
-Die jetzige Seite läuft im **IONOS-Baukasten (MyWebsite)**. Dort kann man keine eigenen Dateien hochladen.
-Es gibt zwei Wege:
+```
+Agent baut die Seite (Di + Fr) → Freigabe-Übersicht (Artifact) → du schreibst „Webseite freigeben“
+→ Push auf Branch webseite-live → IONOS Deploy Now → www.haus-meister-helden.de
+```
 
-**A) IONOS-Webhosting (empfohlen):**
-1. Im IONOS-Konto prüfen, ob ein **Webhosting-Paket mit Webspace** vorhanden ist. Falls nicht, das kleinste Webhosting-Paket buchen.
-2. Unter **Hosting → SFTP & SSH** die Zugangsdaten ansehen.
-3. Mit einem SFTP-Programm (z. B. FileZilla, kostenlos) verbinden und den **Inhalt** von `webseite/public/` in das Webspace-Verzeichnis hochladen.
-4. Unter **Domains & SSL** die Domain `haus-meister-helden.de` auf dieses Webspace-Verzeichnis zeigen lassen (statt auf den Baukasten). SSL-Zertifikat aktivieren.
-5. Den Baukasten-Vertrag erst kündigen, wenn die neue Seite läuft.
+- `python3 webseite/build.py` baut die Seite nach `public/`.
+- `python3 webseite/freigabe.py` erstellt die Übersicht in `freigabe/` (Screenshots, Prüfung, Liste der geänderten Seiten).
+- Freigabe-Link (bleibt immer gleich): https://claude.ai/artifact/ASec45HoYTtWniU4ZzWRiB
 
-**B) Kostenloses Hosting + IONOS-Domain:** `public/` zum Beispiel bei Netlify oder Cloudflare Pages hochladen und in IONOS die DNS-Einträge der Domain dorthin zeigen lassen.
-Dann muss in `datenschutz()` in `build.py` der Hosting-Anbieter angepasst werden.
+### Einmalig einrichten: IONOS Deploy Now (macht der Inhaber, ca. 10 Minuten)
+Deploy Now ist der IONOS-Dienst, der eine Webseite direkt aus GitHub veröffentlicht. Passwörter musst du dafür nicht weitergeben.
+1. Erste Freigabe im Chat geben („Webseite freigeben“). Dadurch entsteht der Branch `webseite-live`.
+2. Im IONOS-Konto **Deploy Now** öffnen → Projekt anlegen → mit GitHub verbinden → Repository `martinogur/HausManager` wählen.
+3. Bei den Build-Einstellungen: **kein Framework / statische Seite**, Build-Befehl leer lassen, **Veröffentlichungsordner: `webseite/public`**.
+4. **Produktions-Branch: `webseite-live`.**
+5. In den Projekteinstellungen **Domain verbinden** → `haus-meister-helden.de` (und `www.`). Achtung: Dadurch wird die alte Baukasten-Seite ersetzt.
+6. Claude Bescheid geben („Deploy Now ist eingerichtet“). Dann wird in `freigabe.py` `DEPLOY_NOW_VERBUNDEN = True` gesetzt und die Live-Seite geprüft.
 
-Nach dem Umzug: In der **Google Search Console** die `sitemap.xml` einreichen.
+Danach in der **Google Search Console** die `sitemap.xml` einreichen.
 
 ## Vor dem Livegang prüfen (Inhaber)
 - [ ] Impressum und Datenschutz prüfen (Rechtsform, ggf. USt-IdNr. ergänzen). Die Texte sind Vorlagen und ersetzen keine Rechtsberatung.
