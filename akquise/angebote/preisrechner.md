@@ -1,85 +1,91 @@
 # Preisrechner – Hausmeister Helden
 
-> Grundlage: Preise von der Webseite (siehe `firma/profil.md`). **Ob diese Preise netto oder brutto sind,
-> ist noch [OFFEN].** Bis zur Klärung rechnet der Rechner sie als **netto** und schlägt die USt. auf.
-> Unten steht zum Vergleich auch die Rechnung, falls die Webseitenpreise brutto gemeint sind.
+> Grundlage: Preisliste vom 24.11.2026, freigegeben vom Inhaber (siehe `firma/profil.md`, Abschnitt „Preise“,
+> und `preiskalkulation.md`). **Alle Preise netto zzgl. 19 % MwSt.**
+> Abgerechnet wird nach Aufwand (Treppenhaus/Etage, laufender Meter Gehweg, m² Grünfläche, Abfuhrtermin),
+> nicht pro Wohneinheit. Der Hausverwaltung nennen wir daraus einen festen Monatspreis pro Objekt.
 > Die Tabellenversion mit Formeln liegt in `preisrechner.csv`. Öffnen in Excel oder LibreOffice:
-> Trennzeichen Semikolon, Formeln werden beim Import berechnet. Eingaben stehen in Spalte C, Zeilen 2–10.
+> Trennzeichen Semikolon, Formeln werden beim Import berechnet. Eingaben stehen in Spalte C, Zeilen 2–17.
 
-## 1. Eingaben
+## 1. Eingaben (vor Ort messen)
 | Eingabe | Werte |
 |---|---|
-| Wohneinheiten (WE) | Anzahl |
-| Treppenhäuser | Anzahl (ab dem 2. greift ein Zuschlag, [OFFEN]) |
-| Grünfläche | m² (Zuschlag je m² [OFFEN], aktuell 0) |
-| Gehwege Winterdienst | lfd. m (Zuschlag je m [OFFEN], aktuell 0) |
+| Treppenhäuser | Anzahl |
+| Etagen je Treppenhaus | Anzahl |
+| Aufzugkabinen | Anzahl |
 | Intervall Treppenhausreinigung | wöchentlich oder 14-täglich |
+| Gehweg + Zuwege Winterdienst | lfd. m |
+| Rasen / Beete / Hecke | m² / m² / lfd. m |
+| Abfuhrtermine und Tonnen-Leerungen | je Monat laut Abfuhrkalender |
+| Objektkontrollen mit Fotoprotokoll | je Monat (0 = nur Sichtkontrolle) |
 | Bausteine | Treppenhaus / Mülltonnen / Garten / Winterdienst ja oder nein |
 
-## 2. Sätze und Formeln
-| Baustein | Satz (laut Webseite) | Formel Monat |
+## 2. Sätze und Formeln (netto)
+| Baustein | Satz | Formel |
 |---|---|---|
-| Treppenhausreinigung | ab 8 € / Einheit / Einsatz | WE × 8 € × Einsätze pro Monat (wöchentlich 52/12 = 4,33; 14-täglich 26/12 = 2,17) |
-| Treuerabatt | 10 % | nur bei wöchentlicher Reinigung, nur auf die Treppenhausreinigung [OFFEN: auch auf andere Bausteine?] |
-| Mülltonnen-Service | 5 € / Einheit / Monat | WE × 5 € |
-| Gartenpflege | 30 € / Einheit / Monat | WE × 30 € (+ m² × Zuschlag [OFFEN]) |
-| Winterdienst | ab 8 € / Einheit / Woche, 26 Wochen | Saison = WE × 8 € × 26, zahlbar in 6 Raten (Okt–März) oder verteilt auf 12 Monate |
-| Gebäudekontrolle | inklusive | 0 € |
-| Kleinreparaturen | 35 € / h | nach Aufwand, nicht in der Pauschale |
-| Anfahrt | [OFFEN] | Platzhalter 0 € |
-| USt. | [OFFEN] 19 % oder 0 % (§ 19 UStG) | Netto × Satz |
+| Treppenhausreinigung | 12 € je Treppenhaus und Reinigung + 8 € je Etage, Aufzug + 4,45 € | (Treppenhäuser × (12 € + Etagen × 8 €) + Aufzüge × 4,45 €) × Reinigungen pro Monat (wöchentlich 52/12 = 4,33; 14-täglich 26/12 = 2,17) |
+| … 14-täglich | + 15 % je Reinigung | Preis je Reinigung × 1,15 |
+| Mülltonnen-Service | 6,50 € je Abfuhrtermin + 1,34 € je Leerung, Müllplatz kehren 4,45 €/Woche | Termine × 6,50 € + Leerungen × 1,34 € + 4,45 € × 4,33 |
+| Gartenpflege | 13,50 € je Einsatz + Rasen 0,14 €/m²/Mahd, Beet 0,45 €/m², Hecke 1,78 €/m, Laub 0,05 €/m², Grünschnitt 0,11 €/m²/Jahr | Jahressumme / 12 (Annahme: 18 Mähgänge, 7 Beetgänge, 2 Heckenschnitte, 3 Laub-Einsätze; Faustregel 0,30–0,40 € je m² Grünfläche und Monat) |
+| Winterdienst (Saison Nov–März) | 220 € Grundpauschale je Objekt + 9,50 € je lfd. Meter, inkl. Streugut und Einsatzprotokoll | Saison = 220 € + Meter × 9,50 €; zahlbar in 5 Raten (Nov–März) oder verteilt auf 12 Monate |
+| Winterdienst Einzeleinsatz ohne Vertrag | 43,50 € | je Einsatz |
+| Sichtkontrolle bei jedem Einsatz | inklusive | 0 € |
+| Objektkontrolle mit Fotoprotokoll (eigener Termin) | 27 € | je Begehung |
+| Kleinreparaturen / Sonderarbeiten | 53,50 €/h, je angefangene 15 Min. 13,50 €, mindestens 30 Min. (27 €) | nach Aufwand, **immer getrennt von der Pauschale** (meist nicht auf Mieter umlegbar) |
+| Anfahrt (Einzelaufträge) | Gütersloh bis 10 km 14,50 €, Umland 10–25 km 36,50 € | je Fahrt |
+| USt. | 19 % | Netto × 0,19 |
 
-„ab“-Preise sind Mindestpreise. Bei großen oder stark verschmutzten Objekten, schwierigem Zugang oder
-großen Flächen setzt der Inhaber nach der Besichtigung einen Zuschlag fest.
+Die Beispielpreise sind Richtwerte. Den Festpreis legt der Inhaber nach der kostenlosen Besichtigung fest.
 
-## 3. Beispielrechnung: 12 Wohneinheiten, 1 Treppenhaus, wöchentliche Reinigung, alle Bausteine
+## 3. Beispielrechnung: Mehrfamilienhaus (6 WE), 1 Treppenhaus mit 3 Etagen, wöchentliche Reinigung, alle Bausteine
+
+Objektdaten wie in `preiskalkulation.md` (Beispiel „MFH 6 WE“): 25 m Gehweg, 150 m² Rasen, 20 m² Beete,
+15 m Hecke, 6 Abfuhrtermine und 9 Leerungen pro Monat, 1 Objektkontrolle mit Fotoprotokoll pro Monat.
 
 | Position | Rechnung | Monat netto |
 |---|---|---|
-| Treppenhausreinigung wöchentlich | 12 WE × 8 € × 52/12 Einsätze | 416,00 € |
-| Treuerabatt 10 % | –10 % von 416,00 € | –41,60 € |
-| Mülltonnen-Service | 12 WE × 5 € | 60,00 € |
-| Gartenpflege | 12 WE × 30 € | 360,00 € |
-| Gebäudekontrolle mit Protokoll | inklusive | 0,00 € |
-| Anfahrt | [OFFEN] | 0,00 € |
-| **Monatspauschale ganzjährig netto** | | **794,40 €** |
-| zzgl. 19 % USt. | | 150,94 € |
-| **Monatspauschale brutto** | | **945,34 €** |
+| Treppenhausreinigung wöchentlich | (12 € + 3 × 8 €) × 52/12 | 156,00 € |
+| Mülltonnen-Service inkl. Müllplatz | 6 × 6,50 € + 9 × 1,34 € + 4,45 € × 52/12 | 70,34 € |
+| Gartenpflege | 822,10 € Jahrespreis / 12 | 68,51 € |
+| Objektkontrolle mit Fotoprotokoll | 1 × 27 € | 27,00 € |
+| **Monatspauschale ganzjährig netto** | | **321,85 €** |
 
 **Winterdienst (eigener Saisonvertrag)**
 | Position | Rechnung | Betrag netto |
 |---|---|---|
-| Saisonpreis 01.10.–31.03. | 12 WE × 8 € × 26 Wochen | 2.496,00 € |
-| als 6 Monatsraten (Okt–März) | 2.496 € / 6 | 416,00 € / Monat |
-| alternativ verteilt auf 12 Monate | 2.496 € / 12 | 208,00 € / Monat |
+| Saisonpreis 01.11.–31.03. | 220 € + 25 m × 9,50 € | 457,50 € |
+| als 5 Monatsraten (Nov–März) | 457,50 € / 5 | 91,50 € / Monat |
+| alternativ verteilt auf 12 Monate | 457,50 € / 12 | 38,13 € / Monat |
 
 **Alles zusammen, Winterdienst auf 12 Monate verteilt**
 | | Betrag |
 |---|---|
-| Gesamt pro Monat netto | **1.002,40 €** |
-| zzgl. 19 % USt. | 190,46 € |
-| Gesamt pro Monat brutto | **1.192,86 €** |
-| Jahreswert netto | 12.028,80 € |
+| Gesamt pro Monat netto | **359,98 €** (rund 360 €) |
+| zzgl. 19 % USt. | 68,40 € |
+| Gesamt pro Monat brutto | **428,37 €** |
+| Jahreswert netto | 4.319,72 € |
 
-### Varianten derselben 12 WE
+### Varianten desselben Objekts
 | Variante | Monat netto | Monat brutto (19 %) |
 |---|---|---|
-| Nur Treppenhaus wöchentlich + Mülltonnen (typisches Einstiegspaket) | 434,40 € | 516,94 € |
-| Treppenhaus **14-täglich** (kein Rabatt: 12 × 8 × 26/12 = 208 €) + Müll + Garten | 628,00 € | 747,32 € |
-| wie oben + Winterdienst verteilt (208 €) | 836,00 € | 994,84 € |
+| Nur Treppenhaus wöchentlich + Mülltonnen (typisches Einstiegspaket) | 226,34 € | 269,35 € |
+| Treppenhaus **14-täglich**: (12 € + 3 × 8 €) × 1,15 × 26/12 = 89,70 € | 89,70 € | 106,74 € |
+| Kleinreparatur 45 Min. in Gütersloh: 3 × 13,50 € + 14,50 € Anfahrt (einmalig) | 55,00 € | 65,45 € |
 
-### Falls die Webseitenpreise **brutto** gemeint sind
-Dann wäre das Beispiel „alle Bausteine“ nicht 1.002,40 € netto, sondern 1.002,40 € **brutto**.
-Das entspricht 842,35 € netto zzgl. 160,05 € USt. Bei einem Kleinunternehmer (§ 19 UStG) gilt der
-Betrag ohne USt. Unterschied für den Betrieb: rund 160 € pro Monat bei diesem einen Objekt.
-**Diese Frage sollte der Inhaber vor dem ersten Angebot klären.**
+### Weitere Richtwerte aus der Preiskalkulation (Monat netto, alle Bausteine, Winterdienst verteilt)
+| Objekt | Empfehlung netto |
+|---|---|
+| Wohnanlage 12 WE (1 Treppenhaus × 4 Etagen, 45 m Gehweg) | ca. 471 € |
+| Anlage 24 WE (2 Treppenhäuser × 4 Etagen, 90 m Gehweg) | ca. 799 € |
 
-## 4. Plausibilitäts-Hinweise für den Inhaber
-- **Garten:** 30 € pro Einheit und Monat ergibt bei 12 WE 4.320 € netto im Jahr. Bei kleinen
-  Grünflächen ist das teuer und könnte Hausverwaltungen abschrecken. Bei großen Anlagen mit vielen WE
-  und wenig Grün passt der Preis nicht zum Aufwand. Vorschlag: Preis an die m² Grünfläche koppeln oder
-  eine Mindestpauschale mit m²-Staffel festlegen. [OFFEN]
-- **Winterdienst:** Der Preis nach Einheiten passt bei Reihenhaus-Anlagen nicht gut zu den Gehweglängen.
-  Vorschlag: Mindestpauschale plus Zuschlag je lfd. m. [OFFEN]
-- **Einsätze pro Monat:** 4,33 (52/12) ist genau. Wenn die Webseite mit 4 rechnet, sind das 8 % weniger.
-  Bitte einheitlich festlegen. [OFFEN]
+## 4. Hinweise für den Inhaber
+- **Festpreis nach Kostenarten:** Im Angebot die Positionen getrennt nach Gebäudereinigung, Gartenpflege,
+  Hauswart/Objektkontrolle, Müll und Winterdienst ausweisen. So übernimmt die Verwaltung sie direkt in die
+  Betriebskostenabrechnung.
+- **Kleinreparaturen** nie in die Pauschale packen, sondern nach Aufwand getrennt abrechnen.
+- **Mülltonnen:** Der Preis setzt voraus, dass ein Weg (raus oder rein) mit einem anderen Termin am Objekt
+  zusammenfällt. Sonst nach der Besichtigung anpassen.
+- **Winterdienst:** Der Preis rechnet mit rund 20 Einsätzen pro Saison. Nur so viele Objekte annehmen, wie
+  vor der Räumzeit zu schaffen sind.
+- **Rabatte:** Kein Treue- oder Mengenrabatt. Ein Einführungsangebot ist nicht freigegeben und wird nicht verwendet.
+- **Kleinunternehmerregelung (§ 19 UStG):** mit dem Steuerberater klären [OFFEN]. Bis dahin gilt: netto zzgl. 19 % MwSt.

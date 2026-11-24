@@ -1,35 +1,55 @@
 Nr;Position;Wert;Einheit;Hinweis
-E1;EINGABE Wohneinheiten;12;Anzahl;Wohn-/Gewerbeeinheiten des Objekts
-E2;EINGABE Treppenhäuser;1;Anzahl;ab dem 2. Treppenhaus greift Zuschlag Z3
-E3;EINGABE Grünfläche;0;m²;nur relevant wenn Zuschlag Z1 festgelegt
-E4;EINGABE Gehwege Winterdienst;0;lfd. m;nur relevant wenn Zuschlag Z2 festgelegt
-E5;EINGABE Reinigungsintervall;1;1 oder 2;1 = wöchentlich (mit Treuerabatt) / 2 = 14-täglich
-E6;EINGABE Treppenhausreinigung gewünscht;1;1/0;1 = ja / 0 = nein
-E7;EINGABE Mülltonnen-Service gewünscht;1;1/0;1 = ja / 0 = nein
-E8;EINGABE Gartenpflege gewünscht;1;1/0;1 = ja / 0 = nein
-E9;EINGABE Winterdienst gewünscht;1;1/0;1 = ja / 0 = nein
-S1;SATZ Treppenhausreinigung;8;EUR/Einheit/Einsatz;Webseite: ab 8 EUR/Einheit/Woche - netto/brutto [OFFEN]
-S2;SATZ Winterdienst;8;EUR/Einheit/Woche;Webseite: ab 8 EUR - Saison Okt-März - netto/brutto [OFFEN]
-S3;SATZ Gartenpflege;30;EUR/Einheit/Monat;Webseite - ganzjährig oder saisonal [OFFEN]
-S4;SATZ Mülltonnen-Service;5;EUR/Einheit/Monat;Webseite
-S5;SATZ Treuerabatt;10;%;nur auf Treppenhausreinigung bei wöchentlichem Intervall [OFFEN: auch auf andere Positionen?]
-S6;SATZ Wochen Winterdienst-Saison;26;Wochen;01.10.-31.03.
-S7;SATZ Umsatzsteuer;19;%;[OFFEN] 0 eintragen falls Kleinunternehmer § 19 UStG
-Z1;ZUSCHLAG Grünfläche;0;EUR/m²/Monat;[OFFEN] Platzhalter - Inhaber legt fest
-Z2;ZUSCHLAG Gehweg Winterdienst;0;EUR/m/Woche;[OFFEN] Platzhalter - Inhaber legt fest
-Z3;ZUSCHLAG je weiteres Treppenhaus;0;EUR/Monat;[OFFEN] Platzhalter - Inhaber legt fest
-Z4;ANFAHRT pauschal;0;EUR/Monat;[OFFEN] Platzhalter - Inhaber legt fest
-R1;Einsätze Reinigung pro Monat;=52/12/C6;Einsätze;52 bzw. 26 Einsätze pro Jahr / 12 [OFFEN: Webseite rechnet evtl. mit 4]
-R2;Treppenhausreinigung pro Monat;=C7*(C2*C11*C22+(C3-1)*C20);EUR netto*;
-R3;Treuerabatt;=-C23*C15/100*(C6=1);EUR netto*;nur bei Intervall 1
-R4;Mülltonnen-Service pro Monat;=C8*C2*C14;EUR netto*;
-R5;Gartenpflege pro Monat;=C9*(C2*C13+C4*C18);EUR netto*;
-R6;Anfahrt pro Monat;=C21;EUR netto*;
-R7;MONATSPAUSCHALE ganzjährig netto*;=C23+C24+C25+C26+C27;EUR netto*;ohne Winterdienst
-R8;Winterdienst Saisonpreis;=C10*(C2*C12+C5*C19)*C16;EUR netto*;eigener Saisonvertrag
-R9;Winterdienst je Saisonmonat (6 Raten);=C29/6;EUR netto*;Okt-März
-R10;Winterdienst auf 12 Monate verteilt;=C29/12;EUR netto*;Alternative Zahlweise
-R11;GESAMT pro Monat inkl. Winterdienst (12-Monats-Verteilung) netto*;=C28+C31;EUR netto*;
-R12;zzgl. Umsatzsteuer;=C32*C17/100;EUR;
-R13;GESAMT pro Monat brutto;=C32+C33;EUR;
-X1;Hinweis;* netto unter Vorbehalt;;Ob die Webseitenpreise netto oder brutto sind ist [OFFEN]. Formeln: Datei in Excel/LibreOffice mit Trennzeichen Semikolon öffnen
+E1;EINGABE Treppenhäuser;1;Anzahl;vor Ort zählen
+E2;EINGABE Etagen je Treppenhaus;3;Anzahl;Treppenlauf + Podest/Flur je Etage
+E3;EINGABE Aufzugkabinen;0;Anzahl;0 wenn kein Aufzug
+E4;EINGABE Reinigungsintervall;1;1 oder 2;1 = wöchentlich (Normalpreis) / 2 = 14-täglich (+15 % je Reinigung)
+E5;EINGABE Gehweg + Zuwege Winterdienst;25;lfd. m;vor Ort messen
+E6;EINGABE Rasenfläche;150;m²;vor Ort messen
+E7;EINGABE Beete / Pflaster;20;m²;vor Ort messen
+E8;EINGABE Hecke;15;lfd. m;bis 2,5 m Höhe
+E9;EINGABE Abfuhrtermine pro Monat;6;Termine;laut Abfuhrkalender (raus + rein = 1 Termin)
+E10;EINGABE Tonnen-Leerungen pro Monat;9;Leerungen;Summe aller Behälter je Monat
+E11;EINGABE Müllplatz kehren;1;1/0;1 = ja (wöchentlich) / 0 = nein
+E12;EINGABE Objektkontrollen mit Fotoprotokoll pro Monat;1;Anzahl;0 = nur Sichtkontrolle bei jedem Einsatz (inklusive)
+E13;EINGABE Treppenhausreinigung gewünscht;1;1/0;1 = ja / 0 = nein
+E14;EINGABE Mülltonnen-Service gewünscht;1;1/0;1 = ja / 0 = nein
+E15;EINGABE Gartenpflege gewünscht;1;1/0;1 = ja / 0 = nein
+E16;EINGABE Winterdienst gewünscht;1;1/0;1 = ja / 0 = nein
+S1;SATZ Treppenhaus Grundpreis;12;EUR netto/Treppenhaus/Reinigung;Preisliste 24.11.2026
+S2;SATZ Treppenhaus je Etage;8;EUR netto/Etage/Reinigung;Preisliste 24.11.2026
+S3;SATZ Aufzugkabine;4.45;EUR netto/Reinigung;Preisliste 24.11.2026
+S4;SATZ Zuschlag 14-täglich;15;%;je Reinigung, nur bei Intervall 2
+S5;SATZ Winterdienst Grundpauschale;220;EUR netto/Objekt/Saison;Saison Nov-März, inkl. Einsatzprotokoll
+S6;SATZ Winterdienst je lfd. Meter;9.5;EUR netto/lfm/Saison;inkl. Streugut
+S7;SATZ Garten je Einsatz;13.5;EUR netto/Gartengang;Rüstzeit
+S8;SATZ Rasen mähen;0.14;EUR netto/m²/Mahd;inkl. Kanten und Schnittgut
+S9;SATZ Beete / Pflaster;0.45;EUR netto/m²/Gang;
+S10;SATZ Heckenschnitt;1.78;EUR netto/lfm/Schnitt;bis 2,5 m
+S11;SATZ Laub;0.05;EUR netto/m²/Einsatz;auf Rasen + Beete
+S12;SATZ Grünschnitt-Entsorgung;0.11;EUR netto/m²/Jahr;auf Rasen + Beete
+S13;SATZ Mülltonnen je Abfuhrtermin;6.5;EUR netto/Termin;raus + rein
+S14;SATZ Mülltonnen je Leerung;1.34;EUR netto/Leerung;
+S15;SATZ Müllplatz kehren;4.45;EUR netto/Woche;
+S16;SATZ Objektkontrolle mit Fotoprotokoll;27;EUR netto/Begehung;eigener Termin
+S17;SATZ Umsatzsteuer;19;%;alle Preise netto zzgl. 19 % MwSt. (§ 19 UStG mit Steuerberater klären [OFFEN])
+A1;ANNAHME Mähgänge pro Jahr;18;Gänge;April-Oktober 14-täglich + Extras
+A2;ANNAHME Beetpflege-Gänge pro Jahr;7;Gänge;mit Mähgang kombiniert
+A3;ANNAHME Heckenschnitte pro Jahr;2;Schnitte;Juni + September, mit Mähgang kombiniert
+A4;ANNAHME Laub-Einsätze pro Jahr;3;Einsätze;Oktober-November
+A5;Gartengänge pro Jahr;=C35+C38;Gänge;Mähgänge + Laub-Einsätze (Beete und Hecke laufen beim Mähgang mit)
+A6;Wochen je Monat;=52/12;Wochen;4,33
+R1;Reinigungen pro Monat;=C40/C5;Einsätze;wöchentlich 4,33 / 14-täglich 2,17
+R2;Preis je Reinigung;=(C2*(C18+C3*C19)+C4*C20)*(1+(C5=2)*C21/100);EUR netto;
+R3;Treppenhausreinigung pro Monat;=C14*C41*C42;EUR netto;
+R4;Mülltonnen-Service pro Monat;=C15*(C10*C30+C11*C31+C12*C32*C40);EUR netto;
+R5;Gartenpflege pro Jahr;=C16*(C39*C24+C35*C7*C25+C36*C8*C26+C37*C9*C27+C38*(C7+C8)*C28+(C7+C8)*C29);EUR netto;
+R6;Gartenpflege pro Monat;=C45/12;EUR netto;ganzjährig in 12 Raten
+R7;Objektkontrolle mit Fotoprotokoll pro Monat;=C13*C33;EUR netto;
+R8;MONATSPAUSCHALE ganzjährig netto;=C43+C44+C46+C47;EUR netto;ohne Winterdienst
+R9;Winterdienst Saisonpreis;=C17*(C22+C6*C23);EUR netto;eigener Saisonvertrag
+R10;Winterdienst je Saisonmonat (5 Raten);=C49/5;EUR netto;Nov-März
+R11;Winterdienst auf 12 Monate verteilt;=C49/12;EUR netto;Alternative Zahlweise
+R12;GESAMT pro Monat inkl. Winterdienst (12-Monats-Verteilung) netto;=C48+C51;EUR netto;
+R13;zzgl. Umsatzsteuer 19 %;=C52*C34/100;EUR;
+R14;GESAMT pro Monat brutto;=C52+C53;EUR;
+X1;Hinweis;Preisliste 24.11.2026, alle Preise netto;;Abrechnung nach Aufwand, nicht pro Wohneinheit. Kleinreparaturen 53,50 EUR/h netto + Anfahrt (14,50 / 36,50 EUR) immer getrennt abrechnen. Formeln: Datei in Excel/LibreOffice mit Trennzeichen Semikolon öffnen. Beispielwerte = MFH 6 WE aus preiskalkulation.md (Ergebnis ca. 360 EUR netto/Monat)
