@@ -1,36 +1,34 @@
-# Bericht Instagram-Manager – 24.11.2026
+# Bericht Instagram-Manager – 24.11.2026 (aktualisiert)
 
 ## Was wurde gemacht
-- `marketing/instagram/profil.md`: Handle-Vorschläge (Favorit `@hausmeisterhelden_gt`, **nur Vorschlag**), Name-Feld „Hausmeister Helden | Gütersloh“ (30 Zeichen), 3 Bio-Varianten, Link-Strategie (1. WhatsApp https://wa.me/4952413389748 mit vorausgefülltem Text „komme von Instagram“, 2. Webseite), 6 Story-Highlights, Einrichtungs-Checkliste.
-- `marketing/instagram/2026-KW48.md`: Wochenplan mit 5 Beiträgen (4 Reels, 1 Karussell), tägliche Story-Ideen, Drehliste für einen Drehtag, 10-Minuten-Engagement-Routine.
+- **Neuausrichtung:** Kein Filmen, keine Videos vom Inhaber. Der bisherige KW48-Plan mit Drehtag, Vorher/Nachher und „Ein Morgen als Hausmeister-Held“ wurde komplett ersetzt.
+- `marketing/instagram/2026-KW48.json`: Inhalte für 4 Posts (3 Karussells, 1 Text-Reel) plus 5 Highlight-Cover. Keine Preise, keine konkreten Räumzeiten; rechtliche Aussagen allgemein gehalten mit Verweis auf die Ortssatzung.
+- `marketing/instagram/2026-KW48.md`: neuer Wochenplan ab Mi 25.11. mit Captions, Hashtags, Uhrzeiten, Dateipfaden, 5 Story-Ideen (nur Text/Sticker), Engagement-Routine.
+- `marketing/instagram/profil.md`: Highlights „Vorher/Nachher“ und „Team“ ersetzt durch Leistungen, Ablauf, Winterdienst, FAQ, Kontakt (Bewertungen erst, wenn echte vorliegen). Profilbild ohne Inhaberfoto.
+- **Noch nicht gerendert:** In dieser Sitzung stand mir kein Werkzeug zum Ausführen von Befehlen zur Verfügung. Die Grafiken entstehen mit
+  `python3 marketing/instagram/grafik.py marketing/instagram/2026-KW48.json`.
+  Die Texte habe ich vorsorglich so kurz gehalten, dass die Schriftgrößen-Regel in `grafik.py` passt (lange Titel → kleinere Schrift, keine überlangen Einzelwörter in großen Titeln). Folie 1 jedes Posts muss nach dem Rendern noch angesehen werden.
 
 ## Plan der Woche (KW 48)
-| Tag | Uhrzeit | Format | Thema |
-|---|---|---|---|
-| Mi 25.11. | 18:30 | Reel | 3 Pflichten beim Winterdienst für Vermieter |
-| Do 26.11. | 07:15 | Reel | Vorher/Nachher Laub auf dem Gehweg |
-| Fr 27.11. | 12:00 | Karussell | 4 Winterdienst-Mythen |
-| Sa 28.11. | 09:00 | Reel | Ein Morgen als Hausmeister-Held: Winter-Check mit Gebäudekontrolle |
-| So 29.11. | 17:00 | Reel | Treppenhaus Vorher/Nachher – 1. Advent |
-Dazu täglich 2–4 Stories mit Umfrage-, Quiz-, Fragen- und Link-Stickern.
+| Tag | Uhrzeit | Format | Thema | Dateien |
+|---|---|---|---|---|
+| Mi 25.11. | 18:30 | Karussell (5) | 3 Pflichten beim Winterdienst | `marketing/instagram/grafiken/2026-KW48/01-winterdienst-pflichten/folie-01…05.png` |
+| Fr 27.11. | 12:00 | Karussell (6) | 4 Mythen rund um den Winterdienst | `marketing/instagram/grafiken/2026-KW48/02-winterdienst-mythen/folie-01…06.png` |
+| Sa 28.11. | 09:00 | Text-Reel (15 Sek.) | Wer räumt vor deinem Haus? | `marketing/instagram/grafiken/2026-KW48/03-wer-raeumt-reel/reel.mp4` |
+| So 29.11. | 17:00 | Karussell (7) | So betreuen wir dein Haus (Objektbetreuung in 4 Schritten) | `marketing/instagram/grafiken/2026-KW48/04-objektbetreuung-ablauf/folie-01…07.png` |
+| – | – | Highlight-Cover (5) | Leistungen, Ablauf, Winterdienst, FAQ, Kontakt | `marketing/instagram/grafiken/2026-KW48/00-highlight-cover/folie-01…05.png` |
 
-## Drehliste – ein Drehtag (Mi 25.11. vormittags, 60–90 Min.)
-- **A Transporter:** Handschuhe/Kaffee, Werkzeug & Streugut (ohne Kennzeichen), Foto Schneeschieber + Streugut, Thermometer-Foto
-- **B Kundenobjekt außen:** Laub vorher (feste Position) – Zeitraffer – nachher, Laubsäcke zählen, Schieber + Eimer, Gehweg räumen von oben, Splitt streuen, Füße zum Eingang, Lampe/Wasserhahn/Dachrinne prüfen
-- **C Treppenhaus:** Stufen vorher – Wischmopp – nachher
-- **D Abschluss:** Protokoll abhaken (2 Varianten), Behind-the-scenes-Clips, Advent-Foto
-- Endkontrolle: keine Gesichter, Hausnummern, Namensschilder, Kennzeichen
+Stories: Mi Umfrage „Winterdienst geregelt?“, Do Quiz „Übertragen an Mieter?“, Fr Fragen-Sticker, Sa Link-Sticker WhatsApp, So Advent-Gruß mit Emoji-Slider.
 
 ## Was braucht Freigabe
-- Profiltexte (Name, Bio, Links) und alle 5 Beiträge inkl. Captions, bevor sie veröffentlicht werden.
+- Alle 4 Beiträge inkl. Captions und die Highlight-Cover, bevor sie veröffentlicht werden.
+- Profiltexte (Name, Bio, Links, Highlights).
 
 ## Fragen an den Inhaber
 1. Welcher Instagram-Name soll es sein? Gibt es schon ein Konto?
-2. An welchem Objekt darf gefilmt werden? Liegt die Einwilligung von Eigentümer/Verwaltung vor? Darf der Stadtteil genannt werden?
-3. Möchten Sie selbst im Bild zu sehen sein (Team-Highlight), oder sollen nur Hände und Werkzeug gezeigt werden?
-4. Preise netto oder brutto? (betrifft Post 5)
-5. Was regelt die Gütersloher Straßenreinigungssatzung genau (Räumzeiten, Breite, Salz)? Bis das geklärt ist, werden keine konkreten Uhrzeiten genannt.
-6. Funktioniert der wa.me-Link mit der Festnetznummer? Bitte einmal vom Handy aus testen.
-7. Gibt es Logo/Firmenfarben für Profilbild und Highlight-Cover?
-8. Gibt es schon echte Kundenstimmen oder Google-Bewertungen für das Highlight „Bewertungen“?
-9. Gibt es eine eigene Unterseite für Winterdienst auf der Webseite?
+2. Preise netto oder brutto, und dürfen sie auf Instagram genannt werden? (bis dahin keine Preisbeiträge)
+3. Was regelt die Gütersloher Straßenreinigungssatzung genau (Räumzeiten, Breite, Salz)? Bis das geklärt ist, keine konkreten Uhrzeiten.
+4. Funktioniert der wa.me-Link mit der Festnetznummer? Bitte einmal vom Handy aus testen.
+5. Gibt es Logo/Firmenfarben für Profilbild? (Grafiken nutzen derzeit das Grün/Dunkel-Design der Webseite.)
+6. Gibt es schon echte Kundenstimmen oder Google-Bewertungen für ein späteres Highlight „Bewertungen“?
+7. Gibt es eine eigene Unterseite für Winterdienst auf der Webseite?

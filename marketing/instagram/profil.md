@@ -1,4 +1,4 @@
-# Instagram-Profil – Hausmeister Helden (Version 1, Stand 24.11.2026)
+# Instagram-Profil – Hausmeister Helden (Version 2, Stand 24.11.2026)
 
 > Entwurf. Nichts davon ist live. Der Inhaber richtet das Profil selbst ein bzw. gibt es frei.
 > Grundlage: `firma/profil.md`. Fehlende Daten sind als `[OFFEN: …]` markiert.
@@ -69,22 +69,29 @@ Instagram erlaubt bis zu 5 Links in der Bio, sichtbar ist der erste.
 - Webseite optional mit Kennung versehen, z. B. `https://www.haus-meister-helden.de/?utm_source=instagram`, falls die IONOS-Statistik das auswertet.
 - In Captions keinen klickbaren Link erwarten: Immer „Link in der Bio“ oder „schreib uns per WhatsApp“ schreiben. In Stories den Link-Sticker nutzen.
 
-## 5. Story-Highlights
-Cover einheitlich: einfarbiger Hintergrund in Firmenfarbe `[OFFEN: Farben/Logo]` + weißes Symbol. Bis dahin: dunkelblau mit weißem Icon.
+## 5. Story-Highlights (Version 2: komplett ohne Filmen)
+Der Inhaber möchte nicht selbst im Bild sein und hat derzeit keine Aufträge zum Filmen. Deshalb entfallen „Vorher/Nachher“ und „Team“; alle Highlights bestehen aus Grafiken, Text-Stories und Stickern.
 
-| Highlight | Cover-Symbol | Inhalt |
-|---|---|---|
-| Leistungen | 🛠️ | Je 1 Story pro Leistung: Treppenhaus, Winterdienst, Garten, Kleinreparaturen, Mülltonnen, Gebäudekontrolle mit Protokoll (kostenlos inklusive) |
-| Vorher/Nachher | ✨ | Die besten Vorher/Nachher-Clips (Laub, Treppenhaus, Müllplatz, Hecke) |
-| Bewertungen | ⭐ | Nur echte Bewertungen (Google-Screenshots oder WhatsApp-Lob, nur mit Erlaubnis und ohne Namen/Profilbild) `[OFFEN: noch keine Referenzen vorhanden]` |
-| Team | 👷 | Inhaber Martin Ogur als fester Ansprechpartner (nur mit seiner Zustimmung zum Zeigen), Werkzeug, Fahrzeug ohne Kennzeichen |
-| Winterdienst | ❄️ | Räum-/Streupflicht-Tipps, Einsatzbilder, „So läuft der Winterdienst bei uns“ mit Einsatzdokumentation, Saisonangebot |
-| Kontakt | 📲 | Telefon, WhatsApp-Link-Sticker, Zeiten Mo–Sa 7–20 Uhr, Einsatzgebiet Gütersloh & Umgebung, „Besichtigung kostenlos“ |
+**Cover:** fertige Grafiken im Hausmeister-Helden-Design (dunkler Hintergrund, grüner Schriftzug), erzeugt mit
+`python3 marketing/instagram/grafik.py marketing/instagram/2026-KW48.json` (Post-ID `00-highlight-cover`):
+
+| Reihenfolge | Highlight | Cover-Datei | Inhalt |
+|---|---|---|---|
+| 1 | Leistungen | `marketing/instagram/grafiken/2026-KW48/00-highlight-cover/folie-01.png` | Je 1 Text-Story pro Leistung: Treppenhaus, Winterdienst, Garten, Kleinreparaturen, Mülltonnen, Gebäudekontrolle mit Protokoll (kostenlos inklusive) |
+| 2 | Ablauf | `…/00-highlight-cover/folie-02.png` | Karussell „So betreuen wir dein Haus“ (KW48, Post 4) als Stories: melden → kostenlose Besichtigung → Angebot → Betreuung |
+| 3 | Winterdienst | `…/00-highlight-cover/folie-03.png` | Karussells „3 Pflichten“ und „4 Mythen“, Reel „Wer räumt vor deinem Haus?“, Umfrage-/Quiz-Stories |
+| 4 | FAQ | `…/00-highlight-cover/folie-04.png` | Antworten auf Fragen-Sticker (ohne Namen/Profilbild der Fragenden), z. B. „Wie schnell meldet ihr euch?“ – „Innerhalb von 24 Stunden.“ |
+| 5 | Kontakt | `…/00-highlight-cover/folie-05.png` | Telefon/WhatsApp 05241 3389748, Link-Sticker https://wa.me/4952413389748, Mo–Sa 7–20 Uhr, Gütersloh & Umgebung, „Besichtigung kostenlos“ |
+| später | Bewertungen | – | Erst anlegen, wenn echte Bewertungen vorliegen (Google-Screenshots oder WhatsApp-Lob, nur mit Erlaubnis, ohne Namen/Profilbild). `[OFFEN: noch keine Referenzen vorhanden]` |
+
+So geht's: Jede Cover-Grafik einmal als Story posten (sie ist gleichzeitig die Einstiegs-Story des Highlights), dann ins Highlight speichern und beim Bearbeiten des Highlights als Titelbild wählen; den runden Ausschnitt auf den grünen Schriftzug ziehen.
+Alternative, falls die Schrift im Kreis zu klein wirkt: in der App einfarbige Cover mit Emoji (🛠️ 📋 ❄️ ❓ 📲).
+Sobald es echte Aufträge gibt: Objektfotos (ohne Personen, Hausnummern, Kennzeichen, mit Einwilligung des Auftraggebers) können als zusätzliches Highlight „Einsätze“ dazukommen.
 
 ## 6. Profil-Checkliste für den Inhaber
 - [ ] Handle festlegen und anlegen (Vorschlag siehe oben)
 - [ ] Auf **Business-Konto** umstellen (Statistiken, Kontakt-Buttons)
-- [ ] Profilbild: Logo `[OFFEN]` oder freundliches Foto des Inhabers (nur wenn er das möchte)
+- [ ] Profilbild: Logo `[OFFEN]` (kein Foto des Inhabers, da er nicht im Bild sein möchte)
 - [ ] Name-Feld, Bio, Links eintragen
 - [ ] WhatsApp-Button verknüpfen und Link testen
 - [ ] Erste 6 Beiträge posten, bevor aktiv kommentiert wird (Profil soll nicht leer wirken)
