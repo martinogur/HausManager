@@ -149,8 +149,10 @@ class Figur:
                 ell(ex + blick, ey + 1, 3.6, 4.2, (35, 30, 40, 255), outline=False)
                 ell(ex + blick - 1.2, ey - 1, 1.3, 1.5, (255, 255, 255, 255), outline=False)
         # Bäckchen
+        # (deckend gemischt, damit der Hintergrund nicht durchscheint)
+        backe = mischen(F["koerper"], (255, 120, 150, 255), 0.5)
         for sx in (-1, 1):
-            ell(50 + sx * 18, 47, 5, 3, (255, 140, 160, 120), outline=False)
+            ell(50 + sx * 18, 47, 5, 3, backe, outline=False)
         # Nase
         if typ == "baer":
             ell(50, 46.5, 3.6, 2.6, F["linie"], outline=False)
@@ -163,13 +165,37 @@ class Figur:
                                fill=F["linie"], width=max(1, lw // 2))
         # Mund
         my = 53 if typ != "frosch" else 48
+        breite = 12 if typ == "frosch" else 7
         if mund > 0.12:
-            h = 1.5 + 6.5 * mund
-            ell(50, my + h / 2, 4 + 2 * mund, h, (122, 31, 43, 255))
-            ell(50, my + h * 0.85, 2.6 + 1.2 * mund, h * 0.35, (240, 120, 140, 255), outline=False)
+            # lachender, offener Mund („D“-Form): Oberkante als leichtes Lächeln, unten rund, mit Zunge
+            w = (breite - 1.5) + 2.5 * mund
+            h = 2.5 + 6.5 * mund
+            oben = [(50 + w * math.cos(math.pi * k / 12), my - 0.5 + 1.6 * math.sin(math.pi * k / 12))
+                    for k in range(13)]
+            unten = [(50 - w * math.cos(math.pi * k / 16), my + h * math.sin(math.pi * k / 16))
+                     for k in range(1, 16)]
+            umriss = [P(x, y) for x, y in oben + unten]
+            maske = Image.new("L", img.size, 0)
+            ImageDraw.Draw(maske).polygon(umriss, fill=255)
+            mund_img = Image.new("RGBA", img.size, (0, 0, 0, 0))
+            md = ImageDraw.Draw(mund_img)
+            md.polygon(umriss, fill=(122, 31, 43, 255))
+            zx, zy = 50, my + h * 0.95
+            md.ellipse([P(zx - w * 0.6, zy - h * 0.45), P(zx + w * 0.6, zy + h * 0.35)], fill=(240, 120, 140, 255))
+            md.rectangle([P(50 - w, my - 1), P(50 + w, my + 0.9 + 0.6 * mund)], fill=(255, 255, 255, 255))
+            mund_img.putalpha(Image.composite(mund_img.getchannel("A"), Image.new("L", img.size, 0), maske))
+            img.alpha_composite(mund_img)
+            d.polygon(umriss, outline=F["linie"], width=lw)
+            # nach oben gezogene Mundwinkel
+            for sx in (-1, 1):
+                d.arc([P(50 + sx * w - 2.2, my - 2.4), P(50 + sx * w + 2.2, my + 0.8)],
+                      *((110, 200) if sx < 0 else (340, 70)), fill=F["linie"], width=lw)
         else:
-            breite = 12 if typ == "frosch" else 6
-            d.arc([P(50 - breite, my - 4), P(50 + breite, my + 2)], 20, 160, fill=F["linie"], width=lw + 1)
+            # breites Lächeln mit Grübchen
+            d.arc([P(50 - breite, my - 5), P(50 + breite, my + 3)], 15, 165, fill=F["linie"], width=lw + 1)
+            for sx in (-1, 1):
+                d.arc([P(50 + sx * breite * 0.97 - 1.6, my - 2.6), P(50 + sx * breite * 0.97 + 1.6, my + 0.2)],
+                      *((120, 220) if sx < 0 else (320, 60)), fill=F["linie"], width=lw)
         return img
 
 
