@@ -179,6 +179,8 @@ input[type=range]{flex:1;accent-color:var(--green-600);height:28px}
 .calc-out .breakdown{list-style:none;padding:0;margin:16px 0 24px;font-size:.92rem;color:#b7bfb8}
 .calc-out .breakdown li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--dark-line)}
 .calc-out .btn{margin-top:auto}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:4px 14px;margin-bottom:12px}
+.calc-grid .field[hidden]{display:none}
 .calc-out small{color:#8a948c;font-size:.8rem;margin-top:14px;display:block}
 
 /* Einsatzgebiet */

@@ -43,16 +43,18 @@
 4. Gewerbe: Büros, Praxen, Arztzentren, Supermärkte, Hotels
 5. Privatkunden (Garten, Winterdienst, Entrümpelung)
 
-## Preise (laut Webseite, Richtwerte netto?/brutto? [OFFEN])
-- Treppenhausreinigung: ab 8 € / Einheit / Woche
-- Winterdienst: ab 8 € / Einheit / Woche (Okt–März)
-- Gartenarbeit: 30 € / Einheit / Monat
-- Kleinreparaturen: 35 € / Stunde
-- Mülltonnen-Service: 5 € / Einheit / Monat
-- Gebäudekontrolle: kostenlos inklusive
-- Treuerabatt: 10 % bei wöchentlicher Reinigung (4× im Monat)
-- Anfahrt: [OFFEN]
-- Kleinunternehmer nach § 19 UStG? [OFFEN]
+## Preise (freigegeben vom Inhaber am 24.11.2026 – netto zzgl. 19 % MwSt.)
+Details und Herleitung: `akquise/angebote/preiskalkulation.md` / `.xlsx`. Abrechnung nach Aufwand, nicht pro Wohneinheit.
+- Arbeitsstunde (Kleinreparaturen, Sonderarbeiten): 53,50 €/h, je angefangene 15 Min. 13,50 €, mindestens 30 Min. (27 €)
+- Anfahrt: Gütersloh bis 10 km 14,50 €, Umland 10–25 km 36,50 €
+- Treppenhausreinigung: 12 € je Treppenhaus und Reinigung + 8 € je Etage; Aufzug 4,45 €; 14-täglich +15 % je Reinigung
+  (Beispiel: 1 Treppenhaus, 3 Etagen, wöchentlich ≈ 156 €/Monat)
+- Winterdienst (Saison Nov–März): 220 € Grundpauschale je Objekt + 9,50 € je lfd. Meter inkl. Streugut und Einsatzprotokoll; Einzeleinsatz ohne Vertrag 43,50 €
+- Gartenpflege: 13,50 € je Einsatz + Rasen 0,14 €/m²/Mahd, Beet 0,45 €/m², Hecke 1,78 €/m, Laub 0,05 €/m², Grünschnitt 0,11 €/m²/Jahr (≈ 0,30–0,40 €/m² Grünfläche/Monat)
+- Mülltonnen-Service: 6,50 € je Abfuhrtermin + 1,34 € je Leerung; Müllplatz kehren 4,45 €/Woche
+- Objektkontrolle mit Fotoprotokoll als eigener Termin: 27 €; Sichtkontrolle bei jedem Einsatz inklusive
+- Kein Treuerabatt mehr. Einführungsangebot „Startpaket“ (3 Monate ≈ 8 % günstiger bei 12 Monaten Laufzeit): [OFFEN – noch nicht freigegeben]
+- Kleinunternehmerregelung § 19 UStG: [OFFEN – mit Steuerberater klären]
 
 ## Stärken / Alleinstellung (was macht euch besser?)
 - Reaktion innerhalb 24 h, per Telefon und WhatsApp erreichbar

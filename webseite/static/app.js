@@ -22,34 +22,33 @@
     els.forEach(function (el) { io.observe(el); });
   } else { els.forEach(function (el) { el.classList.add("in"); }); }
 
-  // Preisrechner (Richtwerte von der Webseite, Preise in firma/profil.md)
+  // Preisrechner – Preise laut akquise/angebote/preiskalkulation.md (netto)
   var calc = document.getElementById("rechner");
   if (calc) {
-    var WEEKS = 52 / 12;
-    var P = {
-      reinigung: { label: "Treppenhausreinigung", per: function (u) { return u * 8 * WEEKS * 0.9; }, hint: "wöchentlich, inkl. 10 % Treuerabatt" },
-      winter: { label: "Winterdienst", per: function (u) { return u * 8 * WEEKS; }, hint: "Okt–März" },
-      garten: { label: "Gartenarbeit", per: function (u) { return u * 30; } },
-      muell: { label: "Mülltonnen-Service", per: function (u) { return u * 5; } },
-      reparatur: { label: "Kleinreparaturen", per: null, hint: "35 € / Std. nach Aufwand" }
-    };
-    var units = calc.querySelector("#einheiten"), out = calc.querySelector("#einheiten-out");
-    var total = calc.querySelector("#summe"), list = calc.querySelector("#aufstellung"), cta = calc.querySelector("#rechner-cta");
-    var eur = function (v) { return Math.round(v).toLocaleString("de-DE") + " €"; };
+    var W = 52 / 12, $ = function (id) { return calc.querySelector("#" + id); };
+    var num = function (id) { var v = parseFloat($(id).value); return isNaN(v) || v < 0 ? 0 : v; };
+    var total = $("summe"), list = $("aufstellung"), cta = $("rechner-cta");
+    var eur = function (v) { return v.toLocaleString("de-DE", { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " €"; };
     function upd() {
-      var u = +units.value; out.value = u;
-      var sum = 0, rows = [], chosen = [];
-      calc.querySelectorAll("input[name=l]:checked").forEach(function (c) {
-        var p = P[c.value]; chosen.push(p.label);
-        if (p.per) { var v = p.per(u); sum += v; rows.push("<li><span>" + p.label + (p.hint ? " <small>(" + p.hint + ")</small>" : "") + "</span><b>" + eur(v) + "</b></li>"); }
-        else rows.push("<li><span>" + p.label + "</span><b>" + p.hint + "</b></li>");
-      });
-      total.textContent = rows.length ? eur(sum) : "– €";
-      list.innerHTML = rows.length ? rows.join("") : "<li><span>Bitte mindestens eine Leistung wählen</span></li>";
-      var msg = "Hallo Hausmeister Helden, ich interessiere mich für: " + (chosen.join(", ") || "Hausmeisterservice") + " für ca. " + u + " Wohneinheiten. Der Rechner zeigt ca. " + eur(sum) + " / Monat. Bitte um ein konkretes Angebot.";
+      var on = {}; calc.querySelectorAll("input[name=l]").forEach(function (c) { on[c.value] = c.checked; });
+      calc.querySelectorAll(".calc-grid .field").forEach(function (f) { f.hidden = !on[f.getAttribute("data-for")]; });
+      var rows = [], sum = 0, text = [];
+      if (on.reinigung) {
+        var th = Math.max(1, num("r-th")), et = Math.max(1, num("r-et")), z = $("r-int").value === "z";
+        var proR = th * (12 + 8 * et) * (z ? 1.15 : 1), v = proR * (z ? W / 2 : W);
+        sum += v; rows.push(["Treppenhausreinigung (" + (z ? "14-täglich" : "wöchentlich") + ")", eur(v)]);
+        text.push("Treppenhaus " + th + "x" + et + " Etagen " + (z ? "14-täglich" : "wöchentlich"));
+      }
+      if (on.garten) { var g = num("r-qm") * 0.35; sum += g; rows.push(["Gartenpflege (" + num("r-qm") + " m²)", eur(g)]); text.push("Garten " + num("r-qm") + " m²"); }
+      if (on.muell) { var m = num("r-ab") * (6.5 + 2 * 1.34); sum += m; rows.push(["Mülltonnen-Service", eur(m)]); text.push("Mülltonnen " + num("r-ab") + " Termine/Monat"); }
+      var wtxt = "";
+      if (on.winter) { var ws = 220 + 9.5 * num("r-m"); rows.push(["Winterdienst je Saison (" + num("r-m") + " m)", eur(ws)]); wtxt = " + Winterdienst " + eur(ws) + "/Saison"; text.push("Winterdienst " + num("r-m") + " m"); }
+      total.textContent = (sum || !on.winter) ? eur(sum) : "– €";
+      list.innerHTML = rows.length ? rows.map(function (r) { return "<li><span>" + r[0] + "</span><b>" + r[1] + "</b></li>"; }).join("") + (sum ? "<li><span>inkl. 19 % MwSt.</span><b>" + eur(sum * 1.19) + "</b></li>" : "") : "<li><span>Bitte mindestens eine Leistung wählen</span></li>";
+      var msg = "Hallo Hausmeister Helden, ich hätte gern ein Festpreis-Angebot: " + (text.join(", ") || "Hausmeisterservice") + ". Richtwert laut Rechner: ca. " + eur(sum) + " netto/Monat" + wtxt + ".";
       cta.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
     }
-    calc.addEventListener("input", upd); upd();
+    calc.addEventListener("input", upd); calc.addEventListener("change", upd); upd();
   }
 
   // Anfrageformular: baut eine WhatsApp-Nachricht oder E-Mail – es werden keine Daten auf dem Server gespeichert.

@@ -74,21 +74,23 @@ LEISTUNGEN = [
     {
         "slug": "treppenhausreinigung-guetersloh", "icon": "reinigung", "name": "Treppenhausreinigung",
         "kurz": "Regelmäßige Reinigung von Treppenhäusern, Fluren und Gemeinschaftsbereichen – sauber, zuverlässig, termingerecht.",
-        "preis": "ab 8 €", "einheit": "pro Einheit / Woche",
+        "preis": "ab 156 €", "einheit": "netto / Monat · wöchentlich, 3 Etagen",
+        "preisdetail": "12 € je Treppenhaus und Reinigung plus 8 € je Etage (netto). Aufzugkabine 4,45 € je Reinigung. Bei 14-täglicher Reinigung 15 % Aufschlag je Reinigung. Beispiel: 1 Treppenhaus mit 3 Etagen, wöchentlich = ca. 156 € netto im Monat.",
         "titel": "Treppenhausreinigung in Gütersloh",
         "intro": "Ein sauberes Treppenhaus ist die Visitenkarte jedes Mehrfamilienhauses. Wir reinigen Treppen, Flure, Handläufe, Eingangsbereiche und Kellergänge nach festem Plan – damit Mieter zufrieden sind und Sie keine Beschwerden mehr bearbeiten müssen.",
         "umfang": ["Treppenstufen und Podeste kehren und feucht wischen", "Handläufe, Geländer, Lichtschalter und Türgriffe reinigen",
                    "Eingangsbereich, Briefkastenanlage und Haustür säubern", "Kellerflure und Gemeinschaftsräume nach Absprache",
                    "Spinnweben entfernen, Fensterbänke abwischen", "Kurze Gebäudekontrolle bei jedem Einsatz – inklusive"],
         "fuer": "Hausverwaltungen, WEG-Verwaltungen, Vermieter und Eigentümergemeinschaften in Gütersloh und Umgebung.",
-        "faq": [("Wie oft wird gereinigt?", "Wöchentlich, 14-täglich oder monatlich – ganz nach Bedarf. Bei wöchentlicher Reinigung (4× im Monat) erhalten Sie 10 % Treuerabatt."),
+        "faq": [("Wie oft wird gereinigt?", "Wöchentlich, 14-täglich oder monatlich – ganz nach Bedarf. Den günstigsten Preis je Reinigung haben Sie bei wöchentlicher Reinigung."),
                 ("Bringen Sie Reinigungsmittel mit?", "Ja, Material und Reinigungsmittel bringen wir mit."),
                 ("Was passiert, wenn etwas kaputt ist?", "Wir melden Schäden sofort mit Foto und beheben Kleinigkeiten auf Wunsch direkt mit.")],
     },
     {
         "slug": "winterdienst-guetersloh", "icon": "winter", "name": "Winterdienst",
         "kurz": "Schneeräumung, Eisentfernung und Streudienst für sichere Zugänge. Saisonal von Oktober bis März.",
-        "preis": "ab 8 €", "einheit": "pro Einheit / Woche (Okt–März)",
+        "preis": "ab 220 €", "einheit": "netto / Saison + 9,50 € je Meter",
+        "preisdetail": "Grundpauschale 220 € je Objekt und Saison (Bereitschaft, Wetterkontrolle, Kontrollfahrten, Einsatzprotokoll) plus 9,50 € je laufendem Meter Gehweg/Zuweg inkl. Streugut (netto, Saison November–März). Beispiel: 25 m Gehweg = 457,50 € netto pro Saison. Einzeleinsatz ohne Vertrag ab 43,50 €.",
         "titel": "Winterdienst in Gütersloh",
         "intro": "Als Eigentümer oder Verwalter tragen Sie die Verkehrssicherungspflicht – rutscht jemand vor Ihrem Haus aus, kann das teuer werden. Wir übernehmen das Räumen und Streuen zuverlässig und dokumentieren jeden Einsatz, damit Sie im Ernstfall einen Nachweis haben.",
         "umfang": ["Räumen von Gehwegen, Hauszugängen, Treppen und Mülltonnenplätzen", "Streuen mit abstumpfenden bzw. zulässigen Streumitteln",
@@ -102,7 +104,8 @@ LEISTUNGEN = [
     {
         "slug": "gartenpflege-guetersloh", "icon": "garten", "name": "Gartenarbeit",
         "kurz": "Rasenmähen, Heckenpflege, Laub entfernen – Ihre Grünanlagen gepflegt das ganze Jahr über.",
-        "preis": "30 €", "einheit": "pro Einheit / Monat",
+        "preis": "ab 0,30 €", "einheit": "netto je m² Grünfläche / Monat",
+        "preisdetail": "Abrechnung nach Fläche statt pauschal: 13,50 € je Einsatz plus z. B. 0,14 € je m² Rasen und Mahd, 0,45 € je m² Beet, 1,78 € je Meter Hecke (netto). Als Jahrespauschale ergibt das meist 0,30–0,40 € je m² Grünfläche und Monat.",
         "titel": "Gartenpflege in Gütersloh",
         "intro": "Gepflegte Außenanlagen steigern den Wert einer Immobilie und sorgen für zufriedene Mieter. Wir kümmern uns um Rasen, Hecken, Beete und Laub – regelmäßig und ohne dass Sie daran denken müssen.",
         "umfang": ["Rasen mähen und Kanten schneiden", "Hecken- und Strauchschnitt", "Laub entfernen im Herbst",
@@ -114,7 +117,8 @@ LEISTUNGEN = [
     {
         "slug": "kleinreparaturen-guetersloh", "icon": "reparatur", "name": "Kleinreparaturen",
         "kurz": "Türen, Beleuchtung, kleine Defekte – wir beheben Schäden schnell und fachgerecht, bevor sie größer werden.",
-        "preis": "35 €", "einheit": "pro Stunde",
+        "preis": "53,50 €", "einheit": "netto / Stunde",
+        "preisdetail": "53,50 € netto je Stunde, abgerechnet je angefangene 15 Minuten (mindestens 30 Minuten). Anfahrt Gütersloh 14,50 €, Umland bis 25 km 36,50 € (netto). Material nach Verbrauch.",
         "titel": "Kleinreparaturen & Hausmeister-Arbeiten in Gütersloh",
         "intro": "Eine klemmende Tür, ein defektes Licht im Flur, eine lose Leiste – kleine Schäden werden schnell zu großen Ärgernissen. Wir erledigen Kleinreparaturen zügig und melden Ihnen, was gemacht wurde.",
         "umfang": ["Leuchtmittel tauschen, Bewegungsmelder prüfen", "Türen, Türschließer und Schlösser einstellen",
@@ -126,7 +130,8 @@ LEISTUNGEN = [
     {
         "slug": "muelltonnen-service-guetersloh", "icon": "muell", "name": "Mülltonnen-Service",
         "kurz": "Bereitstellen, zurückstellen und Sauberhalten der Müllbereiche – ohne dass Sie daran denken müssen.",
-        "preis": "5 €", "einheit": "pro Einheit / Monat",
+        "preis": "6,50 €", "einheit": "netto je Abfuhrtermin",
+        "preisdetail": "6,50 € je Abfuhrtermin (Bereitstellen und Zurückstellen) plus 1,34 € je Tonnen-Leerung, Müllplatz kehren 4,45 € je Woche (netto). Für ein typisches Mehrfamilienhaus meist 70–100 € im Monat.",
         "titel": "Mülltonnen-Service in Gütersloh",
         "intro": "Volle Tonnen, die nicht rausgestellt wurden, und unordentliche Müllplätze sind ein Dauerthema in Mehrfamilienhäusern. Wir stellen die Tonnen zu den Abfuhrterminen bereit, holen sie zurück und halten den Müllplatz sauber.",
         "umfang": ["Bereitstellen der Tonnen zu den Abfuhrterminen", "Zurückstellen nach der Leerung", "Müllplatz sauber halten",
@@ -137,12 +142,12 @@ LEISTUNGEN = [
     {
         "slug": None, "icon": "kontrolle", "name": "Gebäudekontrolle", "feature": True,
         "kurz": "Regelmäßige Begehungen und Protokollierung des Gebäudezustands. Bei jeder beauftragten Leistung inklusive.",
-        "preis": "0 €", "einheit": "kostenlos inklusive",
+        "preis": "0 €", "einheit": "bei jeder Leistung inklusive",
     },
 ]
 
 FAQ = [
-    ("Was kostet ein Hausmeisterservice in Gütersloh?", "Das hängt von Größe und Leistungen ab. Treppenhausreinigung gibt es ab 8 € pro Einheit und Woche, den Mülltonnen-Service für 5 € pro Einheit und Monat. Mit unserem Preisrechner sehen Sie sofort einen Richtwert – das konkrete Angebot erhalten Sie nach einer kostenlosen Besichtigung."),
+    ("Was kostet ein Hausmeisterservice in Gütersloh?", "Das hängt von Größe und Leistungen ab. Ein Treppenhaus mit 3 Etagen wöchentlich zu reinigen kostet z. B. ca. 156 € netto im Monat, Winterdienst ab 220 € netto pro Saison plus 9,50 € je Meter Gehweg. Wir rechnen nach tatsächlichem Aufwand, nicht pauschal pro Wohnung. Mit unserem Preisrechner sehen Sie sofort einen Richtwert – das konkrete Angebot erhalten Sie nach einer kostenlosen Besichtigung."),
     ("Wie schnell bekomme ich ein Angebot?", "Sie erhalten innerhalb von 24 Stunden eine Rückmeldung. Nach der kostenlosen Objektbesichtigung erstellen wir Ihnen zügig ein schriftliches Angebot."),
     ("In welchen Orten sind Sie im Einsatz?", "In Gütersloh und Umgebung – unter anderem in " + ", ".join(ORTE[1:6]) + ". Fragen Sie gern auch für andere Orte im Kreis Gütersloh an."),
     ("Arbeiten Sie auch für Hausverwaltungen mit mehreren Objekten?", "Ja, genau darauf sind wir ausgerichtet: ein fester Ansprechpartner für alle Objekte, regelmäßige Kontrollen und Protokolle, die Sie direkt an Eigentümer weitergeben können."),
@@ -347,7 +352,7 @@ def startseite(artikel):
   <div class="section-head"><span class="eyebrow">Was wir tun</span><h2>Alles aus einer Hand</h2>
   <p class="lead">Ein Dienstleister statt fünf: Wir übernehmen die laufende Betreuung Ihrer Immobilie – planbar, dokumentiert und zu transparenten Preisen.</p></div>
   <div class="grid grid-3">{leistung_cards()}</div>
-  <div class="note">{icon('euro')} Treuerabatt: Bei wöchentlicher Reinigung (4× im Monat) erhalten Sie 10 % Rabatt auf die monatliche Reinigungsrechnung.</div>
+  <div class="note">{icon('euro')} Fairer Festpreis nach Aufwand – nicht pauschal pro Wohnung. Für Hausverwaltungen getrennt nach Betriebskostenarten, damit Sie direkt umlegen können. Alle Preise netto zzgl. 19 % MwSt.</div>
 </div></section>
 
 <section class="section dark" id="verwaltungen"><div class="container split">
@@ -387,27 +392,31 @@ def startseite(artikel):
 
 <section class="section" id="preisrechner"><div class="container">
   <div class="section-head"><span class="eyebrow">Interaktiver Preisrechner</span><h2>Was kostet Ihr Hausmeisterservice?</h2>
-  <p class="lead">Leistungen wählen, Anzahl der Wohneinheiten einstellen – und sofort einen Richtwert sehen.</p></div>
+  <p class="lead">Leistungen wählen, Objekt beschreiben – und sofort einen Richtwert sehen. Wir rechnen nach Aufwand, nicht pauschal pro Wohnung.</p></div>
   <form class="calc" id="rechner" onsubmit="return false">
     <div class="calc-in">
       <fieldset><legend>Welche Leistungen benötigen Sie?</legend><div class="chips">
         <label class="chip"><input type="checkbox" name="l" value="reinigung" checked><span>Treppenhausreinigung</span></label>
         <label class="chip"><input type="checkbox" name="l" value="winter"><span>Winterdienst</span></label>
-        <label class="chip"><input type="checkbox" name="l" value="garten"><span>Gartenarbeit</span></label>
+        <label class="chip"><input type="checkbox" name="l" value="garten"><span>Gartenpflege</span></label>
         <label class="chip"><input type="checkbox" name="l" value="muell" checked><span>Mülltonnen-Service</span></label>
-        <label class="chip"><input type="checkbox" name="l" value="reparatur"><span>Kleinreparaturen</span></label>
       </div></fieldset>
-      <fieldset><legend><label for="einheiten">Anzahl Wohneinheiten</label></legend>
-        <div class="range-row"><input type="range" id="einheiten" min="1" max="60" value="10"><output id="einheiten-out" for="einheiten">10</output></div>
-      </fieldset>
-      <p style="color:var(--muted);font-size:.9rem;margin:0">Die Gebäudekontrolle ist bei jeder Beauftragung kostenlos inklusive.</p>
+      <div class="calc-grid">
+        <div class="field" data-for="reinigung"><label for="r-th">Treppenhäuser</label><input type="number" id="r-th" min="1" max="10" value="1" inputmode="numeric"></div>
+        <div class="field" data-for="reinigung"><label for="r-et">Etagen je Treppenhaus</label><input type="number" id="r-et" min="1" max="12" value="3" inputmode="numeric"></div>
+        <div class="field" data-for="reinigung"><label for="r-int">Reinigung</label><select id="r-int"><option value="w">wöchentlich</option><option value="z">14-täglich</option></select></div>
+        <div class="field" data-for="winter"><label for="r-m">Gehweg + Zuwege (Meter)</label><input type="number" id="r-m" min="0" max="500" value="25" inputmode="numeric"></div>
+        <div class="field" data-for="garten"><label for="r-qm">Grünfläche (m²)</label><input type="number" id="r-qm" min="0" max="10000" value="200" inputmode="numeric"></div>
+        <div class="field" data-for="muell"><label for="r-ab">Abfuhrtermine pro Monat</label><input type="number" id="r-ab" min="1" max="20" value="6" inputmode="numeric"></div>
+      </div>
+      <p style="color:var(--muted);font-size:.9rem;margin:0">Gebäudekontrolle bei jedem Einsatz inklusive. Kleinreparaturen 53,50 €/Std. netto nach Aufwand.</p>
     </div>
     <div class="calc-out" aria-live="polite">
-      <span class="eyebrow" style="color:#7ccc13">Geschätzter Monatspreis ab</span>
+      <span class="eyebrow" style="color:#7ccc13">Richtwert pro Monat (netto)</span>
       <div class="total" id="summe">– €</div>
       <ul class="breakdown" id="aufstellung"></ul>
-      <a class="btn btn-primary" id="rechner-cta" href="{wa()}" target="_blank" rel="noopener">Konkretes Angebot anfragen {icon('arrow')}</a>
-      <small>Alle Preise sind Richtwerte. Das tatsächliche Angebot hängt von Ihrem Objekt ab.</small>
+      <a class="btn btn-primary" id="rechner-cta" href="{wa()}" target="_blank" rel="noopener">Festpreis-Angebot anfragen {icon('arrow')}</a>
+      <small>Richtwerte, netto zzgl. 19 % MwSt. Den Festpreis erhalten Sie nach kostenloser Besichtigung.</small>
     </div>
   </form>
 </div></section>
@@ -500,7 +509,9 @@ def leistungsseite(l):
     <h2>Für wen?</h2>
     <p>{e(l['fuer'])}</p>
     <h2>Preis</h2>
-    <p><strong>{l['preis']} {l['einheit']}</strong> – als Richtwert. Das genaue Angebot erstellen wir nach einer kostenlosen Besichtigung. Die Gebäudekontrolle mit Protokoll ist immer inklusive.</p>
+    <p><strong>{l['preis']} {l['einheit']}</strong></p>
+    <p>{e(l.get('preisdetail', ''))}</p>
+    <p>Alle Preise netto zzgl. 19 % MwSt. Das genaue Festpreis-Angebot erstellen wir nach einer kostenlosen Besichtigung. Die Gebäudekontrolle mit Protokoll ist immer inklusive.</p>
     <h2>Häufige Fragen</h2>
     {faq_html(l['faq'])}
     <h2>Weitere Leistungen</h2>
@@ -537,7 +548,7 @@ def verwaltungsseite():
     <article class="card reveal"><div class="icon">{icon('kontrolle')}</div><h3>Protokolle mit Fotos</h3><p>Nach jedem Einsatz – ideal für Eigentümer, Beirat und Ihre Dokumentation.</p></article>
     <article class="card reveal"><div class="icon">{icon('bolt')}</div><h3>Schnelle Reaktion</h3><p>Rückmeldung innerhalb von 24 Stunden, erreichbar {FIRMA['zeiten']}.</p></article>
     <article class="card reveal"><div class="icon">{icon('shield')}</div><h3>Winterdienst mit Nachweis</h3><p>Jeder Einsatz dokumentiert – für Ihre Verkehrssicherungspflicht.</p></article>
-    <article class="card reveal"><div class="icon">{icon('euro')}</div><h3>Planbare Kosten</h3><p>Transparente Preise pro Einheit und klare Angebote – ohne versteckte Kosten.</p></article>
+    <article class="card reveal"><div class="icon">{icon('euro')}</div><h3>Planbare Kosten</h3><p>Fester Monatspreis nach Aufwand, getrennt nach Betriebskostenarten – direkt umlegbar.</p></article>
     <article class="card reveal"><div class="icon">{icon('reinigung')}</div><h3>Alles aus einer Hand</h3><p>Reinigung, Winterdienst, Garten, Tonnen und Reparaturen – ein Vertrag statt fünf.</p></article>
   </div>
 </div></section>
