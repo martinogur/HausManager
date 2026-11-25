@@ -56,3 +56,11 @@ Kunden, Reichweite und Umsatz steigern.
 - Alles auf einmal: „Nutze den `wachstums-chef` und erstelle den Wochenplan.“
 - Rund um die Uhr: geplante Aufgaben (z. B. täglich Leads + Anschreiben, wöchentlich
   Instagram-Plan und SEO-Check) rufen die Agenten automatisch auf.
+
+## Portal und Betriebs-Agenten (Hausmeister Helden AI OS)
+- Das Verwaltungsportal (`portal/`) ist die zentrale Steuerung. Dort laufen 13 Betriebs-Agenten mit Budget, Grenzen
+  und Freigabe-Warteschlange. Überblick: `README.md`, `AGENT_ARCHITECTURE.md`, `AUTOMATION_MAP.md`.
+- Ergebnisse der Claude-Code-Agenten fließen über Importe ins Portal (z. B. `leads/leads.csv` →
+  `manage.py agent_beauftragen lead_research bestand_importieren`). Spalten von `leads.csv` nicht umbenennen.
+- Änderungen am Datenmodell nur als neue Datei in `portal/db/erweiterungen/` mit Rückweg und SQL-Tests.
+- Vor jedem Commit am Portal: `pytest -q` in `portal/app` und `bash portal/db/tests/run.sh`.
