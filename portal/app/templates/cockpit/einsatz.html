@@ -1,0 +1,50 @@
+{% extends "basis.html" %}
+{% block titel %}Einsatz{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>{{ e.auftrag.titel }}</h1>
+  <p class="untertitel">{{ e.geplant_von|date:"l, d.m. H:i" }}–{{ e.geplant_bis|time:"H:i" }} · {{ e.get_status_display }}</p></div>
+</div>
+<section class="karte">
+  <h2>Objekt</h2>
+  <p><strong>{{ e.auftrag.objekt.bezeichnung }}</strong><br>{{ e.auftrag.objekt.strasse }} {{ e.auftrag.objekt.hausnummer }}, {{ e.auftrag.objekt.plz }} {{ e.auftrag.objekt.ort }}</p>
+  {% if e.auftrag.objekt.zugang_hinweise %}<p class="meldung warning">Zugang: {{ e.auftrag.objekt.zugang_hinweise }}</p>{% endif %}
+  {% if e.auftrag.beschreibung %}<p>{{ e.auftrag.beschreibung|linebreaksbr }}</p>{% endif %}
+  {% if e.notiz_buero %}<p class="stand">Büro: {{ e.notiz_buero }}</p>{% endif %}
+</section>
+{% if e.status != 'erledigt' %}
+<section class="karte">
+  <h2>Arbeitszeit</h2>
+  {% if darf_zeit %}
+  <form method="post">{% csrf_token %}
+    {% if offen %}
+      <p>Läuft seit {{ offen.beginn|time:"H:i" }} Uhr.</p>
+      <div class="feld"><label for="pause">Pause (Minuten)</label><input id="pause" name="pause" inputmode="numeric" value="0"></div>
+      <button class="knopf breit gross-knopf" name="aktion" value="stopp">Stopp</button>
+    {% else %}
+      <button class="knopf breit gross-knopf" name="aktion" value="start">Start</button>
+    {% endif %}
+  </form>
+  {% else %}<p class="leer">Nur zugewiesene Mitarbeiter erfassen hier Zeit.</p>{% endif %}
+</section>
+<section class="karte">
+  <h2>Fotos</h2>
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}<input type="hidden" name="aktion" value="foto">
+    <div class="feld"><label for="typ">Art</label><select id="typ" name="typ">{% for s, t in fototypen %}<option value="{{ s }}">{{ t }}</option>{% endfor %}</select></div>
+    <div class="feld"><label for="foto-datei">Foto</label><input id="foto-datei" type="file" name="foto" accept="image/*" capture="environment" required></div>
+    <button class="knopf zweit breit">Foto hochladen</button>
+  </form>
+  <p class="stand">Standortdaten werden beim Speichern entfernt. Keine Personen oder Kennzeichen fotografieren.</p>
+</section>
+<section class="karte">
+  <h2>Bericht</h2>
+  <form method="post">{% csrf_token %}
+    <div class="feld"><label for="bericht">Was wurde gemacht? Auffälligkeiten?</label><textarea id="bericht" name="bericht" rows="4">{{ e.bericht_mitarbeiter|default:"" }}</textarea></div>
+    <div class="aktionen"><button class="knopf zweit" name="aktion" value="bericht">Bericht speichern</button>
+      <button class="knopf" name="aktion" value="erledigt">Einsatz erledigt</button></div>
+  </form>
+</section>
+{% endif %}
+{% if fotos %}<section class="karte"><h2>Dokumentation</h2><div class="fotos">{% for f in fotos %}<figure><img src="{% url 'cockpit:foto' f.pk %}" alt="{{ f.get_typ_display }}-Foto" loading="lazy"><figcaption>{{ f.get_typ_display }} · {{ f.aufgenommen_am|time:"H:i" }}</figcaption></figure>{% endfor %}</div></section>{% endif %}
+{% if zeiten %}<section class="karte"><h2>Zeiten</h2><ul class="liste">{% for z in zeiten %}<li>{{ z.mitarbeiter.vorname }}: {{ z.beginn|time:"H:i" }}–{{ z.ende|time:"H:i"|default:"läuft" }}{% if z.pause_minuten %} (Pause {{ z.pause_minuten }} min){% endif %}</li>{% endfor %}</ul></section>{% endif %}
+{% endblock %}

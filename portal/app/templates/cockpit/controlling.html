@@ -1,0 +1,53 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}Controlling{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf"><div><h1>Controlling</h1><p class="untertitel">Umsatz aus Rechnungen (Lexware führend) · Rohertrag = Umsatz − Personal − Material (ohne Fixkosten)</p></div></div>
+<h2>{{ heute|date:"F Y" }}</h2>
+{% include "cockpit/_geschaeftszahlen.html" with k=monat %}
+<h2>Jahr {{ heute.year }}</h2>
+<dl class="kennzahlen">
+  <div class="kennzahl hervor"><dt>Umsatz</dt><dd>{{ jahr.umsatz_cent|cent }}</dd></div>
+  <div class="kennzahl"><dt>Rohertrag</dt><dd>{{ jahr.rohertrag_cent|cent }}</dd></div>
+  <div class="kennzahl"><dt>Mitarbeiterkosten</dt><dd>{{ jahr.personalkosten_cent|cent }}</dd><span class="zusatz">{{ jahr.arbeitsstunden }} Std.</span></div>
+  <div class="kennzahl"><dt>Angebotsquote</dt><dd>{{ jahr.angebotsquote_prozent|prozent }}</dd><span class="zusatz">{{ jahr.angebote_angenommen }} von {{ jahr.angebote_entschieden }}</span></div>
+</dl>
+<section class="karte">
+  <h2>Umsatz je Monat {{ heute.year }}</h2>
+  {% if diagramm.leer %}<p class="leer">Noch keine Rechnungen in diesem Jahr.</p>{% else %}
+  <svg class="diagramm" viewBox="0 0 {{ diagramm.breite }} {{ diagramm.hoehe }}" role="img" aria-label="Umsatz je Monat">
+    {% for b in diagramm.balken %}<g><title>{{ b.monat|date:"F" }}: {{ b.wert|cent }}</title>
+      <rect class="balken" x="{{ b.x }}" y="{{ b.y }}" width="{{ b.b }}" height="{{ b.h }}" rx="3"/>
+      <text x="{{ b.tx }}" y="{{ diagramm.hoehe|add:'-4' }}" text-anchor="middle">{{ b.monat|date:"M" }}</text></g>{% endfor %}
+  </svg>{% endif %}
+</section>
+<div class="raster-2" style="margin-top:16px">
+  <section class="karte">
+    <h2>Auftragsrentabilität (schwächste zuerst)</h2>
+    <div class="tabelle-rahmen"><table class="tabelle">
+      <thead><tr><th>Auftrag</th><th class="zahl">Preis</th><th class="zahl weg-mobil">Personal</th><th class="zahl">DB</th></tr></thead>
+      <tbody>{% for r in rentabilitaet %}<tr><td><a href="{% url 'cockpit:auftraege_detail' r.auftrag_id %}">{{ r.auftragsnummer }}</a><br><span class="klein">{{ r.kunde }}</span></td>
+        <td class="zahl">{{ r.verkaufspreis_netto_cent|cent }}</td><td class="zahl weg-mobil">{{ r.personalkosten_cent|cent }}</td>
+        <td class="zahl"><span class="abzeichen {% if r.deckungsbeitrag_prozent < 30 %}rot{% endif %}">{{ r.deckungsbeitrag_prozent|prozent }}</span></td></tr>
+      {% empty %}<tr><td colspan="4" class="leer">Noch keine Aufträge mit Verkaufspreis.</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </section>
+  <section class="karte">
+    <h2>KI-Kosten (30 Tage)</h2>
+    <div class="tabelle-rahmen"><table class="tabelle">
+      <thead><tr><th>Agent</th><th class="zahl">Aufrufe</th><th class="zahl">Cent</th><th class="zahl">Fehler</th></tr></thead>
+      <tbody>{% for agent, n, kosten, fehler in ki_kosten %}<tr><td>{{ agent }}</td><td class="zahl">{{ n }}</td><td class="zahl">{{ kosten|floatformat:2 }}</td><td class="zahl">{{ fehler }}</td></tr>
+      {% empty %}<tr><td colspan="4" class="leer">Keine KI-Aufrufe.</td></tr>{% endfor %}</tbody>
+    </table></div>
+    <h2 style="margin-top:16px">Lead-Pipeline</h2>
+    <ul class="liste">{% for p in pipeline %}<li>{{ p.status }} · {{ p.prioritaet|default:"–" }}: <strong>{{ p.anzahl }}</strong>{% if p.potenzial_cent %} · {{ p.potenzial_cent|cent }}/Monat{% endif %}</li>{% empty %}<li class="leer">Keine Leads.</li>{% endfor %}</ul>
+  </section>
+</div>
+{% if bericht %}
+<section class="karte">
+  <h2>Letzter Wochenbericht ({{ bericht.beendet_am|date:"d.m.Y" }})</h2>
+  <p>{{ bericht.ergebnis.bericht.zusammenfassung }}</p>
+  {% if bericht.ergebnis.bericht.entscheidungen %}<h3>Offene Entscheidungen</h3><ul>{% for e in bericht.ergebnis.bericht.entscheidungen %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  {% if bericht.ergebnis.bericht.risiken %}<h3>Risiken</h3><ul>{% for r in bericht.ergebnis.bericht.risiken %}<li>{{ r }}</li>{% endfor %}</ul>{% endif %}
+</section>
+{% endif %}
+{% endblock %}

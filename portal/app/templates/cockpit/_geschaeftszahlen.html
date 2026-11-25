@@ -1,0 +1,11 @@
+{% load portal %}
+<dl class="kennzahlen">
+  <div class="kennzahl hervor"><dt>Umsatz Monat</dt><dd>{{ k.umsatz_cent|cent }}</dd><span class="zusatz">offen {{ k.offene_rechnungen_cent|cent }}</span></div>
+  <div class="kennzahl"><dt>Rohertrag</dt><dd>{{ k.rohertrag_cent|cent }}</dd><span class="zusatz">ohne Fixkosten</span></div>
+  <div class="kennzahl"><dt>Mitarbeiterkosten</dt><dd>{{ k.personalkosten_cent|cent }}</dd><span class="zusatz">{{ k.arbeitsstunden }} Std.</span></div>
+  <div class="kennzahl"><dt>Wiederkehrend</dt><dd>{{ k.wiederkehrend_monat_cent|cent }}</dd><span class="zusatz">{{ k.wiederkehrende_vertraege }} Verträge / Monat</span></div>
+  <div class="kennzahl"><dt>Offene Aufträge</dt><dd>{{ k.auftraege_offen }}</dd><span class="zusatz">{{ k.auftraege_abgeschlossen }} abgeschlossen</span></div>
+  <div class="kennzahl"><dt>Neue Anfragen</dt><dd>{{ k.anfragen_neu }}</dd><span class="zusatz">{{ k.leads_neu }} neue Leads</span></div>
+  <div class="kennzahl"><dt>Offene Angebote</dt><dd>{{ k.angebote_offen }}</dd><span class="zusatz">Quote {{ k.angebotsquote_prozent|prozent }}</span></div>
+  <div class="kennzahl"><dt>Freigaben offen</dt><dd>{{ k.freigaben_offen }}</dd><span class="zusatz">KI {{ k.ki_kosten_cent|floatformat:2 }} ct</span></div>
+</dl>

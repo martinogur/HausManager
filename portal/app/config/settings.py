@@ -138,6 +138,7 @@ INSTALLED_APPS = [
     "agenten",
     "vertrieb",
     "marketing",
+    "cockpit",
 ]
 
 MIDDLEWARE = [
@@ -176,6 +177,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "kern.context_processors.portal",
+                "cockpit.navigation.navigation",
             ],
         },
     },

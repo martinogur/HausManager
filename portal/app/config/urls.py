@@ -16,6 +16,7 @@ urlpatterns = [
     path("", include("berichte.urls")),
     path("", include("konten.urls")),
     path("", include("kern.urls")),
+    path("", include("cockpit.urls")),
     path(settings.ADMIN_PFAD, admin.site.urls),
 ]
 

@@ -1,0 +1,47 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}{{ a.auftragsnummer }}{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>{{ a.titel }}</h1><p class="untertitel">{{ a.auftragsnummer }} · {{ a.kunde.name }} · <strong>{{ a.get_status_display }}</strong></p></div>
+  <a class="knopf zweit klein" href="{% url 'admin:auftraege_auftrag_change' a.pk %}">Bearbeiten</a>
+</div>
+{% if wechsel %}
+<form method="post" class="aktionen">{% csrf_token %}
+  {% for s, t in wechsel %}<button class="knopf {% if forloop.first %}{% else %}zweit{% endif %} klein" name="status" value="{{ s }}">→ {{ t }}</button>{% endfor %}
+</form>
+{% endif %}
+<div class="raster-2" style="margin-top:16px">
+  <section class="karte">
+    <h2>Auftrag</h2>
+    <dl class="daten">
+      <dt>Objekt</dt><dd>{{ a.objekt.bezeichnung }}<br>{{ a.objekt.strasse }} {{ a.objekt.hausnummer }}, {{ a.objekt.plz }} {{ a.objekt.ort }}</dd>
+      <dt>Beschreibung</dt><dd>{{ a.beschreibung|default:"–"|linebreaksbr }}</dd>
+      <dt>Priorität</dt><dd>{{ a.get_prioritaet_display }}</dd>
+      <dt>Fällig</dt><dd>{{ a.faellig_am|date:"d.m.Y"|default:"–" }}</dd>
+      <dt>Geschätzte Zeit</dt><dd>{% if a.geschaetzte_minuten %}{{ a.geschaetzte_minuten }} min{% else %}–{% endif %}</dd>
+      <dt>Tatsächliche Zeit</dt><dd>{{ ist_minuten|floatformat:0 }} min</dd>
+      <dt>Bemerkungen</dt><dd>{{ a.bemerkungen|default:"–"|linebreaksbr }}</dd>
+      {% if a.angebot %}<dt>Angebot</dt><dd>{{ a.angebot.angebotsnummer }} ({{ a.angebot.summe_netto_cent|cent }})</dd>{% endif %}
+    </dl>
+  </section>
+  <section class="karte">
+    <h2>Wirtschaftlichkeit</h2>
+    <dl class="daten">
+      <dt>Verkaufspreis netto</dt><dd>{% if a.verkaufspreis_netto_cent %}{{ a.verkaufspreis_netto_cent|cent }}{% else %}nicht hinterlegt{% endif %}</dd>
+      <dt>Personalkosten</dt><dd>{{ w.personalkosten_cent|cent }}</dd>
+      <dt>Materialkosten</dt><dd>{{ a.materialkosten_cent|cent }}</dd>
+      <dt>Deckungsbeitrag</dt><dd>{% if w.deckungsbeitrag_cent is not None %}<strong>{{ w.deckungsbeitrag_cent|cent }}</strong> ({{ w.deckungsbeitrag_prozent|prozent }}){% else %}–{% endif %}</dd>
+    </dl>
+  </section>
+</div>
+<section class="karte">
+  <h2>Einsätze</h2>
+  <ul class="liste">{% for e in einsaetze %}
+    <li class="einsatz"><span class="zeit">{{ e.geplant_von|date:"d.m. H:i" }}</span>
+      <span class="titel">{{ e.get_status_display }} · {% for z in e.zuweisungen.all %}{{ z.mitarbeiter.vorname }} {{ z.mitarbeiter.nachname }}{% if not forloop.last %}, {% endif %}{% empty %}<strong>noch niemand eingeteilt</strong>{% endfor %}</span>
+      <span class="ort">{% if e.bericht_mitarbeiter %}Bericht: {{ e.bericht_mitarbeiter|truncatechars:200 }}{% endif %}</span>
+      {% if e.fotos.all %}<div class="fotos ort">{% for f in e.fotos.all %}<figure><a href="{% url 'cockpit:foto' f.pk %}"><img src="{% url 'cockpit:foto' f.pk %}" alt="{{ f.get_typ_display }}-Foto" loading="lazy"></a><figcaption>{{ f.get_typ_display }}</figcaption></figure>{% endfor %}</div>{% endif %}
+    </li>
+  {% empty %}<li class="leer">Noch kein Einsatz geplant.</li>{% endfor %}</ul>
+</section>
+{% endblock %}

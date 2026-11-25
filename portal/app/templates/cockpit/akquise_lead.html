@@ -1,0 +1,74 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}{{ lead.firma }}{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>{{ lead.firma }} {% if lead.prioritaet %}<span class="abzeichen prio-{{ lead.prioritaet }}">{{ lead.prioritaet }}</span>{% endif %}</h1>
+  <p class="untertitel">{{ lead.leadnummer }} · {{ lead.get_status_display }} · Score {{ lead.score|default:"–" }}</p></div>
+  <a class="knopf zweit klein" href="{% url 'cockpit:akquise' %}">Alle Leads</a>
+</div>
+<div class="raster-2">
+  <div>
+  <section class="karte">
+    <h2>Daten</h2>
+    <dl class="daten">
+      <dt>Zielgruppe</dt><dd>{{ lead.get_zielgruppe_display }}</dd>
+      <dt>Adresse</dt><dd>{{ lead.strasse|default:"" }} {{ lead.plz|default:"" }} {{ lead.ort|default:"–" }}</dd>
+      <dt>Einsatzgebiet</dt><dd>{% if lead.im_einsatzgebiet is None %}prüfen{% elif lead.im_einsatzgebiet %}ja{% else %}nein{% endif %}{% if lead.entfernung_km is not None %} ({{ lead.entfernung_km }} km){% endif %}</dd>
+      <dt>Ansprechpartner</dt><dd>{{ lead.ansprechpartner|default:"–" }}{% if lead.position %} ({{ lead.position }}){% endif %}</dd>
+      <dt>Telefon</dt><dd>{{ lead.telefon|default:"–" }}</dd>
+      <dt>E-Mail</dt><dd>{{ lead.email|default:"–" }} {% if lead.email and not lead.email_werbung_erlaubt %}<span class="abzeichen gelb">keine Werbe-E-Mail</span>{% endif %}</dd>
+      <dt>Webseite</dt><dd>{% if lead.webseite %}<a href="{{ lead.webseite }}" rel="noopener noreferrer" target="_blank">{{ lead.webseite }}</a>{% else %}–{% endif %}</dd>
+      <dt>Quelle</dt><dd>{{ lead.quelle }}</dd>
+      {% if lead.einladung_beleg %}<dt>Einladung</dt><dd><a href="{{ lead.einladung_beleg }}" rel="noopener noreferrer" target="_blank">Beleg</a></dd>{% endif %}
+      <dt>Objekte</dt><dd>{{ lead.objekte_geschaetzt|default:"–" }}</dd>
+      <dt>Potenzial</dt><dd>{% if lead.geschaetzter_monatsumsatz_cent %}{{ lead.geschaetzter_monatsumsatz_cent|cent }}/Monat{% else %}unbekannt{% endif %}</dd>
+      <dt>Nächste Aktion</dt><dd>{{ lead.naechste_aktion|default:"–" }}</dd>
+      <dt>Wiedervorlage</dt><dd>{{ lead.wiedervorlage_am|date:"d.m.Y"|default:"–" }}</dd>
+      {% if lead.notizen %}<dt>Notizen</dt><dd>{{ lead.notizen|linebreaksbr }}</dd>{% endif %}
+      {% if lead.kunde %}<dt>Kunde</dt><dd>{{ lead.kunde.kundennummer }} {{ lead.kunde.name }}</dd>{% endif %}
+    </dl>
+  </section>
+  <section class="karte">
+    <h2>Kontaktverlauf</h2>
+    <ul class="liste">{% for k in kontakte %}
+      <li><strong>{{ k.zeitpunkt|date:"d.m.Y H:i" }} · {{ k.get_kanal_display }} ({{ k.richtung }})</strong><br>{{ k.zusammenfassung }}{% if k.ergebnis %}<br><span class="stand">Ergebnis: {{ k.ergebnis }}</span>{% endif %}</li>
+    {% empty %}<li class="leer">Noch kein Kontakt dokumentiert.</li>{% endfor %}</ul>
+  </section>
+  </div>
+  <div>
+  <section class="karte">
+    <h2>Bewertung</h2>
+    {% if lead.score_begruendung.gruende %}<ul class="liste">{% for g in lead.score_begruendung.gruende %}<li>{{ g.grund }} <strong>{{ g.punkte }}</strong></li>{% endfor %}</ul>{% endif %}
+    {% if lead.score_begruendung.gebiet %}<p class="stand">{{ lead.score_begruendung.gebiet }}</p>{% endif %}
+    <form method="post">{% csrf_token %}<button class="knopf zweit klein" name="aktion" value="bewerten">Neu bewerten</button></form>
+  </section>
+  <section class="karte">
+    <h2>Zulässige Kontaktwege</h2>
+    {% if wege %}<ul class="liste">{% for w, grund in wege %}<li><strong>{{ w }}</strong> – {{ grund }}</li>{% endfor %}</ul>
+    {% else %}<p class="leer">Kein zulässiger Kontaktweg (Widerspruch oder keine Daten).</p>{% endif %}
+    {% if freigaben %}<h3>Vorschläge</h3><ul class="liste">{% for f in freigaben %}<li><a href="{% url 'cockpit:freigaben_detail' f.pk %}">{{ f.freigabenummer }} {{ f.titel }}</a> – {{ f.get_status_display }}</li>{% endfor %}</ul>{% endif %}
+  </section>
+  {% if lead.status != 'gesperrt' and lead.status != 'gewonnen' %}
+  <section class="karte">
+    <h2>Kontakt dokumentieren</h2>
+    <form method="post">{% csrf_token %}<input type="hidden" name="aktion" value="kontakt">
+      <div class="feld"><label for="kanal">Kanal</label><select id="kanal" name="kanal">{% for s, t in kanaele %}<option value="{{ s }}">{{ t }}</option>{% endfor %}</select></div>
+      <div class="feld"><label for="richtung">Richtung</label><select id="richtung" name="richtung"><option value="ausgehend">ausgehend (wir)</option><option value="eingehend">eingehend (Lead)</option></select></div>
+      {% if freigegeben %}<div class="feld"><label for="freigabe">Zur Freigabe</label><select id="freigabe" name="freigabe"><option value="">–</option>{% for f in freigegeben %}<option value="{{ f.pk }}">{{ f.freigabenummer }}</option>{% endfor %}</select></div>{% endif %}
+      <div class="feld"><label for="zusammenfassung">Was ist passiert?</label><textarea id="zusammenfassung" name="zusammenfassung" rows="3" required></textarea></div>
+      <div class="feld"><label for="ergebnis">Ergebnis</label><input id="ergebnis" name="ergebnis"></div>
+      <button class="knopf">Speichern</button>
+    </form>
+  </section>
+  <section class="karte">
+    <h2>Weitere Aktionen</h2>
+    <form method="post" class="aktionen">{% csrf_token %}<input type="hidden" name="aktion" value="wiedervorlage">
+      <input type="date" name="datum" aria-label="Wiedervorlage" required class="feld"><button class="knopf zweit klein">Wiedervorlage setzen</button></form>
+    <form method="post" class="aktionen">{% csrf_token %}<button class="knopf klein" name="aktion" value="gewonnen">Gewonnen → Kunde anlegen</button></form>
+    <form method="post" class="aktionen">{% csrf_token %}<input name="grund" placeholder="Grund" aria-label="Grund"><button class="knopf zweit klein" name="aktion" value="verloren">Verloren</button></form>
+    <form method="post" class="aktionen">{% csrf_token %}<input name="quelle" placeholder="z. B. Anruf 25.11., Frau X" aria-label="Nachweis"><button class="knopf rot klein" name="aktion" value="widerspruch">Widerspruch erfassen</button></form>
+  </section>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}Angebotsrechner{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>Angebotsrechner</h1><p class="untertitel">Preisliste vom 24.11.2026 · intern nach Aufwand, außen fester Monatspreis je Objekt</p></div>
+  <a class="knopf zweit klein" href="{% url 'admin:auftraege_angebot_changelist' %}">Alle Angebote</a>
+</div>
+<div class="raster-2">
+<section class="karte">
+  <form method="post">{% csrf_token %}
+    <div class="formular-raster">
+      <div class="feld ganz"><label for="objekt">Objekt (Werte werden übernommen, wenn leer)</label>
+        <select id="objekt" name="objekt"><option value="">– ohne Objekt (nur rechnen) –</option>
+          {% for o in objekte %}<option value="{{ o.pk }}" {% if eingabe.objekt == o.pk|stringformat:"s" %}selected{% endif %}>{{ o.kunde.name }} · {{ o.bezeichnung }}</option>{% endfor %}</select></div>
+      <div class="feld"><label for="reinigung">Treppenhausreinigung</label><select id="reinigung" name="reinigung"><option value="">keine</option>
+        <option value="woechentlich" {% if eingabe.reinigung == 'woechentlich' %}selected{% endif %}>wöchentlich</option>
+        <option value="zweiwoechentlich" {% if eingabe.reinigung == 'zweiwoechentlich' %}selected{% endif %}>14-täglich</option></select></div>
+      <div class="feld"><label for="treppenhaeuser">Treppenhäuser</label><input id="treppenhaeuser" name="treppenhaeuser" inputmode="numeric" value="{{ eingabe.treppenhaeuser }}"></div>
+      <div class="feld"><label for="etagen">Etagen</label><input id="etagen" name="etagen" inputmode="numeric" value="{{ eingabe.etagen }}"></div>
+      <div class="feld"><label><input type="checkbox" name="aufzug" {% if eingabe.aufzug %}checked{% endif %}>Aufzug</label></div>
+      <div class="feld"><label for="winterdienst_lfm">Winterdienst: lfd. Meter</label><input id="winterdienst_lfm" name="winterdienst_lfm" inputmode="decimal" value="{{ eingabe.winterdienst_lfm }}"></div>
+      <div class="feld"><label for="rasen_qm">Rasen m²</label><input id="rasen_qm" name="rasen_qm" inputmode="decimal" value="{{ eingabe.rasen_qm }}"></div>
+      <div class="feld"><label for="beet_qm">Beete m²</label><input id="beet_qm" name="beet_qm" inputmode="decimal" value="{{ eingabe.beet_qm }}"></div>
+      <div class="feld"><label for="hecke_lfm">Hecke lfm</label><input id="hecke_lfm" name="hecke_lfm" inputmode="decimal" value="{{ eingabe.hecke_lfm }}"></div>
+      <div class="feld"><label for="muell_termine_monat">Abfuhrtermine/Monat</label><input id="muell_termine_monat" name="muell_termine_monat" inputmode="numeric" value="{{ eingabe.muell_termine_monat }}"></div>
+      <div class="feld"><label for="muell_leerungen_monat">Tonnen-Leerungen/Monat</label><input id="muell_leerungen_monat" name="muell_leerungen_monat" inputmode="numeric" value="{{ eingabe.muell_leerungen_monat }}"></div>
+      <div class="feld"><label><input type="checkbox" name="muellplatz" {% if eingabe.muellplatz %}checked{% endif %}>Müllplatz wöchentlich kehren</label></div>
+      <div class="feld"><label for="kontrollen_monat">Objektkontrollen/Monat</label><input id="kontrollen_monat" name="kontrollen_monat" inputmode="numeric" value="{{ eingabe.kontrollen_monat }}"></div>
+      <div class="feld"><label for="ausfuehrung">Ausführung</label><select id="ausfuehrung" name="ausfuehrung">
+        <option value="inhaber">Inhaber (49,35 €/h Selbstkosten)</option><option value="minijob" {% if eingabe.ausfuehrung == 'minijob' %}selected{% endif %}>Minijob (28,92 €/h)</option></select></div>
+    </div>
+    <div class="aktionen"><button class="knopf zweit">Berechnen</button><button class="knopf" name="anlegen" value="1">Angebotsentwurf anlegen (zur Freigabe)</button></div>
+  </form>
+</section>
+<section class="karte">
+  <h2>Ergebnis</h2>
+  {% if ergebnis %}
+  <ul class="liste">{% for p in ergebnis.positionen %}<li><strong>{{ p.monat_netto_cent|cent }}</strong> · {{ p.kostenart }}<br><span class="stand">{{ p.bezeichnung }}</span></li>{% endfor %}</ul>
+  <dl class="kennzahlen">
+    <div class="kennzahl hervor"><dt>Monat netto</dt><dd>{{ ergebnis.monat_netto_cent|cent }}</dd><span class="zusatz">brutto {{ ergebnis.monat_brutto_cent|cent }}</span></div>
+    <div class="kennzahl"><dt>Arbeitszeit</dt><dd>{{ ergebnis.minuten_monat }} min</dd><span class="zusatz">je Monat</span></div>
+    <div class="kennzahl"><dt>Selbstkosten</dt><dd>{{ ergebnis.selbstkosten_monat_cent|cent }}</dd></div>
+    <div class="kennzahl"><dt>Marge</dt><dd>{{ ergebnis.marge_prozent|prozent }}</dd><span class="zusatz">{{ ergebnis.marge_cent|cent }}</span></div>
+  </dl>
+  {% for w in ergebnis.warnungen %}<p class="meldung warning">{{ w }}</p>{% endfor %}
+  <p class="stand">Entwurf – verbindlich erst nach Freigabe durch den Inhaber.</p>
+  {% else %}<p class="leer">Leistungen eingeben und „Berechnen“.</p>{% endif %}
+</section>
+</div>
+{% endblock %}

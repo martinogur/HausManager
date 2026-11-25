@@ -1,0 +1,32 @@
+{% extends "basis.html" %}
+{% block titel %}Agentenauftrag{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>{{ a.agent.name }} · {{ a.aufgabe }}</h1>
+  <p class="untertitel">{{ a.get_status_display }} · Versuch {{ a.versuche }}/{{ a.max_versuche }} · Ebene {{ a.tiefe }} · {{ a.kosten_cent|floatformat:4 }} Cent</p></div>
+  <a class="knopf zweit klein" href="{% url 'cockpit:agenten' %}">Alle Agenten</a>
+</div>
+<div class="raster-2">
+  <section class="karte">
+    <h2>Protokoll</h2>
+    <ul class="protokoll">{% for p in protokoll %}
+      <li><strong>{{ p.zeitpunkt|date:"H:i:s" }} · {{ p.art }}</strong><br><code>{{ p.inhalt }}</code></li>
+    {% endfor %}</ul>
+    {% if a.fehler %}<p class="meldung error">{{ a.fehler }}</p>{% endif %}
+  </section>
+  <section class="karte">
+    <h2>Eckdaten</h2>
+    <dl class="daten">
+      <dt>Ausgelöst von</dt><dd>{{ a.ausgeloest_von }}</dd>
+      {% if a.eltern %}<dt>Beauftragt durch</dt><dd><a href="{% url 'cockpit:agenten_auftrag' a.eltern_id %}">{{ a.eltern.agent_id }} · {{ a.eltern.aufgabe }}</a></dd>{% endif %}
+      <dt>Erstellt</dt><dd>{{ a.erstellt_am|date:"d.m.Y H:i:s" }}</dd>
+      <dt>Beendet</dt><dd>{{ a.beendet_am|date:"d.m.Y H:i:s"|default:"–" }}</dd>
+      <dt>Eingabe</dt><dd><code>{{ a.eingabe }}</code></dd>
+      <dt>Ergebnis</dt><dd><code>{{ a.ergebnis|default:"–" }}</code></dd>
+    </dl>
+    {% if kinder %}<h3>Delegiert</h3><ul class="liste">{% for k in kinder %}<li><a href="{% url 'cockpit:agenten_auftrag' k.pk %}">{{ k.agent.name }} · {{ k.aufgabe }}</a> – {{ k.get_status_display }}</li>{% endfor %}</ul>{% endif %}
+    {% if freigaben %}<h3>Freigaben</h3><ul class="liste">{% for f in freigaben %}<li><a href="{% url 'cockpit:freigaben_detail' f.pk %}">{{ f.freigabenummer }} {{ f.titel }}</a> – {{ f.get_status_display }}</li>{% endfor %}</ul>{% endif %}
+    {% if ki_aufrufe %}<h3>KI-Aufrufe</h3><ul class="liste">{% for k in ki_aufrufe %}<li>{{ k.zweck }} · {{ k.modell }} · {{ k.eingabe_tokens }}/{{ k.ausgabe_tokens }} Tokens · {{ k.kosten_cent|floatformat:4 }} ct{% if not k.erfolgreich %} · <span class="abzeichen rot">{{ k.fehler }}</span>{% endif %}</li>{% endfor %}</ul>{% endif %}
+  </section>
+</div>
+{% endblock %}

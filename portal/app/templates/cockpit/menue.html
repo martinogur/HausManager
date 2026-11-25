@@ -1,0 +1,10 @@
+{% extends "basis.html" %}
+{% block titel %}Menü{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf"><h1>Alle Bereiche</h1></div>
+<ul class="menue-raster">
+  {% for p in nav_punkte %}
+  <li><a href="{{ p.url }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ p.svg|safe }}</svg>{{ p.titel }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

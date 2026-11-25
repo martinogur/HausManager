@@ -1,0 +1,42 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}KI-Agenten{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>KI-Agenten</h1>
+  <p class="untertitel">KI {% if ki_aktiv %}<span class="abzeichen">aktiv</span>{% else %}<span class="abzeichen gelb">aus – Agenten arbeiten regelbasiert</span>{% endif %} · Kosten heute {{ kosten_heute|floatformat:2 }} Cent</p></div>
+</div>
+<section class="karte">
+  <h2>Aufgabe jetzt starten</h2>
+  <p class="stand">Routinen laufen automatisch nach Zeitplan; hier können Sie sie zusätzlich sofort starten.</p>
+  <ul class="reiter">{% for a, b, titel in manuell %}
+    <li><form method="post" action="{% url 'cockpit:agenten_starten' %}" class="inline">{% csrf_token %}<input type="hidden" name="agent" value="{{ a }}"><input type="hidden" name="aufgabe" value="{{ b }}"><button class="knopf zweit klein">{{ titel }}</button></form></li>
+  {% endfor %}</ul>
+</section>
+<section class="karte">
+  <h2>Team</h2>
+  <div class="tabelle-rahmen"><table class="tabelle">
+    <thead><tr><th>Agent</th><th class="weg-mobil">Verantwortung</th><th class="zahl">7 Tage</th><th class="zahl">Fehler</th><th class="zahl weg-mobil">Kosten heute</th><th class="weg-mobil">Grenzen</th><th>Status</th></tr></thead>
+    <tbody>{% for z in zeilen %}
+      <tr><td><strong>{{ z.agent.name }}</strong><br><span class="klein">{{ z.agent.beschreibung }}</span>{% if z.def.erfolgsmessung %}<br><span class="klein">Erfolg: {{ z.def.erfolgsmessung }}</span>{% endif %}</td>
+        <td class="weg-mobil">{{ z.def.verantwortung }}</td>
+        <td class="zahl">{{ z.stat.erledigt|default:0 }}/{{ z.stat.gesamt|default:0 }}</td>
+        <td class="zahl">{% if z.stat.fehler %}<span class="abzeichen rot">{{ z.stat.fehler }}</span>{% else %}0{% endif %}</td>
+        <td class="zahl weg-mobil">{{ z.kosten_heute|floatformat:2 }} / {{ z.agent.tagesbudget_cent }} ct</td>
+        <td class="weg-mobil klein">{{ z.agent.max_schritte }} Schritte · {{ z.agent.max_laufzeit_sekunden }} s · {{ z.agent.max_versuche }} Versuche{% if not z.agent.modell %} · ohne KI{% endif %}</td>
+        <td>{% if ist_admin %}<form method="post" action="{% url 'cockpit:agenten_schalten' z.agent.code %}">{% csrf_token %}<button class="knopf {% if z.agent.aktiv %}zweit{% else %}rot{% endif %} klein">{% if z.agent.aktiv %}aktiv{% else %}pausiert{% endif %}</button></form>{% else %}{% if z.agent.aktiv %}aktiv{% else %}pausiert{% endif %}{% endif %}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+</section>
+<section class="karte">
+  <h2>Letzte Agentenaufträge</h2>
+  <div class="tabelle-rahmen"><table class="tabelle">
+    <thead><tr><th>Zeit</th><th>Agent / Aufgabe</th><th>Status</th><th class="weg-mobil">Ausgelöst von</th><th class="zahl weg-mobil">Kosten</th></tr></thead>
+    <tbody>{% for a in letzte %}
+      <tr><td class="klein">{{ a.erstellt_am|date:"d.m. H:i" }}</td>
+        <td><a href="{% url 'cockpit:agenten_auftrag' a.pk %}">{{ a.agent.name }} · {{ a.aufgabe }}</a>{% if a.tiefe %} <span class="abzeichen grau">Ebene {{ a.tiefe }}</span>{% endif %}</td>
+        <td><span class="abzeichen {% if a.status == 'erledigt' %}{% elif a.status == 'fehlgeschlagen' or a.status == 'eskaliert' %}rot{% else %}grau{% endif %}">{{ a.get_status_display }}</span></td>
+        <td class="weg-mobil klein">{{ a.ausgeloest_von }}</td><td class="zahl weg-mobil">{{ a.kosten_cent|floatformat:2 }} ct</td></tr>
+    {% empty %}<tr><td colspan="5" class="leer">Noch keine Aufträge.</td></tr>{% endfor %}</tbody>
+  </table></div>
+</section>
+{% endblock %}

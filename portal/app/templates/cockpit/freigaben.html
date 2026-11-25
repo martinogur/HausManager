@@ -1,0 +1,30 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}Freigaben{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>Freigaben</h1><p class="untertitel">Agenten schlagen vor – Sie entscheiden. Nichts geht ohne Freigabe nach außen.</p></div>
+</div>
+<ul class="reiter">
+  <li><a href="?status=offen" {% if status == 'offen' and not art %}aria-current="true"{% endif %}>Offen <span class="abzeichen grau">{{ freigaben_offen }}</span></a></li>
+  {% for wert, titel in arten %}{% with n=zaehler|get_item:wert %}{% if n %}
+  <li><a href="?status=offen&art={{ wert }}" {% if art == wert %}aria-current="true"{% endif %}>{{ titel }} <span class="abzeichen grau">{{ n }}</span></a></li>
+  {% endif %}{% endwith %}{% endfor %}
+  <li><a href="?status=freigegeben" {% if status == 'freigegeben' %}aria-current="true"{% endif %}>Freigegeben</a></li>
+  <li><a href="?status=abgelehnt" {% if status == 'abgelehnt' %}aria-current="true"{% endif %}>Abgelehnt</a></li>
+</ul>
+<section class="karte">
+  {% if seite.object_list %}
+  <div class="tabelle-rahmen"><table class="tabelle">
+    <thead><tr><th>Nr.</th><th>Vorgang</th><th class="weg-mobil">Art</th><th class="weg-mobil">Von</th><th>Priorität</th><th class="weg-mobil">Erstellt</th></tr></thead>
+    <tbody>{% for f in seite %}
+      <tr><td><a href="{% url 'cockpit:freigaben_detail' f.pk %}">{{ f.freigabenummer }}</a></td>
+          <td><a href="{% url 'cockpit:freigaben_detail' f.pk %}">{{ f.titel }}</a>{% if f.status != 'offen' %}<br><span class="klein">{{ f.get_status_display }} von {{ f.entschieden_von.anzeigename }} am {{ f.entschieden_am|date:"d.m.Y H:i" }}</span>{% endif %}</td>
+          <td class="weg-mobil">{{ f.get_art_display }}</td><td class="weg-mobil klein">{{ f.angefordert_von }}</td>
+          <td><span class="abzeichen {% if f.prioritaet == 'hoch' or f.prioritaet == 'dringend' %}rot{% else %}grau{% endif %}">{{ f.get_prioritaet_display }}</span></td>
+          <td class="weg-mobil klein">{{ f.erstellt_am|date:"d.m. H:i" }}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% include "cockpit/_seitennavi.html" %}
+  {% else %}<p class="leer">Keine Freigaben in dieser Ansicht.</p>{% endif %}
+</section>
+{% endblock %}

@@ -3,7 +3,7 @@
   {% for e in einsaetze %}
   <li class="einsatz">
     <span class="zeit">{{ e.geplant_von|time:"H:i" }}</span>
-    <span class="titel">{{ e.titel }}</span>
+    <span class="titel"><a href="{% url 'cockpit:einsatz' e.id %}">{{ e.titel }}</a> <span class="abzeichen grau">{{ e.status }}</span></span>
     <span class="ort">{{ e.objekt }} · {{ e.strasse }} {{ e.hausnummer }}, {{ e.plz }} {{ e.ort }}</span>
     {% if e.notiz_buero %}<span class="team">Hinweis vom Büro: {{ e.notiz_buero }}</span>{% endif %}
     {% if e.zugang_hinweise %}<span class="team">Zugang: {{ e.zugang_hinweise }}</span>{% endif %}

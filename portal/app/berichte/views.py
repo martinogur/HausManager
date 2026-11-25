@@ -7,6 +7,7 @@ from django.views.decorators.cache import never_cache
 
 from konten.rechte import ist_buero, rolle_erforderlich
 
+from . import controlling
 from . import kennzahlen as kz
 
 
@@ -19,7 +20,9 @@ def dashboard(request):
         return render(
             request,
             "berichte/dashboard.html",
-            {"k": kz.kennzahlen(zeitraum), "zu_tun": kz.heute_zu_tun(zeitraum), "zeitraum": zeitraum},
+            {"k": kz.kennzahlen(zeitraum), "zu_tun": kz.heute_zu_tun(zeitraum), "zeitraum": zeitraum,
+             "geschaeft": controlling.kennzahlen(controlling.Zeitraum.monat(zeitraum.heute)),
+             "geschaeft_jahr": controlling.kennzahlen(controlling.Zeitraum.jahr(zeitraum.heute))},
         )
 
     morgen = zeitraum.heute + timedelta(days=1)

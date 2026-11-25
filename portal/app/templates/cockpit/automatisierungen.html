@@ -1,0 +1,21 @@
+{% extends "basis.html" %}
+{% block titel %}Automatisierungen{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>Automatisierungen</h1>
+  <p class="untertitel">Unverarbeitete Ereignisse: {{ ereignisse_offen }}{% if aelteste %} (ältestes {{ aelteste|date:"d.m. H:i" }}){% endif %}</p></div>
+</div>
+<section class="karte">
+  <div class="tabelle-rahmen"><table class="tabelle">
+    <thead><tr><th>Automatisierung</th><th>Auslöser</th><th class="weg-mobil">Letzter Lauf</th><th>Zustand</th><th></th></tr></thead>
+    <tbody>{% for z in zeilen %}
+      <tr><td><strong>{{ z.a.name }}</strong><br><span class="klein">{{ z.a.beschreibung }}</span>
+            {% if z.laeufe %}<br><span class="klein">Letzte Läufe: {% for l in z.laeufe %}{% if l.erfolgreich %}✓{% else %}✗{% endif %}{% endfor %}</span>{% endif %}</td>
+        <td class="klein">{{ z.a.ausloeser }}</td>
+        <td class="weg-mobil klein">{{ z.a.letzter_lauf|date:"d.m. H:i"|default:"–" }}</td>
+        <td>{% if z.a.fehler_in_folge %}<span class="abzeichen rot">{{ z.a.fehler_in_folge }} Fehler</span><br><span class="klein">{{ z.a.letzter_fehler|truncatechars:120 }}</span>{% elif z.a.letzter_erfolg %}<span class="abzeichen">OK</span>{% else %}<span class="abzeichen grau">noch nicht gelaufen</span>{% endif %}</td>
+        <td>{% if ist_admin %}<form method="post" action="{% url 'cockpit:automatisierungen_schalten' z.a.code %}">{% csrf_token %}<button class="knopf {% if z.a.aktiv %}zweit{% else %}rot{% endif %} klein">{% if z.a.aktiv %}aktiv{% else %}pausiert{% endif %}</button></form>{% else %}{% if z.a.aktiv %}aktiv{% else %}pausiert{% endif %}{% endif %}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+</section>
+{% endblock %}

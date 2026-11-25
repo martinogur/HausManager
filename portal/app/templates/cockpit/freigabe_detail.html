@@ -1,0 +1,41 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}{{ f.freigabenummer }}{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>{{ f.titel }}</h1>
+  <p class="untertitel">{{ f.freigabenummer }} · {{ f.get_art_display }} · angefordert von {{ f.angefordert_von }} am {{ f.erstellt_am|date:"d.m.Y H:i" }}</p></div>
+  <a class="knopf zweit klein" href="{% url 'cockpit:freigaben' %}">Alle Freigaben</a>
+</div>
+<div class="raster-2">
+  <section class="karte">
+    <h2>Vorschlag</h2>
+    {% if f.begruendung %}<p>{{ f.begruendung|linebreaksbr }}</p>{% endif %}
+    {% if f.status == 'offen' %}
+    <form method="post">{% csrf_token %}
+      {% if vorschlag_text is not None %}
+      <div class="feld"><label for="text">Text (vor der Freigabe änderbar)</label>
+        <textarea id="text" name="text" rows="12">{{ vorschlag_text }}</textarea></div>
+      {% endif %}
+      <div class="feld"><label for="kommentar">Kommentar (optional)</label><textarea id="kommentar" name="kommentar" rows="2"></textarea></div>
+      <div class="aktionen">
+        <button class="knopf" name="entscheidung" value="freigeben">Freigeben</button>
+        <button class="knopf zweit" name="entscheidung" value="ablehnen">Ablehnen</button>
+      </div>
+    </form>
+    {% else %}
+      {% if vorschlag_text %}<div class="vorschlag">{{ vorschlag_text }}</div>{% endif %}
+      <p class="meldung">{{ f.get_status_display }} von {{ f.entschieden_von.anzeigename }} am {{ f.entschieden_am|date:"d.m.Y H:i" }}{% if f.kommentar %} – „{{ f.kommentar }}“{% endif %}</p>
+    {% endif %}
+  </section>
+  <section class="karte">
+    <h2>Details</h2>
+    <dl class="daten">
+      <dt>Status</dt><dd>{{ f.get_status_display }}</dd>
+      <dt>Priorität</dt><dd>{{ f.get_prioritaet_display }}</dd>
+      {% if f.bezug_tabelle %}<dt>Bezug</dt><dd>{{ f.bezug_tabelle }}{% if f.bezug_tabelle == 'leads' %} · <a href="{% url 'cockpit:akquise_lead' f.bezug_id %}">Lead öffnen</a>{% endif %}</dd>{% endif %}
+      {% if f.agenten_auftrag_id %}<dt>Agentenauftrag</dt><dd><a href="{% url 'cockpit:agenten_auftrag' f.agenten_auftrag_id %}">Protokoll ansehen</a></dd>{% endif %}
+      {% for k, v in f.vorschlag.items %}{% if k != 'text' %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endif %}{% endfor %}
+    </dl>
+  </section>
+</div>
+{% endblock %}

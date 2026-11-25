@@ -1,0 +1,52 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}Akquise{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>Akquise</h1><p class="untertitel">{{ faellig }} Wiedervorlage(n) fällig · Kontakt nur über zulässige Wege (UWG/DSGVO)</p></div>
+  <a class="knopf klein" href="#neu">Lead erfassen</a>
+</div>
+<dl class="kennzahlen">{% for titel, n, s in pipeline %}
+  <div class="kennzahl{% if s == 'gewonnen' %} hervor{% endif %}"><dt>{{ titel }}</dt><dd><a href="?status={{ s }}">{{ n }}</a></dd></div>
+{% endfor %}</dl>
+<form class="filter" method="get">
+  <input type="search" name="q" value="{{ q }}" placeholder="Firma, Ort, Ansprechpartner …" aria-label="Suche">
+  <select name="status" aria-label="Status"><option value="offen">Alle offenen</option><option value="" {% if not status %}selected{% endif %}>Alle</option>
+    {% for s, t in stati %}<option value="{{ s }}" {% if s == status %}selected{% endif %}>{{ t }}</option>{% endfor %}</select>
+  <select name="prio" aria-label="Priorität"><option value="">Alle Prioritäten</option>
+    {% for s, t in prios %}<option value="{{ s }}" {% if s == prio %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+  <button class="knopf zweit klein">Filtern</button>
+</form>
+<section class="karte">
+  <div class="tabelle-rahmen"><table class="tabelle">
+    <thead><tr><th>Prio</th><th>Firma</th><th class="weg-mobil">Zielgruppe</th><th class="weg-mobil">Ort</th><th class="zahl">Score</th><th>Status</th><th class="weg-mobil">Wiedervorlage</th></tr></thead>
+    <tbody>{% for l in seite %}
+      <tr><td>{% if l.prioritaet %}<span class="abzeichen prio-{{ l.prioritaet }}">{{ l.prioritaet }}</span>{% endif %}</td>
+        <td><a href="{% url 'cockpit:akquise_lead' l.pk %}">{{ l.firma }}</a><br><span class="klein">{{ l.leadnummer }}{% if l.externe_ref %} · {{ l.externe_ref }}{% endif %}</span></td>
+        <td class="weg-mobil">{{ l.get_zielgruppe_display }}</td><td class="weg-mobil klein">{{ l.ort|truncatechars:40 }}{% if l.entfernung_km is not None %} · {{ l.entfernung_km }} km{% endif %}</td>
+        <td class="zahl">{{ l.score|default:"–" }}</td><td>{{ l.get_status_display }}</td>
+        <td class="weg-mobil">{{ l.wiedervorlage_am|date:"d.m.Y"|default:"–" }}</td></tr>
+    {% empty %}<tr><td colspan="7" class="leer">Keine Leads in dieser Ansicht.</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% include "cockpit/_seitennavi.html" %}
+</section>
+<section class="karte" id="neu">
+  <h2>Lead erfassen</h2>
+  <form method="post" action="{% url 'cockpit:akquise_neu' %}">{% csrf_token %}
+    <div class="formular-raster">
+      <div class="feld"><label for="firma">Firma *</label><input id="firma" name="firma" required></div>
+      <div class="feld"><label for="zielgruppe">Zielgruppe *</label><select id="zielgruppe" name="zielgruppe">{% for s, t in zielgruppen %}<option value="{{ s }}">{{ t }}</option>{% endfor %}</select></div>
+      <div class="feld"><label for="strasse">Straße</label><input id="strasse" name="strasse"></div>
+      <div class="feld"><label for="plz">PLZ</label><input id="plz" name="plz" inputmode="numeric" pattern="[0-9]{5}"></div>
+      <div class="feld"><label for="ort">Ort</label><input id="ort" name="ort"></div>
+      <div class="feld"><label for="telefon">Telefon (geschäftlich)</label><input id="telefon" name="telefon"></div>
+      <div class="feld"><label for="email">E-Mail (geschäftlich)</label><input id="email" name="email" type="email"></div>
+      <div class="feld"><label for="ansprechpartner">Ansprechpartner</label><input id="ansprechpartner" name="ansprechpartner"></div>
+      <div class="feld"><label for="bedarf">Regelmäßiger Bedarf?</label><select id="bedarf" name="bedarf"><option value="">unbekannt</option><option value="ja">ja</option><option value="nein">nein</option></select></div>
+      <div class="feld"><label for="umsatz">Geschätzter Umsatz € netto/Monat</label><input id="umsatz" name="umsatz" inputmode="decimal"></div>
+      <div class="feld ganz"><label for="quelle">Quelle * (z. B. „Impressum https://… abgerufen 25.11.2026“)</label><input id="quelle" name="quelle" required>
+        <p class="hilfe">DSGVO: nur öffentliche Geschäftsdaten, Herkunft immer angeben.</p></div>
+    </div>
+    <button class="knopf">Speichern und bewerten</button>
+  </form>
+</section>
+{% endblock %}

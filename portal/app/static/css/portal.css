@@ -161,3 +161,63 @@ details summary{cursor:pointer;font-weight:600;color:var(--gruen-800);margin-bot
 .nebenaktion{margin-top:14px;text-align:center}
 .kennzahlen-kopf{flex-wrap:wrap}
 .kennzahlen-aktion{display:flex;align-items:center;gap:10px}
+
+/* ==========================================================================
+   Steuerung (Cockpit): Navigation mit 15 Bereichen, Tabellen, Filter, Formulare, Diagramm
+   ========================================================================== */
+.nur-desktop{display:none}
+@media (min-width:900px){.nur-desktop{display:block}.nur-mobil{display:none}
+  .navigation{overflow-y:auto}.navigation .nav-punkt{min-height:38px}}
+.nav-punkt{position:relative}
+.nav-zahl{position:absolute;top:6px;right:calc(50% - 26px);min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--rot);color:#fff;font-size:.7rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+@media (min-width:900px){.nav-zahl{position:static;margin-left:auto}}
+
+.menue-raster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;margin:0;padding:0}
+.menue-raster a{display:flex;align-items:center;gap:10px;min-height:64px;padding:12px 14px;background:var(--karte);border:1px solid var(--linie);border-radius:var(--radius-klein);text-decoration:none;color:var(--tinte);font-weight:600}
+.menue-raster svg{width:24px;height:24px;flex:none;color:var(--gruen-800)}
+
+.filter{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
+.filter select,.filter input[type=search]{min-height:42px;padding:6px 12px;font:inherit;border:2px solid #9aa39c;border-radius:var(--radius-klein);background:#fff}
+.filter input[type=search]{flex:1 1 200px}
+.reiter{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;padding:0;list-style:none}
+.reiter a{display:inline-flex;gap:6px;align-items:center;padding:6px 12px;border-radius:999px;border:1px solid var(--linie);text-decoration:none;color:var(--tinte);font-size:.88rem;background:#fff}
+.reiter a[aria-current="true"]{background:var(--tinte);color:#fff;border-color:var(--tinte)}
+
+.tabelle-rahmen{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabelle{width:100%;border-collapse:collapse;font-size:.92rem}
+.tabelle th,.tabelle td{padding:10px 10px;border-bottom:1px solid var(--linie);text-align:left;vertical-align:top}
+.tabelle th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--grau);font-weight:700;white-space:nowrap}
+.tabelle td.zahl,.tabelle th.zahl{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tabelle tr:hover td{background:#fafbf8}
+.tabelle .klein{font-size:.82rem;color:var(--grau)}
+@media (max-width:700px){.tabelle .weg-mobil{display:none}}
+
+.abzeichen.rot{background:var(--rot-50);color:var(--rot)}
+.abzeichen.gelb{background:var(--gelb-50);color:var(--gelb-800)}
+.abzeichen.dunkel{background:var(--tinte);color:#fff}
+.prio-A{background:var(--tinte);color:var(--gruen)} .prio-B{background:var(--gruen-50);color:var(--gruen-800)} .prio-C{background:#eef0ec;color:var(--tinte-2)}
+
+.formular-raster{display:grid;gap:12px}
+@media (min-width:700px){.formular-raster{grid-template-columns:repeat(2,minmax(0,1fr))}.formular-raster .ganz{grid-column:1/-1}}
+.feld select,.feld textarea{width:100%;min-height:46px;padding:10px 12px;font:inherit;border:2px solid #9aa39c;border-radius:var(--radius-klein);background:#fff;color:var(--tinte)}
+.feld textarea{min-height:140px;line-height:1.45}
+.feld input[type=checkbox]{width:auto;min-height:0;margin-right:8px}
+.aktionen{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.knopf.rot{background:var(--rot);color:#fff}.knopf.rot:hover{background:#8f1c13;color:#fff}
+.inline{display:inline}
+
+.daten{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:0}
+.daten dt{color:var(--grau);font-size:.88rem}.daten dd{margin:0;overflow-wrap:anywhere}
+.vorschlag{white-space:pre-wrap;background:var(--hg);border:1px solid var(--linie);border-radius:var(--radius-klein);padding:14px;font-size:.95rem}
+.protokoll{list-style:none;margin:0;padding:0;font-size:.88rem}
+.protokoll li{padding:8px 0;border-top:1px solid var(--linie)}
+.protokoll code{white-space:pre-wrap;word-break:break-word;font-size:.8rem;color:var(--tinte-2)}
+.diagramm{width:100%;height:auto;display:block}
+.diagramm .balken{fill:var(--gruen-600)}
+.diagramm text{font:600 11px var(--text);fill:var(--grau)}
+.fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.fotos figure{margin:0}.fotos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px}
+.fotos figcaption{font-size:.78rem;color:var(--grau)}
+.gross-knopf{min-height:60px;font-size:1.1rem}
+.seitennavi{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:14px}
+.kennzahl.hervor a{color:var(--gruen)}

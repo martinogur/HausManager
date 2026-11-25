@@ -8,7 +8,16 @@
   </div>
 </div>
 
+{% if freigaben_offen %}<p class="meldung warning"><a href="{% url 'cockpit:freigaben' %}">{{ freigaben_offen }} Freigabe(n) warten auf Ihre Entscheidung</a></p>{% endif %}
+
 {% include "berichte/_kennzahlen.html" %}
+
+<section aria-labelledby="geschaeft-titel">
+  <div class="kennzahlen-kopf"><h2 id="geschaeft-titel">Geschäftszahlen {{ zeitraum.monatsstart|date:"F" }}</h2>
+    <a class="knopf zweit klein" href="{% url 'cockpit:controlling' %}">Controlling</a></div>
+  {% include "cockpit/_geschaeftszahlen.html" with k=geschaeft %}
+  <p class="stand">Jahr {{ zeitraum.heute.year }}: Umsatz {{ geschaeft_jahr.umsatz_cent|cent }} · Rohertrag {{ geschaeft_jahr.rohertrag_cent|cent }}</p>
+</section>
 
 <div class="raster-2">
   <section class="karte" aria-labelledby="einsaetze-titel">

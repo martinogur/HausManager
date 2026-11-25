@@ -1,0 +1,25 @@
+{% extends "basis.html" %}
+{% block titel %}Marketing{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>Marketing &amp; Redaktionskalender</h1><p class="untertitel">Saison-Schwerpunkte: {{ themen|join:", " }} · Ziel: 5 Posts, 2–3 Reels, Stories je Woche</p></div>
+  <a class="knopf zweit klein" href="{% url 'admin:marketing_socialbeitrag_changelist' %}">Alle Beiträge</a>
+</div>
+<ul class="reiter">{% for s, n in zaehler.items %}<li><span class="abzeichen grau">{{ s }}: {{ n }}</span></li>{% endfor %}</ul>
+<section class="karte">
+  <h2>Nächste 3 Wochen</h2>
+  {% for tag, liste in tage %}
+  <h3>{{ tag|date:"l, j. F" }}</h3>
+  <ul class="liste">{% for b in liste %}
+    <li><strong>{{ b.geplant_fuer|time:"H:i" }} · {{ b.get_plattform_display }} {{ b.get_format_display }}</strong> – {{ b.thema }}
+      <span class="abzeichen {% if b.status == 'freigegeben' or b.status == 'veroeffentlicht' %}{% else %}gelb{% endif %}">{{ b.get_status_display }}</span>
+      {% if b.freigabe_id and b.status == 'zur_freigabe' %}<a href="{% url 'cockpit:freigaben_detail' b.freigabe_id %}">prüfen</a>{% endif %}
+      <br><span class="stand">{{ b.text|truncatechars:160 }}{% if b.hashtags %} {{ b.hashtags|join:" " }}{% endif %}</span>
+      {% if b.bildidee %}<br><span class="stand">Bild: {{ b.bildidee }}</span>{% endif %}</li>
+  {% endfor %}</ul>
+  {% empty %}<p class="leer">Noch nichts geplant – der Social-Agent plant jeden Donnerstag die Folgewoche (oder unter KI-Agenten von Hand starten).</p>{% endfor %}
+</section>
+{% if plan %}<section class="karte"><h2>Monatsplan</h2><ul>{% for m in plan.ergebnis.massnahmen %}<li>{{ m }}</li>{% endfor %}</ul></section>{% endif %}
+<section class="karte"><h2>Veröffentlichung</h2>
+  <p>Freigegebene Instagram-Beiträge veröffentlicht das vorhandene Skript <code>marketing/instagram/posten.py</code>, sobald der Instagram-Zugang hinterlegt ist. Ohne Freigabe wird nichts veröffentlicht (Datenbank-Regel).</p></section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}Aufträge{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div><h1>Aufträge</h1></div>
+  <a class="knopf klein" href="{% url 'admin:auftraege_auftrag_add' %}">Neuer Auftrag</a>
+</div>
+<ul class="reiter">
+  <li><a href="?status=offen" {% if status == 'offen' %}aria-current="true"{% endif %}>Offen</a></li>
+  {% for s, t, n in stati %}<li><a href="?status={{ s }}" {% if status == s %}aria-current="true"{% endif %}>{{ t }} <span class="abzeichen grau">{{ n }}</span></a></li>{% endfor %}
+  <li><a href="?status=" {% if not status %}aria-current="true"{% endif %}>Alle</a></li>
+</ul>
+<form class="filter" method="get"><input type="hidden" name="status" value="{{ status }}">
+  <input type="search" name="q" value="{{ q }}" placeholder="Nummer, Titel, Kunde, Straße …" aria-label="Suche">
+  <select name="prio" aria-label="Priorität"><option value="">Alle Prioritäten</option>{% for s, t in prios %}<option value="{{ s }}" {% if prio == s %}selected{% endif %}>{{ t }}</option>{% endfor %}</select>
+  <button class="knopf zweit klein">Filtern</button>
+</form>
+<section class="karte">
+  <div class="tabelle-rahmen"><table class="tabelle">
+    <thead><tr><th>Nr.</th><th>Auftrag</th><th class="weg-mobil">Objekt</th><th>Status</th><th class="weg-mobil">Priorität</th><th class="weg-mobil">Fällig</th><th class="zahl weg-mobil">Preis netto</th></tr></thead>
+    <tbody>{% for a in seite %}
+      <tr><td><a href="{% url 'cockpit:auftraege_detail' a.pk %}">{{ a.auftragsnummer }}</a></td>
+        <td><a href="{% url 'cockpit:auftraege_detail' a.pk %}">{{ a.titel }}</a><br><span class="klein">{{ a.kunde.name }}</span></td>
+        <td class="weg-mobil klein">{{ a.objekt.strasse }} {{ a.objekt.hausnummer }}, {{ a.objekt.ort }}</td>
+        <td>{{ a.get_status_display }}</td>
+        <td class="weg-mobil"><span class="abzeichen {% if a.prioritaet == 'dringend' or a.prioritaet == 'hoch' %}rot{% else %}grau{% endif %}">{{ a.get_prioritaet_display }}</span></td>
+        <td class="weg-mobil">{{ a.faellig_am|date:"d.m.Y"|default:"–" }}</td>
+        <td class="zahl weg-mobil">{% if a.verkaufspreis_netto_cent %}{{ a.verkaufspreis_netto_cent|cent }}{% else %}–{% endif %}</td></tr>
+    {% empty %}<tr><td colspan="7" class="leer">Keine Aufträge in dieser Ansicht.</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% include "cockpit/_seitennavi.html" %}
+</section>
+{% endblock %}

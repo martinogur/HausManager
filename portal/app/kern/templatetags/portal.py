@@ -57,3 +57,21 @@ STATUS_TEXTE = {
 def status_text(wert):
     """Enum-Wert lesbar machen: in_arbeit → in Arbeit"""
     return STATUS_TEXTE.get(wert, str(wert).replace("_", " "))
+
+
+@register.filter
+def cent(wert):
+    """Cent-Betrag als Euro: 15600 → 156,00 €"""
+    return euro(Decimal(str(wert or 0)) / 100)
+
+
+@register.filter
+def prozent(wert):
+    if wert in (None, ""):
+        return "–"
+    return f"{number_format(Decimal(str(wert)), decimal_pos=1, use_l10n=True)} %"
+
+
+@register.filter
+def get_item(woerterbuch, schluessel):
+    return (woerterbuch or {}).get(schluessel)
