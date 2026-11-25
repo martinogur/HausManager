@@ -1,8 +1,54 @@
 # Instagram automatisch posten – zwei Wege
 
-> Stand 24.11.2026 (`instagram-manager`). Nur Beschreibung, **nichts davon ist eingerichtet**.
-> Grundregel aus `CLAUDE.md`: Nichts wird ohne Freigabe des Inhabers veröffentlicht. Automatisches Posten (Weg 2)
-> ist erst erlaubt, wenn der Inhaber es **ausdrücklich für Instagram** erlaubt.
+> Stand 25.11.2026 (`instagram-manager`). Der Inhaber hat automatisches Posten von Beiträgen und Storys
+> **ausdrücklich erlaubt – jeweils nach seiner Freigabe**. Das Werkzeug dafür ist `marketing/instagram/posten.py` (Weg 2).
+> Grundregel aus `CLAUDE.md` bleibt: Ohne Freigabe wird nichts veröffentlicht.
+
+## So läuft das automatische Posten
+
+1. **Wochenplan:** Claude erstellt Grafiken, Captions und Zeiten (`JJJJ-KW<nr>.md/.json`) und trägt jeden Beitrag und jede Story
+   in den Posting-Plan **`marketing/instagram/plan.json`** ein – immer mit `"status": "geplant"`.
+2. **Vorschau:** Der Inhaber bekommt die Übersicht (Bilder, Captions, Uhrzeiten). Ändern ist bis zur Freigabe jederzeit möglich.
+3. **Freigabe:** Der Inhaber schreibt im Chat **„Instagram freigeben“** (für die gezeigte Woche bzw. den gezeigten Tag).
+   Erst dann setzt Claude die betroffenen Einträge auf `"status": "freigegeben"`, wandelt die Bilder in JPEG um
+   (`posten.py --vorbereiten` → `marketing/instagram/veroeffentlicht/<id>/`) und committet + pusht sie, damit Instagram sie
+   unter `https://raw.githubusercontent.com/martinogur/HausManager/<branch>/…` abholen kann.
+   Achtung: Das Repository ist öffentlich – dort liegen ohnehin nur Grafiken, die veröffentlicht werden sollen.
+4. **Zu den Zeiten:** Eine geplante Aufgabe ruft regelmäßig (z. B. alle 5–10 Minuten) `python3 marketing/instagram/posten.py --faellige` auf.
+   Das Skript postet jeden freigegebenen Eintrag, dessen Zeitpunkt erreicht ist, und schreibt `status`, `media_id`, `gepostet_am`,
+   `permalink` bzw. `fehler` in `plan.json` zurück.
+   - Mehr als 120 Minuten verpasst → **nicht** nachgeholt (Status `fehler`), damit z. B. keine Abend-Story nachts erscheint.
+   - Bild noch nicht online → Hinweis „erst committen + pushen“, der Eintrag bleibt `freigegeben` und wird beim nächsten Lauf erneut versucht.
+   - Token abgelaufen, Rate-Limit, Verarbeitungsfehler → verständliche Meldung im Feld `fehler` und im Bericht.
+5. **Kontrolle:** `posten.py --trockenlauf --alle` zeigt jederzeit, was wann gepostet würde (sendet nichts an Instagram);
+   `posten.py --konto` zeigt das verbundene Konto und das 24-Stunden-Limit.
+
+### Was per Schnittstelle geht – und was nicht
+
+| Geht automatisch | Geht nicht (nur von Hand in der App) |
+|---|---|
+| Einzelbild (JPEG) mit Caption und Hashtags | **Sticker in Storys:** Umfrage, Quiz, Link, Ort, Fragen, Emoji-Regler, Countdown |
+| Karussell (2–20 Bilder) mit Caption | Story in ein Highlight speichern |
+| Story als Bild (ohne Caption, ohne Sticker) | Trend-Sound / Instagram-Musik beim Reel |
+| Reel (MP4, ohne Ton aus der Instagram-Bibliothek) | Feed-Beitrag „als Story teilen“ |
+| | Umfrage unter einem Feed-Beitrag (siehe unten) |
+
+Deshalb werden Storys für das automatische Posten **ohne Sticker** gestaltet: „Antworte per DM: A · B · C“ statt Quiz-Sticker,
+WhatsApp-Nummer groß + „Link in Bio“ statt Link-Sticker (Beispiel: `2026-11-25-storys.json`).
+
+**Umfrage-„Caption-Add-on“ für Feed-Beiträge (Recherche 25.11.2026):** Meta dokumentiert dafür den Parameter `poll_attachment`
+(JSON mit `option_a`, `option_b`, optional `option_c`/`option_d`, je 1–25 Zeichen, Caption = Frage) – aber ausdrücklich
+**„Available for Instagram API with Facebook Login only“**. Unser Weg (Instagram Login, `graph.instagram.com`) kann das nicht,
+daher ist es in `posten.py` **nicht eingebaut**. Quelle: https://developers.facebook.com/documentation/instagram-platform/instagram-graph-api/reference/ig-user/media
+
+### Technik kurz (für spätere Agenten)
+- Schnittstelle: Instagram API with Instagram Login, `https://graph.instagram.com/v27.0`, Berechtigung `instagram_business_content_publish`.
+- Ablauf: `GET /me?fields=user_id,username` → `POST /{ig-user-id}/media` (Container; Karussell: Kinder mit `is_carousel_item=true`,
+  dann `media_type=CAROUSEL` + `children`) → `GET /{container-id}?fields=status_code` bis `FINISHED` → `POST /{ig-user-id}/media_publish` (`creation_id`).
+- Vorher `GET /{ig-user-id}/content_publishing_limit` (Tageslimit). `media_publish` wird nie automatisch wiederholt (kein Doppelpost).
+- Token: Umgebungsvariable `IG_TOKEN`; fehlt sie, sendet das Skript den Platzhalter `proxy-injiziert`, den der Sitzungs-Proxy ersetzt.
+  Der Token steht nie im Repository, in `plan.json` oder in Ausgaben.
+- Tests (ohne echte Aufrufe, Fake-Server): `python3 -m unittest discover -s marketing/instagram/tests -v`
 
 ## Überblick
 
@@ -86,7 +132,7 @@ Claude richtet nichts selbst ein und meldet sich nirgends an.
    (`https://www.haus-meister-helden.de/ig/2026-KW49/…jpg`).
    Achtung: Nach `CLAUDE.md` geht die Webseite nur nach „Webseite freigeben“ live. Für wöchentliches Posten braucht es deshalb
    **entweder** eine ausdrückliche Dauer-Erlaubnis nur für den Ordner `/ig/` **oder** einen getrennten Speicher (z. B. IONOS Object Storage mit öffentlichem Lesezugriff).
-   `[OFFEN: Welcher Speicherort? Dauer-Erlaubnis für /ig/?]`
+   **Entschieden 25.11.2026:** öffentliche Adresse über `raw.githubusercontent.com` dieses (öffentlichen) Repositorys, Ordner `marketing/instagram/veroeffentlicht/` – kein Eingriff in die Webseite nötig.
 9. **Schriftliche Erlaubnis** an Claude, z. B.: „Instagram automatisch posten erlaubt, nach meiner Wochenfreigabe.“
 
 ### So läuft es danach jede Woche
@@ -135,7 +181,8 @@ Umsetzung entweder über dieselbe Meta-App wie in Weg 2 (Claude kann den Ablauf 
 oder über ein Tool eines offiziellen Meta-Partners (meist kostenpflichtig). Bitte keine inoffiziellen „Instagram-Bots“ mit Passwort-Login verwenden.
 Datenschutz: In der Datenschutzerklärung der Webseite erwähnen, dass Instagram-Nachrichten automatisiert beantwortet werden. `[OFFEN: Abstimmung Datenschutzerklärung]`
 
-## Quellen (abgerufen 24.11.2026)
+## Quellen (abgerufen 24.11.2026, ergänzt 25.11.2026)
+- Meta – IG User Media (Parameter `poll_attachment`, „Facebook Login only“; Sticker in Storys nicht unterstützt), abgerufen 25.11.2026: https://developers.facebook.com/documentation/instagram-platform/instagram-graph-api/reference/ig-user/media
 - Meta – Content Publishing (Voraussetzungen, Berechtigungen, JPEG, öffentliche URL, Limits, Karussell, Reels, Stories): https://developers.facebook.com/docs/instagram-platform/content-publishing/
 - Meta – IG User Content Publishing Limit: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/content_publishing_limit
 - Meta – IG User Media / Media Publish: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media und https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media_publish
