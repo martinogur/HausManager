@@ -1,0 +1,10 @@
+# Laufzeit (fest gepinnt, Stand 25.11.2026)
+Django==5.2.19
+psycopg[binary]==3.3.9
+django-otp==1.7.5
+qrcode==8.2
+argon2-cffi==25.1.0
+django-htmx==1.29.0
+whitenoise==6.12.0
+gunicorn==27.0.1
+pillow==13.0.0

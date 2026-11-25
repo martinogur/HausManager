@@ -1,0 +1,83 @@
+[
+  {
+    "id": "2026-11-25-story-1-frost-check",
+    "zeitpunkt": "2026-11-25T18:00:00+01:00",
+    "typ": "story",
+    "dateien": [
+      "marketing/instagram/grafiken/2026-11-25-storys/story-1-frost-check/folie-01.png"
+    ],
+    "caption": "",
+    "status": "geplant",
+    "media_id": null,
+    "gepostet_am": null,
+    "fehler": null
+  },
+  {
+    "id": "2026-11-25-story-2-quiz",
+    "zeitpunkt": "2026-11-25T18:02:00+01:00",
+    "typ": "story",
+    "dateien": [
+      "marketing/instagram/grafiken/2026-11-25-storys/story-2-quiz/folie-01.png"
+    ],
+    "caption": "",
+    "status": "geplant",
+    "media_id": null,
+    "gepostet_am": null,
+    "fehler": null
+  },
+  {
+    "id": "2026-11-25-story-3-aufloesung",
+    "zeitpunkt": "2026-11-25T18:04:00+01:00",
+    "typ": "story",
+    "dateien": [
+      "marketing/instagram/grafiken/2026-11-25-storys/story-3-aufloesung/folie-01.png"
+    ],
+    "caption": "",
+    "status": "geplant",
+    "media_id": null,
+    "gepostet_am": null,
+    "fehler": null
+  },
+  {
+    "id": "2026-11-25-story-4-preis",
+    "zeitpunkt": "2026-11-25T18:06:00+01:00",
+    "typ": "story",
+    "dateien": [
+      "marketing/instagram/grafiken/2026-11-25-storys/story-4-preis/folie-01.png"
+    ],
+    "caption": "",
+    "status": "geplant",
+    "media_id": null,
+    "gepostet_am": null,
+    "fehler": null
+  },
+  {
+    "id": "2026-11-25-story-5-cta",
+    "zeitpunkt": "2026-11-25T18:08:00+01:00",
+    "typ": "story",
+    "dateien": [
+      "marketing/instagram/grafiken/2026-11-25-storys/story-5-cta/folie-01.png"
+    ],
+    "caption": "",
+    "status": "geplant",
+    "media_id": null,
+    "gepostet_am": null,
+    "fehler": null
+  },
+  {
+    "id": "2026-11-25-feed-winterdienst-preis",
+    "zeitpunkt": "2026-11-25T18:30:00+01:00",
+    "typ": "karussell",
+    "dateien": [
+      "marketing/instagram/grafiken/2026-11-25-feed/winterdienst-preis-erklaert/folie-01.png",
+      "marketing/instagram/grafiken/2026-11-25-feed/winterdienst-preis-erklaert/folie-02.png",
+      "marketing/instagram/grafiken/2026-11-25-feed/winterdienst-preis-erklaert/folie-03.png",
+      "marketing/instagram/grafiken/2026-11-25-feed/winterdienst-preis-erklaert/folie-04.png"
+    ],
+    "caption": "Was kostet Winterdienst eigentlich? ❄️\n\nBei uns ist die Rechnung ganz einfach:\n👉 220 € Grundpauschale je Objekt und Saison\n👉 + 9,50 € je laufendem Meter\n\nBeispiel: 25 m Gehweg\n220 € + 25 × 9,50 € = 457,50 € für die ganze Saison (November bis März).\nRäumen, Streuen, Streugut und Einsatzprotokoll sind inklusive.\n\nDie ersten Frostnächte in Gütersloh sind da – wer räumen muss und wann, regelt die Satzung deiner Stadt. Wenn du das nicht selbst machen willst: Wir übernehmen das für Vermieter, Verwaltungen und Gewerbe in Gütersloh & Umgebung.\n\n📲 Schreib uns per WhatsApp: 05241 3389748\nDie Besichtigung ist kostenlos, wir messen bei dir vor Ort nach.\n\nAlle Preise netto zzgl. 19 % MwSt. Ohne Vertrag: Einzeleinsatz 43,50 € netto.\n\n#winterdienst #gütersloh #hausmeisterservice #winterdienstgütersloh #räumpflicht #streupflicht #vermieter #hausverwaltung #kreisgütersloh #hausmeisterhelden",
+    "status": "geplant",
+    "media_id": null,
+    "gepostet_am": null,
+    "fehler": null
+  }
+]

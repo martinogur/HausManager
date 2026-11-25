@@ -1,0 +1,9 @@
+# Laufzeit-Umgebung (Symlink auf /run/hh-portal/portal.env oder lokale Kopie von .env.example)
+.env
+.env.*
+!.env.example
+# Entschlüsselte Secrets und Schlüssel gehören nie ins Repository
+secrets.yaml
+secrets.dec.yaml
+*.key
+age*.txt

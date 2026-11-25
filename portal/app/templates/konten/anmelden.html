@@ -1,0 +1,17 @@
+{% extends "basis_einfach.html" %}
+{% block titel %}Anmelden{% endblock %}
+{% block inhalt %}
+<h1>Anmelden</h1>
+<p class="einleitung">Mit Ihrer E-Mail-Adresse und Ihrem Passwort.</p>
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+  <div class="meldung error" role="alert">{% for fehler in form.non_field_errors %}{{ fehler }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</div>
+  {% endif %}
+  {% include "_feld.html" with feld=form.username %}
+  {% include "_feld.html" with feld=form.password %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <button class="knopf breit" type="submit">Anmelden</button>
+</form>
+{% endblock %}
+{% block fuss %}Passwort vergessen? Bitte im Büro melden. · Verwaltungsportal nur für Mitarbeitende von Hausmeister Helden{% endblock %}

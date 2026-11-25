@@ -1,0 +1,24 @@
+# Server-Ergänzung für den Hetzner-Server (ohne SOPS) – wird von /usr/local/bin/hh-compose
+# zusätzlich zu ../docker-compose.yml geladen:
+#
+#   docker compose --project-directory portal/deploy --env-file /srv/portal/.env \
+#     -f portal/deploy/docker-compose.yml -f portal/deploy/hetzner/compose.server.yml …
+#
+# Warum eine eigene Datei? Die Basis-Datei ist für die SOPS-Variante gebaut (portal/deploy/.env
+# als Symlink auf /run/hh-portal/portal.env im Arbeitsspeicher, siehe docs/04-betrieb.md) und
+# bleibt unverändert. Auf dem Hetzner-Server liegt die Umgebung stattdessen als Datei
+# /srv/portal/.env (Rechte 600, vom Server selbst erzeugt) und wird per --env-file übergeben;
+# hier stehen nur die Abweichungen für diesen Server.
+
+services:
+  caddy:
+    environment:
+      # Die Basis reicht ACME_CA nicht an Caddy durch; so lässt sich bei Bedarf in
+      # /srv/portal/.env die Let's-Encrypt-Staging-CA eintragen (Tests ohne Rate-Limit).
+      ACME_CA: ${ACME_CA:-https://acme-v02.api.letsencrypt.org/directory}
+    labels:
+      de.hausmeister-helden.version: ${PORTAL_VERSION:-lokal}
+
+  web:
+    labels:
+      de.hausmeister-helden.version: ${PORTAL_VERSION:-lokal}

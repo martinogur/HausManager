@@ -1,0 +1,50 @@
+{
+  "kampagne": "Meta-Anzeigen Instagram – Test Dez. 2026 (A/B/C)",
+  "hinweis": "Entwurf. Keine Preise (nicht freigegeben), keine Zahlen/Bewertungen. Ansprache in Anzeigen: Sie (Zielgruppe Vermieter/Verwalter). feed = 1080x1350, story = 1080x1920 mit Sicherheitsrand, reel = 9-Sek.-Text-Video 1080x1920.",
+  "posts": [
+    {"id": "A-winterdienst-feed", "format": "karussell", "folien": [
+      {"art": "anzeige", "kicker": "Winterdienst Gütersloh", "titel": "Glätte? *Wir räumen.*",
+       "text": "Räumen und streuen für Vermieter, Verwaltungen und Gewerbe.",
+       "punkte": ["Gehwege und Hauszugänge", "Antwort innerhalb von 24 Stunden", "Besichtigung kostenlos"],
+       "button": "Jetzt per WhatsApp anfragen"}]},
+    {"id": "A-winterdienst-story", "format": "reel", "story_rand": true, "folien": [
+      {"art": "anzeige", "kicker": "Winterdienst Gütersloh", "titel": "Glätte? *Wir räumen.*",
+       "text": "Räumen und streuen für Vermieter, Verwaltungen und Gewerbe.",
+       "punkte": ["Gehwege und Hauszugänge", "Antwort innerhalb von 24 Stunden", "Besichtigung kostenlos"],
+       "button": "Jetzt per WhatsApp anfragen"}]},
+    {"id": "A-winterdienst-reel", "format": "reel", "story_rand": true, "sekunden_pro_folie": 3, "folien": [
+      {"art": "titel", "kicker": "Winterdienst", "titel": "Wer räumt *vor Ihrem Haus*?", "text": "Gütersloh & Umgebung"},
+      {"art": "liste", "titel": "Das übernehmen *wir*", "punkte": ["Räumen bei Schnee", "Streuen bei Glätte", "Gehwege und Zugänge"]},
+      {"art": "cta", "titel": "Jetzt *anfragen*", "text": "Antwort innerhalb von 24 Stunden."}]},
+
+    {"id": "B-ansprechpartner-feed", "format": "karussell", "folien": [
+      {"art": "anzeige", "kicker": "Für Vermieter & Verwaltungen", "titel": "*Ein* Ansprechpartner für Ihr Objekt", "schrift": 96,
+       "text": "Treppenhaus, Winterdienst, Garten und Reparaturen aus einer Hand.",
+       "punkte": ["Inhaber persönlich erreichbar", "Gebäudekontrolle mit Protokoll inklusive", "Antwort innerhalb von 24 Stunden"],
+       "button": "Jetzt per WhatsApp anfragen"}]},
+    {"id": "B-ansprechpartner-story", "format": "reel", "story_rand": true, "folien": [
+      {"art": "anzeige", "kicker": "Für Vermieter & Verwaltungen", "titel": "*Ein* Ansprechpartner für Ihr Objekt", "schrift": 96,
+       "text": "Treppenhaus, Winterdienst, Garten und Reparaturen aus einer Hand.",
+       "punkte": ["Inhaber persönlich erreichbar", "Gebäudekontrolle mit Protokoll inklusive", "Antwort innerhalb von 24 Stunden"],
+       "button": "Jetzt per WhatsApp anfragen"}]},
+    {"id": "B-ansprechpartner-reel", "format": "reel", "story_rand": true, "sekunden_pro_folie": 3, "folien": [
+      {"art": "titel", "kicker": "Vermieter & Verwalter", "titel": "5 Gewerke. *1 Nummer.*", "text": "Hausmeisterservice in Gütersloh & Umgebung"},
+      {"art": "liste", "titel": "Alles aus *einer Hand*", "punkte": ["Treppenhausreinigung", "Winterdienst", "Gartenarbeit", "Kleinreparaturen", "Mülltonnen-Service"]},
+      {"art": "cta", "titel": "Ein Kontakt *für alles*", "text": "Gebäudekontrolle mit Protokoll inklusive."}]},
+
+    {"id": "C-besichtigung-feed", "format": "karussell", "folien": [
+      {"art": "anzeige", "kicker": "Hausmeisterservice Gütersloh", "titel": "Besichtigung *kostenlos*", "schrift": 132,
+       "text": "Wir sehen uns Ihr Objekt vor Ort an. Danach erhalten Sie ein klares Angebot.",
+       "punkte": ["Nachricht per WhatsApp", "Termin vor Ort, kostenlos", "Angebot, unverbindlich"],
+       "button": "Termin per WhatsApp anfragen"}]},
+    {"id": "C-besichtigung-story", "format": "reel", "story_rand": true, "folien": [
+      {"art": "anzeige", "kicker": "Hausmeisterservice Gütersloh", "titel": "Besichtigung *kostenlos*", "schrift": 132,
+       "text": "Wir sehen uns Ihr Objekt vor Ort an. Danach erhalten Sie ein klares Angebot.",
+       "punkte": ["Nachricht per WhatsApp", "Termin vor Ort, kostenlos", "Angebot, unverbindlich"],
+       "button": "Termin per WhatsApp anfragen"}]},
+    {"id": "C-besichtigung-reel", "format": "reel", "story_rand": true, "sekunden_pro_folie": 3, "folien": [
+      {"art": "titel", "kicker": "In 3 Schritten", "titel": "Ihr Objekt *in guten Händen*", "text": "Hausmeisterservice Gütersloh"},
+      {"art": "liste", "titel": "So *einfach* geht's", "punkte": ["Sie schreiben uns per WhatsApp", "Wir besichtigen kostenlos", "Sie erhalten ein Angebot"]},
+      {"art": "cta", "titel": "Termin *anfragen*", "text": "Unverbindlich. Antwort innerhalb von 24 Stunden."}]}
+  ]
+}

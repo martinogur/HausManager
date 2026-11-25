@@ -1,0 +1,21 @@
+{% load static %}<!doctype html>
+<html lang="de">
+<head>
+{% include "basis_kopf.html" %}
+<title>{% block titel %}Portal{% endblock %} · Hausmeister Helden</title>
+</head>
+<body>
+<main class="einfach" id="inhalt">
+  <div class="einfach-karte{% block karten_klasse %}{% endblock %}">
+    <img class="einfach-logo" src="{% static 'img/logo-klein.jpg' %}" alt="Hausmeister Helden" width="180" height="102">
+    {% if messages %}
+    <ul class="meldungen" role="status">
+      {% for meldung in messages %}<li class="meldung {{ meldung.tags }}">{{ meldung }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% block inhalt %}{% endblock %}
+  </div>
+  <p class="einfach-fuss">{% block fuss %}Verwaltungsportal · nur für Mitarbeitende von Hausmeister Helden{% endblock %}</p>
+</main>
+</body>
+</html>

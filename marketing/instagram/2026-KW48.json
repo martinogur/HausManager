@@ -1,0 +1,66 @@
+{
+  "woche": "KW 48/2026 (Mi 25.11. - So 29.11.)",
+  "hinweis": "Entwurf. Keine Preise (noch nicht freigegeben), keine konkreten Räumzeiten (regelt die Ortssatzung). Allgemeine Infos, kein Rechtsrat.",
+  "posts": [
+    {
+      "id": "01-winterdienst-pflichten",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Winterdienst", "titel": "*3 Pflichten* beim Winterdienst", "text": "Was du als Vermieter wissen solltest"},
+        {"art": "punkt", "nr": "1", "titel": "Räumen & *streuen*", "text": "Gehweg und Hauszugang müssen sicher sein. Wann und wie, regelt die Ortssatzung."},
+        {"art": "punkt", "nr": "2", "titel": "*Kontrollieren*", "text": "Übergibst du den Winterdienst an Mieter oder Dienstleister, musst du trotzdem prüfen, ob er erledigt wird."},
+        {"art": "punkt", "nr": "3", "titel": "*Dokumentieren*", "text": "Wann wurde geräumt, wann gestreut? Im Schadensfall zählt der Nachweis."},
+        {"art": "cta", "titel": "Lieber *abgeben*?", "text": "Wir übernehmen den Winterdienst – mit Einsatzprotokoll."}
+      ]
+    },
+    {
+      "id": "02-winterdienst-mythen",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Mythos vs. Fakt", "titel": "*4 Mythen* rund um den Winterdienst", "text": "Welchen hast du schon gehört?"},
+        {"art": "mythos", "mythos": "Ohne Schnee kein Winterdienst", "fakt": "Auch Reifglätte und überfrierende Nässe können Streuen nötig machen."},
+        {"art": "mythos", "mythos": "Einmal streuen reicht", "fakt": "Hält die Glätte an oder schneit es weiter, muss nachgearbeitet werden."},
+        {"art": "mythos", "mythos": "Mieter räumt, Vermieter ist raus", "fakt": "Die Pflicht lässt sich übertragen – die Kontrollpflicht bleibt beim Vermieter."},
+        {"art": "mythos", "mythos": "Streusalz geht immer", "fakt": "Viele Städte schränken Salz ein. Was erlaubt ist, steht in der Satzung."},
+        {"art": "cta", "titel": "Wir räumen. *Du entspannst.*", "text": "Winterdienst für Vermieter, Verwaltungen und Gewerbe."}
+      ]
+    },
+    {
+      "id": "03-wer-raeumt-reel",
+      "format": "reel",
+      "sekunden_pro_folie": 3,
+      "folien": [
+        {"art": "titel", "kicker": "Winterdienst", "titel": "Wer räumt vor *deinem* Haus?", "text": "Die Antwort in 15 Sekunden"},
+        {"art": "punkt", "nr": "1", "titel": "Die *Stadt*?", "text": "Für Gehwege sind laut Ortssatzung oft die Eigentümer zuständig."},
+        {"art": "punkt", "nr": "2", "titel": "Der *Eigentümer*", "text": "Er kann die Pflicht an Mieter oder einen Dienstleister übertragen."},
+        {"art": "punkt", "nr": "3", "titel": "Und *dann*?", "text": "Kontrollieren muss er trotzdem. Klare Absprachen und ein Protokoll helfen."},
+        {"art": "cta", "titel": "Wir machen *das*.", "text": "Winterdienst in Gütersloh & Umgebung – mit Einsatzprotokoll."}
+      ]
+    },
+    {
+      "id": "04-objektbetreuung-ablauf",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Objektbetreuung", "titel": "So betreuen wir *dein Haus*", "text": "In 4 einfachen Schritten"},
+        {"art": "punkt", "nr": "1", "titel": "Du *meldest* dich", "text": "Per WhatsApp oder Telefon. Wir antworten innerhalb von 24 Stunden."},
+        {"art": "punkt", "nr": "2", "titel": "Wir schauen *vorbei*", "text": "Kostenlose Besichtigung vor Ort: Was braucht dein Objekt wirklich?"},
+        {"art": "punkt", "nr": "3", "titel": "Dein *Angebot*", "text": "Klar und unverbindlich – passend zu den Leistungen, die du brauchst."},
+        {"art": "punkt", "nr": "4", "titel": "Wir *kümmern* uns", "text": "Fester Ansprechpartner. Gebäudekontrolle mit Protokoll ist immer inklusive."},
+        {"art": "liste", "titel": "Das übernehmen *wir*", "punkte": ["Treppenhausreinigung", "Winterdienst", "Gartenarbeit & Laub", "Kleinreparaturen", "Mülltonnen-Service"]},
+        {"art": "cta", "titel": "Erster Schritt: *Nachricht*", "text": "Schreib uns, wir melden uns innerhalb von 24 Stunden."}
+      ]
+    },
+    {
+      "id": "00-highlight-cover",
+      "format": "reel",
+      "sekunden_pro_folie": 3,
+      "folien": [
+        {"art": "punkt", "titel": "*Leistungen*", "text": "Was wir für dein Haus tun"},
+        {"art": "punkt", "titel": "*Ablauf*", "text": "Vom ersten Kontakt bis zur Betreuung"},
+        {"art": "punkt", "titel": "*Winterdienst*", "text": "Räumen, streuen, dokumentieren"},
+        {"art": "punkt", "titel": "*FAQ*", "text": "Deine Fragen, unsere Antworten"},
+        {"art": "punkt", "titel": "*Kontakt*", "text": "WhatsApp & Telefon, Mo–Sa 7–20 Uhr"}
+      ]
+    }
+  ]
+}

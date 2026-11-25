@@ -1,0 +1,16 @@
+{% extends "basis_einfach.html" %}
+{% block titel %}Code eingeben{% endblock %}
+{% block inhalt %}
+<h1>Code eingeben</h1>
+<p class="einleitung">Bitte den aktuellen sechsstelligen Code aus Ihrer Authenticator-App eingeben.</p>
+<form method="post" novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  {% include "_feld.html" with feld=formular.code %}
+  <p class="hilfe" id="code-hilfe">Handy verloren? Bitte den Administrator bitten, die Zwei-Faktor-Anmeldung zurückzusetzen.</p>
+  <button class="knopf breit" type="submit">Weiter</button>
+</form>
+<form method="post" action="{% url 'konten:abmelden' %}" class="nebenaktion">{% csrf_token %}
+  <button class="knopf zweit klein" type="submit">Abmelden</button>
+</form>
+{% endblock %}

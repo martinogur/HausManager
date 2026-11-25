@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.haus-meister-helden.de/sitemap.xml

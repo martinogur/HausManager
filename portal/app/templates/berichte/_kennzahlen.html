@@ -1,0 +1,25 @@
+{% load portal %}
+{# Kennzahlen-Block; wird per HTMX jede Minute neu geladen (berichte:kennzahlen) #}
+<section id="kennzahlen" aria-labelledby="kennzahlen-titel"
+         hx-get="{% url 'berichte:kennzahlen' %}" hx-trigger="every 60s" hx-swap="outerHTML">
+  <div class="kennzahlen-kopf">
+    <h2 id="kennzahlen-titel">Kennzahlen</h2>
+    <div class="kennzahlen-aktion">
+      <span class="stand" aria-live="polite">Stand {% now "H:i" %} Uhr</span>
+      <button class="knopf zweit klein" type="button"
+              hx-get="{% url 'berichte:kennzahlen' %}" hx-target="#kennzahlen" hx-swap="outerHTML">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg>
+        Aktualisieren</button>
+    </div>
+  </div>
+  <dl class="kennzahlen">
+    <div class="kennzahl hervor"><dt>Einsätze heute</dt><dd>{{ k.einsaetze_heute }}</dd><span class="zusatz">{{ k.einsaetze_woche }} diese Woche</span></div>
+    <div class="kennzahl"><dt>Offene Aufträge</dt><dd>{{ k.auftraege_offen }}</dd></div>
+    <div class="kennzahl"><dt>Offene Angebote</dt><dd>{{ k.angebote_offen }}</dd><span class="zusatz">{{ k.angebote_offen_eur|euro }} netto</span></div>
+    <div class="kennzahl"><dt>Neue E-Mails</dt><dd>{{ k.emails_neu }}</dd><span class="zusatz">noch nicht zugeordnet</span></div>
+    <div class="kennzahl"><dt>Aktive Kunden</dt><dd>{{ k.kunden_aktiv }}</dd><span class="zusatz">{{ k.objekte }} Objekte</span></div>
+    <div class="kennzahl"><dt>Neue Bewerbungen</dt><dd>{{ k.bewerbungen_neu }}</dd></div>
+    <div class="kennzahl"><dt>Arbeitsstunden</dt><dd>{{ k.stunden_woche|stunden }}</dd><span class="zusatz">diese Woche</span></div>
+    <div class="kennzahl"><dt>Umsatz {{ zeitraum.monatsstart|date:"F" }}</dt><dd>{{ k.umsatz_monat_eur|euro }}</dd><span class="zusatz">davon bezahlt {{ k.bezahlt_monat_eur|euro }}</span></div>
+  </dl>
+</section>

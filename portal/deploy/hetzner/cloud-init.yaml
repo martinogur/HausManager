@@ -1,0 +1,444 @@
+#cloud-config
+#
+# Verwaltungsportal Hausmeister Helden – vollautomatische Einrichtung eines Hetzner-Cloud-Servers
+# (Ubuntu 24.04). Wird von server_erstellen.py als user_data übergeben; Ablauf und Bedienung:
+# portal/deploy/hetzner/README.md
+#
+# Diese Datei ist öffentlich (Repository) und enthält KEINE Geheimnisse. Alle Secrets
+# (DJANGO_SECRET_KEY, POSTGRES_PASSWORD, RESTIC_PASSWORD) erzeugt der Server beim ersten
+# Start selbst mit "openssl rand" in /srv/portal/.env (Rechte 600). Sie verlassen den Server nie.
+#
+# Ergebnis auf dem Server:
+#   /srv/portal/repo      Klon des Zweigs portal-live (öffentliches Repo, ohne Zugangsdaten)
+#   /srv/portal/.env      Laufzeit-Umgebung (600), Symlink repo/portal/deploy/.env → hierher
+#   /srv/portal/backups   tägliche pg_dump-Sicherungen (14 Tage)
+#   /srv/portal/stand     aktiver Commit, Ergebnis des letzten Updates
+#   hh-portal.service     startet den Compose-Stack beim Booten
+#   hh-update.timer       alle 15 Minuten: neuer Commit auf portal-live → Sicherung, Build, migrate, up -d
+#   hh-backup.timer       täglich ca. 02:30 Uhr lokales pg_dump
+#   hh-admin-anlegen      erstes Admin-Konto anlegen (interaktiv, in der Hetzner-Web-Konsole)
+#   hh-status             Überblick: Container, Version, letztes Update, Zertifikat, /gesund
+#   Logs: /var/log/hh-einrichtung.log, /var/log/hh-update.log, /var/log/hh-backup.log
+
+timezone: Europe/Berlin
+ssh_pwauth: false
+package_update: true
+package_upgrade: true
+packages:
+  - ca-certificates
+  - curl
+  - git
+  - openssl
+  - ufw
+  - unattended-upgrades
+
+write_files:
+  # ---------------------------------------------------------------- Einstellungen (keine Secrets)
+  - path: /etc/hh-portal/einstellungen
+    permissions: "0644"
+    content: |
+      # Einstellungen des Portal-Servers (keine Geheimnisse). Umgebungsvariablen haben Vorrang.
+      HH_DOMAIN=${HH_DOMAIN:-portal.haus-meister-helden.de}
+      HH_ACME_EMAIL=${HH_ACME_EMAIL:-info@haus-meister-helden.de}
+      HH_REPO_URL=${HH_REPO_URL:-https://github.com/martinogur/HausManager.git}
+      HH_BRANCH=${HH_BRANCH:-portal-live}
+      HH_BASIS=${HH_BASIS:-/srv/portal}
+      HH_LOG_DIR=${HH_LOG_DIR:-/var/log}
+      HH_BACKUP_TAGE=${HH_BACKUP_TAGE:-14}
+
+  # ---------------------------------------------------------------- automatische Sicherheitsupdates
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    permissions: "0644"
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+      APT::Periodic::AutocleanInterval "7";
+  - path: /etc/apt/apt.conf.d/52hh-unattended
+    permissions: "0644"
+    content: |
+      // Neustart nach Kernel-Updates nachts; Portal startet über hh-portal.service wieder.
+      Unattended-Upgrade::Automatic-Reboot "true";
+      Unattended-Upgrade::Automatic-Reboot-Time "04:30";
+      Unattended-Upgrade::Remove-Unused-Dependencies "true";
+  - path: /etc/sysctl.d/90-hh-portal.conf
+    permissions: "0644"
+    content: |
+      vm.swappiness=10
+
+  # ---------------------------------------------------------------- Ersteinrichtung (runcmd)
+  - path: /usr/local/sbin/hh-einrichten
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Ersteinrichtung des Servers. Idempotent: darf jederzeit erneut laufen, überschreibt
+      # aber nie eine vorhandene /srv/portal/.env (sonst passen DB-Passwort und Daten nicht mehr).
+      # Testschalter: HH_NUR_PORTAL=1 (ohne apt/ufw/swap), HH_OHNE_SYSTEMD=1 (keine Units starten).
+      set -Eeuo pipefail
+      umask 022
+      . "${HH_EINSTELLUNGEN:-/etc/hh-portal/einstellungen}"
+      mkdir -p "$HH_LOG_DIR"
+      exec > >(tee -a "$HH_LOG_DIR/hh-einrichtung.log") 2>&1
+      log() { printf '%s %s\n' "$(date '+%F %T')" "$*"; }
+      trap 'log "FEHLER in Zeile $LINENO (Befehl: $BASH_COMMAND)"' ERR
+
+      system_einrichten() {
+        log "Swap (2 GB) …"
+        if ! swapon --show=NAME --noheadings | grep -qx /swapfile; then
+          if [ ! -f /swapfile ]; then
+            fallocate -l 2G /swapfile || dd if=/dev/zero of=/swapfile bs=1M count=2048
+            chmod 600 /swapfile
+            mkswap /swapfile
+          fi
+          swapon /swapfile
+        fi
+        grep -q '^/swapfile ' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
+        sysctl -q --system || true
+
+        log "Docker aus dem offiziellen Docker-Repository …"
+        if ! command -v docker >/dev/null || ! docker compose version >/dev/null 2>&1; then
+          install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL --retry 10 --retry-all-errors --retry-delay 5 \
+            https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          chmod a+r /etc/apt/keyrings/docker.asc
+          . /etc/os-release
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu ${UBUNTU_CODENAME:-$VERSION_CODENAME} stable" \
+            > /etc/apt/sources.list.d/docker.list
+          apt-get update -q
+          DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
+            docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+        fi
+        systemctl enable --now docker
+
+        log "Firewall (ufw): eingehend nur 80/443 …"
+        ufw default deny incoming
+        ufw default allow outgoing
+        ufw allow 80/tcp
+        ufw allow 443/tcp
+        ufw allow 443/udp
+        ufw --force enable
+
+        log "Kein SSH: Verwaltung nur über die Hetzner-Web-Konsole …"
+        systemctl disable --now ssh.socket ssh.service 2>/dev/null || true
+
+        log "Automatische Sicherheitsupdates …"
+        systemctl enable --now unattended-upgrades apt-daily.timer apt-daily-upgrade.timer || true
+      }
+
+      env_erzeugen() {
+        local env="$HH_BASIS/.env" tmp pg
+        if [ -s "$env" ]; then
+          log "$env existiert bereits – bleibt unverändert."
+          return 0
+        fi
+        log "Erzeuge $env mit neuen Zufallswerten (verlassen den Server nie) …"
+        tmp=$(mktemp "$HH_BASIS/.env.XXXXXX")
+        chmod 600 "$tmp"
+        pg=$(openssl rand -hex 32)
+        cat > "$tmp" <<EOF
+      # Erzeugt am $(date '+%F %T') von hh-einrichten. NICHT ins Repository, nicht weitergeben.
+      # Werte nur aus [A-Za-z0-9._:/@,-] (docker compose wertet \$ und Anführungszeichen aus).
+      DJANGO_SECRET_KEY=$(openssl rand -hex 50)
+      DJANGO_DEBUG=0
+      DJANGO_ALLOWED_HOSTS=$HH_DOMAIN
+      DJANGO_CSRF_TRUSTED_ORIGINS=https://$HH_DOMAIN
+      DATABASE_URL=postgresql://hh:$pg@db:5432/hh
+      POSTGRES_PASSWORD=$pg
+      DJANGO_MEDIA_ROOT=/srv/portal/daten
+      PORTAL_DOMAIN=$HH_DOMAIN
+      ACME_EMAIL=$HH_ACME_EMAIL
+      GUNICORN_WORKERS=3
+      # restic/Storage Box folgt später; das Passwort vorher sicher notieren (Passwort-Manager).
+      RESTIC_PASSWORD=$(openssl rand -hex 32)
+      RESTIC_REPOSITORY=
+      HH_MELDE_URL=
+      EOF
+        mv -f "$tmp" "$env"
+      }
+
+      portal_einrichten() {
+        log "Ordner unter $HH_BASIS …"
+        install -d -m 0755 "$HH_BASIS"
+        install -d -m 0700 "$HH_BASIS/backups" "$HH_BASIS/stand"
+        env_erzeugen
+        if [ "${HH_OHNE_SYSTEMD:-0}" != 1 ]; then
+          systemctl daemon-reload
+          systemctl enable hh-portal.service
+          systemctl enable --now hh-update.timer hh-backup.timer
+        fi
+        log "Erster Start (Clone von $HH_BRANCH, Build, Migration) …"
+        if hh-update --jetzt; then
+          log "Portal läuft. Erstes Admin-Konto: hh-admin-anlegen   Überblick: hh-status"
+        else
+          log "Erster Start nicht erfolgreich – hh-update.timer versucht es alle 15 Minuten erneut."
+          log "Details: $HH_LOG_DIR/hh-update.log"
+        fi
+      }
+
+      log "=== Einrichtung startet (Domain $HH_DOMAIN, Zweig $HH_BRANCH) ==="
+      [ "${HH_NUR_PORTAL:-0}" = 1 ] || system_einrichten
+      portal_einrichten
+      log "=== Einrichtung beendet ==="
+
+  # ---------------------------------------------------------------- docker compose mit Server-Einstellungen
+  - path: /usr/local/bin/hh-compose
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # docker compose für das Portal: Basis-Datei + Server-Override, Umgebung aus /srv/portal/.env.
+      # Beispiel: hh-compose ps    hh-compose logs --tail=100 web
+      set -euo pipefail
+      . "${HH_EINSTELLUNGEN:-/etc/hh-portal/einstellungen}"
+      D="$HH_BASIS/repo/portal/deploy"
+      [ -f "$D/docker-compose.yml" ] || { echo "Noch kein Code unter $HH_BASIS/repo (hh-update läuft?)" >&2; exit 1; }
+      # Image-Tag = aktueller Commit, damit beim Booten nichts neu gebaut wird
+      export PORTAL_VERSION="${PORTAL_VERSION:-$(git -C "$HH_BASIS/repo" rev-parse --short=12 HEAD)}"
+      dateien=(-f "$D/docker-compose.yml")
+      [ -f "$D/hetzner/compose.server.yml" ] && dateien+=(-f "$D/hetzner/compose.server.yml")
+      for extra in ${HH_COMPOSE_EXTRA:-}; do dateien+=(-f "$extra"); done
+      exec docker compose --project-directory "$D" --env-file "$HH_BASIS/.env" "${dateien[@]}" "$@"
+
+  # ---------------------------------------------------------------- Pull-Update von portal-live
+  - path: /usr/local/bin/hh-update
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Prüft portal-live; bei neuem Commit: Sicherung → Build → migrate (Compose-Job) → up -d.
+      # Schlägt etwas fehl, bleibt die laufende Version aktiv und der Commit wird bis zum
+      # nächsten neuen Commit übersprungen (erneut versuchen: hh-update --jetzt).
+      set -Eeuo pipefail
+      umask 022
+      . "${HH_EINSTELLUNGEN:-/etc/hh-portal/einstellungen}"
+      R="$HH_BASIS/repo"; S="$HH_BASIS/stand"; D="$R/portal/deploy"
+      mkdir -p "$S" "$HH_LOG_DIR"
+      exec 9>"$S/.update.lock"
+      flock -n 9 || { echo "hh-update läuft bereits."; exit 0; }
+      exec > >(tee -a "$HH_LOG_DIR/hh-update.log") 2>&1
+      log() { printf '%s %s\n' "$(date '+%F %T')" "$*"; }
+      ergebnis() { printf '%s %s %s\n' "$(date '+%F %T')" "$1" "${2:-}" > "$S/letztes-update"; }
+      JETZT=0; [ "${1:-}" = "--jetzt" ] && JETZT=1
+
+      if [ ! -d "$R/.git" ]; then
+        log "Klone $HH_REPO_URL (Zweig $HH_BRANCH) …"
+        rm -rf "$R.neu"
+        git clone --quiet --branch "$HH_BRANCH" --single-branch "$HH_REPO_URL" "$R.neu" \
+          || { log "FEHLER: Clone fehlgeschlagen (gibt es den Zweig $HH_BRANCH schon?)"; ergebnis FEHLER clone; exit 1; }
+        mv "$R.neu" "$R"
+      fi
+      git -C "$R" fetch --quiet --force origin "+refs/heads/$HH_BRANCH:refs/remotes/origin/$HH_BRANCH" \
+        || { log "FEHLER: git fetch fehlgeschlagen"; exit 1; }
+      date '+%F %T' > "$S/letzte-pruefung"
+      NEU=$(git -C "$R" rev-parse "refs/remotes/origin/$HH_BRANCH")
+      ALT=$(cat "$S/aktiv" 2>/dev/null || true)
+      if [ "$JETZT" = 0 ]; then
+        [ "$NEU" = "$ALT" ] && exit 0
+        [ "$NEU" = "$(cat "$S/fehlgeschlagen" 2>/dev/null || true)" ] && exit 0
+      fi
+
+      log "=== Update auf ${NEU:0:12} (bisher: ${ALT:0:12}) ==="
+      if [ -n "$ALT" ] && docker ps -q --filter label=com.docker.compose.project=hh-portal --filter label=com.docker.compose.service=db | grep -q .; then
+        hh-backup vor-update || { log "FEHLER: Sicherung vor dem Update fehlgeschlagen – Abbruch."; ergebnis FEHLER "${NEU:0:12} (Sicherung)"; exit 1; }
+      fi
+      zurueck() {
+        log "FEHLER: $1 – bleibe bei ${ALT:0:12}."
+        echo "$NEU" > "$S/fehlgeschlagen"
+        [ -n "$ALT" ] && git -C "$R" checkout --quiet --force --detach "$ALT"
+        ergebnis FEHLER "${NEU:0:12} ($1)"
+        exit 1
+      }
+      git -C "$R" checkout --quiet --force --detach "$NEU"
+      ln -sfn "$HH_BASIS/.env" "$D/.env"
+      export PORTAL_VERSION="${NEU:0:12}"
+      hh-compose build --pull || zurueck "Build"
+      hh-compose up -d --remove-orphans || zurueck "Start/Migration"
+
+      log "Warte auf gesunden Web-Container …"
+      for _ in $(seq 1 60); do
+        id=$(hh-compose ps -q web || true)
+        zustand=$(docker inspect -f '{{.State.Health.Status}}' $id 2>/dev/null || echo unbekannt)
+        [ "$zustand" = healthy ] && break
+        sleep 5
+      done
+      [ "$zustand" = healthy ] || zurueck "web nicht gesund ($zustand)"
+
+      echo "$NEU" > "$S/aktiv"
+      rm -f "$S/fehlgeschlagen"
+      ergebnis OK "${NEU:0:12} $(git -C "$R" log -1 --format=%s "$NEU" | cut -c1-80)"
+      log "OK: Version ${NEU:0:12} läuft."
+      # Aufräumen: die 3 neuesten Images behalten (schnelles Zurückrollen), Rest entfernen
+      docker image ls hh-portal-web --format '{{.Tag}}' | grep -vx "$PORTAL_VERSION" | tail -n +3 \
+        | while read -r tag; do docker image rm "hh-portal-web:$tag" >/dev/null 2>&1 || true; done
+      docker image prune -f >/dev/null 2>&1 || true
+      docker builder prune -f --filter until=168h >/dev/null 2>&1 || true
+
+  # ---------------------------------------------------------------- lokale Sicherung
+  - path: /usr/local/bin/hh-backup
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Lokale Sicherung: pg_dump (Custom-Format) + hochgeladene Dateien nach /srv/portal/backups,
+      # Aufbewahrung HH_BACKUP_TAGE (14). Externe Kopie (restic → Storage Box) folgt später.
+      # Aufruf: hh-backup [grund]   (grund z. B. taeglich, vor-update, hand)
+      set -Eeuo pipefail
+      umask 077
+      . "${HH_EINSTELLUNGEN:-/etc/hh-portal/einstellungen}"
+      Z="$HH_BASIS/backups"; GRUND=${1:-hand}
+      [[ "$GRUND" =~ ^[a-z0-9-]+$ ]] || { echo "Ungültiger Grund: $GRUND" >&2; exit 2; }
+      mkdir -p "$Z" "$HH_LOG_DIR"; chmod 700 "$Z"
+      exec > >(tee -a "$HH_LOG_DIR/hh-backup.log") 2>&1
+      log() { printf '%s %s\n' "$(date '+%F %T')" "$*"; }
+      exec 8>"$Z/.lock"; flock -w 900 8
+      T=$(date '+%F_%H%M%S')
+      DUMP="$Z/hh-$T-$GRUND.dump"
+      trap 'rm -f "$DUMP.teil"; log "Sicherung FEHLGESCHLAGEN"' ERR
+      hh-compose exec -T db pg_dump -U hh -d hh --format=custom --compress=6 > "$DUMP.teil"
+      hh-compose exec -T db pg_restore --list < "$DUMP.teil" > /dev/null
+      mv "$DUMP.teil" "$DUMP"
+      vol=$(docker volume inspect -f '{{.Mountpoint}}' hh-portal_dateien 2>/dev/null || true)
+      if [ -n "$vol" ] && [ -d "$vol" ]; then
+        tar -C "$vol" -czf "$Z/dateien-$T-$GRUND.tar.gz" .
+      fi
+      find "$Z" -maxdepth 1 -type f \( -name 'hh-*.dump' -o -name 'dateien-*.tar.gz' \) \
+        -mtime +"$((HH_BACKUP_TAGE - 1))" -delete
+      log "Sicherung OK: $(basename "$DUMP") ($(du -h "$DUMP" | cut -f1)), $(ls "$Z"/hh-*.dump | wc -l) Dumps vorhanden"
+
+  # ---------------------------------------------------------------- Erstes Admin-Konto
+  - path: /usr/local/bin/hh-admin-anlegen
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Legt ein Admin-Konto im Portal an. Fragt E-Mail, Name und (verdeckt, zweimal) das Passwort.
+      set -euo pipefail
+      [ "$(id -u)" = 0 ] || { echo "Bitte als root ausführen."; exit 1; }
+      echo "Tastaturtest (Web-Konsole): bitte genau  yz@-_  eingeben und Enter drücken."
+      read -r test
+      if [ "$test" != "yz@-_" ]; then
+        echo "Angekommen ist: '$test' – die Tastaturbelegung stimmt nicht."
+        echo "Passwort jetzt NICHT setzen (es wäre im Browser anders). Siehe README, Abschnitt Web-Konsole."
+        exit 1
+      fi
+      read -rp "E-Mail-Adresse für die Anmeldung: " email
+      read -rp "Name (wird im Portal angezeigt): " name
+      [ -n "$email" ] && [ -n "$name" ] || { echo "E-Mail und Name sind Pflicht."; exit 1; }
+      read -rp "Anlegen: '$email' / '$name' – richtig? (j/n) " ok
+      [ "$ok" = j ] || { echo "Abgebrochen."; exit 1; }
+      echo "Jetzt zweimal das Passwort (mind. 12 Zeichen; die Eingabe bleibt unsichtbar)."
+      exec hh-compose exec web python manage.py admin_anlegen --email "$email" --name "$name"
+
+  # ---------------------------------------------------------------- Überblick
+  - path: /usr/local/bin/hh-status
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Überblick über das Portal: Container, Version, Updates, Zertifikat, /gesund, Sicherungen.
+      set -uo pipefail
+      . "${HH_EINSTELLUNGEN:-/etc/hh-portal/einstellungen}"
+      S="$HH_BASIS/stand"; R="$HH_BASIS/repo"
+      echo "== Container"
+      hh-compose ps --all --format 'table {{.Service}}\t{{.State}}\t{{.Status}}' 2>&1
+      echo; echo "== Version"
+      if [ -s "$S/aktiv" ]; then
+        git -C "$R" log -1 --format='aktiv: %h  %ci  %s' "$(cat "$S/aktiv")" 2>/dev/null
+      else
+        echo "noch keine Version erfolgreich ausgerollt"
+      fi
+      git -C "$R" log -1 --format="portal-live: %h  %ci" "refs/remotes/origin/$HH_BRANCH" 2>/dev/null
+      echo "letzte Prüfung: $(cat "$S/letzte-pruefung" 2>/dev/null || echo –)"
+      echo "letztes Update: $(cat "$S/letztes-update" 2>/dev/null || echo –)"
+      [ -s "$S/fehlgeschlagen" ] && echo "übersprungen (fehlgeschlagen): $(cut -c1-12 "$S/fehlgeschlagen")"
+      tail -n 5 "$HH_LOG_DIR/hh-update.log" 2>/dev/null | sed 's/^/  /'
+      echo; echo "== Zeitpläne"
+      systemctl list-timers 'hh-*' --no-pager 2>/dev/null | head -n 4
+      echo; echo "== Zertifikat ($HH_DOMAIN)"
+      echo | timeout 10 openssl s_client -connect 127.0.0.1:443 -servername "$HH_DOMAIN" 2>/dev/null \
+        | openssl x509 -noout -issuer -enddate 2>/dev/null || echo "kein Zertifikat abrufbar"
+      echo; echo "== /gesund"
+      if curl -fs -m 10 --resolve "$HH_DOMAIN:443:127.0.0.1" "https://$HH_DOMAIN/gesund"; then
+        echo "  (gültiges Zertifikat)"
+      elif curl -fsSk -m 10 --resolve "$HH_DOMAIN:443:127.0.0.1" "https://$HH_DOMAIN/gesund"; then
+        echo "  (Portal antwortet, Zertifikat aber noch nicht gültig – DNS-A-Record prüfen, dann: hh-compose restart caddy)"
+      else
+        echo "keine Antwort"
+      fi
+      echo; echo "== Sicherungen ($HH_BASIS/backups)"
+      ls -1t "$HH_BASIS/backups"/hh-*.dump 2>/dev/null | head -n 3 | xargs -r ls -lh | awk '{print "  "$5"  "$NF}'
+      echo; echo "== System"
+      df -h / | tail -n 1 | awk '{print "Platte: "$3" von "$2" belegt ("$5")"}'
+      free -h | awk '/^Mem|^Swap/{print $1" "$3" von "$2}'
+
+  # ---------------------------------------------------------------- systemd
+  - path: /etc/systemd/system/hh-portal.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Hausmeister Helden Portal (docker compose)
+      Requires=docker.service
+      After=docker.service network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      ExecStart=/usr/local/bin/hh-compose up -d --remove-orphans
+      ExecStop=/usr/local/bin/hh-compose stop
+      TimeoutStartSec=900
+
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/systemd/system/hh-update.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Hausmeister Helden Portal – Update von portal-live
+      Requires=docker.service
+      After=docker.service network-online.target hh-portal.service
+      Wants=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/bin/hh-update
+      TimeoutStartSec=1800
+  - path: /etc/systemd/system/hh-update.timer
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Hausmeister Helden Portal – alle 15 Minuten auf neue Version prüfen
+
+      [Timer]
+      OnBootSec=5min
+      OnUnitInactiveSec=15min
+      RandomizedDelaySec=60
+
+      [Install]
+      WantedBy=timers.target
+  - path: /etc/systemd/system/hh-backup.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Hausmeister Helden Portal – tägliche lokale Sicherung
+      Requires=docker.service
+      After=docker.service hh-portal.service
+
+      [Service]
+      Type=oneshot
+      Nice=10
+      IOSchedulingClass=idle
+      ExecStart=/usr/local/bin/hh-backup taeglich
+      TimeoutStartSec=2h
+  - path: /etc/systemd/system/hh-backup.timer
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Hausmeister Helden Portal – Sicherung täglich um ca. 02:30
+
+      [Timer]
+      OnCalendar=*-*-* 02:30:00 Europe/Berlin
+      RandomizedDelaySec=15min
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+
+runcmd:
+  - [bash, /usr/local/sbin/hh-einrichten]
+
+final_message: "hh-portal: cloud-init fertig nach $UPTIME s – Protokoll /var/log/hh-einrichtung.log, Überblick: hh-status"

@@ -1,0 +1,10 @@
+{% extends "basis_einfach.html" %}
+{% block titel %}Sitzung abgelaufen{% endblock %}
+{% block inhalt %}
+<div class="fehlerseite">
+  <p class="code" aria-hidden="true">403</p>
+  <h1>Bitte erneut versuchen</h1>
+  <p>Das Formular war zu lange geöffnet oder Cookies sind blockiert. Bitte die Seite neu laden und noch einmal absenden.</p>
+  <a class="knopf" href="/">Zur Startseite</a>
+</div>
+{% endblock %}

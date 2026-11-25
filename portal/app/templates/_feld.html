@@ -1,0 +1,7 @@
+{% load portal %}{# Ein Formularfeld mit Label, Hilfe und Fehlern (barrierearm verknüpft). Aufruf: include "_feld.html" with feld=formular.x #}
+<div class="feld">
+  <label for="{{ feld.id_for_label }}">{{ feld.label }}</label>
+  {{ feld|feld_barrierearm }}
+  {% if feld.help_text %}<p class="hilfe" id="{{ feld.auto_id }}-hilfe">{{ feld.help_text }}</p>{% endif %}
+  {% if feld.errors %}<div id="{{ feld.auto_id }}-fehler">{% for fehler in feld.errors %}<p class="fehler" role="alert">{{ fehler }}</p>{% endfor %}</div>{% endif %}
+</div>

@@ -1,0 +1,95 @@
+<title>Webseiten-Freigabe Hausmeister Helden</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine ruhige Spalte – Status oben, dann Vorschau, Änderungen, Seitenliste. Marke: Grün aus dem Logo + Schwarz. */
+@font-face{font-family:"Archivo";src:url("vorschau/fonts/archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:"Inter";src:url("vorschau/fonts/inter.woff2") format("woff2");font-weight:100 900;font-display:swap}
+:root{--bg:#f6f8f3;--card:#ffffff;--fg:#141814;--muted:#5c645e;--line:#e1e6dc;--accent:#7ccc13;--accent-ink:#3d6f08;--accent-soft:#eef7e1;
+--warn:#a15c00;--warn-soft:#fff3df;--blue:#1f5fbf;--blue-soft:#e8f0fc;--head:"Archivo",system-ui,sans-serif;--body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f120f;--card:#171b17;--fg:#eef1ec;--muted:#9aa49c;--line:#2a302a;--accent:#8bd925;--accent-ink:#a6e85a;--accent-soft:#1c2a12;--warn:#f0b057;--warn-soft:#2e2412;--blue:#8db6f5;--blue-soft:#152338;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f120f;--card:#171b17;--fg:#eef1ec;--muted:#9aa49c;--line:#2a302a;--accent:#8bd925;--accent-ink:#a6e85a;--accent-soft:#1c2a12;--warn:#f0b057;--warn-soft:#2e2412;--blue:#8db6f5;--blue-soft:#152338;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:20px}
+h1,h2{font-family:var(--head);font-stretch:85%;text-transform:uppercase;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:850}
+h2{font-size:1.25rem;font-weight:800;letter-spacing:.01em}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:850;font-stretch:82%;letter-spacing:.02em;font-size:1rem}
+.brand svg{width:34px;height:26px}
+.head{display:grid;gap:12px}
+.meta{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--warn-soft);color:var(--warn);font-weight:700;font-size:.85rem;width:fit-content}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:14px;min-width:0}
+.approve{border:2px solid var(--accent);background:var(--accent-soft)}
+.approve .cmd{font-family:var(--head);font-stretch:90%;font-weight:800;font-size:1.35rem;background:var(--card);border:1px dashed var(--accent-ink);border-radius:10px;padding:10px 14px;width:fit-content;color:var(--accent-ink)}
+.approve p,.card p{margin:0}
+.deploy{font-size:.92rem;color:var(--muted)}
+.stats{display:flex;flex-wrap:wrap;gap:8px}
+.shots{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:640px){.shots{grid-template-columns:1fr}}
+.shot{display:grid;gap:8px;min-width:0}
+.shot a{display:block;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.shot img{display:block;width:100%;height:auto}
+.shot span{font-size:.82rem;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+ul.list{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td:last-child{text-align:right;white-space:nowrap}
+.pname{display:block;font-weight:650}
+.file{display:block;font-size:.8rem;color:var(--muted)}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.t-neu{background:var(--blue-soft);color:var(--blue)}
+.t-mod{background:var(--warn-soft);color:var(--warn)}
+.t-same{background:transparent;color:var(--muted);border:1px solid var(--line)}
+a{color:var(--accent-ink);font-weight:700}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.ok{color:var(--accent-ink);font-weight:600}
+.warn{color:var(--warn);font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><svg viewBox="0 0 64 48" aria-hidden="true"><path d="M5 31L29 9l10 9v-8h7v14l11 10" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><g fill="var(--accent)"><rect x="21" y="25" width="5" height="5" rx="1"/><rect x="28" y="25" width="5" height="5" rx="1"/><rect x="21" y="32" width="5" height="5" rx="1"/><rect x="28" y="32" width="5" height="5" rx="1"/></g></svg>HAUSMEISTER HELDEN</div>
+    <h1>Webseiten-Freigabe</h1>
+    <span class="pill">Wartet auf deine Freigabe</span>
+    <div class="meta">Stand 25.11.2026, 00:34 Uhr · Version cc89648 · Ziel: www.haus-meister-helden.de</div>
+  </header>
+
+  <section class="card approve" aria-labelledby="h-frei">
+    <h2 id="h-frei">So gibst du frei</h2>
+    <p>Schau dir die Vorschau an. Wenn alles passt, schreib im Chat mit Claude:</p>
+    <div class="cmd">Webseite freigeben</div>
+    <p>Wenn du etwas ändern willst, schreib einfach, was anders sein soll. Dann kommt eine neue Übersicht.</p>
+    <p class="deploy">Nach deiner Freigabe geht die Seite automatisch über GitHub Pages auf <b>www.haus-meister-helden.de</b> online, spätestens nach 30 Minuten.</p>
+  </section>
+
+  <section class="card" aria-labelledby="h-vor">
+    <h2 id="h-vor">Vorschau Startseite</h2>
+    <div class="shots">
+      <div class="shot"><span>Computer</span><a href="vorschau/index.html" target="_blank" rel="noopener"><img src="vorschau-desktop.png" alt="Startseite auf dem Computer" width="1366" height="860"></a></div>
+      <div class="shot"><span>Handy</span><a href="vorschau/index.html" target="_blank" rel="noopener"><img src="vorschau-handy.png" alt="Startseite auf dem Handy" width="390" height="664"></a></div>
+    </div>
+    <p><a href="vorschau/index.html" target="_blank" rel="noopener">Komplette Webseite in der Vorschau öffnen →</a></p>
+    <p class="ok">Automatische Prüfung bestanden: keine Fehler, Handy-Ansicht passt.</p>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="h-neu">
+      <h2 id="h-neu">Was ist neu</h2>
+      <div class="stats"><span class="tag t-neu">1 neu</span><span class="tag t-mod">12 geändert</span></div>
+      <ul class="list"><li>Neue Seite /bewertung.html als Ziel für die QR-Codes auf Bewertungskarten und Visitenkarten</li><li>Sie leitet zu Google weiter, sobald der Bewertungslink eingetragen ist; bis dahin Dankeseite mit WhatsApp/E-Mail</li><li>Die Seite ist für Suchmaschinen ausgeblendet (noindex) und nicht in der Sitemap</li><li>Technisch: CSS/JS-Versionskennung jetzt per Prüfsumme (keine täglichen Scheinänderungen mehr)</li></ul>
+    </section>
+    <section class="card" aria-labelledby="h-offen">
+      <h2 id="h-offen">Von dir noch offen</h2>
+      <ul class="list"><li>Impressum: Rechtsform und ggf. USt-IdNr. ergänzen, Texte rechtlich prüfen lassen</li><li>Preise: netto oder brutto? Muss auf der Seite stehen</li><li>Echte Fotos (Team, Einsätze, Vorher/Nachher) schicken</li><li>Echte Google-Bewertungen / Kundenstimmen freigeben</li></ul>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="h-seiten">
+    <h2 id="h-seiten">Alle Seiten (13)</h2>
+    <div class="tablewrap"><table><tbody><tr><td><span class="pname">Startseite</span><span class="file">index.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/index.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Bewertung</span><span class="file">bewertung.html</span></td><td><span class="tag t-neu">neu</span></td><td><a href="vorschau/bewertung.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Gartenpflege in Gütersloh</span><span class="file">gartenpflege-guetersloh.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/gartenpflege-guetersloh.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Für Hausverwaltungen</span><span class="file">hausverwaltungen.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/hausverwaltungen.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Kleinreparaturen &amp; Hausmeister-Arbeiten in Gütersloh</span><span class="file">kleinreparaturen-guetersloh.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/kleinreparaturen-guetersloh.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Mülltonnen-Service in Gütersloh</span><span class="file">muelltonnen-service-guetersloh.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/muelltonnen-service-guetersloh.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Winterdienst: Diese Pflichten haben Vermieter und Verwaltungen</span><span class="file">ratgeber-winterdienst-pflichten-vermieter.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/ratgeber-winterdienst-pflichten-vermieter.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Ratgeber (Übersicht)</span><span class="file">ratgeber.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/ratgeber.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Treppenhausreinigung in Gütersloh</span><span class="file">treppenhausreinigung-guetersloh.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/treppenhausreinigung-guetersloh.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Winterdienst in Gütersloh</span><span class="file">winterdienst-guetersloh.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/winterdienst-guetersloh.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Fehlerseite (404)</span><span class="file">404.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/404.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Datenschutz</span><span class="file">datenschutz.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/datenschutz.html" target="_blank" rel="noopener">Ansehen</a></td></tr><tr><td><span class="pname">Impressum</span><span class="file">impressum.html</span></td><td><span class="tag t-mod">geändert</span></td><td><a href="vorschau/impressum.html" target="_blank" rel="noopener">Ansehen</a></td></tr></tbody></table></div>
+  </section>
+</div>

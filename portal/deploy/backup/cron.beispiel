@@ -1,0 +1,11 @@
+# Alternative zu den systemd-Timern (nur EINE Variante verwenden!).
+# Installation: sudo cp cron.beispiel /etc/cron.d/hh-portal && sudo chmod 644 /etc/cron.d/hh-portal
+# Zeiten in der Zeitzone des Servers (Europe/Berlin einstellen: timedatectl set-timezone Europe/Berlin).
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MAILTO=""
+
+# Backup täglich 02:30
+30 2 * * *  root  bash /opt/hh-portal/portal/deploy/backup/backup.sh >> /var/log/hh-backup.log 2>&1 || logger -p user.err -t hh-alarm "Backup fehlgeschlagen"
+# Wiederherstellungstest sonntags 05:00
+0 5 * * 0   root  bash /opt/hh-portal/portal/deploy/backup/restore-test.sh >> /var/log/hh-restore-test.log 2>&1 || logger -p user.err -t hh-alarm "Wiederherstellungstest fehlgeschlagen"

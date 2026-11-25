@@ -1,0 +1,24 @@
+{% extends "basis.html" %}
+{% block titel %}Meine Einsätze{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div>
+    <h1>Hallo {{ user.anzeigename }}</h1>
+    <p class="untertitel">{{ zeitraum.heute|date:"l, j. F Y" }}</p>
+  </div>
+</div>
+
+{% if not verknuepft %}
+<p class="meldung warning">Ihr Konto ist noch keinem Mitarbeiterprofil zugeordnet. Bitte im Büro melden.</p>
+{% endif %}
+
+<section class="karte" aria-labelledby="heute-titel">
+  <h2 id="heute-titel">Meine Einsätze heute <span class="abzeichen grau">{{ einsaetze_heute|length }}</span></h2>
+  {% include "berichte/_eigene_einsaetze.html" with einsaetze=einsaetze_heute leer="Heute sind keine Einsätze für Sie geplant." %}
+</section>
+
+<section class="karte" aria-labelledby="morgen-titel">
+  <h2 id="morgen-titel">Morgen <span class="abzeichen grau">{{ einsaetze_morgen|length }}</span></h2>
+  {% include "berichte/_eigene_einsaetze.html" with einsaetze=einsaetze_morgen leer="Morgen sind keine Einsätze geplant." %}
+</section>
+{% endblock %}

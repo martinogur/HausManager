@@ -1,0 +1,28 @@
+{% extends "basis_einfach.html" %}
+{% block titel %}Zwei-Faktor einrichten{% endblock %}
+{% block karten_klasse %} breit{% endblock %}
+{% block inhalt %}
+<h1>Zwei-Faktor-Anmeldung einrichten</h1>
+<p class="einleitung">Zum Schutz der Kundendaten ist für Ihr Konto ein zweiter Faktor nötig.</p>
+<ol class="schritte">
+  <li>Authenticator-App auf dem Handy öffnen (z. B. Google Authenticator, Microsoft Authenticator oder FreeOTP).</li>
+  <li>Neues Konto hinzufügen und diesen QR-Code scannen.</li>
+  <li>Den sechsstelligen Code aus der App unten eingeben.</li>
+</ol>
+<div class="qr">{{ qr_svg }}</div>
+<details>
+  <summary>Scannen geht nicht? Schlüssel von Hand eingeben</summary>
+  <code class="schluessel" aria-label="Geheimer Schlüssel">{{ schluessel }}</code>
+  <p class="hilfe">Zeitbasiert (TOTP), 6 Ziffern, 30 Sekunden. Diesen Schlüssel niemandem weitergeben.</p>
+</details>
+<form method="post" novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  {% include "_feld.html" with feld=formular.code %}
+  <p class="hilfe" id="code-hilfe">Der Code wechselt alle 30 Sekunden.</p>
+  <button class="knopf breit" type="submit">Bestätigen und weiter</button>
+</form>
+<form method="post" action="{% url 'konten:abmelden' %}" class="nebenaktion">{% csrf_token %}
+  <button class="knopf zweit klein" type="submit">Abbrechen und abmelden</button>
+</form>
+{% endblock %}

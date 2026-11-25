@@ -1,0 +1,23 @@
+{
+ "vorschau-desktop.png": "webseite/freigabe/vorschau-desktop.png",
+ "vorschau-handy.png": "webseite/freigabe/vorschau-handy.png",
+ "vorschau/404.html": "webseite/public/404.html",
+ "vorschau/app.js": "webseite/public/app.js",
+ "vorschau/bewertung.html": "webseite/public/bewertung.html",
+ "vorschau/datenschutz.html": "webseite/public/datenschutz.html",
+ "vorschau/fonts/archivo.woff2": "webseite/public/fonts/archivo.woff2",
+ "vorschau/fonts/inter.woff2": "webseite/public/fonts/inter.woff2",
+ "vorschau/gartenpflege-guetersloh.html": "webseite/public/gartenpflege-guetersloh.html",
+ "vorschau/hausverwaltungen.html": "webseite/public/hausverwaltungen.html",
+ "vorschau/img/favicon.svg": "webseite/public/img/favicon.svg",
+ "vorschau/img/logo.jpg": "webseite/public/img/logo.jpg",
+ "vorschau/impressum.html": "webseite/public/impressum.html",
+ "vorschau/index.html": "webseite/public/index.html",
+ "vorschau/kleinreparaturen-guetersloh.html": "webseite/public/kleinreparaturen-guetersloh.html",
+ "vorschau/muelltonnen-service-guetersloh.html": "webseite/public/muelltonnen-service-guetersloh.html",
+ "vorschau/ratgeber-winterdienst-pflichten-vermieter.html": "webseite/public/ratgeber-winterdienst-pflichten-vermieter.html",
+ "vorschau/ratgeber.html": "webseite/public/ratgeber.html",
+ "vorschau/style.css": "webseite/public/style.css",
+ "vorschau/treppenhausreinigung-guetersloh.html": "webseite/public/treppenhausreinigung-guetersloh.html",
+ "vorschau/winterdienst-guetersloh.html": "webseite/public/winterdienst-guetersloh.html"
+}
