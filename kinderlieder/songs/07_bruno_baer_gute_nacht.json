@@ -1,0 +1,56 @@
+{
+  "titel": "Schlaf gut, Bruno – Das Gute-Nacht-Lied mit Bruno Bär",
+  "kurztitel": "Schlaf gut, Bruno",
+  "figur": {"typ": "baer", "name": "Bruno"},
+  "melodie": "D",
+  "tempo": 84,
+  "tonart": "F",
+  "instrument": "musikbox",
+  "begleitung": "klavier",
+  "akzent": "#3949ab",
+  "teile": {
+    "refrain": {"art": "refrain", "nacht": true, "bild": "mond", "zeilen": [
+      "Schlaf gut, Bruno, schlaf schön ein,",
+      {"text": "Mond und Sterne leuchten fein.", "effekt": "glitzer"},
+      "Kuschel dich ins Bett hinein,",
+      "gute Nacht, mein Bärchen klein."
+    ]},
+    "abends": {"art": "strophe", "farbe": "#fb8c00", "wort": "ABENDS", "zeilen": [
+      {"text": "Abends, wenn die Sonne sinkt,", "bild": "sonne"},
+      {"text": "und der erste Stern schon blinkt,", "bild": "sterne", "effekt": "glitzer"},
+      {"text": "Zähne putzen, hin und her,", "bild": "zaehneputzen", "effekt": "schrubb"},
+      {"text": "Bruno gähnt, er kann nicht mehr.", "bild": "bett", "effekt": "gaehn"}
+    ]},
+    "kuscheln": {"art": "strophe", "nacht": true, "farbe": "#8e24aa", "wort": "KUSCHELN", "zeilen": [
+      {"text": "Wo ist Schäfchen, weiß und weich?", "bild": "kuscheltier"},
+      {"text": "Da im Bett, ich hab es gleich!", "bild": "bett"},
+      {"text": "Dann ein Buch, wir lesen still,", "bild": "buch"},
+      {"text": "bis der Bruno schlafen will.", "bild": "mond", "effekt": "gaehn"}
+    ]},
+    "lichtaus": {"art": "strophe", "nacht": true, "farbe": "#3949ab", "wort": "LICHT AUS", "zeilen": [
+      {"text": "Klick, das Licht ist aus, ganz sacht,", "bild": "lampe"},
+      {"text": "nur das Nachtlicht hält noch Wacht.", "bild": "lampe"},
+      {"text": "Schäfchen zählen: eins, zwei, drei,", "zahlen": true, "zaehlobjekt": "schaf"},
+      {"text": "vier, fünf, Bruno schläft dabei.", "zahlen": true, "zaehlobjekt": "schaf"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo, ich bin Bruno Bär. Uaah, ich bin schon ein bisschen müde. Kommst du mit ins Bett?"},
+    "refrain",
+    {"sprich": "Schau mal, die Sonne geht unter. Was machst du am Abend vor dem Schlafen?"},
+    "abends",
+    {"sprich": "Das ist mein Kuscheltier, das Schäfchen. Hast du auch ein Kuscheltier?", "nacht": true},
+    "kuscheln",
+    "refrain",
+    {"sprich": "Jetzt machen wir das Licht aus. Zählst du mit mir Schäfchen? Ganz leise!", "nacht": true},
+    "lichtaus",
+    "refrain"
+  ],
+  "ende_nacht": true,
+  "vorschau_nacht": true,
+  "vorschau_bilder": ["kuscheltier", "bett", "sterne"],
+  "tschuess": "Zähne putzen, kuscheln, ein Buch lesen und Licht aus. Gute Nacht, schlaf gut!",
+  "beschreibung": "Bruno Bär ist müde und geht schlafen: Zähne putzen, mit dem Kuschel-Schäfchen ins Bett, ein Buch lesen, Licht aus und Schäfchen zählen bis fünf. Ein ruhiges Gute-Nacht-Lied zum Mitsingen und Einschlafen für Kinder ab 2 Jahren.",
+  "suchbegriffe": ["Gute Nacht Lied", "Schlaflied für Kinder", "Einschlaflied", "Gute Nacht Lied Kinder deutsch"],
+  "tags": ["Kinderlied", "Gute-Nacht-Lied", "Schlaflied", "Einschlaflied", "Bär", "Abendritual", "Kinderlieder zum Mitsingen", "Kleinkinder"]
+}

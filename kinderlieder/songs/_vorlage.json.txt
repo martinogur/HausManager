@@ -1,0 +1,24 @@
+{
+  "titel": "Name der Figur – Worum geht es",
+  "kurztitel": "Kurzer Titel fürs Bild",
+  "figur": {"typ": "katze", "name": "Mimi"},
+  "tempo": 104,
+  "tonart": "C",
+  "instrument": "glockenspiel",
+  "begleitung": "klavier",
+  "seed": 1,
+  "teile": {
+    "refrain": {"art": "refrain", "zeilen": [
+      "Zeile eins mit etwa sieben Silben,",
+      "Zeile zwei, die sich darauf reimt.",
+      "Zeile drei mit etwa sieben Silben,",
+      "Zeile vier, die sich darauf reimt."
+    ]},
+    "strophe1": {"art": "strophe", "zeige": {"text": "WORT", "farbe": "#e53935"}, "zeilen": [
+      "…", "…", "…", "…"
+    ]}
+  },
+  "ablauf": ["refrain", "strophe1", "refrain"],
+  "beschreibung": "Ein bis zwei Sätze für die YouTube-Beschreibung.",
+  "tags": ["Kinderlied", "…"]
+}

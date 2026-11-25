@@ -1,0 +1,46 @@
+{
+  "titel": "Hopsi Hase zählt bis zehn – Das Zähllied",
+  "kurztitel": "Hopsi Hase zählt bis 10",
+  "figur": {"typ": "hase", "name": "Hopsi"},
+  "melodie": "C",
+  "tempo": 100,
+  "tonart": "G",
+  "instrument": "xylophon",
+  "begleitung": "klavier",
+  "akzent": "#43a047",
+  "teile": {
+    "refrain": {"art": "refrain", "zeilen": [
+      {"text": "Hopsi Hase, hopp, hopp, hopp,", "effekt": "boing"},
+      "springt im Garten ohne Stopp.",
+      "Zähl mit mir, das macht viel Spaß,",
+      {"text": "Möhren liegen dort im Gras!", "bild": "moehre"}
+    ]},
+    "vorwaerts": {"art": "strophe", "zahlen": true, "farbe": "#43a047", "zeilen": [
+      "Eins und zwei und drei und vier,",
+      "fünf und sechs, die zähl ich dir.",
+      "Sieben, acht und neun, juchhe,",
+      {"text": "zehn! Jetzt hüpf ich in die Höh!", "effekt": {"typ": "boing", "wort": "hüpf"}}
+    ]},
+    "rueckwaerts": {"art": "strophe", "zahlen": true, "farbe": "#fb8c00",
+      "melodie": [[9, 9, 8, 8, 7, 7, 6, 6], [5, 5, 4, 4, 3, 3, 4, 4], [3, 3, 2, 2, 1, 1, 0], [0, 4, 4, 2, 1, 1, 0]],
+      "zeilen": [
+      "Zehn und neun und acht und sieben,",
+      "sechs und fünf sind hier geblieben.",
+      "vier und drei und zwei und eins,",
+      "null! Im Gras liegt jetzt gar keins."
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo! Ich bin Hopsi, der Hase. Hopp, hopp! Zählst du mit mir bis zehn?"},
+    "refrain",
+    {"sprich": "Los geht's! Wir zählen die Möhren. Zähl laut mit!"},
+    "vorwaerts",
+    "refrain",
+    {"sprich": "Super! Und jetzt zählen wir rückwärts. Bist du bereit?"},
+    "rueckwaerts",
+    "refrain"
+  ],
+  "tschuess": "Toll! Du kannst schon bis zehn zählen! Hopp, hopp, tschüss!",
+  "beschreibung": "Hopsi Hase hüpft durch den Garten und zählt Möhren – von 1 bis 10 und wieder zurück bis 0! Jede Zahl wird groß gezeigt, mit genau so vielen Möhren zum Mitzählen. Ein Zähllied für Kinder ab 2 Jahren.",
+  "tags": ["Kinderlied", "Zählen lernen", "Zahlen 1 bis 10", "Hase", "Lernlied", "Kinderlieder zum Mitsingen", "Kita", "Vorschule"]
+}

@@ -1,0 +1,22 @@
+{
+  "titel": "Welche Farbe ist das? Rate mal mit Bella Biene 🐝 Farben-Ratespiel für Kinder",
+  "figur": {"typ": "biene"},
+  "banner": "WELCHE FARBE?",
+  "akzent": "#e53935",
+  "palette": 2,
+  "tempo": 112,
+  "tonart": "G",
+  "instrument": "celesta",
+  "start": "Welche Farbe hat das? Rate mal!",
+  "fragen": ["Und welche Farbe hat das?", "Welche Farbe ist das hier?", "Und jetzt? Welche Farbe?", "Weißt du die Farbe?"],
+  "dinge": [
+    {"bild": "erdbeere", "wort": "ROT", "antwort": "Rot! Die Erdbeere ist rot. Mmh, lecker!", "farbe": "#e53935"},
+    {"bild": "banane", "wort": "GELB", "antwort": "Gelb! Die Banane ist gelb. Mampf, mampf!", "farbe": "#f9b800"},
+    {"bild": "frosch", "wort": "GRÜN", "antwort": "Grün! Der Frosch ist grün. Quak, quak!", "farbe": "#43a047"},
+    {"bild": "fisch", "wort": "BLAU", "antwort": "Blau! Ein blauer Fisch. Blubb, blubb!", "farbe": "#1e88e5"},
+    {"bild": "moehre", "wort": "ORANGE", "antwort": "Orange! Die Möhre. Knack, knack!", "farbe": "#fb8c00"}
+  ],
+  "ende": "Wie viele Farben hast du erraten?",
+  "beschreibung": "Welche Farbe versteckt sich im Schatten? Rate mit Bella Biene: Rot, Gelb, Grün, Blau oder Orange? 3, 2, 1 – und los! Ein Farben-Ratespiel für Kinder ab 2 Jahren.",
+  "tags": ["Ratespiel für Kinder", "Farben lernen", "Welche Farbe", "Rate mal", "Kinder Quiz", "Kleinkinder", "Liederwiese"]
+}

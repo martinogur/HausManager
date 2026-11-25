@@ -1,0 +1,56 @@
+{
+  "titel": "Bella und der erste Schnee – Winterlied zum Mitsingen und Zählen",
+  "kurztitel": "Bella und der erste Schnee",
+  "figur": {"typ": "biene", "name": "Bella"},
+  "melodie": "C",
+  "tempo": 100,
+  "tonart": "G",
+  "instrument": "celesta",
+  "begleitung": "gitarre",
+  "akzent": "#039be5",
+  "winter": true,
+  "teile": {
+    "refrain": {"art": "refrain", "schnee": true, "bild": "schneeflocke", "zeilen": [
+      "Leise, leise fällt der Schnee,",
+      {"text": "weiß ist alles, was ich seh!", "effekt": "glitzer"},
+      {"text": "Bella summt und tanzt im Kreis:", "effekt": "summ"},
+      "heute ist die Welt ganz weiß!"
+    ]},
+    "zaehlen": {"art": "strophe", "schnee": true, "farbe": "#039be5", "wort": "ZÄHLEN", "zeilen": [
+      {"text": "Flocken fallen, zähl mit mir:", "bild": "schneeflocke"},
+      {"text": "eins und zwei und drei und vier!", "zahlen": true, "zaehlobjekt": "schneeflocke"},
+      {"text": "Fünf auf meiner Nase klein,", "zahlen": true, "zaehlobjekt": "schneeflocke"},
+      {"text": "kitzelt kalt und kitzelt fein!", "bild": "schneeflocke", "effekt": "glitzer"}
+    ]},
+    "schneemann": {"art": "strophe", "schnee": true, "farbe": "#5e35b1", "wort": "SCHNEEMANN", "zeilen": [
+      {"text": "Kugeln rollen, groß und klein,", "bild": "schneemann"},
+      {"text": "das soll unser Schneemann sein!", "bild": "schneemann", "effekt": "plopp"},
+      {"text": "Möhre wird die Nase, schau,", "bild": "moehre"},
+      {"text": "Knöpfe schwarz und Augen blau!", "bild": "schneemann", "effekt": "glitzer"}
+    ]},
+    "anziehen": {"art": "strophe", "schnee": true, "farbe": "#e53935", "wort": "ANZIEHEN", "zeilen": [
+      {"text": "Draußen ist es kalt, oh je,", "bild": "schneeflocke"},
+      {"text": "Mütze auf, dann in den Schnee!", "bild": "muetze"},
+      {"text": "Schal um, Handschuh an die Hand,", "bild": "schal"},
+      {"text": "warm geht's in das Winterland!", "bild": "schneemann", "effekt": {"typ": "boing", "wort": "warm"}}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo, ich bin Bella Biene! Summ, summ! Schau mal aus dem Fenster: Es schneit! Hast du schon mal Schnee gesehen?"},
+    "refrain",
+    {"sprich": "Komm, wir zählen die Schneeflocken! Zählst du mit?"},
+    "zaehlen",
+    "refrain",
+    {"sprich": "Jetzt bauen wir einen Schneemann! Was nehmen wir für die Nase?"},
+    "schneemann",
+    "refrain",
+    {"sprich": "Brr, ist das kalt! Was ziehen wir an, damit wir nicht frieren?"},
+    "anziehen",
+    "refrain"
+  ],
+  "tschuess": "Schneeflocken zählen, einen Schneemann bauen und warm anziehen. Das war ein schöner Wintertag! Summ, summ, tschüss!",
+  "vorschau_bilder": ["schneemann", "schneeflocke", "muetze"],
+  "beschreibung": "Es schneit! Bella Biene zählt Schneeflocken bis fünf, baut einen Schneemann mit Möhrennase und zieht sich warm an – mit Mütze, Schal und Handschuhen. Ein fröhliches Winterlied zum Mitsingen und Mitzählen für Kinder ab 2 Jahren.",
+  "suchbegriffe": ["Winterlied für Kinder", "Schneelied Kinder", "Kinderlied Schnee", "Schneemann Lied", "Winterlieder Kita"],
+  "tags": ["Kinderlied", "Winter", "Schnee", "Schneemann", "Zählen lernen", "Biene", "Kinderlieder zum Mitsingen"]
+}

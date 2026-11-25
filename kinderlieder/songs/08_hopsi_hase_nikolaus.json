@@ -1,0 +1,72 @@
+{
+  "titel": "Lasst uns froh und munter sein – Nikolauslied mit Hopsi Hase",
+  "kurztitel": "Lasst uns froh und munter sein",
+  "herkunft": "Text und Melodie: volkstümlich, Rheinland/Hunsrück, 19. Jahrhundert",
+  "figur": {"typ": "hase", "name": "Hopsi"},
+  "melodie": "A",
+  "tempo": 116,
+  "tonart": "D",
+  "instrument": "glockenspiel",
+  "begleitung": "klavier",
+  "akzent": "#e53935",
+  "teile": {
+    "refrain": {"art": "refrain", "bild": "nikolaus", "melodie": [
+        [[0, 2], [1, 2], [2, 2], [3, 2], [4, 1], [5, 1], [4, 1], [5, 1], [4, 4]],
+        [[7, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [1, 2], [4, 4]],
+        [[7, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [1, 2], [0, 4]]], "zeilen": [
+      {"text": "Lustig, lustig, traleralera!", "effekt": "glitzer"},
+      "bald ist Niklausabend da,",
+      "bald ist Niklausabend da!"
+    ]},
+    "froh": {"art": "strophe", "farbe": "#fb8c00", "wort": "FROH", "melodie": [
+        [[4, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [2, 2], [2, 4]],
+        [[3, 2], [3, 2], [3, 2, 4], [3, 2, 2], [1, 2], [1, 2], [1, 4]]], "zeilen": [
+      {"text": "Lasst uns froh und munter sein", "bild": "sonne"},
+      {"text": "und uns recht von Herzen freun!", "bild": "herz"}
+    ]},
+    "teller": {"art": "strophe", "farbe": "#1e88e5", "wort": "TELLER", "melodie": [
+        [[4, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [2, 2], [2, 4]],
+        [[3, 2], [3, 2], [3, 2, 4], [3, 2, 2], [1, 2], [1, 2], [1, 4]]], "zeilen": [
+      {"text": "Dann stell ich den Teller auf,", "bild": "teller"},
+      {"text": "Niklaus legt gewiss was drauf.", "bild": "teller", "effekt": "glitzer"}
+    ]},
+    "traeumen": {"art": "strophe", "nacht": true, "farbe": "#5e35b1", "wort": "TRÄUMEN", "melodie": [
+        [[4, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [2, 2], [2, 4]],
+        [[3, 2], [3, 2], [3, 2, 4], [3, 2, 2], [1, 2], [1, 2], [1, 4]]], "zeilen": [
+      {"text": "Wenn ich schlaf, dann träume ich:", "bild": "bett", "effekt": "gaehn"},
+      {"text": "jetzt bringt Niklaus was für mich.", "bild": "geschenk"}
+    ]},
+    "aufstehen": {"art": "strophe", "farbe": "#43a047", "wort": "AUFSTEHEN", "melodie": [
+        [[4, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [2, 2], [2, 4]],
+        [[3, 2], [3, 2], [3, 2, 4], [3, 2, 2], [1, 2], [1, 2], [1, 4]]], "zeilen": [
+      {"text": "Wenn ich aufgestanden bin,", "bild": "wecker", "effekt": "klingel"},
+      {"text": "lauf ich schnell zum Teller hin.", "bild": "teller", "effekt": {"typ": "boing", "wort": "schnell"}}
+    ]},
+    "danke": {"art": "strophe", "farbe": "#e91e63", "wort": "DANKE", "melodie": [
+        [[4, 2], [4, 2], [4, 2, 5], [4, 2, 3], [2, 2], [2, 2], [2, 4]],
+        [[3, 2], [3, 2], [3, 1], [4, 1], [3, 2, 2], [1, 2], [1, 2], [1, 4]]], "zeilen": [
+      {"text": "Niklaus ist ein guter Mann,", "bild": "nikolaus"},
+      {"text": "dem man nicht genug danken kann.", "bild": "herz"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo, ich bin Hopsi Hase! Hopp, hopp! Bald kommt der Nikolaus. Singst du mit mir?"},
+    "froh",
+    "refrain",
+    {"sprich": "Ich stelle meinen Teller auf. Was legt der Nikolaus wohl drauf?"},
+    "teller",
+    "refrain",
+    "traeumen",
+    "refrain",
+    {"sprich": "Guten Morgen! Schnell, wir schauen auf den Teller. Was liegt da?"},
+    "aufstehen",
+    "refrain",
+    "danke",
+    "refrain"
+  ],
+  "tschuess": "Nüsse, ein Apfel und eine Mandarine! Danke, lieber Nikolaus! Hopp, hopp, tschüss!",
+  "vorschau_bilder": ["nikolaus", "teller", "herz"],
+  "beschreibung": "Lasst uns froh und munter sein – das beliebte Nikolauslied zum Mitsingen mit Text! Hopsi Hase stellt den Teller auf, träumt vom Nikolaus und findet am Morgen Nüsse, Apfel und Mandarine. Das traditionelle Kinderlied für die Adventszeit und den Nikolaustag am 6. Dezember, für Kinder ab 2 Jahren.",
+  "suchbegriffe": ["Lasst uns froh und munter sein", "Lasst uns froh und munter sein Kinderlied", "Nikolauslied", "Nikolauslieder für Kinder", "Lasst uns froh und munter sein Text"],
+  "tags": ["Kinderlied", "Nikolaus", "Nikolaustag", "Adventslied", "Weihnachtslieder für Kinder", "Hase"]
+}

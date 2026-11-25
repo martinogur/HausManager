@@ -1,0 +1,21 @@
+{
+  "titel": "Wie viele sind das? Zählen lernen mit Hopsi Hase 🐰 Zählspiel für Kinder",
+  "figur": {"typ": "hase"},
+  "banner": "WIE VIELE?",
+  "akzent": "#43a047",
+  "palette": 0,
+  "tempo": 112,
+  "tonart": "D",
+  "instrument": "glockenspiel",
+  "dinge": [
+    {"bild": "blume", "anzahl": 3, "frage": "Wie viele Blumen sind das? Zähl mit!", "wort": "DREI", "antwort": "Drei Blumen! Eins, zwei, drei!", "farbe": "#e91e63"},
+    {"bild": "schneeflocke", "anzahl": 5, "frage": "Wie viele Schneeflocken?", "wort": "FÜNF", "antwort": "Fünf Schneeflocken! Brr!", "farbe": "#039be5"},
+    {"bild": "kueken", "anzahl": 2, "frage": "Wie viele Küken siehst du?", "wort": "ZWEI", "antwort": "Zwei Küken! Piep, piep!", "farbe": "#f9b800"},
+    {"bild": "erdbeere", "anzahl": 4, "frage": "Und wie viele Erdbeeren?", "wort": "VIER", "antwort": "Vier Erdbeeren! Mmh, lecker!", "farbe": "#e53935"},
+    {"bild": "herz", "anzahl": 1, "frage": "Und jetzt? Wie viele Herzen?", "wort": "EINS", "antwort": "Ein Herz! Für dich!", "farbe": "#e91e63"}
+  ],
+  "ende": "Toll gezählt! Wie viele hattest du richtig?",
+  "beschreibung": "Wie viele Blumen, Schneeflocken, Küken, Erdbeeren und Herzen siehst du? Zähl mit Hopsi Hase von eins bis fünf! 3, 2, 1 – und los! Ein Zählspiel für Kinder ab 2 Jahren.",
+  "suchbegriffe": ["Zählen lernen Kinder", "Zählen bis 5", "Zahlen lernen Kleinkinder", "Zählspiel für Kinder"],
+  "tags": ["Ratespiel für Kinder", "Zahlen lernen", "Kinder Quiz", "Rate mal", "Liederwiese"]
+}

@@ -1,0 +1,53 @@
+{
+  "titel": "Bella und der Regenbogen – Alle Farben lernen",
+  "kurztitel": "Bella und der Regenbogen",
+  "figur": {"typ": "biene", "name": "Bella"},
+  "melodie": "E",
+  "tempo": 100,
+  "tonart": "C",
+  "instrument": "celesta",
+  "begleitung": "klavier",
+  "akzent": "#8e24aa",
+  "teile": {
+    "refrain": {"art": "refrain", "bild": "regenbogen", "zeilen": [
+      "Regenbogen, bunt und weit,",
+      "leuchtet nach der Regenzeit.",
+      "Alle Farben, eins, zwei, drei,",
+      {"text": "komm und flieg mit mir vorbei!", "effekt": "glitzer"}
+    ]},
+    "rot_orange": {"art": "strophe", "zeilen": [
+      {"text": "Rot, so rot wie Erdbeern sind,", "bild": "erdbeere", "farbe": "#e53935", "wort": "ROT"},
+      {"text": "rot, die erste, sieh geschwind!", "bild": "blume", "farbe": "#e53935", "wort": "ROT", "landen": true},
+      {"text": "Orange wie die Möhre fein,", "bild": "moehre", "farbe": "#fb8c00", "wort": "ORANGE"},
+      {"text": "Hopsi Hase lädt uns ein!", "bild": "moehre", "farbe": "#fb8c00", "wort": "ORANGE"}
+    ]},
+    "gelb_gruen": {"art": "strophe", "zeilen": [
+      {"text": "Gelb wie Sonnenschein am Tag,", "bild": "sonne", "farbe": "#f9b800", "wort": "GELB"},
+      {"text": "Küken, das ich gerne mag!", "bild": "kueken", "farbe": "#f9b800", "wort": "GELB", "effekt": "piep"},
+      {"text": "Grün wie Gras und Blätterwald,", "bild": "blatt", "farbe": "#43a047", "wort": "GRÜN"},
+      {"text": "Frösche quaken, quak, schon bald!", "bild": "frosch", "farbe": "#43a047", "wort": "GRÜN", "effekt": {"typ": "quak", "wort": "quak"}}
+    ]},
+    "blau_lila": {"art": "strophe", "zeilen": [
+      {"text": "Blau wie Himmel und das Meer,", "bild": "meer", "farbe": "#1e88e5", "wort": "BLAU"},
+      {"text": "Fische schwimmen hin und her.", "bild": "fisch", "farbe": "#1e88e5", "wort": "BLAU"},
+      {"text": "Lila sind die Trauben, schau,", "bild": "traube", "farbe": "#8e24aa", "wort": "LILA"},
+      {"text": "und die Pflaume, ganz genau!", "bild": "pflaume", "farbe": "#8e24aa", "wort": "LILA"}
+    ]}
+  },
+  "ablauf": [
+    {"sprich": "Hallo, ich bin's, Bella! Es hat geregnet. Plitsch, platsch! Aber schau mal, da kommt die Sonne. Und ein Regenbogen!"},
+    "refrain",
+    {"sprich": "Ganz oben ist Rot. Und dann kommt Orange!"},
+    "rot_orange",
+    "refrain",
+    {"sprich": "Weiter geht's mit Gelb und Grün!"},
+    "gelb_gruen",
+    "refrain",
+    {"sprich": "Und jetzt die letzten Farben: Blau und Lila!"},
+    "blau_lila",
+    "refrain"
+  ],
+  "tschuess": "Rot, Orange, Gelb, Grün, Blau und Lila. Sechs Farben! Toll gemacht! Tschüss!",
+  "beschreibung": "Nach dem Regen kommt der Regenbogen! Bella, die Biene, zeigt dir alle sechs Farben: Rot, Orange, Gelb, Grün, Blau und Lila – mit Erdbeere, Möhre, Sonne, Küken, Frosch, Meer, Trauben und Pflaume. Ein Farben-Lernlied zum Mitsingen für Kinder ab 2 Jahren.",
+  "tags": ["Kinderlied", "Farben lernen", "Regenbogen", "Regenbogenfarben", "Biene", "Lernlied", "Kinderlieder zum Mitsingen", "Kita"]
+}
