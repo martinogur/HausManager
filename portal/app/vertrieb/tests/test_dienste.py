@@ -43,10 +43,10 @@ def test_bestand_importieren_ist_idempotent():
     assert all(l.quelle for l in Lead.objects.all())
 
 
-def test_fressnapf_wird_nicht_als_gewonnen_gefuehrt():
+def test_fressnapf_als_verloren_gefuehrt():
     lead = dienste.fressnapf_vormerken()
-    assert lead.status == "angebot" and lead.kunde is None
-    assert lead.geschaetzter_monatsumsatz_cent == 89500 and "klären" in lead.naechste_aktion
+    assert lead.status == "verloren" and lead.kunde is None
+    assert lead.geschaetzter_monatsumsatz_cent == 89500 and "nicht erhalten" in lead.naechste_aktion
     assert dienste.fressnapf_vormerken().pk == lead.pk
 
 

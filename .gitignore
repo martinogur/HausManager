@@ -8,3 +8,6 @@ portal/deploy/.env
 portal/app/staticfiles/
 marketing/instagram/plan.lock
 marketing/instagram/plan.json.tmp
+
+# Kundenanfragen und Angebote enthalten personenbezogene Daten – nie ins (öffentliche) Repository
+anfragen/

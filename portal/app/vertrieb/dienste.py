@@ -178,22 +178,18 @@ def bestand_importieren(ordner: Path) -> dict:
 
 
 def fressnapf_vormerken() -> Lead:
-    """Vom Inhaber genannte Verkaufschance (Projektauftrag 25.11.2026). Status bewusst NICHT „gewonnen“:
-    Im Repository gibt es keinen Beleg für eine Annahme des Angebots."""
+    """Vom Inhaber genannte Verkaufschance (Projektauftrag 25.11.2026). Rückmeldung des Inhabers am 25.11.2026:
+    Auftrag nicht erhalten → Status „verloren“ (bleibt für Auswertung und spätere Wiedervorlage erhalten)."""
     lead, _ = Lead.objects.get_or_create(
         externe_ref="INH-001",
         defaults=dict(
             firma="Fressnapf-Filiale Gütersloh", zielgruppe="einzelhandel", ort="Gütersloh",
             quelle="Angabe des Inhabers im Projektauftrag vom 25.11.2026",
-            regelmaessiger_bedarf=True, geschaetzter_monatsumsatz_cent=89500, status=Leadstatus.ANGEBOT,
-            naechste_aktion="Auftragsstatus klären: Angebot über 895 € netto/Monat – angenommen, offen oder abgelehnt? "
-                            "Kalkulationsgrundlage (Leistungsumfang) im Portal hinterlegen.",
-            wiedervorlage_am=date.today(),
+            regelmaessiger_bedarf=True, geschaetzter_monatsumsatz_cent=89500, status=Leadstatus.VERLOREN,
+            naechste_aktion="Auftrag nicht erhalten (Angebot 895 € netto/Monat). In 12 Monaten erneut anfragen.",
+            notizen="Verloren: Auftrag nicht erhalten (Rückmeldung Inhaber 25.11.2026).",
         ),
     )
     if lead.score is None:
         pruefen_und_bewerten(lead)
-        if lead.status != Leadstatus.ANGEBOT:
-            lead.status = Leadstatus.ANGEBOT
-            lead.save()
     return lead
