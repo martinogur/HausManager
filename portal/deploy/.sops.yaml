@@ -1,0 +1,12 @@
+# SOPS-Regeln für die Zugangsdaten des Portals (siehe docs/04-betrieb.md, Abschnitt "Secrets").
+#
+# Die Public Keys unten sind PLATZHALTER. Vor dem ersten Verschlüsseln ersetzen durch:
+#   1. den Public Key des Servers   (age-keygen -y /etc/hh-portal/age.key)
+#   2. den Public Key von Martin    (Notfall-Schlüssel, privater Teil nur im Passwort-Manager)
+# Public Keys sind nicht geheim; die privaten Schlüssel kommen NIE ins Repository.
+creation_rules:
+  - path_regex: (^|/)secrets\.enc\.yaml$
+    # Kommagetrennte Liste der Empfänger (age-Public-Keys)
+    age: >-
+      age1platzhalterserverschluesselxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
+      age1platzhalternotfallschluesselmartinxxxxxxxxxxxxxxxxxxxxxxxxxxx

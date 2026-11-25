@@ -1,0 +1,160 @@
+# Verwaltungsportal Hausmeister Helden – Produktions-/Vorschau-Stack
+#
+# Aufruf (im Ordner portal/deploy):
+#   docker compose up -d --build
+#
+# Umgebung: Datei portal/deploy/.env (liegt NICHT im Repository).
+#   - Server: Symlink auf /run/hh-portal/portal.env, erzeugt von secrets-entschluesseln.sh (SOPS + age)
+#   - lokal:  cp .env.example .env und Platzhalter durch eigene Testwerte ersetzen
+# Jeder Dienst bekommt nur die Variablen, die er braucht (kein env_file für alle).
+
+name: hh-portal
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
+x-sicherheit: &sicherheit
+  security_opt:
+    - no-new-privileges:true
+
+x-web-umgebung: &web-umgebung
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY fehlt in .env}
+  DJANGO_DEBUG: ${DJANGO_DEBUG:-0}
+  DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:?DJANGO_ALLOWED_HOSTS fehlt in .env}
+  DJANGO_CSRF_TRUSTED_ORIGINS: ${DJANGO_CSRF_TRUSTED_ORIGINS:?DJANGO_CSRF_TRUSTED_ORIGINS fehlt in .env}
+  DATABASE_URL: ${DATABASE_URL:?DATABASE_URL fehlt in .env}
+  # Pfad für hochgeladene Dateien im Container (Volume "dateien")
+  DJANGO_MEDIA_ROOT: /srv/portal/daten
+  GUNICORN_WORKERS: ${GUNICORN_WORKERS:-3}
+
+x-web-build: &web-build
+  context: ../app
+  dockerfile: ../deploy/Dockerfile
+  additional_contexts:
+    db: ../db
+
+services:
+  caddy:
+    image: caddy:2.11.9
+    restart: unless-stopped
+    <<: *sicherheit
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp" # HTTP/3
+    environment:
+      PORTAL_DOMAIN: ${PORTAL_DOMAIN:-portal.haus-meister-helden.de}
+      ACME_EMAIL: ${ACME_EMAIL:?ACME_EMAIL fehlt in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_daten:/data
+      - caddy_konfig:/config
+      - statisch:/srv/static:ro
+    networks: [aussen, intern]
+    depends_on:
+      web:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits: { cpus: "0.50", memory: 256M }
+    logging: *logging
+
+  web:
+    build: *web-build
+    image: hh-portal-web:${PORTAL_VERSION:-lokal}
+    restart: unless-stopped
+    <<: *sicherheit
+    cap_drop: [ALL]
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+    environment: *web-umgebung
+    volumes:
+      - dateien:/srv/portal/daten
+    # Nur internes Netz: Phase 2 braucht keine Verbindungen nach außen.
+    # Ab Phase 5 (IMAP, HubSpot, Lexware, Claude API) ein Netz "ausgehend" ergänzen (siehe unten).
+    networks: [intern]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        limits: { cpus: "1.00", memory: 768M }
+    logging: *logging
+
+  # Einmal-Job bei jedem "up": Migrationen + statische Dateien für Caddy bereitstellen.
+  migrate:
+    build: *web-build
+    image: hh-portal-web:${PORTAL_VERSION:-lokal}
+    restart: "no"
+    <<: *sicherheit
+    cap_drop: [ALL]
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+    environment: *web-umgebung
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && cp -R staticfiles/. /srv/static/
+    volumes:
+      - statisch:/srv/static
+    networks: [intern]
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      disable: true
+    deploy:
+      resources:
+        limits: { cpus: "1.00", memory: 512M }
+    logging: *logging
+
+  db:
+    image: postgres:16.15-trixie
+    restart: unless-stopped
+    <<: *sicherheit
+    environment:
+      POSTGRES_USER: hh
+      POSTGRES_DB: hh
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD fehlt in .env}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C.UTF-8 --data-checksums"
+    volumes:
+      - pg_daten:/var/lib/postgresql/data
+    # Kein "ports:" – die Datenbank ist nur im internen Netz erreichbar.
+    networks: [intern]
+    shm_size: 256m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hh -d hh"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits: { cpus: "1.00", memory: 1G }
+    logging: *logging
+
+networks:
+  # Öffentliche Seite: nur Caddy veröffentlicht Ports.
+  aussen: {}
+  # Internes Netz ohne Verbindung nach außen (Datenbank, Anwendung).
+  intern:
+    internal: true
+  # Ab Phase 5 hier ein Netz "ausgehend: {}" ergänzen und dem Dienst web zuweisen
+  # (ausgehende Verbindungen zu IONOS, HubSpot usw., ohne veröffentlichte Ports).
+
+volumes:
+  pg_daten:
+  dateien:
+  statisch:
+  caddy_daten:
+  caddy_konfig:

@@ -1,0 +1,63 @@
+# Caddy – öffentlicher Eingang des Verwaltungsportals
+# Domain über PORTAL_DOMAIN (Standard: portal.haus-meister-helden.de).
+# Zertifikate holt Caddy automatisch (Let's Encrypt, kostenlos); HTTP wird auf HTTPS umgeleitet.
+# Lokal testen: PORTAL_DOMAIN=localhost → Caddy nutzt eine eigene lokale Zertifizierungsstelle.
+{
+	email {$ACME_EMAIL}
+	# Für Tests ohne Rate-Limits: ACME_CA=https://acme-staging-v02.api.letsencrypt.org/directory
+	acme_ca {$ACME_CA:https://acme-v02.api.letsencrypt.org/directory}
+	servers {
+		protocols h1 h2 h3
+	}
+}
+
+{$PORTAL_DOMAIN:portal.haus-meister-helden.de} {
+	encode zstd gzip
+
+	# Uploads (Fotos, PDFs) begrenzen
+	request_body {
+		max_size 25MB
+	}
+
+	header {
+		# HSTS: 1 Jahr. "preload" bewusst nicht gesetzt (schwer rückgängig zu machen, Entscheidung Martin).
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=(), usb=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+		# Grund-CSP nur, falls Django keine eigene setzt (? = nur wenn nicht vorhanden)
+		?Content-Security-Policy "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+		-Server
+		-X-Powered-By
+	}
+
+	# Statische Dateien direkt aus dem Volume (vom migrate-Job befüllt).
+	# Fehlt eine Datei dort, liefert sie die Anwendung (WhiteNoise) aus.
+	handle /static/* {
+		root * /srv
+		@vorhanden file
+		handle @vorhanden {
+			header Cache-Control "public, max-age=604800"
+			file_server
+		}
+		handle {
+			reverse_proxy web:8000
+		}
+	}
+
+	# Hochgeladene Dateien (/media/…) werden NICHT direkt ausgeliefert:
+	# Zugriff nur über die Anwendung mit Rechteprüfung.
+
+	handle {
+		# Caddy setzt X-Forwarded-For/-Proto/-Host automatisch
+		reverse_proxy web:8000
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}

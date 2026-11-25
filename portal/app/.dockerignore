@@ -1,0 +1,29 @@
+# Nur was das Image wirklich braucht. Build-Kontext ist portal/app.
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+node_modules/
+staticfiles/
+media/
+daten/
+*.sqlite3
+*.log
+# Niemals Zugangsdaten ins Image
+.env
+.env.*
+*.key
+*.pem
+secrets*.yaml
+# Entwicklungswerkzeuge
+.git/
+.github/
+.idea/
+.vscode/
+Dockerfile*
+.dockerignore

@@ -33,6 +33,9 @@ FIRMA = {
     "url": "https://www.haus-meister-helden.de",
     "zeiten": "Mo–Sa, 7:00–20:00 Uhr",
     "slogan": "Ihr Haus. Unsere Pflicht.",
+    # Google-Bewertungslink (aus dem Google-Unternehmensprofil: „Bewertungen erhalten“ → Link kopieren).
+    # Solange leer, zeigt /bewertung.html eine Danke-Seite mit Kontaktmöglichkeit statt der Weiterleitung.
+    "google_bewertung": "",
     "geo": (51.9069, 8.3786),  # ungefähr Gütersloh – für Google
 }
 ORTE = ["Gütersloh", "Rheda-Wiedenbrück", "Verl", "Harsewinkel", "Herzebrock-Clarholz",
@@ -687,6 +690,24 @@ def datenschutz():
     return page("datenschutz.html", "Datenschutz | Hausmeister Helden", "Datenschutzerklärung von Hausmeister Helden, Gütersloh.", body)
 
 
+def bewertungsseite():
+    """Ziel der QR-Codes auf Karten/Rechnungen. Leitet direkt zu Google weiter (kein Vorfiltern nach Zufriedenheit)."""
+    link = FIRMA["google_bewertung"]
+    if link:
+        inhalt = f"""<p class="lead">Danke, dass Sie sich einen Moment Zeit nehmen! Sie werden zu Google weitergeleitet.</p>
+<a class="btn btn-primary" href="{e(link)}" rel="noopener">Jetzt bei Google bewerten {icon('arrow')}</a>"""
+        kopf = f'<meta http-equiv="refresh" content="1;url={e(link)}">'
+    else:
+        inhalt = f"""<p class="lead">Danke, dass Sie uns bewerten möchten! Unser Google-Profil ist gerade im Aufbau – der Link folgt in Kürze.</p>
+<p class="lead">Bis dahin freuen wir uns über Ihre Rückmeldung per WhatsApp oder E-Mail.</p>
+<div class="btn-row"><a class="btn btn-wa" href="{wa('Hallo Hausmeister Helden, meine Rückmeldung zum Einsatz: ')}" target="_blank" rel="noopener">{WA_SVG} WhatsApp</a>
+<a class="btn btn-ghost" style="color:#fff;border-color:#3a423c" href="mailto:{FIRMA['mail']}">{icon('mail')} E-Mail</a></div>"""
+        kopf = ""
+    body = f"""<section class="page-hero"><div class="container"><h1>Ihre Bewertung</h1>{inhalt}</div></section>"""
+    html_seite = page("bewertung.html", "Bewertung | Hausmeister Helden", "Bewerten Sie Hausmeister Helden.", body)
+    return html_seite.replace("<head>", "<head>\n" + kopf + '\n<meta name="robots" content="noindex">', 1)
+
+
 def seite_404():
     body = f"""<section class="page-hero"><div class="container"><h1>Seite nicht gefunden</h1>
 <p class="lead">Diese Seite gibt es nicht (mehr). Aber wir sind trotzdem für Sie da.</p>
@@ -712,7 +733,8 @@ def main():
     arts = lade_artikel()
     seiten = {"index.html": startseite(arts), "hausverwaltungen.html": verwaltungsseite(),
               "ratgeber.html": ratgeberliste(arts), "impressum.html": impressum(),
-              "datenschutz.html": datenschutz(), "404.html": seite_404()}
+              "datenschutz.html": datenschutz(), "404.html": seite_404(),
+              "bewertung.html": bewertungsseite()}
     for l in LEISTUNGEN:
         if l["slug"]:
             seiten[l["slug"] + ".html"] = leistungsseite(l)
@@ -722,7 +744,7 @@ def main():
         (OUT / name).write_text(inhalt, encoding="utf-8")
 
     urls = "".join(f"<url><loc>{FIRMA['url']}/{'' if n == 'index.html' else n}</loc><lastmod>{HEUTE}</lastmod></url>"
-                   for n in seiten if n != "404.html")
+                   for n in seiten if n not in ("404.html", "bewertung.html"))
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + "</urlset>\n", encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {FIRMA['url']}/sitemap.xml\n", encoding="utf-8")
     (OUT / ".htaccess").write_text("ErrorDocument 404 /404.html\n<IfModule mod_expires.c>\nExpiresActive On\nExpiresByType text/css \"access plus 1 month\"\nExpiresByType application/javascript \"access plus 1 month\"\nExpiresByType font/woff2 \"access plus 1 year\"\nExpiresByType image/jpeg \"access plus 1 month\"\n</IfModule>\n", encoding="utf-8")
