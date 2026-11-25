@@ -176,7 +176,7 @@ CREATE TRIGGER lead_kontakte_pruefen BEFORE INSERT OR UPDATE ON lead_kontakte
 
 -- ---------------------------------------------------------------- Agenten
 CREATE TABLE agenten (
-    code                    text PRIMARY KEY CHECK (code ~ '^[a-z][a-z_]{2,39}$'),
+    code                    text PRIMARY KEY CHECK (code ~ '^[a-z][a-z_]{1,39}$'),
     name                    text NOT NULL,
     beschreibung            text NOT NULL,
     aktiv                   boolean NOT NULL DEFAULT true,

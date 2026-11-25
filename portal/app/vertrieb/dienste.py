@@ -56,6 +56,7 @@ def pruefen_und_bewerten(lead: Lead, speichern: bool = True) -> scoring.Bewertun
         hat_postanschrift=bool(lead.strasse and lead.plz),
         hat_telefon=bool(lead.telefon),
         widerspruch=lead.widerspruch_am is not None,
+        vorbewertung=(lead.score_begruendung or {}).get("vorbewertung"),
     ))
     lead.score, lead.prioritaet = bewertung.score, bewertung.prioritaet
     lead.score_begruendung = {**bewertung.als_json(), "gebiet": gebiet.hinweis,

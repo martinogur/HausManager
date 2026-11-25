@@ -29,6 +29,7 @@ class LeadMerkmale:
     hat_postanschrift: bool
     hat_telefon: bool
     widerspruch: bool = False
+    vorbewertung: str | None = None   # A/B/C aus der Recherche (nur genutzt, wenn der Umsatz unbekannt ist)
 
 
 @dataclass(frozen=True)
@@ -88,7 +89,7 @@ def bewerte(m: LeadMerkmale) -> Bewertung:
         gruende.append(("Werbewiderspruch – kein Kontakt", 0))
         return Bewertung(0, "C", gruende)
 
-    umsatz_hoch = (u or 0) >= A_MINDEST_MONATSUMSATZ_CENT or (u is None and zg >= 30)
+    umsatz_hoch = (u or 0) >= A_MINDEST_MONATSUMSATZ_CENT or (u is None and m.vorbewertung == "A")
     if m.im_einsatzgebiet is False:
         prio = "C"
     elif score >= 70 and m.regelmaessiger_bedarf is True and umsatz_hoch:
