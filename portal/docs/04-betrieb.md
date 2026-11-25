@@ -64,6 +64,10 @@ Kein Posten wird ohne Martins ausdrückliche Freigabe gebucht. Das Kostenlimit w
 
 ## 3. Server einrichten (Schritt für Schritt)
 
+> **Vollautomatische Alternative (ohne SSH, ohne SOPS):** `portal/deploy/hetzner/README.md` –
+> `server_erstellen.py` legt Firewall und Server an, `cloud-init.yaml` richtet alles selbst ein,
+> Updates kommen per Pull-Timer vom Zweig `portal-live`.
+
 Alle Befehle als Beispiel; `<…>` ersetzen. Zeitbedarf beim ersten Mal: ca. 2–3 Stunden.
 
 ### 3.1 Server anlegen (erst nach Freigabe)

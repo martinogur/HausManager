@@ -72,7 +72,7 @@ grep -Eq '^DJANGO_SECRET_KEY=[0-9a-f]{100}$' "$HH_BASIS/.env" || fehler "SECRET_
 PW=$(sed -n 's/^POSTGRES_PASSWORD=//p' "$HH_BASIS/.env")
 grep -q "^DATABASE_URL=postgresql://hh:$PW@db:5432/hh$" "$HH_BASIS/.env" || fehler "DATABASE_URL passt nicht zu POSTGRES_PASSWORD"
 [ -L "$HH_BASIS/repo/portal/deploy/.env" ] || fehler "Symlink portal/deploy/.env fehlt"
-grep -q '^OK ' "$HH_BASIS/stand/letztes-update" || fehler "erstes Update nicht OK: $(cat "$HH_BASIS/stand/letztes-update")"
+grep -q ' OK ' "$HH_BASIS/stand/letztes-update" || fehler "erstes Update nicht OK: $(cat "$HH_BASIS/stand/letztes-update")"
 [ "$(docker inspect -f '{{.State.ExitCode}}' "$(hh-compose ps -aq migrate)")" = 0 ] || fehler "migrate-Job"
 curl -fsSk --resolve localhost:443:127.0.0.1 https://localhost/gesund | grep -q ok || fehler "/gesund über Caddy"
 echo "OK: Ersteinrichtung, /gesund antwortet"
@@ -87,8 +87,7 @@ hh-update
 echo "OK: idempotent"
 
 # 6. Neuer Commit auf portal-live → Update mit Sicherung vorher
-echo "# Test $(date +%s)" >> "$W/origin/portal/deploy/hetzner/README.md"
-git -C "$W/origin" -c user.name=test -c user.email=test@example.org commit --quiet -am "Test-Update"
+git -C "$W/origin" -c user.name=test -c user.email=test@example.org commit --quiet --allow-empty -m "Test-Update"
 hh-update
 [ "$(cat "$HH_BASIS/stand/aktiv")" = "$(git -C "$W/origin" rev-parse HEAD)" ] || fehler "Update nicht ausgerollt"
 ls "$HH_BASIS/backups"/hh-*-vor-update.dump >/dev/null || fehler "keine Sicherung vor dem Update"
@@ -102,5 +101,21 @@ hh-compose exec -T -e HH_ADMIN_PASSWORT=Test-Passwort-2026-lang web \
   python manage.py admin_anlegen --email admin@example.org --name "Test Admin" | grep -q angelegt || fehler "admin_anlegen"
 hh-status | tee "$W/status.txt"
 grep -q "Portal antwortet\|gültiges Zertifikat" "$W/status.txt" || fehler "hh-status /gesund"
+
+# 8. Kaputter Commit: Build schlägt fehl → alte Version läuft weiter, Commit wird übersprungen
+AKTIV=$(cat "$HH_BASIS/stand/aktiv")
+echo 'RUN false' >> "$W/origin/portal/deploy/Dockerfile"
+git -C "$W/origin" -c user.name=test -c user.email=test@example.org commit --quiet -am "Kaputter Build"
+if hh-update; then fehler "kaputter Build wurde nicht erkannt"; fi
+[ "$(cat "$HH_BASIS/stand/aktiv")" = "$AKTIV" ] || fehler "aktiv-Stand verändert"
+[ "$(git -C "$HH_BASIS/repo" rev-parse HEAD)" = "$AKTIV" ] || fehler "Repo nicht auf alte Version zurückgesetzt"
+grep -q FEHLER "$HH_BASIS/stand/letztes-update" || fehler "Fehler nicht vermerkt"
+curl -fsSk --resolve localhost:443:127.0.0.1 https://localhost/gesund | grep -q ok || fehler "alte Version antwortet nicht"
+hh-update || fehler "übersprungener Commit führt erneut zu Fehler"
+# Zurückrollen = portal-live auf den guten Commit setzen (force push)
+git -C "$W/origin" reset --quiet --hard HEAD~1
+hh-update
+[ "$(cat "$HH_BASIS/stand/aktiv")" = "$AKTIV" ] || fehler "Zurückrollen"
+echo "OK: kaputter Commit abgefangen, Zurückrollen per portal-live"
 echo "ALLE BOOTSTRAP-TESTS OK"
 echo "Aufräumen: HH_EINSTELLUNGEN=$HH_EINSTELLUNGEN HH_BASIS=$HH_BASIS HH_COMPOSE_EXTRA=$EXTRA PATH=$W/bin:\$PATH hh-compose down -v"

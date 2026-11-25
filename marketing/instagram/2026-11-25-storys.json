@@ -1,21 +1,75 @@
 {
   "datum": "Mi 25.11.2026",
-  "hinweis": "Story-Serie: 5 Einzelfolien 1080x1920, je ein Ordner = eine Story (ohne Zähler, jede einzeln nutzbar). story_rand = Platz für Instagram-Bedienelemente, platz_unten = freie Fläche für Sticker. Preise freigegeben am 24.11.2026, netto zzgl. 19 % MwSt. Keine konkreten Räumzeiten – regelt die Satzung der Stadt. Allgemeine Info, kein Rechtsrat.",
+  "hinweis": "Story-Serie für automatisches Posten per Schnittstelle: 5 Einzelfolien 1080x1920, je ein Ordner = eine Story. OHNE Sticker – die Content Publishing API kann keine Umfrage-/Quiz-/Link-/Ortssticker setzen; Interaktion daher per DM-Antwort und 'Link in Bio'. story_rand = Platz für Instagram-Bedienelemente. Preise freigegeben am 24.11.2026, netto zzgl. 19 % MwSt. Keine konkreten Räumzeiten – regelt die Satzung der Stadt. Allgemeine Info, kein Rechtsrat.",
   "posts": [
-    {"id": "story-1-frost-check", "format": "reel", "story_rand": true, "folien": [
-      {"art": "titel", "kicker": "Frost-Check", "titel": "Ist dein Gehweg *bereit*?", "text": "Die ersten Frostnächte sind da.", "platz_unten": 300}
-    ]},
-    {"id": "story-2-quiz", "format": "reel", "story_rand": true, "folien": [
-      {"art": "titel", "kicker": "Quiz", "titel": "Wer muss *räumen*?", "text": "Tipp unten auf deine Antwort.", "platz_unten": 480}
-    ]},
-    {"id": "story-3-aufloesung", "format": "reel", "story_rand": true, "folien": [
-      {"art": "punkt", "titel": "Meist der *Eigentümer*", "text": "Die Stadt überträgt die Pflicht per Satzung auf die Anlieger. Per Mietvertrag kann sie auf Mieter übergehen – kontrollieren muss der Eigentümer."}
-    ]},
-    {"id": "story-4-preis", "format": "reel", "story_rand": true, "folien": [
-      {"art": "liste", "titel": "Winterdienst *ab 220 €*", "punkte": ["220 € je Objekt und Saison", "+ 9,50 € je Meter Gehweg", "Streugut + Einsatzprotokoll inklusive", "Saison Nov–März · netto zzgl. MwSt."]}
-    ]},
-    {"id": "story-5-cta", "format": "reel", "story_rand": true, "folien": [
-      {"art": "cta", "titel": "Jetzt Platz *sichern*", "text": "Schreib uns – Antwort in 24 h.", "platz_unten": 340}
-    ]}
+    {
+      "id": "story-1-frost-check",
+      "format": "reel",
+      "story_rand": true,
+      "folien": [
+        {
+          "art": "titel",
+          "kicker": "Frost-Check",
+          "titel": "Ist dein Gehweg *bereit*?",
+          "text": "Die ersten Frostnächte in Gütersloh sind da."
+        }
+      ]
+    },
+    {
+      "id": "story-2-quiz",
+      "format": "reel",
+      "story_rand": true,
+      "folien": [
+        {
+          "art": "titel",
+          "kicker": "Quiz",
+          "titel": "Wer muss *räumen*?",
+          "text": "Antworte per DM: A Mieter · B Eigentümer · C Stadt"
+        }
+      ]
+    },
+    {
+      "id": "story-3-aufloesung",
+      "format": "reel",
+      "story_rand": true,
+      "folien": [
+        {
+          "art": "punkt",
+          "titel": "Meist der *Eigentümer*",
+          "text": "Die Stadt überträgt die Pflicht per Satzung auf die Anlieger. Per Mietvertrag kann sie auf Mieter übergehen – kontrollieren muss der Eigentümer."
+        }
+      ]
+    },
+    {
+      "id": "story-4-preis",
+      "format": "reel",
+      "story_rand": true,
+      "folien": [
+        {
+          "art": "liste",
+          "titel": "Winterdienst *ab 220 €*",
+          "punkte": [
+            "220 € je Objekt und Saison",
+            "+ 9,50 € je Meter Gehweg",
+            "Streugut + Einsatzprotokoll inklusive",
+            "Saison Nov–März · netto zzgl. MwSt."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "story-5-cta",
+      "format": "reel",
+      "story_rand": true,
+      "folien": [
+        {
+          "art": "titel",
+          "kicker": "Winterdienst per WhatsApp",
+          "titel": "05241 *3389748*",
+          "schrift": 150,
+          "text": "Antwort in 24 h · Link in Bio"
+        }
+      ]
+    }
   ]
 }

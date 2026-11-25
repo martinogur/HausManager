@@ -12,7 +12,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import yaml
+try:
+    import yaml
+except ImportError:  # PyYAML fehlt → Tests überspringen
+    raise unittest.SkipTest("PyYAML nicht installiert") from None
 
 HIER = Path(__file__).resolve().parents[1]
 CLOUD_INIT = HIER / "cloud-init.yaml"

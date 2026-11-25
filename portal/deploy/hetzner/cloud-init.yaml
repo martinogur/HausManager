@@ -352,7 +352,7 @@ write_files:
       echo | timeout 10 openssl s_client -connect 127.0.0.1:443 -servername "$HH_DOMAIN" 2>/dev/null \
         | openssl x509 -noout -issuer -enddate 2>/dev/null || echo "kein Zertifikat abrufbar"
       echo; echo "== /gesund"
-      if curl -fsS -m 10 --resolve "$HH_DOMAIN:443:127.0.0.1" "https://$HH_DOMAIN/gesund"; then
+      if curl -fs -m 10 --resolve "$HH_DOMAIN:443:127.0.0.1" "https://$HH_DOMAIN/gesund"; then
         echo "  (gültiges Zertifikat)"
       elif curl -fsSk -m 10 --resolve "$HH_DOMAIN:443:127.0.0.1" "https://$HH_DOMAIN/gesund"; then
         echo "  (Portal antwortet, Zertifikat aber noch nicht gültig – DNS-A-Record prüfen, dann: hh-compose restart caddy)"

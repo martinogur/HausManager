@@ -6,3 +6,5 @@ __pycache__/
 .pytest_cache/
 portal/deploy/.env
 portal/app/staticfiles/
+marketing/instagram/plan.lock
+marketing/instagram/plan.json.tmp
