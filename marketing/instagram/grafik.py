@@ -18,6 +18,7 @@ Zusätzlich für Werbeanzeigen (marketing/instagram/werbung/anzeigen.json):
   {"art": "anzeige", "kicker": "…", "titel": "…", "text": "…", "punkte": ["…"], "button": "…"}  # Einzelbild mit Button
   Jede Folie optional "schrift": 110  -> Titelgröße in px erzwingen, falls ein langes Wort übersteht
   Post-Option "story_rand": true  -> größerer Rand oben/unten (Story-/Reel-Bedienelemente verdecken nichts)
+  Folien-Option "platz_unten": 420 -> Inhalt rückt nach oben, unten bleiben ca. so viele px frei (für Quiz-/Link-Sticker)
 Aufruf: python3 marketing/instagram/grafik.py marketing/instagram/2026-KW48.json
 Ergebnis: marketing/instagram/grafiken/<KW>/<post-id>/folie-01.png … (+ reel.mp4)
 """
@@ -118,6 +119,8 @@ def folie_html(f, i, n, reel, story_rand=False):
     count = f'<span class="count">{i}/{n}</span>' if n > 1 else ""
     if story_rand:
         css += ".wrap{padding:250px 88px 330px}"
+    if f.get("platz_unten"):
+        css += f".main{{padding-bottom:{int(f['platz_unten'])}px}}"
     return f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><style>{css}</style></head><body>
 <div class="bg"></div><div class="grid"></div><div class="wrap">
 <div class="top">{HOUSE}<div>HAUSMEISTER<small>HELDEN</small></div>{count}</div>

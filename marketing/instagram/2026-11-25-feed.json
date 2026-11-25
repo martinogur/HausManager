@@ -1,0 +1,16 @@
+{
+  "datum": "Mi 25.11.2026",
+  "hinweis": "Feed-Karussell, 4 Folien 1080x1350. Preise freigegeben am 24.11.2026, netto zzgl. 19 % MwSt. Rechnung: 220 € + 25 m x 9,50 € = 457,50 €.",
+  "posts": [
+    {
+      "id": "winterdienst-preis-erklaert",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Winterdienst", "titel": "Der Preis *einfach* erklärt", "text": "Zwei Zahlen – mehr brauchst du nicht."},
+        {"art": "liste", "titel": "So setzt er sich *zusammen*", "punkte": ["220 € Grundpauschale je Objekt und Saison", "+ 9,50 € je laufendem Meter", "Räumen, Streuen, Streugut und Einsatzprotokoll inklusive", "Saison November bis März"]},
+        {"art": "liste", "titel": "Beispiel: *25 Meter*", "punkte": ["Grundpauschale: 220,00 €", "+ 25 m Gehweg × 9,50 € = 237,50 €", "= 457,50 € je Saison", "alle Preise netto zzgl. 19 % MwSt."]},
+        {"art": "cta", "titel": "Was kostet *dein* Gehweg?", "text": "Schick uns die Adresse – wir messen bei der kostenlosen Besichtigung nach."}
+      ]
+    }
+  ]
+}
