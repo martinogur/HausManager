@@ -122,3 +122,11 @@ def test_winterdienst_einsatzmodell_entspricht_saisonpreis_bei_20_einsaetzen(lfm
     assert abs(m["saison_bei_20_cent"] - (k.PREISE["wd_grund"] + lfm * k.PREISE["wd_lfm"])) <= 20   # Cent-Rundung je Einsatz
     assert m["einsatz_cent"] > m["einsatz_selbstkosten_cent"]   # jeder Einsatz deckt seine Kosten
     assert k.winterdienst_einsatzmodell(18)["einsatz_cent"] == 1355
+
+
+def test_winterdienst_staffel_und_hecke():
+    kurz, lang = k.winterdienst_staffel(18), k.winterdienst_staffel(40)
+    assert (kurz["bereitstellung_cent"], kurz["streu_cent"], kurz["raeum_cent"]) == (12500, 2500, 5300)
+    assert (lang["streu_cent"], lang["raeum_cent"]) == (3250, 7100)   # 15 m über 25 m
+    assert kurz["streu_cent"] > kurz["selbstkosten_einsatz_cent"] and lang["streu_cent"] > lang["selbstkosten_einsatz_cent"]
+    assert k.heckenschnitt(2.5) == 14875   # 2,5 h × 53,50 € + 15 € Entsorgung

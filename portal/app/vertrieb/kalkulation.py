@@ -241,3 +241,26 @@ def winterdienst_einsatzmodell(lfm) -> dict:
     return {"bereitstellung_cent": WD_BEREITSTELLUNG_CENT, "einsatz_cent": einsatz,
             "saison_bei_20_cent": WD_BEREITSTELLUNG_CENT + WD_ERWARTETE_EINSAETZE * einsatz,
             "einsatz_selbstkosten_cent": selbstkosten}
+
+
+# ----------------------------------------------------------------------------- Winterdienst-Staffel (Marktmodell)
+# Aufbau nach marktüblichem Angebot (Vergleichsangebot GaLaBau OWL, 03/2026: 125 € / 25 € / 53 € / 58 €/h):
+#   Bereitstellung je Saison · Streueinsatz (Glätte, Schnee bis 3 cm) · Räumen + Streuen (bis 15 cm)
+#   · darüber nach Aufwand (Stundensatz). Grundpreise gelten bis 25 lfd. Meter, darüber Meterzuschlag.
+WD_STAFFEL = {
+    "bereitstellung": 12500, "streu_bis_25m": 2500, "streu_je_weiterer_m": 50,
+    "raeum_bis_25m": 5300, "raeum_je_weiterer_m": 120, "grund_meter": 25,
+}
+
+
+def winterdienst_staffel(lfm) -> dict:
+    mehr = max(Decimal(0), Decimal(str(lfm)) - WD_STAFFEL["grund_meter"])
+    streu = _cent(WD_STAFFEL["streu_bis_25m"] + WD_STAFFEL["streu_je_weiterer_m"] * mehr)
+    raeum = _cent(WD_STAFFEL["raeum_bis_25m"] + WD_STAFFEL["raeum_je_weiterer_m"] * mehr)
+    return {"bereitstellung_cent": WD_STAFFEL["bereitstellung"], "streu_cent": streu, "raeum_cent": raeum,
+            "stunde_cent": PREISE["stunde"], "selbstkosten_einsatz_cent": winterdienst_einsatzmodell(lfm)["einsatz_selbstkosten_cent"]}
+
+
+def heckenschnitt(stunden, entsorgung_cent: int = 1500) -> int:
+    """Heckenschnitt nach Aufwand (Höhe > 1,5 m, beidseitig + oben): Stunden × Stundensatz + Entsorgung Schnittgut."""
+    return _cent(Decimal(str(stunden)) * PREISE["stunde"] + entsorgung_cent)

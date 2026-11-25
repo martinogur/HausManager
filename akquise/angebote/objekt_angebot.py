@@ -48,12 +48,18 @@ def positionen(l: dict) -> dict:
             optionen.append((f"Option {t.get('option_text', 'weitere Etage')} mitreinigen (wöchentlich)",
                              k.treppenhaus(mehr).monat_netto_cent - pos[0][1], "zusätzlich"))
     if h := l.get("hecke"):
-        je = k.PREISE["ga_gang"] + c(k.PREISE["ga_hecke_lfm"] * h["lfm"])
+        if h.get("stunden"):   # hohe Hecke: nach Aufwand (beidseitig + oben) + Entsorgung
+            je = k.heckenschnitt(h["stunden"], h.get("entsorgung_cent", 1500))
+            detail = (f"ca. {str(h['stunden']).replace('.', ',')} Std. × 53,50 € + {eur(h.get('entsorgung_cent', 1500))} Entsorgung Schnittgut")
+            minuten = Decimal(str(h["stunden"])) * 60 * h["schnitte"]
+        else:
+            je = k.PREISE["ga_gang"] + c(k.PREISE["ga_hecke_lfm"] * h["lfm"])
+            detail = "inkl. Schnittgut"
+            minuten = (k.ZEIT["ga_ruest"] + k.ZEIT["ga_hecke_lfm"] * h["lfm"]) * h["schnitte"]
         jahr = je * h["schnitte"]
-        pos.append((f"Heckenschnitt {h['schnitte']}× im Jahr (Juni und September, Form- und Pflegeschnitt), ca. {h['lfm']} m, "
-                    f"Höhe bis ca. {h.get('hoehe_m', 2)} m, inkl. Schnittgut ({eur(je)} je Schnitt, {eur(jahr)} im Jahr)",
+        pos.append((f"Heckenschnitt {h['schnitte']}× im Jahr (Juni und September, Form- und Pflegeschnitt beidseitig und oben), "
+                    f"ca. {h['lfm']} m, Höhe ca. {h.get('hoehe_m', 2)} m: {eur(je)} je Schnitt ({detail}), {eur(jahr)} im Jahr",
                     c(Decimal(jahr) / 12), "Gartenpflege"))
-        minuten = (k.ZEIT["ga_ruest"] + k.ZEIT["ga_hecke_lfm"] * h["lfm"]) * h["schnitte"]
         intern.append(("Hecke", c(Decimal(jahr) / 12), c(minuten / 60 * STUNDE / 12)))
     if r := l.get("rasen"):
         je = k.PREISE["ga_gang"] + c(k.PREISE["ga_rasen_qm"] * r["qm"])
@@ -65,7 +71,7 @@ def positionen(l: dict) -> dict:
     winter = None
     if w := l.get("winterdienst"):
         lfm = w.get("lfm") or w.get("schaetzung_lfm")
-        winter = {**k.winterdienst_einsatzmodell(lfm), "lfm": lfm, "geschaetzt": not w.get("lfm"), "hinweis": w.get("hinweis", "")}
+        winter = {**k.winterdienst_staffel(lfm), "lfm": lfm, "geschaetzt": not w.get("lfm"), "hinweis": w.get("hinweis", "")}
     return {"pos": pos, "optionen": optionen, "winter": winter, "intern": intern,
             "monat": sum(p[1] for p in pos)}
 
@@ -83,12 +89,15 @@ def seiten(kunde, objekt, nr, r, gueltig):
         lfm_text = (f"ca. {w['lfm']} m (geschätzt – {e(w['hinweis'])}; wird bei der Besichtigung gemessen)" if w["geschaetzt"]
                     else f"{w['lfm']} m Bürgersteig")
         winter_html = f"""
-<p class="betreff" style="margin-top:2mm">Winterdienst November bis März</p>
+<p class="betreff" style="margin-top:2mm">Winterdienst 1. November bis 31. März</p>
+<p class="klein">Flächen: {e(w.get('flaechen', 'Hauseingang und Bürgersteig vor dem Objekt'))}, {lfm_text}. Wir kommen morgens selbstständig, ohne Anruf, an allen Wochentagen – zusätzliche Einsätze im Tagesverlauf auf Zuruf.</p>
 <table class="tab"><thead><tr><th>Position</th><th style="text-align:right">netto</th></tr></thead><tbody>
-<tr><td>Bereitstellungspauschale je Saison: Bereitschaft während der Saison, Wetterkontrolle, Kontrollfahrten, Einsatzprotokoll (rechtssichere Dokumentation)</td><td class="z">{eur(w['bereitstellung_cent'])}</td></tr>
-<tr><td>je Einsatz: Räumen und Streuen inkl. abstumpfendem Streugut, {lfm_text}</td><td class="z">{eur(w['einsatz_cent'])}</td></tr>
+<tr><td><strong>Bereitstellung</strong> je Saison (einmalig): Geräte, Vorhaltung Streumittel, Wetterkontrolle, Einsatzprotokoll</td><td class="z">{eur(w['bereitstellung_cent'])}</td></tr>
+<tr><td><strong>Streueinsatz</strong> bei Glätte und Schnee bis 3 cm (Fall 1)</td><td class="z">{eur(w['streu_cent'])} je Einsatz</td></tr>
+<tr><td><strong>Räumen und Streuen</strong> bei Schnee ab 3 cm bis 15 cm Gesamtschneedecke (Fall 2)</td><td class="z">{eur(w['raeum_cent'])} je Einsatz</td></tr>
+<tr><td><strong>Mehraufwand</strong> bei mehr als 15 cm Schnee (Fall 3), nach tatsächlichem Aufwand</td><td class="z">{eur(w['stunde_cent'])} je Stunde</td></tr>
 </tbody></table>
-<p class="klein">Abgerechnet werden nur tatsächliche Einsätze (laut Protokoll). Beispiel: bei 20 Einsätzen im Winter {eur(w['saison_bei_20_cent'])} netto für die ganze Saison. Wir übernehmen die Räum- und Streupflicht nach der Straßenreinigungssatzung der Stadt Gütersloh für die vereinbarten Flächen.</p>"""
+<p class="klein">Je Einsatz wird nur ein Fall berechnet, belegt durch das Einsatzprotokoll. Streumittel inklusive (abstumpfend; Tausalz nur, soweit die Straßenreinigungssatzung der Stadt Gütersloh es erlaubt). Wir übernehmen die Räum- und Streupflicht für die vereinbarten Flächen.</p>"""
     opt = "".join(f"<tr><td>{e(t)}</td><td class='z'>{'+' if art == 'zusätzlich' else ''}{eur(b)}{'' if art == 'zusätzlich' else ' statt ' + eur(r['pos'][0][1])} / Monat</td></tr>"
                   for t, b, art in r["optionen"])
     s1 = f"""
@@ -143,9 +152,10 @@ def main(pfad: str) -> None:
         notiz += [f"- **Monatspauschale: {eur(r['monat'])} netto** ({eur(c(Decimal(r['monat']) * Decimal('1.19')))} brutto)"]
         notiz += [f"- Wahlweise: {t}: {eur(b)} ({art})" for t, b, art in r["optionen"]]
         if w := r["winter"]:
-            notiz += [f"- Winterdienst: Bereitstellung {eur(w['bereitstellung_cent'])}/Saison + {eur(w['einsatz_cent'])} je Einsatz"
-                      f" ({w['lfm']} m{' GESCHÄTZT – vor Ort messen' if w['geschaetzt'] else ''}); Selbstkosten je Einsatz "
-                      f"{eur(w['einsatz_selbstkosten_cent'])}"]
+            notiz += [f"- Winterdienst: Bereitstellung {eur(w['bereitstellung_cent'])}/Saison · Streuen {eur(w['streu_cent'])} · "
+                      f"Räumen+Streuen {eur(w['raeum_cent'])} · >15 cm {eur(w['stunde_cent'])}/Std. "
+                      f"({w['lfm']} m{' GESCHÄTZT – vor Ort messen' if w['geschaetzt'] else ''}); Selbstkosten je Streueinsatz "
+                      f"{eur(w['selbstkosten_einsatz_cent'])}"]
         notiz += [f"- Intern: Selbstkosten {eur(kosten)}/Monat, Marge {(Decimal(erloes - kosten) * 100 / erloes).quantize(Decimal('0.1'))} % "
                   "(nicht im Angebot)", ""]
     h = ordner / "_alle.html"
@@ -157,8 +167,9 @@ def main(pfad: str) -> None:
     zu_lang = [Path(o).name for o, over in ergebnis if any(over)]
     if zu_lang:
         notiz.append(f"⚠ Seite zu voll (Schrift verkleinert): {', '.join(zu_lang)}")
-    notiz += ["**Neu zur Bestätigung:** Winterdienst als Bereitstellung 120 €/Saison + je Einsatz 5,00 € + 0,475 €/m "
-              "(aus der freigegebenen Preisliste abgeleitet: bei 20 Einsätzen = bisheriger Saisonpreis).", "",
+    notiz += ["**Neu zur Bestätigung:** Winterdienst nach Marktmodell (Vergleichsangebot 03/2026): Bereitstellung 125 €, "
+              "Streuen 25 €, Räumen+Streuen 53 € (bis 25 m, darüber +0,50 €/+1,20 € je Meter), >15 cm 53,50 €/Std.; "
+              "Hecke über 1,5 m nach Aufwand (Std. × 53,50 € + 15 € Entsorgung).", "",
               "**Nach Freigabe:** Antwort aus `antwort-email.md` mit `alle-angebote.pdf` aus dem IONOS-Postfach senden."]
     (ordner / "FREIGABE.md").write_text("\n".join(notiz) + "\n", encoding="utf-8")
     print("\n".join(notiz))
