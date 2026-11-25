@@ -9,17 +9,23 @@ Kunden, Reichweite und Umsatz steigern.
   Kein Agent erfindet Firmendaten. Fehlt etwas, wird es als `[OFFEN: …]` markiert
   und im Bericht als Frage an den Inhaber aufgeführt.
 
-## Das Team
+## Das Team (Übersicht und Zeitplan: `team/README.md`)
 | Agent | Aufgabe | Ergebnis-Ordner |
 |---|---|---|
-| `wachstums-chef` | Koordiniert alle Agenten, Wochenplan, Kennzahlen | `berichte/` |
-| `lead-finder` | Findet Hausverwaltungen, WEGs, Gewerbe, Immobilienfirmen in der Region | `leads/` |
-| `akquise-texter` | Schreibt persönliche Anschreiben, Briefe, Telefonleitfäden, Nachfass-Texte | `akquise/` |
+| `wachstums-chef` | Koordiniert alle Agenten, Tagesbriefing, Wochenplan, Kennzahlen | `berichte/` |
+| `lead-finder` | Findet Hausverwaltungen, WEGs, Wohnungsunternehmen, Gewerbe in der Region | `leads/` |
+| `akquise-texter` | Briefe (PDF), Telefonleitfäden, E-Mail-Entwürfe nach Einwilligung, Nachfass-Texte | `akquise/` |
 | `angebots-profi` | Angebotsvorlagen, Preisrechner, Leistungsverzeichnisse, Rahmenverträge | `akquise/angebote/` |
-| `webseiten-bauer` | Baut und überarbeitet die Webseite (schnell, mobil, auf Anfragen optimiert) | `webseite/` |
-| `seo-reichweite` | Google-Unternehmensprofil, lokales SEO, Branchenverzeichnisse, Bewertungen | `marketing/seo/` |
-| `instagram-manager` | Content-Plan, Reels-Skripte, Captions, Hashtags, Story-Ideen | `marketing/instagram/` |
-| `whatsapp-business` | Begrüßung, Abwesenheit, Schnellantworten, Katalog, Nachfass-Nachrichten | `marketing/whatsapp/` |
+| `anfragen-assistent` | Eingehende Anfragen zusammenfassen, fehlende Angaben, Antwortentwürfe | `anfragen/` |
+| `webseiten-bauer` | Webseite pflegen, Ratgeber, Freigabe-Übersicht | `webseite/` |
+| `seo-reichweite` | Google-Unternehmensprofil, lokales SEO, Verzeichnisse | `marketing/seo/` |
+| `bewertungs-manager` | Bewertungsbitten nach echten Aufträgen, Antworten (nie Fake-Bewertungen) | `marketing/bewertungen/` |
+| `instagram-manager` | Grafiken, Storys, Reels, Wochenplan, automatisches Posten nach Freigabe | `marketing/instagram/` |
+| `facebook-manager` | Facebook-Seite, Beiträge, lokale Gruppen (nur wo erlaubt) | `marketing/facebook/` |
+| `whatsapp-business` | Begrüßung, Abwesenheit, Schnellantworten, Katalog | `marketing/whatsapp/` |
+| `personal-recruiter` | Stellenanzeigen, Kanäle, Bewerber-Entwürfe, Einarbeitung | `personal/` |
+| `portal-entwickler` | Verwaltungsportal phasenweise weiterentwickeln | `portal/` |
+| `qualitaets-pruefer` | Prüft alle Ergebnisse vor der Freigabe (Recht, Fakten, Einheitlichkeit) | `berichte/` |
 
 ## Feste Regeln für alle Agenten
 1. **Nichts wird ohne Freigabe des Inhabers verschickt oder veröffentlicht.** Agenten erstellen
