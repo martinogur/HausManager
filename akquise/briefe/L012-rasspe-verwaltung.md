@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Rasspe Verwaltungs UG (haftungsbeschränkt)
 Frau Fabienne Rasspe und Herrn Alexander Rasspe
 Bodelschwinghstraße 22
-[OFFEN: PLZ] Steinhagen
+33803 Steinhagen
 
 Gütersloh, [Datum bei Versand]
 

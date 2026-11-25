@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 T. Knoop Immobilienverwaltungs GmbH
 Geschäftsführung
 Obernstraße 42
-[OFFEN: PLZ] Bielefeld
+33602 Bielefeld
 
 Gütersloh, [Datum bei Versand]
 

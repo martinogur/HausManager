@@ -18,7 +18,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Hausverwaltung Santak
 [OFFEN: Ansprechpartner aus dem Telefonat]
 Freigerichtstraße 10
-[OFFEN: PLZ] Rheda-Wiedenbrück
+33378 Rheda-Wiedenbrück
 
 Gütersloh, [Datum bei Versand]
 

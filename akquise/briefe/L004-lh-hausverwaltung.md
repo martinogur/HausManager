@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 LH Miet- und Hausverwaltungs GmbH
 Frau Martina Raabe, Geschäftsführerin
 Berliner Straße 1
-[OFFEN: PLZ] Gütersloh
+33330 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

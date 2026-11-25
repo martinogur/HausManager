@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Kai Wackermann Immobilien und Hausverwaltung
 Herrn Kai Wackermann, Inhaber
 Grünstraße 8
-[OFFEN: PLZ] Rheda-Wiedenbrück
+33378 Rheda-Wiedenbrück
 
 Gütersloh, [Datum bei Versand]
 

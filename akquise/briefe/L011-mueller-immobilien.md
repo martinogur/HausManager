@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Müller Immobilien Verwaltung & Vermietung
 Herrn Bernd Müller
 Goethestraße 10
-[OFFEN: PLZ] Gütersloh
+33330 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

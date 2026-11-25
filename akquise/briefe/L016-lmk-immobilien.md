@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 LMK Immobilien GmbH
 Geschäftsführung
 Hülsbrockstraße 68
-[OFFEN: PLZ] Gütersloh
+33334 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

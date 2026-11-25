@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Haus & Grund GmbH Bielefeld
 WEG-Verwaltung
 Alter Markt 11
-[OFFEN: PLZ] Bielefeld
+33602 Bielefeld
 
 Gütersloh, [Datum bei Versand]
 

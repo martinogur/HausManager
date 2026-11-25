@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 BUSKE Hausverwaltung
 [OFFEN: Ansprechpartner]
 Pöppelkamp 30
-[OFFEN: PLZ] Herzebrock-Clarholz
+33442 Herzebrock-Clarholz
 
 Gütersloh, [Datum bei Versand]
 

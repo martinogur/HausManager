@@ -18,7 +18,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Golücke GmbH Hausverwaltung
 Frau Monika Golücke, Geschäftsführerin
 Pfälzer Straße 7
-[OFFEN: PLZ] Gütersloh
+33332 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

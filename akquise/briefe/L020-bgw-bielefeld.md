@@ -14,10 +14,10 @@ Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
 [OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
-BGW Bielefelder Gemeinnützige Wohnungsgesellschaft mbH
+BGW Bielefelder Gesellschaft für Wohnen und Immobiliendienstleistungen mbH
 Technisches Bestandsmanagement / Einkauf
 Carlmeyerstraße 1
-[OFFEN: PLZ] Bielefeld
+33613 Bielefeld
 
 Gütersloh, [Datum bei Versand]
 

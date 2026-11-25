@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Sennestadt GmbH
 Herrn Eduard Thiessen, Geschäftsführer
 Lindemann-Platz 3
-[OFFEN: PLZ] Bielefeld
+33689 Bielefeld
 
 Gütersloh, [Datum bei Versand]
 

@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 HVG Hausverwaltungsgesellschaft Oesterhelweg mbH
 Herrn Peter Oesterhelweg, Geschäftsführer
 Berliner Straße 81
-[OFFEN: PLZ] Gütersloh
+33330 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

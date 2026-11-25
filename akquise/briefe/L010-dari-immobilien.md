@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Dari Immobilien
 Herrn Simon Dari, Inhaber
 Düppelstraße 11
-[OFFEN: PLZ] Gütersloh
+33330 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

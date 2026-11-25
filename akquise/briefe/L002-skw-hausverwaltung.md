@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 SKW Hausverwaltung GmbH
 Frau Katja Döring und Herrn Ansgar Stahl, Geschäftsführung
 Strengerstraße 10
-[OFFEN: PLZ] Gütersloh
+33330 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Geno immobilien GmbH – immoEINS
 Leitung Hausverwaltung, Standort Gütersloh
 Friedrich-Ebert-Straße 60
-[OFFEN: PLZ] Gütersloh
+33330 Gütersloh
 
 Gütersloh, [Datum bei Versand]
 

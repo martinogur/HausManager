@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 Hausverwaltung S. Stephan GbR
 Frau Silvia Illiges und Frau Iris Langner
 Berliner Straße 23-25
-[OFFEN: PLZ] Rheda-Wiedenbrück
+33378 Rheda-Wiedenbrück
 
 Gütersloh, [Datum bei Versand]
 

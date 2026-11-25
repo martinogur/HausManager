@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 HVW Lüke Hausverwaltung
 Herrn Wolfgang Lüke, Inhaber
 Sudetenweg 11
-[OFFEN: PLZ] Verl-Sürenheide
+33415 Verl-Sürenheide
 
 Gütersloh, [Datum bei Versand]
 

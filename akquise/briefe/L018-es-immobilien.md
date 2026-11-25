@@ -17,7 +17,7 @@ Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-me
 E+S Immobilien GmbH
 Herrn Jan Philipp Eggstein, Geschäftsführer
 Sienstraße 2
-[OFFEN: PLZ] Harsewinkel
+33428 Harsewinkel
 
 Gütersloh, [Datum bei Versand]
 
