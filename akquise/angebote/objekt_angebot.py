@@ -3,7 +3,8 @@
 
 Eingabe: kunde.json mit "objekte": [{"adresse": …, "leistungen": {…}}]. Unterstützte Leistungen:
   treppenhaus:   {"treppenhaeuser": 1, "etagen": 3, "etagen_text": "EG, 1. OG, DG", "option_etagen": 1, "option_text": "Keller"}
-  hecke:         {"lfm": 15, "schnitte": 2, "hoehe_m": 2}
+  hecke:         {"lfm": 15, "schnitte": 2, "hoehe_m": 2, "stunden": 2.5, "monate": "Juli und Oktober"}
+                 (Juli = Formschnitt; starker Rückschnitt nur 1.10.–28.2., § 39 BNatSchG)
   rasen:         {"qm": 20, "mahden": 18}
   winterdienst:  {"lfm": 18}  oder  {"lfm": null, "schaetzung_lfm": 40, "hinweis": "…"}
 Preise: Preisliste vom 24.11.2026 über portal/app/vertrieb/kalkulation.py (eine Quelle für Portal und Angebote).
@@ -57,7 +58,8 @@ def positionen(l: dict) -> dict:
             detail = "inkl. Schnittgut"
             minuten = (k.ZEIT["ga_ruest"] + k.ZEIT["ga_hecke_lfm"] * h["lfm"]) * h["schnitte"]
         jahr = je * h["schnitte"]
-        pos.append((f"Heckenschnitt {h['schnitte']}× im Jahr (Juni und September, Form- und Pflegeschnitt beidseitig und oben), "
+        monate = h.get("monate", "Juli und Oktober")
+        pos.append((f"Heckenschnitt {h['schnitte']}× im Jahr ({monate}; beidseitig und oben), "
                     f"ca. {h['lfm']} m, Höhe ca. {h.get('hoehe_m', 2)} m: {eur(je)} je Schnitt ({detail}), {eur(jahr)} im Jahr",
                     c(Decimal(jahr) / 12), "Gartenpflege"))
         intern.append(("Hecke", c(Decimal(jahr) / 12), c(minuten / 60 * STUNDE / 12)))
