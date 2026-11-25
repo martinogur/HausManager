@@ -42,15 +42,17 @@ beenden() {
 trap beenden EXIT
 
 # --- 1. Snapshot ------------------------------------------------------------------------------
-INFO=$(restic snapshots --json --host "$HH_RESTIC_HOST" --tag "$HH_RESTIC_TAG" ${SNAPSHOT:+--latest 1}) \
-  || fehler "Snapshots konnten nicht gelesen werden."
+if [ "$SNAPSHOT" = latest ]; then
+  INFO=$(restic snapshots --json --host "$HH_RESTIC_HOST" --tag "$HH_RESTIC_TAG" --latest 1)
+else
+  INFO=$(restic snapshots --json "$SNAPSHOT")
+fi
 read -r SNAP_ID SNAP_ZEIT < <(python3 -c '
 import json, sys
 s = json.load(sys.stdin)
 if not s: sys.exit(1)
 s = sorted(s, key=lambda x: x["time"])[-1]
-print(s["short_id"], s["time"])' <<<"$INFO") || fehler "Kein Snapshot mit Tag $HH_RESTIC_TAG gefunden."
-[ "$SNAPSHOT" = latest ] || SNAP_ID=$SNAPSHOT
+print(s["short_id"], s["time"])' <<<"$INFO") || fehler "Kein passender Snapshot gefunden ($SNAPSHOT, Tag $HH_RESTIC_TAG)."
 
 alter_std=$(( ( $(date +%s) - $(date -d "$SNAP_ZEIT" +%s) ) / 3600 ))
 log "Snapshot $SNAP_ID vom $SNAP_ZEIT (vor $alter_std h)"

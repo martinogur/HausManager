@@ -69,14 +69,16 @@ echo "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY; SELECT pg_export_snapshot
 IFS= read -r -t 60 SNAPSHOT <&"${PSQL[0]}" || fehler "Konnte keinen Datenbank-Snapshot exportieren."
 [[ "$SNAPSHOT" =~ ^[0-9A-F-]+$ ]] || fehler "Unerwartete Antwort beim Snapshot-Export: $SNAPSHOT"
 
-{ zaehl_sql; echo '\echo __ENDE__'; } >&"${PSQL[1]}"
+{ zaehl_sql; printf '%s\n' '\echo __ENDE__'; } >&"${PSQL[1]}"
 : > "$DB_ORDNER/zeilen.txt"
 ende=0
 while IFS= read -r -t 120 zeile <&"${PSQL[0]}"; do
   if [ "$zeile" = "__ENDE__" ]; then ende=1; break; fi
   echo "$zeile" >> "$DB_ORDNER/zeilen.txt"
 done
-[ "$ende" = 1 ] && [ -s "$DB_ORDNER/zeilen.txt" ] || fehler "Zeilenanzahlen konnten nicht ermittelt werden."
+if [ "$ende" != 1 ] || [ ! -s "$DB_ORDNER/zeilen.txt" ]; then
+  fehler "Zeilenanzahlen konnten nicht ermittelt werden."
+fi
 
 db_pg_dump --format=custom --compress=6 --snapshot="$SNAPSHOT" > "$DB_ORDNER/hh.dump"
 
