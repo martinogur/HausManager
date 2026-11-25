@@ -143,11 +143,11 @@ Die KI entscheidet nie über Einstellungen, Kündigungen, Preise, Verträge oder
 | Claude API (Anthropic) | Zusammenfassungen, Entwürfe, Wochenbericht | ca. 5–20 € je nach Mailmenge¹ | **neu, braucht Freigabe** |
 | IONOS (Domain, E-Mail) | vorhanden | 0 € zusätzlich | vorhanden |
 | HubSpot CRM | API mit Private-App-Token auch im Free-Tarif (250.000 Aufrufe/Tag) | 0 € zusätzlich | vorhanden |
-| Lexware Office | Public API **nur im Tarif XL** | XL ca. 33 €. Mehrkosten nur, wenn ein kleinerer Tarif läuft | **Tarif prüfen** |
+| Lexware Office | Public API **nur im Tarif XL** | Aktuell Tarif M (12,90 €). XL kostet 32,90 €, also **+20 €/Monat** – Upgrade erst in Phase 6, wenn die Rechnungsautomatik gebraucht wird | **Entscheidung in Phase 6** |
 | Craftnote | API-Key in den Einstellungen (Firmeninhaber) | vorhanden, entfällt evtl. nach E9 | vorhanden |
 | Make | nur einzelne Abläufe | vorhandener Tarif | vorhanden |
 | GitHub | Code, automatische Tests, Deployment | 0 € | vorhanden |
-| **Summe neu** | | **ca. 15–35 €/Monat** (+ evtl. Lexware-Upgrade) | |
+| **Summe neu** | | **ca. 15–35 €/Monat** (+ 20 € ab Phase 6, falls Lexware-Upgrade) | |
 
 ¹ Rechnung mit Opus 5.5 ($4 pro Mio. Eingabe-Tokens, $20 pro Mio. Ausgabe-Tokens): 300 Mails im Monat × ca. 3.000 + 600 Tokens = 0,9 Mio. + 0,18 Mio. Tokens ≈ 7 $. Dazu Bewerbungen, Arbeitsberichte und 4 Wochenberichte, zusammen ≈ 10–15 $. Ein Kostenlimit wird im Anthropic-Konto gesetzt.
 
@@ -166,7 +166,7 @@ Jede Phase endet mit **automatischen Tests**, einer **Vorschau zum Ausprobieren*
 | **3** | Kunden, Ansprechpartner, Objekte, Leistungskatalog (Preise aus `firma/profil.md`), Aufträge, Angebote (PDF) | Kunden und Objekte anlegen, Angebot erstellen, Freigabe-Ablauf | Freigabe Hetzner-Server (Kosten) für die Testumgebung |
 | **4** | Mitarbeiter, Qualifikationen, Verfügbarkeit, Bewerbungsformular, Einsatzkalender, Mitarbeiter-App (Zeiterfassung, Fotos, Bericht), wiederkehrende Einsätze | Mit dem Handy einen Einsatz abschließen, Bewerbung absenden | Entscheidung E9 (Craftnote) |
 | **5** | IONOS (IMAP/SMTP), HubSpot-Sync, Make-Webhooks | Echte Mails landen im Portal, Antwort nach Freigabe | IONOS-Postfachpasswort und HubSpot-Token über die sichere Secret-Eingabe (nie im Chat) |
-| **6** | Lexware (Rechnungsentwurf, Status), Craftnote-Sync oder -Ablösung | Rechnungsentwurf erscheint in Lexware | Lexware-API-Key (Tarif XL), Craftnote-API-Key |
+| **6** | Lexware (Rechnungsentwurf, Status), Craftnote-Sync oder -Ablösung | Rechnungsentwurf erscheint in Lexware | Entscheidung Lexware-Upgrade M → XL (+20 €/Monat) und API-Key, Craftnote-API-Key. Ohne Upgrade: Portal erstellt Rechnungsdaten als übersichtliche Vorlage zum Abtippen/Kopieren in Lexware (kein API-Zugriff) |
 | **7** | KI-Funktionen (Anfragen, Antwortentwürfe, Bewerbungen, Berichte, fehlende Angaben), Statistiken, Wochenbericht | Wochenbericht, Antwortentwürfe | Anthropic-API-Key mit Kostenlimit |
 | **8** | Last- und Sicherheitstests, Datenschutzprüfung (VVT, AV-Verträge, Löschkonzept), Backup-Wiederherstellungstest, Produktivsetzung, Import echter Daten | Produktivbetrieb unter `portal.haus-meister-helden.de` | **Freigabe Produktivsetzung und Datenimport** |
 

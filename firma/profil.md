@@ -65,6 +65,10 @@ Details und Herleitung: `akquise/angebote/preiskalkulation.md` / `.xlsx`. Abrech
 ## Referenzen (nur echte!)
 - [OFFEN] (z. B. „betreuen 25 Objekte in …“, Kundenzitate mit Erlaubnis)
 
+## Software
+- Buchhaltung: Lexware Office Tarif M (12,90 €/Monat netto) – Public API erst ab Tarif XL (32,90 €)
+- CRM: HubSpot · Automatisierung: Make · Einsatzplanung: Craftnote · E-Mail/Domain: IONOS
+
 ## Versicherung / Nachweise
 - Betriebshaftpflicht: [OFFEN]
 - Gewerbeanmeldung / Zertifikate: [OFFEN]
