@@ -157,7 +157,9 @@ DECLARE l leads;
 BEGIN
     IF NEW.richtung <> 'ausgehend' THEN RETURN NEW; END IF;
     SELECT * INTO l FROM leads WHERE id = NEW.lead_id;
-    IF l.widerspruch_am IS NOT NULL AND NEW.zeitpunkt >= l.widerspruch_am THEN
+    -- least(…, now()): unabhängig davon, ob der Widerspruch mit Transaktions- oder Anweisungszeit erfasst wurde.
+    -- Nachträglich erfasste Kontakte aus der Zeit VOR dem Widerspruch bleiben möglich.
+    IF l.widerspruch_am IS NOT NULL AND NEW.zeitpunkt >= least(l.widerspruch_am, now()) THEN
         RAISE EXCEPTION 'Lead % hat der Kontaktaufnahme widersprochen', l.leadnummer USING ERRCODE = 'check_violation';
     END IF;
     IF NEW.kanal = 'email' AND l.email_einwilligung IS NULL AND l.einladung_beleg IS NULL THEN
