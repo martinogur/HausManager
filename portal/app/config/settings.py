@@ -142,6 +142,8 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    # Früh, damit request.htmx auch in der 2FA-Middleware bekannt ist
+    "django_htmx.middleware.HtmxMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     # Ergänzt request.user um is_verified() (bestätigter zweiter Faktor)
@@ -152,7 +154,6 @@ MIDDLEWARE = [
     "kern.middleware.AuditBenutzerMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_htmx.middleware.HtmxMiddleware",
     # Content-Security-Policy und Permissions-Policy
     "kern.middleware.SicherheitsHeaderMiddleware",
 ]
@@ -291,6 +292,11 @@ STORAGES = {
         )
     },
 }
+
+
+# In Entwicklung/Tests liefert WhiteNoise direkt aus den Quellordnern (ohne collectstatic)
+WHITENOISE_AUTOREFRESH = DEBUG or TESTLAUF
+WHITENOISE_USE_FINDERS = DEBUG or TESTLAUF
 
 
 # ----------------------------------------------------------------------------- Protokollierung

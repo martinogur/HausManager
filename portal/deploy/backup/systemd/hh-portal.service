@@ -1,0 +1,17 @@
+# Startet den Docker-Compose-Stack nach dem Entschlüsseln der Secrets.
+[Unit]
+Description=Hausmeister Helden Portal (docker compose)
+Requires=docker.service hh-secrets.service
+After=docker.service hh-secrets.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/hh-portal/portal/deploy
+ExecStart=/usr/bin/docker compose up -d --remove-orphans
+ExecStop=/usr/bin/docker compose stop
+TimeoutStartSec=600
+
+[Install]
+WantedBy=multi-user.target

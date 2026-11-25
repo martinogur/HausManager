@@ -1,0 +1,9 @@
+# Wird bei Fehlschlag von Backup oder Wiederherstellungstest ausgelöst (OnFailure=).
+# Phase 2: nur Eintrag im System-Journal mit Priorität "err" (kein externer Dienst).
+# Später möglich: Mail an Martin über IONOS-SMTP oder Ping an einen Überwachungsdienst – nach Freigabe.
+[Unit]
+Description=Hausmeister Helden Portal – Alarm für %i
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/logger -p user.err -t hh-alarm "FEHLER: %i ist fehlgeschlagen – journalctl -u %i prüfen"

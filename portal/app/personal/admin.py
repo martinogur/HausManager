@@ -60,7 +60,7 @@ class MitarbeiterAdmin(admin.ModelAdmin):
     def einsaetze_heute(self, obj):
         from django.utils import timezone
 
-        if not obj.pk:
+        if obj._state.adding:
             return "–"
         heute = timezone.localdate()
         zuweisungen = obj.einsatz_zuweisungen.filter(einsatz__geplant_von__date=heute).select_related("einsatz__auftrag")

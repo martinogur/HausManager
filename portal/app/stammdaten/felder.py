@@ -99,3 +99,14 @@ class NurLesendAdminMixin:
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+class CitextEmailFeld(models.EmailField):
+    """E-Mail-Feld für eine ``citext``-Spalte.
+
+    Nötig nur als Element von ``ArrayField`` (``citext[]``): Django castet Array-Parameter
+    auf den Spaltentyp des Elements; mit ``varchar`` gäbe es für ``citext[] @> …`` keinen Operator.
+    """
+
+    def db_type(self, connection):
+        return "citext"

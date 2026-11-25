@@ -14,13 +14,13 @@
 # Konfiguration aus portal/deploy/.env (oder HH_ENV_DATEI): RESTIC_REPOSITORY, RESTIC_PASSWORD,
 # optional HH_MELDE_URL. Weitere optionale Variablen:
 #   HH_BACKUP_DB_URL     lokale DB-URL statt Compose-Dienst "db" (für Tests)
-#   HH_DATEIEN_PFAD      Pfad der Dateien (Standard: Mountpoint des Volumes hh-portal_dateien; "-" = überspringen)
+#   HH_DATEIEN_PFAD      Pfad der Dateien (Standard: Mountpoint des Volumes <Projekt>_dateien; "-" = überspringen)
 #   HH_BACKUP_ARBEIT     Arbeitsordner (Standard /var/backups/hh-portal)
 #   HH_CHECK_DATEN       z. B. "5%": restic check liest zusätzlich diesen Anteil der Daten
 set -Eeuo pipefail
 umask 077
 
-# shellcheck source=gemeinsam.sh
+# shellcheck source-path=SCRIPTDIR source=gemeinsam.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/gemeinsam.sh"
 
 lade_env "${HH_ENV_DATEI:-$DEPLOY_DIR/.env}" RESTIC_REPOSITORY RESTIC_PASSWORD HH_MELDE_URL
@@ -107,8 +107,9 @@ date -u '+%Y-%m-%dT%H:%M:%SZ' > "$DB_ORDNER/zeitpunkt.txt"
 PFADE=("$DB_ORDNER")
 DATEIEN=${HH_DATEIEN_PFAD:-}
 if [ -z "$DATEIEN" ]; then
-  DATEIEN=$(docker volume inspect --format '{{ .Mountpoint }}' hh-portal_dateien 2>/dev/null) \
-    || fehler "Volume hh-portal_dateien nicht gefunden (HH_DATEIEN_PFAD setzen oder '-' zum Überspringen)."
+  VOLUME="${COMPOSE_PROJECT_NAME:-hh-portal}_dateien"
+  DATEIEN=$(docker volume inspect --format '{{ .Mountpoint }}' "$VOLUME" 2>/dev/null) \
+    || fehler "Volume $VOLUME nicht gefunden (HH_DATEIEN_PFAD setzen oder '-' zum Überspringen)."
 fi
 if [ "$DATEIEN" != "-" ]; then
   [ -d "$DATEIEN" ] || fehler "Dateien-Ordner fehlt: $DATEIEN"

@@ -28,8 +28,12 @@ ENV PIP_NO_CACHE_DIR=1 \
 
 RUN python -m venv /opt/venv
 COPY requirements.txt /tmp/requirements.txt
-# Nur Laufzeit-Pakete (requirements.txt), keine Entwicklungswerkzeuge
-RUN /opt/venv/bin/pip install -r /tmp/requirements.txt
+# Nur Laufzeit-Pakete (requirements.txt), keine Entwicklungswerkzeuge.
+# Optional: CA-Zertifikat für Builds hinter einem TLS-prüfenden Proxy als BuildKit-Secret
+# (--secret id=pip_ca,src=…); es landet nicht im Image.
+RUN --mount=type=secret,id=pip_ca,required=false \
+    if [ -s /run/secrets/pip_ca ]; then export PIP_CERT=/run/secrets/pip_ca; fi; \
+    /opt/venv/bin/pip install -r /tmp/requirements.txt
 
 # ---------------------------------------------------------------------------
 # Stufe 2: schlankes Laufzeit-Image, Nicht-Root-Benutzer

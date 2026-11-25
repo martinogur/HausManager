@@ -1,0 +1,22 @@
+{% load static %}<!doctype html>
+{# Bewusst ohne Vorlagen-Vererbung und ohne Kontext: wird auch bei schweren Fehlern angezeigt #}
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fehler · Hausmeister Helden</title>
+<link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+<body>
+<main class="einfach">
+  <div class="einfach-karte fehlerseite">
+    <img class="einfach-logo" src="{% static 'img/logo-klein.jpg' %}" alt="Hausmeister Helden" width="180" height="102">
+    <p class="code" aria-hidden="true">500</p>
+    <h1>Da ist etwas schiefgelaufen</h1>
+    <p>Der Fehler wurde protokolliert. Bitte versuchen Sie es in ein paar Minuten noch einmal.</p>
+    <a class="knopf" href="/">Zur Startseite</a>
+  </div>
+</main>
+</body>
+</html>

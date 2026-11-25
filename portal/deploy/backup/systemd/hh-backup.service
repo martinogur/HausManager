@@ -1,0 +1,13 @@
+[Unit]
+Description=Hausmeister Helden Portal – nächtliches Backup (pg_dump + Dateien → restic)
+Requires=hh-secrets.service docker.service
+After=hh-secrets.service docker.service network-online.target
+Wants=network-online.target
+OnFailure=hh-alarm@%n.service
+
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/bin/bash /opt/hh-portal/portal/deploy/backup/backup.sh
+TimeoutStartSec=3h

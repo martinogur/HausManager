@@ -13,7 +13,7 @@
 set -Eeuo pipefail
 umask 077
 
-# shellcheck source=gemeinsam.sh
+# shellcheck source-path=SCRIPTDIR source=gemeinsam.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/gemeinsam.sh"
 
 lade_env "${HH_ENV_DATEI:-$DEPLOY_DIR/.env}" RESTIC_REPOSITORY RESTIC_PASSWORD HH_MELDE_URL_RESTORE

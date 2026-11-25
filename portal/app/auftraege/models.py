@@ -106,11 +106,11 @@ class Anfrage(DbFelderMixin):
     kanal = models.CharField("Kanal", max_length=20, choices=Kanal.choices)
     betreff = models.CharField("Betreff", max_length=300, null=True, blank=True)
     gewuenschte_leistungen = ArrayField(
-        models.CharField(max_length=200), verbose_name="Gewünschte Leistungen", null=True, blank=True
+        models.TextField(), verbose_name="Gewünschte Leistungen", null=True, blank=True
     )
     ki_zusammenfassung = models.TextField("KI-Zusammenfassung", null=True, blank=True)
     fehlende_angaben = ArrayField(
-        models.CharField(max_length=200),
+        models.TextField(),
         verbose_name="Fehlende Angaben",
         null=True,
         blank=True,
@@ -222,6 +222,8 @@ class Angebotsposition(models.Model):
 
     @property
     def gesamt_netto_cent(self):
+        if self.menge is None or self.einzelpreis_netto_cent is None:
+            return None
         return round(self.menge * self.einzelpreis_netto_cent)
 
     def clean(self):

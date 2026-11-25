@@ -1,0 +1,49 @@
+{% extends "basis.html" %}{% load portal %}
+{% block titel %}Start{% endblock %}
+{% block inhalt %}
+<div class="seitenkopf">
+  <div>
+    <h1>Guten Tag, {{ user.anzeigename }}</h1>
+    <p class="untertitel">{{ zeitraum.heute|date:"l, j. F Y" }}</p>
+  </div>
+</div>
+
+{% include "berichte/_kennzahlen.html" %}
+
+<div class="raster-2">
+  <section class="karte" aria-labelledby="einsaetze-titel">
+    <h2 id="einsaetze-titel">Einsätze heute <span class="abzeichen grau">{{ zu_tun.einsaetze|length }}</span></h2>
+    {% if zu_tun.einsaetze %}
+    <ul class="liste">
+      {% for e in zu_tun.einsaetze %}
+      <li class="einsatz">
+        <span class="zeit">{{ e.geplant_von|time:"H:i" }}</span>
+        <span class="titel">{{ e.titel }} <span class="abzeichen">{{ e.status|status_text }}</span></span>
+        <span class="ort">{{ e.objekt }} · {{ e.strasse }} {{ e.hausnummer }}, {{ e.plz }} {{ e.ort }}</span>
+        <span class="team">{% if e.mitarbeiter %}{{ e.mitarbeiter }}{% else %}<strong>noch niemand eingeteilt</strong>{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="leer">Heute sind keine Einsätze geplant.</p>
+    {% endif %}
+  </section>
+
+  <section class="karte" aria-labelledby="zutun-titel">
+    <h2 id="zutun-titel">Heute zu tun</h2>
+    {% if zu_tun.hinweise %}
+    <ul class="liste">
+      {% for h in zu_tun.hinweise %}
+      <li class="hinweis{% if h.dringend %} dringend{% endif %}">
+        <span class="zahl">{{ h.anzahl }}</span>
+        {% if h.link %}<a href="{{ h.link }}">{{ h.text }}</a>{% else %}<span>{{ h.text }}</span>{% endif %}
+        {% if h.dringend %}<span class="nur-screenreader">(dringend)</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="leer">Alles erledigt – keine offenen Punkte.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -11,7 +11,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from stammdaten.felder import DbFelderMixin, erstellt_am_feld, geaendert_am_feld
+from stammdaten.felder import CitextEmailFeld, DbFelderMixin, erstellt_am_feld, geaendert_am_feld
 
 
 class Mailrichtung(models.TextChoices):
@@ -42,7 +42,7 @@ class EmailProtokoll(DbFelderMixin):
     in_reply_to = models.CharField("Antwort auf (Message-ID)", max_length=500, null=True, blank=True)
     postfach = models.CharField("Postfach", max_length=254)
     von = models.EmailField("Von")
-    an = ArrayField(models.EmailField(), verbose_name="An")
+    an = ArrayField(CitextEmailFeld(), verbose_name="An")
     betreff = models.CharField("Betreff", max_length=500, null=True, blank=True)
     text_auszug = models.TextField("Textauszug", null=True, blank=True)
     empfangen_am = models.DateTimeField("Empfangen am", null=True, blank=True)

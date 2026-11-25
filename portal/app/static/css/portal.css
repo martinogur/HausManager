@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Hausmeister Helden – Verwaltungsportal
+   Mobil zuerst: Navigation unten auf dem Handy, Seitenleiste ab 900 px.
+   Schriften lokal (keine CDNs). Farben mit ausreichendem Kontrast (WCAG AA):
+   Grün nur als Fläche mit dunkler Schrift, als Textfarbe das dunkle Grün.
+   ========================================================================== */
+
+@font-face{font-family:"Archivo";src:url("../fonts/archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:"Inter";src:url("../fonts/inter.woff2") format("woff2");font-weight:100 900;font-display:swap}
+
+:root{
+  --gruen:#7ccc13; --gruen-600:#5fa30a; --gruen-800:#356107; --gruen-50:#f2f9e7;
+  --tinte:#111412; --tinte-2:#2b302c; --grau:#545c56; --linie:#dfe4da;
+  --hg:#f6f8f3; --karte:#ffffff; --dunkel:#111412; --dunkel-2:#1c211d; --dunkel-linie:#2e352f;
+  --rot:#b42318; --rot-50:#fef3f2; --gelb-50:#fffaeb; --gelb-800:#7a4a00;
+  --radius:16px; --radius-klein:10px;
+  --schatten:0 1px 2px rgba(17,20,18,.06),0 8px 24px -12px rgba(17,20,18,.18);
+  --kopf:"Archivo",system-ui,sans-serif; --text:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --nav-hoehe:68px; --seitenleiste:248px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--text);font-size:16px;line-height:1.5;color:var(--tinte);background:var(--hg);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--kopf);font-stretch:90%;line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:1.6rem} h2{font-size:1.2rem} h3{font-size:1.05rem}
+p{margin:0 0 1em}
+a{color:var(--gruen-800);text-underline-offset:2px}
+a:hover{color:var(--tinte)}
+img,svg{max-width:100%}
+:focus-visible{outline:3px solid var(--gruen-600);outline-offset:2px;border-radius:6px}
+.nur-screenreader{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.springen{position:absolute;left:-999px;top:8px;background:var(--gruen);color:var(--tinte);padding:10px 16px;border-radius:8px;z-index:200;font-weight:700}
+.springen:focus{left:8px}
+
+/* -------------------------------------------------------------- Grundgerüst */
+.app{min-height:100vh;padding-bottom:calc(var(--nav-hoehe) + env(safe-area-inset-bottom))}
+.kopfleiste{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--dunkel);color:#fff}
+.kopfleiste .marke{color:#fff}
+.kopfleiste .benutzer-kurz{margin-left:auto;font-size:.85rem;color:#d4dbd5;text-align:right;line-height:1.25}
+.marke{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--kopf);font-weight:800;font-stretch:85%;letter-spacing:.01em;text-transform:uppercase;font-size:1rem;line-height:1.05}
+.marke small{display:block;font-weight:500;letter-spacing:.32em;font-size:.62rem;color:var(--gruen)}
+.marke svg{width:34px;height:34px;flex:none}
+.inhalt{padding:20px 16px 32px;max-width:1200px;margin:0 auto}
+
+/* Navigation: unten auf dem Handy */
+.navigation{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--dunkel);border-top:1px solid var(--dunkel-linie);padding-bottom:env(safe-area-inset-bottom)}
+.navigation ul{list-style:none;margin:0;padding:0;display:flex}
+.navigation li{flex:1}
+.navigation .marke,.navigation .benutzer-info{display:none}
+.nav-punkt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;min-height:var(--nav-hoehe);padding:6px 4px;color:#d4dbd5;text-decoration:none;font:600 .75rem/1.1 var(--text);background:none;border:0;cursor:pointer}
+.nav-punkt svg{width:24px;height:24px}
+.nav-punkt:hover{color:#fff}
+.nav-punkt[aria-current="page"]{color:var(--gruen)}
+.nav-punkt:focus-visible{outline-color:var(--gruen);outline-offset:-4px}
+.nav-formular{margin:0}
+
+/* Desktop: Seitenleiste links */
+@media (min-width:900px){
+  .app{display:grid;grid-template-columns:var(--seitenleiste) 1fr;padding-bottom:0}
+  .kopfleiste{display:none}
+  .navigation{position:sticky;top:0;height:100vh;border-top:0;border-right:1px solid var(--dunkel-linie);display:flex;flex-direction:column;padding:22px 14px}
+  .navigation .marke{display:flex;color:#fff;padding:0 8px 22px;font-size:1.05rem}
+  .navigation ul{flex-direction:column;gap:4px}
+  .navigation li{flex:none}
+  .nav-punkt{flex-direction:row;justify-content:flex-start;gap:12px;min-height:46px;padding:0 12px;border-radius:var(--radius-klein);font-size:.95rem;text-align:left}
+  .nav-punkt:hover{background:var(--dunkel-2)}
+  .nav-punkt[aria-current="page"]{background:var(--gruen);color:var(--tinte)}
+  .nav-unten{margin-top:auto}
+  .navigation .benutzer-info{display:block;color:#d4dbd5;font-size:.85rem;padding:14px 12px;border-top:1px solid var(--dunkel-linie);margin-top:10px;line-height:1.35}
+  .benutzer-info strong{color:#fff;display:block}
+  .inhalt{padding:32px 36px 48px;margin:0;max-width:1240px;width:100%}
+}
+
+/* -------------------------------------------------------------- Seitenkopf */
+.seitenkopf{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:20px}
+.seitenkopf h1{margin:0}
+.seitenkopf .untertitel{color:var(--grau);margin:4px 0 0;font-size:.95rem}
+
+/* -------------------------------------------------------------- Karten & Kennzahlen */
+.karte{background:var(--karte);border:1px solid var(--linie);border-radius:var(--radius);padding:18px;box-shadow:var(--schatten)}
+.karte + .karte{margin-top:16px}
+.karte h2{display:flex;align-items:center;gap:8px}
+.raster-2{display:grid;gap:16px}
+@media (min-width:1100px){.raster-2{grid-template-columns:3fr 2fr;align-items:start}.raster-2 .karte + .karte{margin-top:0}}
+
+.kennzahlen{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 20px;padding:0}
+@media (min-width:640px){.kennzahlen{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1100px){.kennzahlen{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.kennzahl{background:var(--karte);border:1px solid var(--linie);border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kennzahl dt{font-size:.82rem;font-weight:600;color:var(--grau);order:1}
+.kennzahl dd{margin:0;order:2;font-family:var(--kopf);font-weight:800;font-stretch:90%;font-size:1.75rem;line-height:1.1;color:var(--tinte);overflow-wrap:anywhere}
+.kennzahl .zusatz{order:3;font-size:.8rem;color:var(--grau)}
+.kennzahl.hervor{background:var(--dunkel);border-color:var(--dunkel);color:#fff}
+.kennzahl.hervor dt,.kennzahl.hervor .zusatz{color:#c9d1ca}
+.kennzahl.hervor dd{color:var(--gruen)}
+.kennzahlen-kopf{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.kennzahlen-kopf h2{margin:0}
+.stand{font-size:.8rem;color:var(--grau)}
+
+/* -------------------------------------------------------------- Listen */
+.liste{list-style:none;margin:0;padding:0}
+.liste > li{padding:12px 0;border-top:1px solid var(--linie)}
+.liste > li:first-child{border-top:0;padding-top:0}
+.einsatz{display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+.einsatz .zeit{font-family:var(--kopf);font-weight:800;font-size:1.05rem;white-space:nowrap}
+.einsatz .titel{font-weight:600}
+.einsatz .ort,.einsatz .team{grid-column:2;font-size:.9rem;color:var(--grau)}
+.hinweis{display:flex;align-items:center;gap:12px}
+.hinweis .zahl{flex:none;min-width:2.2em;height:2.2em;padding:0 6px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:var(--gruen-50);color:var(--gruen-800);font-weight:800}
+.hinweis.dringend .zahl{background:var(--rot-50);color:var(--rot)}
+.leer{color:var(--grau);margin:0}
+
+.abzeichen{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.75rem;font-weight:700;background:var(--gruen-50);color:var(--gruen-800);text-transform:none}
+.abzeichen.grau{background:#eef0ec;color:var(--tinte-2)}
+
+/* -------------------------------------------------------------- Knöpfe & Formulare */
+.knopf{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font:700 1rem/1 var(--text);text-decoration:none;border:2px solid transparent;cursor:pointer;background:var(--gruen);color:var(--tinte)}
+.knopf:hover{background:var(--gruen-600);color:var(--tinte)}
+.knopf.zweit{background:transparent;border-color:var(--linie);color:var(--tinte)}
+.knopf.zweit:hover{border-color:var(--tinte)}
+.knopf.klein{min-height:38px;padding:0 14px;font-size:.85rem}
+.knopf.breit{width:100%}
+.knopf svg{width:18px;height:18px}
+.htmx-request .knopf svg,.knopf.htmx-request svg{animation:drehen .8s linear infinite}
+@keyframes drehen{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.feld{margin-bottom:18px}
+.feld label{display:block;font-weight:600;margin-bottom:6px}
+.feld input{width:100%;min-height:50px;padding:10px 14px;font:inherit;font-size:1.05rem;color:var(--tinte);background:#fff;border:2px solid #9aa39c;border-radius:var(--radius-klein)}
+.feld input:focus{border-color:var(--tinte);outline:3px solid var(--gruen);outline-offset:1px}
+.feld input[aria-invalid="true"]{border-color:var(--rot)}
+.feld .hilfe{font-size:.85rem;color:var(--grau);margin-top:6px}
+.feld .fehler,.fehler-liste{color:var(--rot);font-size:.9rem;margin:6px 0 0;padding:0;list-style:none}
+.code-eingabe{letter-spacing:.3em;font-family:var(--kopf)!important;font-weight:700;text-align:center}
+
+.meldungen{list-style:none;margin:0 0 16px;padding:0}
+.meldung{padding:12px 16px;border-radius:var(--radius-klein);background:var(--gruen-50);border:1px solid #cfe8ad;margin-bottom:8px}
+.meldung.error{background:var(--rot-50);border-color:#f5c2bd;color:var(--rot)}
+.meldung.warning{background:var(--gelb-50);border-color:#f3d79a;color:var(--gelb-800)}
+
+/* -------------------------------------------------------------- Anmelde-Seiten (ohne Navigation) */
+.einfach{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px 40px;background:var(--hg)}
+@media (min-height:700px) and (min-width:600px){.einfach{justify-content:center}}
+.einfach-karte{width:100%;max-width:440px;background:#fff;border:1px solid var(--linie);border-radius:22px;padding:28px 22px;box-shadow:var(--schatten)}
+@media (min-width:600px){.einfach-karte{padding:36px 36px}}
+.einfach-karte.breit{max-width:560px}
+.einfach-logo{display:block;width:180px;height:auto;margin:0 auto 18px}
+.einfach-karte h1{text-align:center;font-size:1.45rem}
+.einfach-karte .einleitung{text-align:center;color:var(--grau)}
+.einfach-fuss{margin-top:18px;font-size:.82rem;color:var(--grau);text-align:center;max-width:440px}
+.qr{display:block;width:220px;max-width:100%;margin:8px auto 12px;padding:8px;background:#fff;border:1px solid var(--linie);border-radius:var(--radius-klein)}
+.schluessel{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.95rem;word-break:break-all;background:var(--hg);padding:10px 12px;border-radius:8px;display:block;text-align:center}
+.schritte{padding-left:1.2em;margin:0 0 16px}
+.schritte li{margin-bottom:6px}
+details summary{cursor:pointer;font-weight:600;color:var(--gruen-800);margin-bottom:8px}
+
+.fehlerseite{text-align:center}
+.fehlerseite .code{font-family:var(--kopf);font-weight:900;font-size:3.5rem;color:var(--gruen-800);line-height:1;margin-bottom:8px}
+.nebenaktion{margin-top:14px;text-align:center}
+.kennzahlen-kopf{flex-wrap:wrap}
+.kennzahlen-aktion{display:flex;align-items:center;gap:10px}

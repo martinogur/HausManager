@@ -63,6 +63,7 @@ class ZweiFaktorCodeFormular(forms.Form):
                 "pattern": "[0-9 ]*",
                 "autofocus": True,
                 "aria-describedby": "code-hilfe",
+                "class": "code-eingabe",
             }
         ),
     )

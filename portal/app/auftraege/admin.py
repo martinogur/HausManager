@@ -28,7 +28,7 @@ class AngebotspositionInline(admin.TabularInline):
 
     @admin.display(description="Gesamt netto")
     def gesamt(self, obj):
-        return euro(obj.gesamt_netto_cent) if obj.pk else "–"
+        return euro(obj.gesamt_netto_cent) if not obj._state.adding else "–"
 
 
 @admin.register(Angebot)
@@ -50,7 +50,7 @@ class AngebotAdmin(admin.ModelAdmin):
 
     @admin.display(description="Summe netto", ordering="summe_netto_cent")
     def summe(self, obj):
-        return euro(obj.summe_netto_cent) if obj.pk else "–"
+        return euro(obj.summe_netto_cent) if not obj._state.adding else "–"
 
 
 class EinsatzInline(admin.TabularInline):
