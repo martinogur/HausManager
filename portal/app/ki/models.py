@@ -22,6 +22,14 @@ class KiAufruf(models.Model):
     ausgabe_tokens = models.IntegerField("Ausgabe-Tokens", null=True, blank=True)
     kosten_cent = models.DecimalField("Kosten (Cent)", max_digits=10, decimal_places=4, null=True, blank=True)
     erfolgreich = models.BooleanField("Erfolgreich")
+    agent = models.ForeignKey(
+        "agenten.Agent", on_delete=models.SET_NULL, null=True, blank=True, db_column="agent",
+        related_name="ki_aufrufe", verbose_name="Agent",
+    )
+    agenten_auftrag = models.ForeignKey(
+        "agenten.AgentenAuftrag", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="ki_aufrufe", verbose_name="Agentenauftrag",
+    )
     fehler = models.TextField("Fehler", null=True, blank=True)
     erstellt_am = erstellt_am_feld("Zeitpunkt")
 

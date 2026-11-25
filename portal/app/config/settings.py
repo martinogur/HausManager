@@ -135,6 +135,9 @@ INSTALLED_APPS = [
     "kommunikation",
     "integrationen",
     "ki",
+    "agenten",
+    "vertrieb",
+    "marketing",
 ]
 
 MIDDLEWARE = [

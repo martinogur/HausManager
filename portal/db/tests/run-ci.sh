@@ -19,12 +19,19 @@ psql "$URL" -X -q -v ON_ERROR_STOP=1 -c "CREATE DATABASE $DB TEMPLATE template0 
 trap 'psql "$URL" -X -q -c "DROP DATABASE IF EXISTS $DB WITH (FORCE)" >/dev/null 2>&1 || true' EXIT
 
 psql "$ZIEL" -X -q -v ON_ERROR_STOP=1 -f "$HIER/../schema.sql"
-AUSGABE=$(psql "$ZIEL" -X -q -v ON_ERROR_STOP=1 -f "$HIER/test_schema.sql" 2>&1) || {
-  echo "$AUSGABE" | grep -oE '(OK   .*|FEHLER.*)' || echo "$AUSGABE"
-  echo "Schema-Tests FEHLGESCHLAGEN" >&2
-  exit 1
-}
-echo "$AUSGABE" | grep -oE '(OK   .*|FEHLER.*|ALLE TESTS BESTANDEN)'
-anzahl=$(echo "$AUSGABE" | grep -cE 'OK   ' || true)
-echo "$AUSGABE" | grep -q 'ALLE TESTS BESTANDEN' || { echo "Abschlussmeldung fehlt" >&2; exit 1; }
+for f in "$HIER"/../erweiterungen/[0-9]*.sql; do
+  case "$f" in *_zurueck.sql) continue ;; esac
+  psql "$ZIEL" -X -q -v ON_ERROR_STOP=1 -f "$f"
+done
+anzahl=0
+for t in "$HIER"/test_*.sql; do
+  AUSGABE=$(psql "$ZIEL" -X -q -v ON_ERROR_STOP=1 -f "$t" 2>&1) || {
+    echo "$AUSGABE" | grep -oE '(OK   .*|FEHLER.*)' || echo "$AUSGABE"
+    echo "Schema-Tests FEHLGESCHLAGEN ($t)" >&2
+    exit 1
+  }
+  echo "$AUSGABE" | grep -oE '(OK   .*|FEHLER.*|ALLE TESTS BESTANDEN)'
+  echo "$AUSGABE" | grep -q 'ALLE TESTS BESTANDEN' || { echo "Abschlussmeldung fehlt ($t)" >&2; exit 1; }
+  anzahl=$((anzahl + $(echo "$AUSGABE" | grep -cE 'OK   ' || true)))
+done
 echo "$anzahl Tests OK"

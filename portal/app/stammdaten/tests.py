@@ -14,7 +14,7 @@ from stammdaten.models import Ansprechpartner, Kunde, Leistung, Leistungsvereinb
 
 pytestmark = pytest.mark.django_db
 
-FACH_APPS = ("stammdaten", "auftraege", "personal", "dokumente", "kommunikation", "integrationen", "ki")
+FACH_APPS = ("stammdaten", "auftraege", "personal", "dokumente", "kommunikation", "integrationen", "ki", "agenten", "vertrieb", "marketing")
 
 
 @pytest.mark.parametrize("modell", [Kunde, Ansprechpartner, Objekt, Leistung, Leistungsvereinbarung], ids=lambda m: m.__name__)

@@ -43,14 +43,24 @@ class Angebotsstatus(models.TextChoices):
 
 
 class Auftragsstatus(models.TextChoices):
-    ANFRAGE = "anfrage", "Anfrage"
-    ANGEBOT = "angebot", "Angebot"
-    BESTAETIGT = "bestaetigt", "Bestätigt"
+    # Bezeichnungen nach dem Betriebsablauf (Neu → Zu prüfen → Angebot erforderlich → Freigegeben …).
+    # Erlaubte Wechsel prüft die Datenbank (Trigger auftraege_statuswechsel) und auftraege.status.
+    ANFRAGE = "anfrage", "Neu"
+    ZU_PRUEFEN = "zu_pruefen", "Zu prüfen"
+    ANGEBOT = "angebot", "Angebot erforderlich"
+    BESTAETIGT = "bestaetigt", "Freigegeben"
     GEPLANT = "geplant", "Geplant"
-    IN_ARBEIT = "in_arbeit", "In Arbeit"
+    IN_ARBEIT = "in_arbeit", "In Bearbeitung"
     ERLEDIGT = "erledigt", "Erledigt"
     ABGERECHNET = "abgerechnet", "Abgerechnet"
     STORNIERT = "storniert", "Storniert"
+
+
+class Prioritaet(models.TextChoices):
+    NIEDRIG = "niedrig", "Niedrig"
+    NORMAL = "normal", "Normal"
+    HOCH = "hoch", "Hoch"
+    DRINGEND = "dringend", "Dringend"
 
 
 class Einsatzstatus(models.TextChoices):
@@ -275,6 +285,11 @@ class Auftrag(DbFelderMixin):
     )
     bestaetigt_am = models.DateTimeField("Bestätigt am", null=True, blank=True)
     faellig_am = models.DateField("Fällig am", null=True, blank=True)
+    prioritaet = models.CharField("Priorität", max_length=10, choices=Prioritaet.choices, default=Prioritaet.NORMAL)
+    geschaetzte_minuten = models.IntegerField("Geschätzte Arbeitszeit (Min.)", null=True, blank=True)
+    materialkosten_cent = models.IntegerField("Materialkosten (Cent)", default=0)
+    verkaufspreis_netto_cent = models.IntegerField("Verkaufspreis netto (Cent)", null=True, blank=True)
+    bemerkungen = models.TextField("Bemerkungen", null=True, blank=True)
     erstellt_am = erstellt_am_feld()
     geaendert_am = geaendert_am_feld()
 
