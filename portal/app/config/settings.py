@@ -294,6 +294,10 @@ STORAGES = {
 }
 
 
+# Hochgeladene Dateien (Fotos, Dokumente); im Betrieb ein gesichertes Volume
+MEDIA_ROOT = Path(os.environ.get("DJANGO_MEDIA_ROOT", str(BASE_DIR / "media")))
+MEDIA_URL = "/medien/"
+
 # In Entwicklung/Tests liefert WhiteNoise direkt aus den Quellordnern (ohne collectstatic)
 WHITENOISE_AUTOREFRESH = DEBUG or TESTLAUF
 WHITENOISE_USE_FINDERS = DEBUG or TESTLAUF
