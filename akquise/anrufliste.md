@@ -1,4 +1,4 @@
-# Anrufliste – Hausmeister Helden (Stand 24.11.2026)
+# Anrufliste – Hausmeister Helden (Stand 25.11.2026)
 
 > Reihenfolge: zuerst A-Leads, dann B, dann C. Innerhalb von A nach der Rangfolge im Lead-Finder-Bericht.
 > **Wann:** „sofort“ = Kanal Anruf laut Leadliste, ohne vorherigen Brief. „Tag 7“ = eine Woche nach Versand des Briefs.
@@ -31,8 +31,31 @@
 | 20 | L020 | C | BGW Bielefelder Gesellschaft für Wohnen und Immobiliendienstleistungen mbH | 0521 8809-01 | [OFFEN: Technik / Einkauf erfragen] | Tag 7 | Wenn Ihre Hausmeister in Brackwede oder Sennestadt bei Schnee oder Laub Verstärkung brauchen, springen wir als Nachunternehmer ein. | | |
 | 21 | L021 | C | Sennestadt GmbH, Bielefeld-Sennestadt | 05205 879300 | Eduard Thiessen (Geschäftsführer) | Tag 7 | Für die neuen Wohnquartiere im Bielefelder Süden möchten wir uns früh als Hausmeister aus der Region vorstellen. | | |
 
+## Ergänzung 25.11.2026 (L022–L037)
+
+| # | ID | Prio | Firma | Telefon | Ansprechpartner | Wann | Aufhänger (ein Satz) | Ergebnis | E-Mail-Einwilligung |
+|---|---|---|---|---|---|---|---|---|---|
+| 22 | L026 | A | AVENIA Quartier GmbH, Gütersloh-Avenwedde | 0171 2200299 (Mobil laut Impressum) | Stefan Brinkmann | **Tag 5** nach Brief | Für die 168 neuen Wohnungen im AVENIA Quartier bieten wir ab Übergabe Winterdienst inkl. Tiefgaragen-Zufahrt, Treppenhaus, Müll und Grün aus einer Hand, und wir wachsen mit jedem Bauabschnitt mit. | | |
+| 23 | L022 | A | KHW Kommunale Haus und Wohnen GmbH, Rheda-Wiedenbrück | 05242 9259-0 | Lars Lippelt (Geschäftsführer), besser: Bestandsmanagement/Technik erfragen | Tag 7 | Sie suchen auf Ihrer Webseite Partner, wir möchten uns an einem Pilotobjekt in Gütersloh oder Verl mit Winterdienst und Grünpflege beweisen. | | |
+| 24 | L027 | A | M. Böcker Hausverwaltungen GmbH, Herzebrock-Clarholz | 05245 92462-0 | Jasmin Menger, Dennis Wieczorek (Geschäftsführung) | Tag 7 | Sie holen für Ihre Objekte selbst Angebote ein, wir möchten bei der nächsten Vergabe transparent und mit Protokoll mitbieten. | | |
+| 25 | L023 | B | KWG Halle (Westf.) eG | 05201 8157-0 | Sven Eisele, Heinrich Brameyer (Vorstand), besser: Technik erfragen | Tag 7 | Wir ersetzen Ihre Hausmeister nicht, wir springen bei Schnee, Laub, Urlaub und Krankheit ein. | | |
+| 26 | L024 | B | gbb Brackwede eG, Bielefeld-Brackwede | 0521 942740 | Markus Fleer, Jörg Patzwald | Tag 7 | Wenn ein Hauswart morgens beim Winterdienst ausfällt, übernehmen wir die Anlage, mit Einsatzprotokoll. | | |
+| 27 | L028 | B | Junkerkalefeld e.K., Oelde | 02522 838450 | Georg Friedrich Junkerkalefeld (Inhaber) | Tag 7 | Sie schließen Hausmeisterverträge für Ihre Objekte ab, wir liefern Leistungsverzeichnis, Protokoll und einen festen Ansprechpartner, damit die Vertragspflege einfach bleibt. | | |
+| 28 | L025 | B | Bauverein Oelde GmbH | 02522 2280 | Sebastian Brauner | Tag 7 | Sie vergeben die Bestandspflege an externe Betriebe, wir möchten als zusätzlicher Partner mit Protokoll und 24-h-Reaktion dazukommen. | | |
+| 29 | L035 | B | HEUTE GmbH, Schloß Holte-Stukenbrock | 05207 956050 | Dennis Fichtner (Geschäftsführer) | Tag 7 | An Ihren Pflege-Standorten müssen die Wege im Winter sicher sein, wir räumen mit Einsatzprotokoll als Nachweis für den Haftungsfall. | | |
+| 30 | L033 | B | EPKE & KOLLEGEN GmbH, Bielefeld-Senne | 0521 95036070 | Tim Oliver Epke (Geschäftsführer) | Tag 7 | Sie prüfen die Hausmeister- und Reinigungsverträge Ihrer Gemeinschaften, wir legen gern ein transparentes Vergleichsangebot daneben. | | |
+| 31 | L032 | B | Hausverwaltung Manss, Gütersloh | 05241 24870 | Burkhard Manss | Tag 7 | Wir sitzen beide in Gütersloh: Treppenhaus, Tonnen und Winterdienst für Ihre Mietwohnungen mit kurzer Anfahrt. | | |
+| 32 | L029 | B | Hausverwaltung Nahrmann GmbH, Oelde | 02522 831323 | Karina Nahrmann (Geschäftsführerin) | Tag 7 | Für Ihre Eigentümergemeinschaften in Oelde liefern wir Winterdienst mit Protokoll, das Sie in der Eigentümerversammlung vorlegen können. | | |
+| 33 | L030 | B | Kuhlmann Haus- und Immobilienverwaltung OWL, Halle (Westf.) | 0175 2226838 (Impressum), 05201 878885 (11880, evtl. veraltet) | Marlies Kuhlmann (Inhaberin) | Tag 7 | Von Inhaber zu Inhaberin: fester Ansprechpartner, Protokoll und 24-h-Reaktion für Ihre Objekte in Halle und Umgebung. | | |
+| 34 | L034 | B | Mario Kramer Immobilien GmbH, Bielefeld-Senne | 0521 959660 | Mario Kramer (Geschäftsführer), Durchwahl Verwaltung erfragen | Tag 7 | Über Verl und Schloß Holte sind wir schnell im Bielefelder Süden, mit festem Ansprechpartner für Ihre verwalteten Objekte. | | |
+| 35 | L036 | C | compassio Seniorenresidenz Verl | 05246 9060-200 | Einrichtungsleitung (Name erfragen) | **sofort** | Wer ist bei Ihnen für Winterdienst und Außenanlagen zuständig, Sie vor Ort oder die Zentrale? | | |
+| 36 | L031 | C | Borsig Hausverwaltung, Rheda-Wiedenbrück | 05242 1821263 | Kathrin Borsig (Inhaberin) | Tag 7 (optional) | Ein Partner für Reinigung, Winterdienst und Garten aus einer Hand spart Ihnen beim Aufbau Ihres Dienstleisterstamms Zeit. | | |
+| 37 | L037 | C | KF Hausverwaltung, Gütersloh | 0159 06156767 (Mobil laut Impressum) | Kristina Franz (Inhaberin) | Tag 7 (optional) | Sie konzentrieren sich auf Gütersloh, wir sind dort zu Hause: kurze Wege und ein fester Ansprechpartner. | | |
+
+Hinweise zur Ergänzung: Oelde-Leads (L025, L028, L029) Termine möglichst auf einen Tag legen. L023 und L024 nur als **Ergänzung** zu den eigenen Hausmeistern ansprechen, nicht als Ersatz.
+
 ## Heute möglich (ohne vorherigen Brief)
-Reihenfolge: L009 → L010 → L011 → L017 → L018 (L018 nur, wenn der Inhaber Kooperationen will).
+Reihenfolge: L009 → L010 → L011 → L036 → L017 → L018 (L018 nur, wenn der Inhaber Kooperationen will).
 
 ## Tag-7-Anrufe
 Beginnen eine Woche nach dem tatsächlichen Versand der Briefe (Versanddatum trägt der Inhaber ein). Reihenfolge wie oben.
