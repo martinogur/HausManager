@@ -220,3 +220,24 @@ def einzelauftrag(minuten: int, zone: int | None) -> dict:
                 "hinweis": "Anfahrt außerhalb Zone 1/2 – Einzelfall, Inhaber entscheidet."}
     anfahrt = PREISE[f"anfahrt_zone{zone}"]
     return {"arbeit_cent": arbeit, "anfahrt_cent": anfahrt, "netto_cent": arbeit + anfahrt, "hinweis": ""}
+
+
+# ----------------------------------------------------------------------------- Winterdienst: Bereitstellung + je Einsatz
+# Abgeleitet aus der freigegebenen Saisonpreisliste (220 € + 9,50 €/lfm bei 20 erwarteten Einsätzen):
+#   Bereitstellung 120 € je Objekt und Saison (Bereitschaft, Wetterkontrolle, Kontrollfahrten, Einsatzprotokoll)
+#   + je Einsatz 5,00 € + 0,475 € je lfd. Meter (Räumen und Streuen inkl. Streugut).
+# Bei 20 Einsätzen ergibt das exakt den Saisonpreis; milde Winter werden günstiger, harte teurer.
+WD_BEREITSTELLUNG_CENT = 12000
+WD_EINSATZ_GRUND_CENT = Decimal(500)
+WD_EINSATZ_JE_LFM_CENT = Decimal("47.5")
+WD_ERWARTETE_EINSAETZE = 20
+
+
+def winterdienst_einsatzmodell(lfm) -> dict:
+    lfm = Decimal(str(lfm))
+    einsatz = _cent(WD_EINSATZ_GRUND_CENT + WD_EINSATZ_JE_LFM_CENT * lfm)
+    selbstkosten = _cent((ZEIT["wd_ruest"] + lfm * ZEIT["wd_lfm"]) * (1 + ZEIT["wd_zuschlag"]) / 60
+                         * SELBSTKOSTEN_STUNDE_CENT["inhaber"] + MATERIAL_CENT["wd_je_lfm_einsatz"] * lfm)
+    return {"bereitstellung_cent": WD_BEREITSTELLUNG_CENT, "einsatz_cent": einsatz,
+            "saison_bei_20_cent": WD_BEREITSTELLUNG_CENT + WD_ERWARTETE_EINSAETZE * einsatz,
+            "einsatz_selbstkosten_cent": selbstkosten}

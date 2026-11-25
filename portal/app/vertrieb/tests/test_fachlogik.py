@@ -114,3 +114,11 @@ def test_kontaktwege_nach_uwg():
     assert [w for w, _ in einladung] == ["kontaktformular", "email"]
     assert scoring.zulaessige_kontaktwege("hausverwaltung", hat_postanschrift=True, hat_telefon=True, hat_email=True,
                                           email_einwilligung=True, einladung_beleg=False, widerspruch=True) == []
+
+
+@pytest.mark.parametrize("lfm", [18, 25, 40])
+def test_winterdienst_einsatzmodell_entspricht_saisonpreis_bei_20_einsaetzen(lfm):
+    m = k.winterdienst_einsatzmodell(lfm)
+    assert abs(m["saison_bei_20_cent"] - (k.PREISE["wd_grund"] + lfm * k.PREISE["wd_lfm"])) <= 20   # Cent-Rundung je Einsatz
+    assert m["einsatz_cent"] > m["einsatz_selbstkosten_cent"]   # jeder Einsatz deckt seine Kosten
+    assert k.winterdienst_einsatzmodell(18)["einsatz_cent"] == 1355
