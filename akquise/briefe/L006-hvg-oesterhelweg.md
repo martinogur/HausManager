@@ -6,13 +6,12 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Große Verwaltung: Rahmenvereinbarung über mehrere Objekte |
 | grund (Leadliste) | Etablierte Hausverwaltung im Kreis Gütersloh für WEG-, Miet-, Büro- und Gewerbeobjekte. Gründungsjahr nur laut Verzeichnis, deshalb im Brief nicht genannt |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
+| vor Versand prüfen | – |
 
 ---
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 HVG Hausverwaltungsgesellschaft Oesterhelweg mbH
 Herrn Peter Oesterhelweg, Geschäftsführer

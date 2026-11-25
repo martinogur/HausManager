@@ -12,7 +12,6 @@
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 Haus & Grund GmbH Bielefeld
 WEG-Verwaltung

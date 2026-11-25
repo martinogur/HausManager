@@ -6,13 +6,12 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Inhabergeführt: Sie koordinieren, wir führen aus |
 | grund (Leadliste) | Verwaltet Häuser, Eigentumswohnungen und Gewerbeobjekte und übernimmt laut Webseite die Koordination und Kontrolle der Pflegearbeiten |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
+| vor Versand prüfen | – |
 
 ---
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 Kai Wackermann Immobilien und Hausverwaltung
 Herrn Kai Wackermann, Inhaber

@@ -28,7 +28,7 @@
 | 17 | L017 | C | HVG Verwaltungsgesellschaft mbH & Co. KG, Rheda-Wiedenbrück | 05242 57248 | [OFFEN: erfragen] | **sofort** | Kurz klären, ob Sie Objekte verwalten, bei denen Sie einen zuverlässigen Hausmeister aus der Region brauchen. | | |
 | 18 | L018 | C | E+S Immobilien GmbH, Harsewinkel | 05247 9256-250 | Jan Philipp Eggstein (Geschäftsführer) | **sofort** (nach Okay des Inhabers zur Kooperation) | Wenn Ihr eigener Hausmeisterservice bei Schnee, Laub oder Urlaub Verstärkung braucht, springen wir als Vertretung ein. | | |
 | 19 | L019 | C | T. Knoop Immobilienverwaltungs GmbH, Bielefeld | 0521 96799816 | [OFFEN: erfragen] | Tag 7 | Betreuen Sie noch Objekte in Halle (Westf.) oder im Bielefelder Süden? Dort sind wir im Einsatz. | | |
-| 20 | L020 | C | BGW Bielefelder Gemeinnützige Wohnungsgesellschaft mbH | 0521 8809-01 | [OFFEN: Technik / Einkauf erfragen] | Tag 7 | Wenn Ihre Hausmeister in Brackwede oder Sennestadt bei Schnee oder Laub Verstärkung brauchen, springen wir als Nachunternehmer ein. | | |
+| 20 | L020 | C | BGW Bielefelder Gesellschaft für Wohnen und Immobiliendienstleistungen mbH | 0521 8809-01 | [OFFEN: Technik / Einkauf erfragen] | Tag 7 | Wenn Ihre Hausmeister in Brackwede oder Sennestadt bei Schnee oder Laub Verstärkung brauchen, springen wir als Nachunternehmer ein. | | |
 | 21 | L021 | C | Sennestadt GmbH, Bielefeld-Sennestadt | 05205 879300 | Eduard Thiessen (Geschäftsführer) | Tag 7 | Für die neuen Wohnquartiere im Bielefelder Süden möchten wir uns früh als Hausmeister aus der Region vorstellen. | | |
 
 ## Heute möglich (ohne vorherigen Brief)

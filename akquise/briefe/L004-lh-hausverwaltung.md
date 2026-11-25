@@ -6,13 +6,12 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Große Verwaltung: Rahmenvereinbarung, Kontrollprotokoll, 24-h-Reaktion |
 | grund (Leadliste) | Seit 1973 WEG-, Miet- und Sondereigentumsverwaltung in der Gütersloher Innenstadt, kurze Wege |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
+| vor Versand prüfen | – |
 
 ---
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 LH Miet- und Hausverwaltungs GmbH
 Frau Martina Raabe, Geschäftsführerin

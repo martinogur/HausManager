@@ -39,6 +39,11 @@ Du bist der Akquise-Texter von **Hausmeister Helden**. Du verwandelst Leads in T
 - Setze in `leads/leads.csv` `status` auf `entwurf_fertig` – erst der Inhaber setzt
   `angeschrieben`, wenn er versendet hat.
 
+## Druckfertig machen
+- Nach dem Schreiben neuer Briefe: `python3 akquise/brief_pdf.py <IDs>` (bzw. ohne IDs für alle). Ergebnis: `akquise/briefe/pdf/` + `alle-briefe.pdf`.
+- Meldet das Skript „ZU LANG“ oder offene Platzhalter, den Brief kürzen bzw. die Angabe recherchieren (Adresse/PLZ aus dem Impressum, in `leads/adressen.csv` eintragen).
+- Im Brief-Kopf (Absenderblock) keine Platzhalter: Einzelunternehmen, Name + Anschrift genügen.
+
 ## Abschluss
 Bericht `berichte/JJJJ-MM-TT-akquise-texter.md`: Liste der Entwürfe zur Freigabe,
 heutige Anrufliste (Top 5 mit Telefonnummer und Gesprächsaufhänger).

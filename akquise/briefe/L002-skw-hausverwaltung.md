@@ -6,13 +6,12 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Große Verwaltung: Rahmenvereinbarung, Kontrollprotokoll, 24-h-Reaktion |
 | grund (Leadliste) | Tochter der Kreissparkasse Halle-Wiedenbrück und der Sparkasse Gütersloh-Rietberg-Versmold, WEG-, Miet- und Sondereigentumsverwaltung im ganzen Kreis Gütersloh |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
+| vor Versand prüfen | – |
 
 ---
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 SKW Hausverwaltung GmbH
 Frau Katja Döring und Herrn Ansgar Stahl, Geschäftsführung
@@ -25,17 +24,17 @@ Gütersloh, [Datum bei Versand]
 
 Sehr geehrte Frau Döring, sehr geehrter Herr Stahl,
 
-Sie verwalten WEG-, Miet- und Sondereigentum im ganzen Kreis Gütersloh. Bei so vielen Objekten zählt vor allem eines: Vor Ort muss es laufen, ohne dass Ihr Büro Dienstleistern hinterhertelefoniert oder Beschwerden von Eigentümern und Mietern auffangen muss.
+Sie verwalten Objekte im ganzen Kreis Gütersloh. Dabei zählt vor allem eines: Vor Ort muss es laufen, ohne dass Ihr Büro Dienstleistern hinterhertelefoniert.
 
 Hausmeister Helden aus Gütersloh bietet Ihnen dafür eine **Rahmenvereinbarung für mehrere Objekte** an:
 
 - **Ein fester Ansprechpartner:** ich, Martin Ogur, als Inhaber. Kein Callcenter.
 - **Reaktion innerhalb von 24 Stunden**, per Telefon und WhatsApp.
-- **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Sie haben schriftlich, was geprüft wurde und was auffällt, zum Beispiel für die Eigentümerversammlung oder bei Rückfragen.
+- **Gebäudekontrolle mit Protokoll:** bei jedem Einsatz kostenlos dabei. Ideal für Eigentümerversammlung und Rückfragen.
 - **Alles aus einer Hand:** Treppenhausreinigung, Winterdienst, Gartenarbeit, Mülltonnen-Service, Kleinreparaturen.
-- **Transparente Preise nach Aufwand:** Wir rechnen nach Treppenhaus, Etage und Gehweg-Meter, nicht pauschal pro Wohnung. Zum Beispiel kostet ein Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, der Winterdienst ab 220 € je Saison plus 9,50 € je Meter, inklusive Einsatzprotokoll. Sie bekommen einen festen Monatspreis pro Objekt, aufgeteilt nach Betriebskostenarten.
+- **Transparente Preise nach Aufwand:** fester Monatspreis pro Objekt, aufgeteilt nach Betriebskostenarten. Beispiel: Treppenhaus mit 3 Etagen wöchentlich ab ca. 156 € netto im Monat, Winterdienst ab 220 € je Saison plus 9,50 € je Meter.
 
-**Mein Vorschlag für den Einstieg:** Nennen Sie mir ein Objekt, bei dem es gerade hakt. Ich sehe es mir kostenlos an und schicke Ihnen ein unverbindliches Angebot. So prüfen Sie unsere Arbeit an einem Objekt, bevor wir über weitere sprechen.
+**Mein Vorschlag für den Einstieg:** Nennen Sie mir ein Objekt, bei dem es gerade hakt. Ich sehe es mir kostenlos an und schicke Ihnen ein unverbindliches Angebot. 
 
 Ich melde mich in der kommenden Woche telefonisch, um einen Termin abzustimmen.
 

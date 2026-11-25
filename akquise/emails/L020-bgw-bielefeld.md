@@ -1,4 +1,4 @@
-# E-Mail-Vorlagen L020 – BGW Bielefelder Gemeinnützige Wohnungsgesellschaft mbH
+# E-Mail-Vorlagen L020 – BGW Bielefelder Gesellschaft für Wohnen und Immobiliendienstleistungen mbH
 
 > Keine Kalt-E-Mail (§ 7 UWG). Nur verwenden, wenn die Voraussetzung erfüllt und dokumentiert ist. Vor dem Versand gibt Martin Ogur frei.
 

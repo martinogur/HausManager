@@ -6,13 +6,12 @@
 | kanal | Brief (Post), danach Tag 7 Anruf |
 | variante | Inhabergeführt: von Inhaber zu Inhaberinnen |
 | grund (Leadliste) | WEG-, Miet- und Sondereigentumsverwaltung in Rheda-Wiedenbrück mit Online-Schadensmeldung und Kundenportal |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
+| vor Versand prüfen | – |
 
 ---
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 Hausverwaltung S. Stephan GbR
 Frau Silvia Illiges und Frau Iris Langner

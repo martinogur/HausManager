@@ -7,13 +7,12 @@
 | variante | Inhabergeführt: von Inhaber zu Inhaber, positiv formuliert |
 | grund (Leadliste) | Referenzobjekte in Gütersloh, Harsewinkel, Steinhagen und Rheda-Wiedenbrück |
 | wichtig | Bewertungen NICHT erwähnen, weder im Brief noch im Telefonat |
-| vor Versand prüfen | PLZ, Pflichtangaben im Briefkopf |
+| vor Versand prüfen | – |
 
 ---
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 Golücke GmbH Hausverwaltung
 Frau Monika Golücke, Geschäftsführerin

@@ -12,10 +12,8 @@
 
 Hausmeister Helden · Martin Ogur · Auf der Benkert 68 · 33330 Gütersloh
 Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
-[OFFEN: Rechtsform / Pflichtangaben im Briefkopf]
 
 BUSKE Hausverwaltung
-[OFFEN: Ansprechpartner]
 Pöppelkamp 30
 33442 Herzebrock-Clarholz
 
