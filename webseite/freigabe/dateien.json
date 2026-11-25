@@ -3,6 +3,7 @@
  "vorschau-handy.png": "webseite/freigabe/vorschau-handy.png",
  "vorschau/404.html": "webseite/public/404.html",
  "vorschau/app.js": "webseite/public/app.js",
+ "vorschau/bewertung.html": "webseite/public/bewertung.html",
  "vorschau/datenschutz.html": "webseite/public/datenschutz.html",
  "vorschau/fonts/archivo.woff2": "webseite/public/fonts/archivo.woff2",
  "vorschau/fonts/inter.woff2": "webseite/public/fonts/inter.woff2",
