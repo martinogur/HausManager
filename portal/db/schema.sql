@@ -523,8 +523,9 @@ CREATE INDEX audit_datensatz ON audit_log (tabelle, datensatz_id);
 CREATE FUNCTION protokolliere() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE alt jsonb; neu jsonb;
 BEGIN
-    IF TG_OP <> 'INSERT' THEN alt := to_jsonb(OLD) - 'geaendert_am'; END IF;
-    IF TG_OP <> 'DELETE' THEN neu := to_jsonb(NEW) - 'geaendert_am'; END IF;
+    -- Passwort-Hashes und Login-Zeitpunkte gehören nicht ins Protokoll
+    IF TG_OP <> 'INSERT' THEN alt := to_jsonb(OLD) - 'geaendert_am' - 'password' - 'last_login'; END IF;
+    IF TG_OP <> 'DELETE' THEN neu := to_jsonb(NEW) - 'geaendert_am' - 'password' - 'last_login'; END IF;
     IF TG_OP = 'UPDATE' AND alt = neu THEN RETURN NULL; END IF;
     INSERT INTO audit_log (tabelle, datensatz_id, aktion, alt, neu, benutzer)
     VALUES (TG_TABLE_NAME, coalesce((neu->>'id')::uuid, (alt->>'id')::uuid), TG_OP, alt, neu,

@@ -51,11 +51,9 @@ def test_audit_benutzer_wird_nach_request_zurueckgesetzt(client, mitarbeiter_ben
 
 @pytest.mark.django_db
 def test_audit_log_ohne_passwort_hash(mitarbeiter_benutzer):
-    """
-    Dokumentiert einen offenen Punkt: Der Audit-Trigger speichert die ganze
-    Zeile – inkl. Passwort-Hash. (Änderungswunsch an schema.sql gemeldet.)
-    """
+    """Der Audit-Trigger darf weder Passwort-Hash noch Login-Zeitpunkt protokollieren."""
     eintraege = _audit("benutzer")
     assert eintraege
-    if "password" in (eintraege[0][2] or {}):
-        pytest.xfail("audit_log enthält password-Hash (schema.sql: protokolliere() sollte 'password' entfernen)")
+    for _aktion, _benutzer, neu in eintraege:
+        assert "password" not in (neu or {})
+        assert "last_login" not in (neu or {})
