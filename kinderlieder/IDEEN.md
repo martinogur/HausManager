@@ -40,7 +40,7 @@ Jahreszeit auch zwei Klassiker hintereinander.
 ## Eigene Lieder (im Wechsel mit den Klassikern)
 
 - [x] **Schlaf gut, Bruno**: Gute-Nacht-Lied, ruhig und langsam (Tempo ~84), Nachtszene, Mond, Sterne, Kuscheltier, Gähnen
-- [ ] **Bella und der erste Schnee**: Winterlied, Schneeflocken zählen, Schneemann bauen, Mütze und Schal
+- [x] **Bella und der erste Schnee**: Winterlied, Schneeflocken zählen, Schneemann bauen, Mütze und Schal
 - [ ] **Hopsi wartet auf den Nikolaus**: Stiefel putzen, Nüsse, Mandarine, Apfel (rechtzeitig vor dem 6. Dezember)
 - [ ] **Bruno backt Plätzchen**: Mehl, Eier, Teig rühren, ausstechen (Stern, Herz, Mond), Formen wiederholen
 - [ ] **Die Tiere auf der Liederwiese**: Tierstimmen (Kuh muh, Hund wau, Katze miau, Ente quak, Schaf mäh)
@@ -68,7 +68,7 @@ Jahreszeit auch zwei Klassiker hintereinander.
 
 - [x] **Welche Farbe ist das?** (Dinge in einer Farbe → Farbe raten)
 - [x] **Wer macht dieses Geräusch?** (Tiergeräusch hören → Tier erscheint)
-- [ ] **Wie viele sind das?** (Möhren, Sterne, Bälle zählen)
+- [x] **Wie viele sind das?** (Möhren, Sterne, Bälle zählen)
 - [ ] **Welche Form ist das?** (Kreis, Dreieck, Viereck, Stern, Herz)
 - [ ] **Was ist im Winter?** (Schneemann, Mütze, Schlitten, Schneeflocke)
 - [ ] **Rate mal! Was gehört ins Bad?** (Zahnbürste, Seife, Handtuch, Ente)
@@ -84,3 +84,5 @@ Jahreszeit auch zwei Klassiker hintereinander.
 - 2026-11-24 – Welche Farbe ist das? Rate mal mit Bella Biene – `shorts/04_welche_farbe.json`
 - 2026-11-24 – Lasst uns froh und munter sein – Nikolauslied mit Hopsi Hase – `songs/08_hopsi_hase_nikolaus.json`
 - 2026-11-24 – Wer macht dieses Geräusch? Tierstimmen raten mit Bruno Bär – `shorts/05_wer_macht_geraeusch.json`
+- 2026-11-25 – Bella und der erste Schnee – Winterlied zum Mitsingen und Zählen – `songs/09_bella_biene_schnee.json`
+- 2026-11-25 – Wie viele sind das? Zählen lernen mit Hopsi Hase – `shorts/06_wie_viele.json`

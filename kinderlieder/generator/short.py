@@ -231,10 +231,12 @@ class ShortSzene:
     def ding(self, d, t, sil):
         bild = d["bild"]
         key = (bild, sil)
-        animiert = not sil and (bild in BI.ANIMIERT or bild == "sonne")
+        animiert = (not sil or d.get("anzahl")) and (bild in BI.ANIMIERT or bild == "sonne")
         if key in self.cache and not animiert:
             return self.cache[key]
-        if bild.startswith("figur:"):
+        if d.get("anzahl"):  # Zählrätsel: Dinge immer sichtbar, Lösung ist die Anzahl
+            img = BI.menge_sprite(bild, int(d["anzahl"]), self.gr, d.get("farbe"), t)
+        elif bild.startswith("figur:"):
             img = BI.bild_sprite("leer", self.gr, d.get("farbe"), t)
             f = G.Figur(bild.split(":", 1)[1]).sprite(int(self.gr * 0.82), mund=0.0 if sil else 0.6, arm=0.6)
             f = f.resize((int(self.gr * 0.82),) * 2, Image.LANCZOS)

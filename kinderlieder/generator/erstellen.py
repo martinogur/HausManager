@@ -192,6 +192,8 @@ class Szene:
                 continue
             if teil.get("nacht"):
                 self.pal[name] = "nacht"
+            elif teil.get("winter") or cfg.get("winter"):
+                self.pal[name] = "winter"
             elif art == "strophe":
                 self.pal[name] = (verschoben + k) % len(G.PALETTEN)
                 k += 1
@@ -199,7 +201,8 @@ class Szene:
                 self.pal[name] = verschoben
         self.bgs = {}
         for p in set(self.pal.values()):
-            self.bgs[p] = G.hintergrund(W, H, G.NACHT if p == "nacht" else G.PALETTEN[p])
+            self.bgs[p] = G.hintergrund(W, H, G.NACHT if p == "nacht" else G.WINTER if p == "winter"
+                                        else G.PALETTEN[p])
 
         self.sonne = G.sonne(int(H * 0.075))
         self.mond = G.mond(int(H * 0.08))
@@ -230,6 +233,12 @@ class Szene:
             r = int(H * rng2.uniform(0.015, 0.04))
             self.seifenblasen.append((G.seifenblase(r), rng2.uniform(0.05, 0.95), rng2.uniform(0.06, 0.12),
                                       rng2.random(), rng2.uniform(0, 6)))
+        self.schneeflocken = []
+        rng3 = random.Random(13)
+        for k in range(45):
+            r = int(H * rng3.uniform(0.02, 0.045))
+            self.schneeflocken.append((BI.flocke_klein(r), rng3.uniform(0.0, 1.0), rng3.uniform(0.05, 0.1),
+                                       rng3.random(), rng3.uniform(0, 6)))
         self.statisch = {}
         self.wort_cache = {}
         rng = random.Random(3)
@@ -321,7 +330,7 @@ class Szene:
             farbig = akt_a["farbe"]
         elif teil.get("wort") and teil.get("farbe") and not teil.get("nacht"):
             farbig = teil["farbe"]
-        for x, y, k in self.blumen_pos:
+        for x, y, k in ([] if pal == "winter" else self.blumen_pos):  # im Winter keine Blumen
             spr = self.blume(farbig or self.blumen_farben[k])
             dy = -abs(math.sin(math.pi * (beat + k * 0.5) / 2)) * H * 0.012
             frame.paste(spr, (int(x - spr.width / 2), int(y + dy - spr.height * 0.3)), spr)
@@ -390,6 +399,14 @@ class Szene:
                 x = W * x0 + math.sin(t * 1.5 + wph) * W * 0.02
                 y = H * (0.95 - p_ * 1.05)
                 frame.paste(spr_b, (int(x), int(y)), spr_b)
+
+        # Schneefall
+        if teil.get("schnee") or self.cfg.get("winter"):
+            for spr_f, x0, v, ph, wph in self.schneeflocken:
+                p_ = (t * v + ph) % 1.0
+                x = W * x0 + math.sin(t * 0.9 + wph) * W * 0.025
+                y = H * (-0.06 + p_ * 1.1)
+                frame.paste(spr_f, (int(x), int(y)), spr_f)
 
         # Noten-Partikel
         for (t0, spr_n, dx, v) in self.partikel:
@@ -504,7 +521,13 @@ def vorschaubild(szene, pfad, cfg):
         m = G.mond(int(H * 0.07))
         bg.paste(m, (int(W * 0.97 - m.width), int(H * 0.03)), m)
     else:
-        bg = G.hintergrund(W, H, G.PALETTEN[random.Random(cfg.get("titel", "")).randrange(len(G.PALETTEN))])
+        bg = G.hintergrund(W, H, G.WINTER if cfg.get("winter") else
+                           G.PALETTEN[random.Random(cfg.get("titel", "")).randrange(len(G.PALETTEN))])
+        if cfg.get("winter"):
+            rng = random.Random(4)
+            for _ in range(26):
+                fl = BI.flocke_klein(int(H * rng.uniform(0.03, 0.06)))
+                bg.paste(fl, (int(W * rng.uniform(0.0, 0.97)), int(H * rng.uniform(0.0, 0.95))), fl)
         s = szene.sonne.resize((int(H * 0.25), int(H * 0.25)))
         bg.paste(s, (int(W * 0.82), int(H * 0.04)), s)
     fs = int(H * 0.95)

@@ -378,6 +378,7 @@ def gestapelt(sprites, abstand=0.9):
 
 
 NACHT = ("#0f1b4c", "#3b4a8c", "#2e6b3a", "#244f2c")
+WINTER = ("#8ecbf3", "#eef8ff", "#f2f7fc", "#d9e8f5")  # Himmel, verschneite Hügel
 
 
 def mond(r):

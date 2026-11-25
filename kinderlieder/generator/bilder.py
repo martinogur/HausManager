@@ -868,6 +868,134 @@ def bild_sprite(typ, groesse, farbe=None, t=0.0, silhouette=False):
     return z.fertig()
 
 
+# --- Winter-Bilder -----------------------------------------------------------
+
+def _flocke_zeichnen(z, cx, cy, r, farbe=(144, 202, 249, 255), drehung=0.0, breite=None):
+    """Sechsstrahlige Schneeflocke mit kleinen Seitenästen."""
+    b = breite or max(1.0, r * 0.09)
+    for k in range(6):
+        a = math.radians(drehung + k * 60)
+        ex, ey = cx + r * math.cos(a), cy + r * math.sin(a)
+        z.linie([(cx, cy), (ex, ey)], farbe, b)
+        for f in (0.45, 0.7):
+            mx, my = cx + r * f * math.cos(a), cy + r * f * math.sin(a)
+            for sa in (-40, 40):
+                a2 = a + math.radians(sa)
+                z.linie([(mx, my), (mx + r * 0.25 * math.cos(a2), my + r * 0.25 * math.sin(a2))], farbe, b * 0.85)
+    z.ell(cx, cy, r * 0.14, r * 0.14, farbe, outline=None)
+
+
+def _schneeflocke(z, f, t):
+    """Große Schneeflocke, die sich langsam dreht und glitzert."""
+    _flocke_zeichnen(z, 50, 50, 36, (66, 165, 245, 255), drehung=t * 15, breite=3.2)
+    _flocke_zeichnen(z, 50, 50, 36, (227, 242, 253, 255), drehung=t * 15, breite=1.2)
+    for k in range(3):
+        a = t * 3 + k * 2.1
+        z.stern(20 + k * 30, 14 + 3 * math.sin(a), 3.5 * (0.6 + 0.4 * math.sin(a * 2)), (255, 214, 64, 255))
+
+
+def _muetze_zeichnen(z, cx, cy, s, farbe=(229, 57, 53, 255)):
+    hell = (255, 255, 255, 255)
+    z.poly([(cx - 24 * s, cy + 6 * s), (cx - 20 * s, cy - 14 * s), (cx - 6 * s, cy - 26 * s),
+            (cx + 6 * s, cy - 26 * s), (cx + 20 * s, cy - 14 * s), (cx + 24 * s, cy + 6 * s)], farbe)
+    for k in range(3):
+        y = cy - 18 * s + k * 7 * s
+        z.linie([(cx - 18 * s + k * 1.5 * s, y), (cx + 18 * s - k * 1.5 * s, y)], (255, 255, 255, 170), 1.6 * s)
+    z.rrect(cx - 26 * s, cy + 2 * s, cx + 26 * s, cy + 12 * s, 4 * s, hell)
+    z.ell(cx, cy - 30 * s, 7 * s, 7 * s, hell)
+
+
+def _schneemann(z, f, t):
+    """Lachender Schneemann mit Möhrennase, Mütze und Schal."""
+    wackel = math.sin(t * 2) * 1.5
+    weiss, rand = (255, 255, 255, 255), (144, 164, 174, 255)
+    z.ell(50, 96, 34, 6, (187, 222, 251, 255), outline=None)
+    z.ell(50, 78, 22, 17, weiss, outline=rand)
+    z.ell(50, 52, 16, 13, weiss, outline=rand)
+    z.ell(50 + wackel * 0.2, 31, 12, 11, weiss, outline=rand)
+    for y in (48, 56, 74, 82):
+        z.ell(50, y, 2.2, 2.2, (55, 71, 79, 255), outline=None)
+    # Arme (Zweige)
+    braun = (121, 85, 72, 255)
+    z.linie([(35, 50), (18, 40 + wackel)], braun, 1.6)
+    z.linie([(22, 43 + wackel), (17, 36 + wackel)], braun, 1.2)
+    z.linie([(65, 50), (82, 40 - wackel)], braun, 1.6)
+    z.linie([(78, 43 - wackel), (84, 36 - wackel)], braun, 1.2)
+    # Schal
+    z.rrect(37, 40, 63, 45, 2, (30, 136, 229, 255))
+    z.poly([(55, 43), (61, 43), (63, 56), (57, 56)], (30, 136, 229, 255))
+    # Gesicht
+    for sx in (-1, 1):
+        z.ell(50 + sx * 4.5 + wackel * 0.2, 28, 1.8, 2.1, LINIE, outline=None)
+        z.ell(50 + sx * 7.5 + wackel * 0.2, 33, 2.2, 1.4, (248, 187, 208, 255), outline=None)
+    z.poly([(50 + wackel * 0.2, 31), (50 + wackel * 0.2, 34), (61 + wackel * 0.2, 33)], (255, 140, 30, 255))
+    z.d.arc([z.P(45 + wackel * 0.2, 33), z.P(55 + wackel * 0.2, 38.5)], 20, 160, fill=LINIE, width=z.lw)
+    _muetze_zeichnen(z, 50 + wackel * 0.2, 20, 0.45)
+    # fallende Flöckchen
+    for k in range(5):
+        y = (t * 12 + k * 21) % 90 + 5
+        _flocke_zeichnen(z, 12 + k * 19, y, 2.6, (144, 202, 249, 255), breite=0.7)
+
+
+def _muetze(z, f, t):
+    """Rote Bommelmütze."""
+    w = math.sin(t * 3) * 2
+    z.ell(50, 86, 30, 5, (0, 0, 0, 35), outline=None)
+    _muetze_zeichnen(z, 50, 58 + w * 0.3, 1.25)
+
+
+def _schal(z, f, t):
+    """Gestreifter Schal mit Fransen, der im Wind weht."""
+    w = math.sin(t * 2.5) * 3
+    blau, weiss = (30, 136, 229, 255), (255, 255, 255, 255)
+    z.poly([(16, 30), (84, 30), (84, 44), (16, 44)], blau)
+    for x in range(24, 84, 12):
+        z.poly([(x, 30), (x + 5, 30), (x + 5, 44), (x, 44)], weiss, outline=None)
+    z.poly([(16, 30), (84, 30), (84, 44), (16, 44)], None)
+    z.poly([(62, 40), (74, 40), (76 + w, 80), (64 + w, 80)], blau)
+    for k, y in enumerate(range(48, 78, 8)):
+        z.poly([(62.5 + (y - 40) * w / 40 * 0.5, y), (74.5 + (y - 40) * w / 40 * 0.5, y),
+                (74.8 + (y - 40) * w / 40 * 0.5, y + 4), (62.8 + (y - 40) * w / 40 * 0.5, y + 4)], weiss, outline=None)
+    z.poly([(62, 40), (74, 40), (76 + w, 80), (64 + w, 80)], None)
+    for k in range(5):
+        x = 64.5 + w + k * 2.6
+        z.linie([(x, 80), (x + w * 0.2, 87)], blau, 1.2)
+
+
+ZEICHNER.update({"schneeflocke": _schneeflocke, "schneemann": _schneemann, "muetze": _muetze, "schal": _schal})
+ANIMIERT.update({"schneeflocke", "schneemann", "muetze", "schal"})
+HINTERGRUND.update({"schneeflocke": (232, 245, 253, 255), "schneemann": (227, 242, 253, 255)})
+
+
+def flocke_klein(groesse):
+    """Kleine weiße Schneeflocke (für fallenden Schnee im Hintergrund)."""
+    z = Zeichner(groesse)
+    _flocke_zeichnen(z, 50, 50, 42, (90, 135, 185, 190), breite=10)
+    _flocke_zeichnen(z, 50, 50, 42, (255, 255, 255, 245), breite=5.5)
+    return z.fertig()
+
+
+def menge_sprite(objekt, anzahl, groesse, farbe=None, t=0.0):
+    """Rundes Bild mit `anzahl` gleichen Dingen zum Mitzählen (für Zähl-Shorts)."""
+    basis = bild_sprite("leer", groesse, farbe, t)
+    S = basis.width
+    reihen = [anzahl] if anzahl <= 2 else [2, 1] if anzahl == 3 else ([anzahl - anzahl // 2, anzahl // 2] if anzahl <= 6
+                                         else [anzahl - 2 * (anzahl // 3), anzahl // 3, anzahl // 3])
+    feld = int(S * min(0.5, 0.7 / max(reihen), 0.68 / len(reihen)))  # passt immer in den Kreis
+    f = rgb(farbe) if farbe else None
+    z = Zeichner(feld)
+    ZEICHNER[objekt](z, f if objekt in ("blume", "fisch") or objekt in FORMFARBE else None, t)
+    ding = z.fertig()
+    hoehe = len(reihen) * feld * 0.95
+    y = (S - hoehe) / 2
+    for n in reihen:
+        x = (S - n * feld * 0.95) / 2
+        for k in range(n):
+            basis.alpha_composite(ding, (int(x + k * feld * 0.95), int(y)))
+        y += feld * 0.95
+    return basis
+
+
 def zahl_sprite(zahl, groesse, farbe, objekt="moehre"):
     """Große Zahl + entsprechend viele Möhren (oder Punkte) zum Mitzählen."""
     f = rgb(farbe)
@@ -895,6 +1023,8 @@ def zahl_sprite(zahl, groesse, farbe, objekt="moehre"):
             z.ell(38, 38, 11, 11, (255, 255, 255, 150), outline=None)
         elif objekt == "schaf":
             _schaf_zeichnen(z, 56, 50, 1.45, augen_zu=False)
+        elif objekt in ZEICHNER and objekt != "moehre":
+            ZEICHNER[objekt](z, None, 0.0)
         else:
             _moehre(z, None, 0, x=55, y=50, s=1.2, winkel=-60)
         m = z.fertig().resize((int(feld), int(feld)), Image.LANCZOS)

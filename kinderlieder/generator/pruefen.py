@@ -70,6 +70,8 @@ def pruefe_short(cfg):
         b = d.get("bild", "")
         if not (b in BEKANNTE_BILDER or (b.startswith("figur:") and b.split(":")[1] in G.FIGUREN)):
             fehler.append(f"Bild '{b}' gibt es nicht")
+        if d.get("anzahl") and not (1 <= int(d["anzahl"]) <= 9 and b in BI.ZEICHNER):
+            fehler.append(f"Zählrätsel '{b}': Anzahl 1–9 und ein gezeichnetes Bild nötig")
         if d.get("geraeusch") and d["geraeusch"] not in EFFEKTE:
             fehler.append(f"Unbekanntes Geräusch '{d['geraeusch']}'")
     if not 3 <= len(cfg.get("dinge", [])) <= 5:
