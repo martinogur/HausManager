@@ -41,7 +41,7 @@ Fester Ansprechpartner · Kontrolle inklusive
 📲 Angebot per WhatsApp
 ```
 
-**Variante C – Winterdienst-Saison (Okt–März)**
+**Variante C – Winterdienst-Saison (Nov–März)**
 ```
 ❄️ Winterdienst Gütersloh – räumen & streuen
 + Treppenhaus, Garten, Kleinreparaturen

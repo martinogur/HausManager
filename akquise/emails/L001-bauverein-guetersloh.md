@@ -33,9 +33,8 @@ Mit freundlichen Grüßen
 
 Martin Ogur
 Inhaber, Hausmeister Helden
-Auf der Benkert 68, 33330 Gütersloh
-Telefon und WhatsApp 05241 3389748 · www.haus-meister-helden.de
-Inhaber: Martin Ogur (Einzelunternehmen) · Auf der Benkert 68, 33330 Gütersloh
+Hausmeister Helden, Inhaber Martin Ogur · Auf der Benkert 68, 33330 Gütersloh
+Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de
 
 Wenn Sie keine weiteren E-Mails von uns wünschen, genügt eine kurze Nachricht.
 
@@ -63,6 +62,5 @@ Mit freundlichen Grüßen
 
 Martin Ogur
 Inhaber, Hausmeister Helden
-Auf der Benkert 68, 33330 Gütersloh
-Telefon und WhatsApp 05241 3389748 · www.haus-meister-helden.de
-[OFFEN: Pflichtangaben E-Mail-Signatur]
+Hausmeister Helden, Inhaber Martin Ogur · Auf der Benkert 68, 33330 Gütersloh
+Telefon und WhatsApp 05241 3389748 · info@haus-meister-helden.de · www.haus-meister-helden.de

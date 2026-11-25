@@ -1,0 +1,40 @@
+{
+  "woche": "KW 48/2026 – Facebook (Do 26.11. - So 29.11.)",
+  "hinweis": "Facebook-Fassung der Instagram-Grafiken (2026-KW48.json und 2026-11-25-feed.json), Ansprache Sie. Preise freigegeben am 24.11.2026, netto zzgl. 19 % MwSt. Keine konkreten Räumzeiten (Satzung). Allgemeine Infos, kein Rechtsrat. Rendern: python3 marketing/instagram/grafik.py marketing/facebook/2026-KW48.json",
+  "posts": [
+    {
+      "id": "01-winterdienst-pflichten",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Winterdienst", "titel": "*3 Pflichten* beim Winterdienst", "text": "Was Sie als Vermieter wissen sollten"},
+        {"art": "punkt", "nr": "1", "titel": "Räumen & *streuen*", "text": "Gehweg und Hauszugang müssen sicher sein. Wann und wie, regelt die Ortssatzung."},
+        {"art": "punkt", "nr": "2", "titel": "*Kontrollieren*", "text": "Übergeben Sie den Winterdienst an Mieter oder Dienstleister, müssen Sie trotzdem prüfen, ob er erledigt wird."},
+        {"art": "punkt", "nr": "3", "titel": "*Dokumentieren*", "text": "Wann wurde geräumt, wann gestreut? Im Schadensfall zählt der Nachweis."},
+        {"art": "cta", "titel": "Lieber *abgeben*?", "text": "Wir übernehmen den Winterdienst – mit Einsatzprotokoll."}
+      ]
+    },
+    {
+      "id": "02-winterdienst-preis",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Winterdienst", "titel": "Der Preis *einfach* erklärt", "text": "Zwei Zahlen – mehr brauchen Sie nicht."},
+        {"art": "liste", "titel": "So setzt er sich *zusammen*", "punkte": ["220 € Grundpauschale je Objekt und Saison", "+ 9,50 € je laufendem Meter", "Räumen, Streuen, Streugut und Einsatzprotokoll inklusive", "Saison November bis März"]},
+        {"art": "liste", "titel": "Beispiel: *25 Meter*", "punkte": ["Grundpauschale: 220,00 €", "+ 25 m Gehweg × 9,50 € = 237,50 €", "= 457,50 € je Saison", "alle Preise netto zzgl. 19 % MwSt."]},
+        {"art": "cta", "titel": "Was kostet *Ihr* Gehweg?", "text": "Nennen Sie uns die Adresse – wir messen bei der kostenlosen Besichtigung nach."}
+      ]
+    },
+    {
+      "id": "03-objektbetreuung-ablauf",
+      "format": "karussell",
+      "folien": [
+        {"art": "titel", "kicker": "Objektbetreuung", "titel": "So betreuen wir *Ihr Haus*", "text": "In 4 einfachen Schritten"},
+        {"art": "punkt", "nr": "1", "titel": "Sie *melden* sich", "text": "Per WhatsApp oder Telefon. Wir antworten innerhalb von 24 Stunden."},
+        {"art": "punkt", "nr": "2", "titel": "Wir schauen *vorbei*", "text": "Kostenlose Besichtigung vor Ort: Was braucht Ihr Objekt wirklich?"},
+        {"art": "punkt", "nr": "3", "titel": "Ihr *Angebot*", "text": "Klar und unverbindlich – passend zu den Leistungen, die Sie brauchen."},
+        {"art": "punkt", "nr": "4", "titel": "Wir *kümmern* uns", "text": "Fester Ansprechpartner. Gebäudekontrolle mit Protokoll ist immer inklusive."},
+        {"art": "liste", "titel": "Das übernehmen *wir*", "punkte": ["Treppenhausreinigung", "Winterdienst", "Gartenarbeit & Laub", "Kleinreparaturen", "Mülltonnen-Service"]},
+        {"art": "cta", "titel": "Erster Schritt: *Nachricht*", "text": "Schreiben Sie uns – wir melden uns innerhalb von 24 Stunden."}
+      ]
+    }
+  ]
+}

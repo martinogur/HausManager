@@ -69,7 +69,7 @@ Preise nur eintragen, wenn geklärt ist, ob sie **netto oder brutto** sind. [OFF
 | Winterdienst | Schnee räumen und Glätte streuen auf Gehwegen, Zugängen und Parkflächen – zuverlässig in der Saison November bis März. Wir übernehmen die Räum- und Streupflicht für Ihr Objekt. Jeder Einsatz wird protokolliert. [OFFEN: Haftungsübernahme vertraglich?] | ab 220 € / Saison + 9,50 € je Meter (netto) |
 | Gartenpflege | Rasen mähen, Hecken schneiden, Laub entfernen, Beete und Außenanlagen pflegen. | nach Fläche, ca. 0,30–0,40 € je m² / Monat (netto) |
 | Kleinreparaturen | Türen einstellen, Leuchtmittel wechseln, kleine Defekte beheben – schnell und unkompliziert. | 53,50 € / Stunde (netto) |
-| Mülltonnen-Service | Tonnen zur Abfuhr bereitstellen und zurückstellen, Müllplätze sauber halten. | 6,50 € je Abfuhrtermin (netto) |
+| Mülltonnen-Service | Tonnen zur Abfuhr bereitstellen und zurückstellen, Müllplätze sauber halten. | 6,50 € je Abfuhrtermin + 1,34 € je Leerung (netto) |
 | Gebäudekontrolle mit Protokoll | Regelmäßige Kontrollgänge mit schriftlichem Protokoll. Schäden werden gemeldet, bevor sie teuer werden. Kostenlos inklusive bei jeder Leistung. | kostenlos (inklusive) |
 | Kostenlose Objektbesichtigung | Wir schauen uns Ihr Objekt vor Ort an und erstellen ein unverbindliches Angebot. | kostenlos |
 
@@ -137,7 +137,7 @@ Länge: 150–300 Wörter sind möglich, gelesen werden aber meist nur die erste
 Typ: Neuigkeit · Button: **Anrufen** · Foto: Streugut/Schneeschieber am Fahrzeug oder vor einem Hauseingang
 
 > Der erste Frost ist da – ist Ihr Gehweg schon versorgt?
-> Hausmeister Helden übernimmt den Winterdienst für Mehrfamilienhäuser, Wohnanlagen und Gewerbeobjekte in Gütersloh und Umgebung: Schnee räumen, Glätte streuen, Zugänge und Parkflächen sicher halten – von Oktober bis März.
+> Hausmeister Helden übernimmt den Winterdienst für Mehrfamilienhäuser, Wohnanlagen und Gewerbeobjekte in Gütersloh und Umgebung: Schnee räumen, Glätte streuen, Zugänge und Parkflächen sicher halten – von November bis März.
 > Für Hausverwaltungen, WEGs und Vermieter: ein fester Ansprechpartner, Rückmeldung innerhalb von 24 Stunden, Objektbesichtigung kostenlos.
 > Jetzt anrufen oder per WhatsApp schreiben: 05241 3389748.
 
