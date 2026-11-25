@@ -11,7 +11,7 @@ hinweis: Ob die LEG Bestand im Umkreis hat, ist nicht geprüft [OFFEN]. Für Reg
 
 **Firma:** Hausmeister Helden
 
-**Rechtsform:** [OFFEN: Rechtsform]
+**Rechtsform:** Einzelunternehmen (Inhaber Martin Ogur)
 
 **Inhaber / Ansprechpartner:** Martin Ogur
 

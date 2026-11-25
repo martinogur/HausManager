@@ -657,7 +657,7 @@ def impressum():
 <h2>Angaben gemäß § 5 DDG</h2>
 <p>{FIRMA['name']}<br>Inhaber: {FIRMA['inhaber']}<br>{FIRMA['strasse']}<br>{FIRMA['plz']} {FIRMA['ort']}</p>
 <h2>Kontakt</h2><p>Telefon: {FIRMA['tel']}<br>E-Mail: <a href="mailto:{FIRMA['mail']}">{FIRMA['mail']}</a></p>
-<!-- OFFEN: Umsatzsteuer-ID (falls vorhanden) und Rechtsform ergänzen -->
+<!-- Einzelunternehmen; USt-IdNr. ergänzen, falls vorhanden -->
 <h2>Verantwortlich für den Inhalt</h2><p>{FIRMA['inhaber']}, Anschrift wie oben.</p>
 <h2>Verbraucherstreitbeilegung</h2><p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 <h2>Haftung für Inhalte und Links</h2><p>Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität übernehmen wir keine Gewähr. Für Inhalte verlinkter externer Seiten sind ausschließlich deren Betreiber verantwortlich.</p>

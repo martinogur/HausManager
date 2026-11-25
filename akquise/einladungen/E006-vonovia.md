@@ -11,7 +11,7 @@ hinweis: Prio C. Vonovia macht das Wohnumfeld oft selbst, die Chancen für klein
 
 **Firma:** Hausmeister Helden
 
-**Rechtsform:** [OFFEN: Rechtsform]
+**Rechtsform:** Einzelunternehmen (Inhaber Martin Ogur)
 
 **Ansprechpartner:** Martin Ogur (Inhaber)
 

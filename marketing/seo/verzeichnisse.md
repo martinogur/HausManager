@@ -22,7 +22,7 @@ Regeln:
 - Straße ausgeschrieben, „Auf der Benkert“, **nicht** abgekürzt.
 - Telefonnummer immer mit Leerzeichen nach der Vorwahl, ohne Schrägstrich oder Bindestrich.
 - Webseite immer mit `https://www.`.
-- Gibt es später eine Rechtsform (z. B. „Hausmeister Helden GmbH“), dann **überall gleichzeitig** ändern. [OFFEN: Rechtsform]
+- Gibt es später eine Rechtsform (z. B. „Hausmeister Helden GmbH“), dann **überall gleichzeitig** ändern.
 - Kurzbeschreibung: den Text aus `google-profil.md` (Abschnitt 3) nehmen, bei kürzeren Feldern nur die ersten 2 Sätze.
 
 ## Liste (Reihenfolge = Wichtigkeit)

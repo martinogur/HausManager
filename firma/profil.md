@@ -6,7 +6,7 @@
 ## Basisdaten
 - Firmenname: Hausmeister Helden
 - Inhaber: Martin Ogur (fester Ansprechpartner)
-- Rechtsform: [OFFEN] (z. B. Einzelunternehmen, GmbH)
+- Rechtsform: Einzelunternehmen (nicht im Handelsregister eingetragen) – Inhaber Martin Ogur. Pflichtangaben auf Briefen/E-Mails: voller Name + Anschrift (+ USt-IdNr., falls vorhanden).
 - Adresse: Auf der Benkert 68, 33330 Gütersloh
 - Telefon: 05241 3389748
 - WhatsApp Business Nummer: 05241 3389748 (Festnetz) – Link: https://wa.me/4952413389748

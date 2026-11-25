@@ -11,7 +11,7 @@ hinweis: Das Formular wurde nicht geöffnet, die genauen Felder sind unbekannt. 
 
 **Firma:** Hausmeister Helden
 
-**Rechtsform:** [OFFEN: Rechtsform]
+**Rechtsform:** Einzelunternehmen (Inhaber Martin Ogur)
 
 **Inhaber / Ansprechpartner:** Martin Ogur
 
