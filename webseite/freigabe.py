@@ -2,8 +2,8 @@
 """Erstellt die Freigabe-Übersicht für die Webseite (webseite/freigabe/).
 
 Ablauf: build.py -> freigabe.py -> Übersicht als Artifact veröffentlichen ->
-Inhaber gibt im Chat frei -> `git push origin HEAD:webseite-live` -> IONOS Deploy Now
-veröffentlicht automatisch auf www.haus-meister-helden.de.
+Inhaber gibt im Chat frei -> `git push origin HEAD:webseite-live` -> GitHub Pages
+(Workflow auf main, alle 30 Min.) veröffentlicht auf www.haus-meister-helden.de.
 
 Änderungen für die Übersicht stehen in freigabe/aenderungen.md (eine Zeile pro Punkt, "- ...").
 """
@@ -19,8 +19,8 @@ REPO = ROOT.parent
 PUBLIC = ROOT / "public"
 OUT = ROOT / "freigabe"
 LIVE_BRANCH = "webseite-live"
-# Wird auf True gesetzt, sobald IONOS Deploy Now mit dem Branch webseite-live verbunden ist.
-DEPLOY_NOW_VERBUNDEN = False
+# GitHub Pages (Workflow .github/workflows/webseite.yml auf main) veröffentlicht webseite-live alle 30 Minuten.
+DEPLOY_NOW_VERBUNDEN = True
 
 SEITEN_NAMEN = {
     "index.html": "Startseite", "hausverwaltungen.html": "Für Hausverwaltungen", "ratgeber.html": "Ratgeber (Übersicht)",
@@ -106,7 +106,7 @@ def main():
     offen_html = "".join(f"<li>{e(a)}</li>" for a in OFFENE_PUNKTE)
     pruef = ('<p class="ok">Automatische Prüfung bestanden: keine Fehler, Handy-Ansicht passt.</p>' if not fehler else
              '<p class="warn">Prüfung hat Hinweise gefunden:</p><ul>' + "".join(f"<li>{e(x)}</li>" for x in fehler) + "</ul>")
-    deploy = ("Nach deiner Freigabe veröffentlicht IONOS Deploy Now die Seite automatisch auf <b>www.haus-meister-helden.de</b>, meist innerhalb weniger Minuten."
+    deploy = ("Nach deiner Freigabe geht die Seite automatisch über GitHub Pages auf <b>www.haus-meister-helden.de</b> online, spätestens nach 30 Minuten."
               if DEPLOY_NOW_VERBUNDEN else
               "Noch nicht verbunden: Sobald IONOS Deploy Now eingerichtet ist, geht die Seite nach deiner Freigabe automatisch online. Bis dahin wird nur der Stand gespeichert.")
 

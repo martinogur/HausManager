@@ -13,21 +13,18 @@ Neue, schnelle Webseite: 12 Seiten, ohne Cookies und ohne Tracking (kein Cookie-
 
 ```
 Agent baut die Seite (Di + Fr) → Freigabe-Übersicht (Artifact) → du schreibst „Webseite freigeben“
-→ Push auf Branch webseite-live → IONOS Deploy Now → www.haus-meister-helden.de
+→ Push auf Branch webseite-live → GitHub Pages (alle 30 Min.) → www.haus-meister-helden.de
 ```
 
 - `python3 webseite/build.py` baut die Seite nach `public/`.
 - `python3 webseite/freigabe.py` erstellt die Übersicht in `freigabe/` (Screenshots, Prüfung, Liste der geänderten Seiten).
 - Freigabe-Link (bleibt immer gleich): https://claude.ai/artifact/ASec45HoYTtWniU4ZzWRiB
 
-### Einmalig einrichten: IONOS Deploy Now (macht der Inhaber, ca. 10 Minuten)
-Deploy Now ist der IONOS-Dienst, der eine Webseite direkt aus GitHub veröffentlicht. Passwörter musst du dafür nicht weitergeben.
-1. Erste Freigabe im Chat geben („Webseite freigeben“). Dadurch entsteht der Branch `webseite-live`.
-2. Im IONOS-Konto **Deploy Now** öffnen → Projekt anlegen → mit GitHub verbinden → Repository `martinogur/HausManager` wählen.
-3. Bei den Build-Einstellungen: **kein Framework / statische Seite**, Build-Befehl leer lassen, **Veröffentlichungsordner: `webseite/public`**.
-4. **Produktions-Branch: `webseite-live`.**
-5. In den Projekteinstellungen **Domain verbinden** → `haus-meister-helden.de` (und `www.`). Achtung: Dadurch wird die alte Baukasten-Seite ersetzt.
-6. Claude Bescheid geben („Deploy Now ist eingerichtet“). Dann wird in `freigabe.py` `DEPLOY_NOW_VERBUNDEN = True` gesetzt und die Live-Seite geprüft.
+### Hosting: GitHub Pages (eingerichtet am 24.11.2026)
+- Der Workflow `.github/workflows/webseite.yml` auf dem Branch `main` veröffentlicht den Ordner `webseite/public`
+  vom Branch `webseite-live` – alle 30 Minuten automatisch oder sofort über GitHub → Actions → „Run workflow“.
+- Die Domain `haus-meister-helden.de` (bei IONOS) zeigt per DNS auf GitHub Pages. E-Mail-Postfächer bleiben bei IONOS.
+- `webseite-live` wird nur nach Freigabe des Inhabers aktualisiert.
 
 Danach in der **Google Search Console** die `sitemap.xml` einreichen.
 

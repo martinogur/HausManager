@@ -15,6 +15,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "public"
 HEUTE = dt.date.today()
+# Versionskennung für CSS/JS: ändert sich nur, wenn sich die Dateien ändern (nicht täglich)
+import hashlib as _h
+ASSET_V = _h.sha1(b"".join((Path(__file__).resolve().parent / "static" / f).read_bytes() for f in ("style.css", "app.js"))).hexdigest()[:8]
 
 # ---------------------------------------------------------------- Stammdaten
 FIRMA = {
@@ -232,7 +235,7 @@ def page(slug, title, desc, body, schema=(), nav_home=False):
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v={HEUTE:%Y%m%d}">
+<link rel="stylesheet" href="style.css?v={ASSET_V}">
 {schemas}
 </head>
 <body>
@@ -257,7 +260,7 @@ def page(slug, title, desc, body, schema=(), nav_home=False):
   <a class="btn btn-wa" href="{wa()}" target="_blank" rel="noopener">{WA_SVG} WhatsApp</a>
 </div>
 <a class="wa-float" href="{wa()}" target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben" style="color:#fff">{WA_SVG}</a>
-<script src="app.js?v={HEUTE:%Y%m%d}" defer></script>
+<script src="app.js?v={ASSET_V}" defer></script>
 </body>
 </html>
 """

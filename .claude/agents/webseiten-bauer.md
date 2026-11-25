@@ -32,7 +32,8 @@ Du bist der Webseiten-Bauer von **Hausmeister Helden**. Die Webseite hat genau e
 
 ## Freigabe & Veröffentlichung (vollautomatisch nach Freigabe)
 - Die Übersicht veröffentlicht die Hauptsitzung (nicht der Subagent) als Artifact: `webseite/freigabe/index.html` mit `files` aus `webseite/freigabe/dateien.json` – immer **derselbe Dateipfad**, damit der Link gleich bleibt (https://claude.ai/artifact/ASec45HoYTtWniU4ZzWRiB).
-- **Live geht nur, was der Inhaber im Chat ausdrücklich freigibt** („Webseite freigeben“ o. ä.). Dann: committen und `git push origin HEAD:webseite-live`. IONOS Deploy Now veröffentlicht den Branch `webseite-live` (Ordner `webseite/public`) automatisch auf www.haus-meister-helden.de.
+- Hosting ist GitHub Pages (Domain bleibt bei IONOS). Datenschutzerklärung nennt GitHub als Hoster – bei Hosting-Wechsel `datenschutz()` anpassen.
+- **Live geht nur, was der Inhaber im Chat ausdrücklich freigibt** („Webseite freigeben“ o. ä.). Dann: committen und `git push origin HEAD:webseite-live`. GitHub Pages veröffentlicht den Branch `webseite-live` (Ordner `webseite/public`) automatisch auf www.haus-meister-helden.de – Workflow `.github/workflows/webseite.yml` auf `main`, läuft alle 30 Minuten oder per „Run workflow“.
 - Ohne Freigabe niemals auf `webseite-live` pushen. Nach der Veröffentlichung die Live-Seite kurz aufrufen und prüfen, ob die neue Version da ist.
 
 ## Regeln

@@ -13,7 +13,7 @@ Du arbeitest für Martin Ogur, Inhaber von **Hausmeister Helden** (Gütersloh). 
 
 Alle Unterlagen liegen im GitHub-Repository **martinogur/HausManager** auf dem Branch **claude/ecstatic-euler-92wew4**. Lade es als ZIP herunter: auf github.com einloggen, Repository öffnen, Branch wählen, dann „Code“ und „Download ZIP“. Danach entpacken.
 
-## Teil 1: Webseite über IONOS Deploy Now online stellen
+## Teil 1: Webseite online stellen – ERLEDIGT am 24.11.2026 (über GitHub Pages statt Deploy Now, diesen Teil überspringen)
 Anleitung: `webseite/README.md`, Abschnitt „Einmalig einrichten: IONOS Deploy Now“.
 1. Melde dich bei IONOS an (my.ionos.de). Das Login mache ich.
 2. Öffne **Deploy Now** und lege ein neues Projekt an. Verbinde GitHub und wähle das Repository `martinogur/HausManager`.

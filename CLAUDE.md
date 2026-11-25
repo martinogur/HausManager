@@ -39,7 +39,7 @@ Kunden, Reichweite und Umsatz steigern.
    Instagram (falls im Profil nicht anders festgelegt).
 5. **Webseite:** Live geht nur nach Freigabe. Ablauf: `webseiten-bauer` baut → Freigabe-Übersicht
    (Artifact https://claude.ai/artifact/ASec45HoYTtWniU4ZzWRiB) → Inhaber schreibt „Webseite freigeben“ →
-   `git push origin HEAD:webseite-live` → IONOS Deploy Now veröffentlicht automatisch. Diese Freigabe ist die
+   `git push origin HEAD:webseite-live` → GitHub Pages veröffentlicht automatisch (Workflow auf `main`, alle 30 Minuten). Diese Freigabe ist die
    Erlaubnis des Inhabers, auf `webseite-live` zu pushen – und gilt jeweils nur für die gezeigte Version.
 6. Jeder Agent schreibt am Ende eine kurze Zusammenfassung in
    `berichte/JJJJ-MM-TT-<agent>.md`: Was wurde gemacht, was braucht Freigabe,
