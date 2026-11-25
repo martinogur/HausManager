@@ -29,6 +29,8 @@ x-web-umgebung: &web-umgebung
   # Pfad für hochgeladene Dateien im Container (Volume "dateien")
   DJANGO_MEDIA_ROOT: /srv/portal/daten
   GUNICORN_WORKERS: ${GUNICORN_WORKERS:-3}
+  # Eingehender Make-Webhook (leer = Webhook abgeschaltet)
+  MAKE_WEBHOOK_TOKEN: ${MAKE_WEBHOOK_TOKEN:-}
 
 x-web-build: &web-build
   context: ../app
@@ -117,6 +119,46 @@ services:
         limits: { cpus: "1.00", memory: 512M }
     logging: *logging
 
+  # KI-Agenten und Automatisierungen: jede Minute ein Arbeitslauf (Zeitpläne, Ereignisse, Agentenaufträge).
+  # Einziger Dienst mit ausgehenden Verbindungen (Claude API, IONOS IMAP/SMTP, HubSpot, Lexware).
+  # Zugangsdaten nur, wenn vorhanden – fehlende Werte bedeuten „Integration nicht eingerichtet“.
+  agenten:
+    build: *web-build
+    image: hh-portal-web:${PORTAL_VERSION:-lokal}
+    restart: unless-stopped
+    <<: *sicherheit
+    cap_drop: [ALL]
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+    environment:
+      <<: *web-umgebung
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      IONOS_MAIL_BENUTZER: ${IONOS_MAIL_BENUTZER:-}
+      IONOS_MAIL_PASSWORT: ${IONOS_MAIL_PASSWORT:-}
+      HUBSPOT_TOKEN: ${HUBSPOT_TOKEN:-}
+      HUBSPOT_PIPELINE: ${HUBSPOT_PIPELINE:-default}
+      HUBSPOT_DEALSTAGE_NEU: ${HUBSPOT_DEALSTAGE_NEU:-appointmentscheduled}
+      LEXWARE_API_KEY: ${LEXWARE_API_KEY:-}
+    command:
+      - sh
+      - -c
+      - python manage.py agenten_sync && while true; do python manage.py agenten_arbeiten --max-sekunden 240; sleep 60; done
+    volumes:
+      - dateien:/srv/portal/daten
+    networks: [intern, ausgehend]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      disable: true
+    deploy:
+      resources:
+        limits: { cpus: "0.50", memory: 512M }
+    logging: *logging
+
   db:
     image: postgres:16.15-trixie
     restart: unless-stopped
@@ -149,8 +191,8 @@ networks:
   # Internes Netz ohne Verbindung nach außen (Datenbank, Anwendung).
   intern:
     internal: true
-  # Ab Phase 5 hier ein Netz "ausgehend: {}" ergänzen und dem Dienst web zuweisen
-  # (ausgehende Verbindungen zu IONOS, HubSpot usw., ohne veröffentlichte Ports).
+  # Ausgehende Verbindungen (nur Dienst "agenten"): Claude API, IONOS, HubSpot, Lexware – keine Ports.
+  ausgehend: {}
 
 volumes:
   pg_daten:

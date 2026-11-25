@@ -11,7 +11,7 @@
 #
 # Im Container liegt die Repository-Struktur gespiegelt vor:
 #   /srv/portal/app   Django-Projekt (manage.py, config/, …)
-#   /srv/portal/db    schema.sql
+#   /srv/portal/db    schema.sql + erweiterungen/ (Migration kern/0003 liest sie zur Laufzeit)
 #   /srv/portal/daten Hochgeladene Dateien (Volume, MEDIA_ROOT)
 #   /srv/static       Kopie der statischen Dateien für Caddy (Volume, wird vom migrate-Job befüllt)
 
@@ -60,6 +60,7 @@ COPY --from=abhaengigkeiten /opt/venv /opt/venv
 
 # Code und Schema gehören root und sind für den Dienst nur lesbar
 COPY --from=db schema.sql /srv/portal/db/schema.sql
+COPY --from=db erweiterungen /srv/portal/db/erweiterungen
 COPY . /srv/portal/app
 WORKDIR /srv/portal/app
 
