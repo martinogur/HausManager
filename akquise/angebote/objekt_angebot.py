@@ -105,7 +105,7 @@ def seiten(kunde, objekt, nr, r, gueltig):
     s1 = f"""
 <p class="betreff">Angebot {e(nr)}: Hausmeisterservice {e(objekt['adresse'])}</p>
 <p>{e(kunde['gruss'])}</p>
-<p>vielen Dank für deine Anfrage. Hier ist unser Angebot für {e(objekt['adresse'])} – berechnet nach dem tatsächlichen Aufwand, nicht pro Wohneinheit. Ich bin dein fester Ansprechpartner und melde mich innerhalb von 24 Stunden.</p>
+<p>{e(kunde.get('dank', 'vielen Dank für deine Anfrage.'))} Hier ist unser Angebot für {e(objekt['adresse'])} – berechnet nach dem tatsächlichen Aufwand, nicht pro Wohneinheit. Ich bin dein fester Ansprechpartner und melde mich innerhalb von 24 Stunden.</p>
 <table class="tab"><thead><tr><th>Leistung (monatlich)</th><th style="text-align:right">netto</th></tr></thead><tbody>{zeilen}</tbody></table>
 {('<table class="tab"><thead><tr><th>Wahlweise</th><th style="text-align:right">netto</th></tr></thead><tbody>' + opt + '</tbody></table>') if opt else ''}
 <p class="klein">Sichtkontrolle (Licht, Türen, Müllplatz) bei jedem Einsatz inklusive. Angaben nach Ansicht von außen; ändert sich bei der kurzen Besichtigung etwas (z. B. Etagenzahl), passen wir den Preis transparent nach denselben Einzelpreisen an.</p>
@@ -172,7 +172,7 @@ def main(pfad: str) -> None:
     notiz += ["**Neu zur Bestätigung:** Winterdienst nach Marktmodell (Vergleichsangebot 03/2026): Bereitstellung 125 €, "
               "Streuen 25 €, Räumen+Streuen 53 € (bis 25 m, darüber +0,50 €/+1,20 € je Meter), >15 cm 53,50 €/Std.; "
               "Hecke über 1,5 m nach Aufwand (Std. × 53,50 € + 15 € Entsorgung).", "",
-              "**Nach Freigabe:** Antwort aus `antwort-email.md` mit `alle-angebote.pdf` aus dem IONOS-Postfach senden."]
+              f"**Nach Freigabe:** Antwort aus `antwort-email.md` mit `alle-angebote.pdf` aus dem IONOS-Postfach senden. Kontaktgrundlage: {kunde.get('kontaktgrundlage', 'Kunde hat angefragt')}."]
     (ordner / "FREIGABE.md").write_text("\n".join(notiz) + "\n", encoding="utf-8")
     print("\n".join(notiz))
 
