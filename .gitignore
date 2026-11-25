@@ -1,2 +1,8 @@
 webseite/*.zip
 akquise/briefe/pdf/
+*.whl
+__pycache__/
+*.pyc
+.pytest_cache/
+portal/deploy/.env
+portal/app/staticfiles/
