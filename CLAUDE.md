@@ -5,6 +5,8 @@ Hier arbeitet ein Team aus spezialisierten KI-Agenten (`.claude/agents/`), die A
 Kunden, Reichweite und Umsatz steigern.
 
 ## Immer zuerst lesen
+- **Preise:** einzige Quelle `portal/app/vertrieb/preisliste.json`. Nach jeder Änderung `python3 werkzeuge/preise.py --schreiben`
+  und `--pruefen` (Agent `preis-waechter`). Keine Preise von Hand in Webseite oder Profil eintragen.
 - `firma/profil.md` – alle Firmendaten (Leistungen, Region, Preise, Kontakt, Ton).
   Kein Agent erfindet Firmendaten. Fehlt etwas, wird es als `[OFFEN: …]` markiert
   und im Bericht als Frage an den Inhaber aufgeführt.
@@ -26,6 +28,7 @@ Kunden, Reichweite und Umsatz steigern.
 | `personal-recruiter` | Stellenanzeigen, Kanäle, Bewerber-Entwürfe, Einarbeitung | `personal/` |
 | `portal-entwickler` | Verwaltungsportal phasenweise weiterentwickeln | `portal/` |
 | `qualitaets-pruefer` | Prüft alle Ergebnisse vor der Freigabe (Recht, Fakten, Einheitlichkeit) | `berichte/` |
+| `preis-waechter` | Hält alle Preise synchron (eine Preisliste → Portal, Angebote, Webseite, Profil, Texte) | `werkzeuge/preise.py` |
 
 ## Feste Regeln für alle Agenten
 1. **Nichts wird ohne Freigabe des Inhabers verschickt oder veröffentlicht.** Agenten erstellen

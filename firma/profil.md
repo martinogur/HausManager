@@ -43,16 +43,20 @@
 4. Gewerbe: Büros, Praxen, Arztzentren, Supermärkte, Hotels
 5. Privatkunden (Garten, Winterdienst, Entrümpelung)
 
-## Preise (freigegeben vom Inhaber am 24.11.2026 – netto zzgl. 19 % MwSt.)
-Details und Herleitung: `akquise/angebote/preiskalkulation.md` / `.xlsx`. Abrechnung nach Aufwand, nicht pro Wohneinheit.
-- Arbeitsstunde (Kleinreparaturen, Sonderarbeiten): 53,50 €/h, je angefangene 15 Min. 13,50 €, mindestens 30 Min. (27 €)
+<!-- PREISE:START (automatisch aus preisliste.json – nicht von Hand ändern) -->
+## Preise (Stand 2026-11-25 – netto zzgl. 19 % MwSt.)
+Einzige Quelle: `portal/app/vertrieb/preisliste.json`. Herleitung: `akquise/angebote/preiskalkulation.md`. Abrechnung nach Aufwand, nicht pro Wohneinheit.
+- Freigabe 2026-11-24: Preisliste vom Inhaber freigegeben (akquise/angebote/preiskalkulation.md)
+- Freigabe 2026-11-25: Inhaber – Winterdienst als Bereitstellung + je Einsatz (Standard), Saisonpauschale bleibt Option; Hecke über 1,5 m nach Aufwand
+- Arbeitsstunde (Kleinreparaturen, Sonderarbeiten): 53,50 €/h, je angefangene 15 Min. 13,50 €, mindestens 30 Min. (27,00 €)
 - Anfahrt: Gütersloh bis 10 km 14,50 €, Umland 10–25 km 36,50 €
-- Treppenhausreinigung: 12 € je Treppenhaus und Reinigung + 8 € je Etage; Aufzug 4,45 €; 14-täglich +15 % je Reinigung
-  (Beispiel: 1 Treppenhaus, 3 Etagen, wöchentlich ≈ 156 €/Monat)
-- Winterdienst (Saison Nov–März): 220 € Grundpauschale je Objekt + 9,50 € je lfd. Meter inkl. Streugut und Einsatzprotokoll; Einzeleinsatz ohne Vertrag 43,50 €
-- Gartenpflege: 13,50 € je Einsatz + Rasen 0,14 €/m²/Mahd, Beet 0,45 €/m², Hecke 1,78 €/m, Laub 0,05 €/m², Grünschnitt 0,11 €/m²/Jahr (≈ 0,30–0,40 €/m² Grünfläche/Monat)
+- Treppenhausreinigung: 12,00 € je Treppenhaus und Reinigung + 8,00 € je Etage; Aufzug 4,45 €; 14-täglich +15 % je Reinigung (Beispiel: 1 Treppenhaus, 3 Etagen, wöchentlich ≈ 156 €/Monat)
+- Winterdienst (Standard, Saison Nov–März): Bereitstellung 125,00 € je Objekt und Saison; Streueinsatz (Glätte, Schnee bis 3 cm) 25,00 €; Räumen + Streuen bis 15 cm 53,00 € je Einsatz (bis 25 m; je weiterer Meter +0,50 € bzw. +1,20 €); über 15 cm nach Aufwand 53,50 €/h
+- Winterdienst (Option Saisonpauschale, alle Einsätze inkl.): 220,00 € je Objekt + 9,50 € je lfd. Meter; Einzeleinsatz ohne Vertrag 43,50 €
+- Gartenpflege: 13,50 € je Einsatz + Rasen 0,14 €/m²/Mahd, Beet 0,45 €/m², Hecke bis 1,5 m Höhe 1,78 €/m je Schnitt, höhere Hecken nach Aufwand (53,50 €/h + 15,00 € Entsorgung je Schnitt), Laub 0,05 €/m², Grünschnitt 0,11 €/m²/Jahr
 - Mülltonnen-Service: 6,50 € je Abfuhrtermin + 1,34 € je Leerung; Müllplatz kehren 4,45 €/Woche
-- Objektkontrolle mit Fotoprotokoll als eigener Termin: 27 €; Sichtkontrolle bei jedem Einsatz inklusive
+- Objektkontrolle mit Fotoprotokoll als eigener Termin: 27,00 €; Sichtkontrolle bei jedem Einsatz inklusive
+<!-- PREISE:ENDE -->
 - Kein Treuerabatt mehr. Einführungsangebot „Startpaket“ (3 Monate ≈ 8 % günstiger bei 12 Monaten Laufzeit): [OFFEN – noch nicht freigegeben]
 - Kleinunternehmerregelung § 19 UStG: [OFFEN – mit Steuerberater klären]
 

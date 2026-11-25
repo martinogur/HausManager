@@ -1,0 +1,56 @@
+{
+  "_hinweis": "EINZIGE Quelle aller Preise (netto, Cent). Änderungen nur nach Freigabe des Inhabers, danach: python3 werkzeuge/preise.py --schreiben (Profil, Webseite) und --pruefen. Siehe .claude/agents/preis-waechter.md",
+  "stand": "2026-11-25",
+  "freigaben": [
+    "2026-11-24: Preisliste vom Inhaber freigegeben (akquise/angebote/preiskalkulation.md)",
+    "2026-11-25: Inhaber – Winterdienst als Bereitstellung + je Einsatz (Standard), Saisonpauschale bleibt Option; Hecke über 1,5 m nach Aufwand"
+  ],
+  "preise": {
+    "stunde": 5350,
+    "viertelstunde": 1350,
+    "mindestauftrag": 2700,
+    "anfahrt_zone1": 1450,
+    "anfahrt_zone2": 3650,
+    "th_grund": 1200,
+    "th_etage": 800,
+    "th_aufzug": 445,
+    "th_zuschlag_14taegig": "0.15",
+    "wd_grund": 22000,
+    "wd_lfm": 950,
+    "wd_einzeleinsatz": 4350,
+    "ga_gang": 1350,
+    "ga_rasen_qm": "14",
+    "ga_beet_qm": "45",
+    "ga_hecke_lfm": "178",
+    "ga_laub_qm": "5",
+    "ga_entsorgung_qm": "11",
+    "mu_termin": 650,
+    "mu_leerung": 134,
+    "mu_platz_woche": 445,
+    "kontrolle": 2700
+  },
+  "winterdienst_staffel": {
+    "bereitstellung": 12500,
+    "streu_bis_25m": 2500,
+    "streu_je_weiterer_m": 50,
+    "raeum_bis_25m": 5300,
+    "raeum_je_weiterer_m": 120,
+    "grund_meter": 25
+  },
+  "hecke": {
+    "hoehe_pauschal_bis_m": 1.5,
+    "entsorgung_cent": 1500
+  },
+  "veraltete_preise": [
+    "(?<![\\d,])35 ?€ ?(/h|/Std|je Stunde|pro Stunde)",
+    "€/WE/Woche",
+    "(?<![\\d,])8 € je Wohneinheit",
+    "Winterdienst[^.\\n]{0,80}Oktober bis März"
+  ],
+  "veraltet_ausnahmen": [
+    "portal/app/vertrieb/preisliste.json",
+    "akquise/angebote/preiskalkulation.md",
+    "akquise/angebote/preiskalkulation_erzeugen.py",
+    "akquise/angebote/preisrechner.md"
+  ]
+}

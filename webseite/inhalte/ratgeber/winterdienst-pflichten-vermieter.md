@@ -44,4 +44,4 @@ Die Kosten für einen beauftragten Winterdienst können in der Regel als Betrieb
 - jeden Einsatz dokumentieren lassen (Datum, Uhrzeit, Maßnahme)
 - regelmäßig kontrollieren, ob alles erledigt wird
 
-**Hausmeister Helden** übernimmt den Winterdienst in Gütersloh und Umgebung von Oktober bis März – mit Einsatzdokumentation. [Jetzt Saisonangebot anfragen](index.html#kontakt).
+**Hausmeister Helden** übernimmt den Winterdienst in Gütersloh und Umgebung von November bis März – mit Einsatzdokumentation. [Jetzt Saisonangebot anfragen](index.html#kontakt).

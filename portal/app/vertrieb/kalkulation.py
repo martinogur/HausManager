@@ -10,36 +10,17 @@ Inhaber verbindlich (Datenbank-Regel ``angebote``).
 Alle Beträge in Cent (int), gerundet auf ganze Cent.
 """
 
+import json
 from dataclasses import dataclass, field
 from decimal import ROUND_HALF_UP, Decimal
+from pathlib import Path
 
 WOCHEN_PRO_MONAT = Decimal(52) / Decimal(12)  # 4,33
 
 # ----------------------------------------------------------------------------- Preisliste (netto, Cent)
-PREISE = {
-    "stunde": 5350,
-    "viertelstunde": 1350,
-    "mindestauftrag": 2700,
-    "anfahrt_zone1": 1450,
-    "anfahrt_zone2": 3650,
-    "th_grund": 1200,          # je Treppenhaus und Reinigung
-    "th_etage": 800,           # je Etage und Reinigung
-    "th_aufzug": 445,          # je Reinigung
-    "th_zuschlag_14taegig": Decimal("0.15"),
-    "wd_grund": 22000,         # je Objekt und Saison (Nov–März)
-    "wd_lfm": 950,             # je lfd. Meter und Saison inkl. Streugut
-    "wd_einzeleinsatz": 4350,
-    "ga_gang": 1350,           # Rüstzeit je Gartengang
-    "ga_rasen_qm": Decimal("14"),     # Cent je m² und Mahd
-    "ga_beet_qm": Decimal("45"),      # Cent je m² und Gang
-    "ga_hecke_lfm": Decimal("178"),   # Cent je lfm und Schnitt
-    "ga_laub_qm": Decimal("5"),       # Cent je m² und Einsatz
-    "ga_entsorgung_qm": Decimal("11"),  # Cent je m² Grünfläche und Jahr
-    "mu_termin": 650,          # je Abfuhrtermin (raus + rein)
-    "mu_leerung": 134,         # je Tonnen-Leerung
-    "mu_platz_woche": 445,     # Müllplatz kehren je Woche
-    "kontrolle": 2700,         # Objektkontrolle mit Fotoprotokoll
-}
+# Einzige Quelle: vertrieb/preisliste.json (auch für Webseite und Firmenprofil, siehe werkzeuge/preise.py).
+PREISLISTE = json.loads((Path(__file__).with_name("preisliste.json")).read_text(encoding="utf-8"))
+PREISE = {k: (Decimal(v) if isinstance(v, str) else v) for k, v in PREISLISTE["preise"].items()}
 
 # ----------------------------------------------------------------------------- Zeitansätze (Minuten) und Material
 ZEIT = {
@@ -247,10 +228,7 @@ def winterdienst_einsatzmodell(lfm) -> dict:
 # Aufbau nach marktüblichem Angebot (Vergleichsangebot GaLaBau OWL, 03/2026: 125 € / 25 € / 53 € / 58 €/h):
 #   Bereitstellung je Saison · Streueinsatz (Glätte, Schnee bis 3 cm) · Räumen + Streuen (bis 15 cm)
 #   · darüber nach Aufwand (Stundensatz). Grundpreise gelten bis 25 lfd. Meter, darüber Meterzuschlag.
-WD_STAFFEL = {
-    "bereitstellung": 12500, "streu_bis_25m": 2500, "streu_je_weiterer_m": 50,
-    "raeum_bis_25m": 5300, "raeum_je_weiterer_m": 120, "grund_meter": 25,
-}
+WD_STAFFEL = PREISLISTE["winterdienst_staffel"]
 
 
 def winterdienst_staffel(lfm) -> dict:
@@ -261,6 +239,6 @@ def winterdienst_staffel(lfm) -> dict:
             "stunde_cent": PREISE["stunde"], "selbstkosten_einsatz_cent": winterdienst_einsatzmodell(lfm)["einsatz_selbstkosten_cent"]}
 
 
-def heckenschnitt(stunden, entsorgung_cent: int = 1500) -> int:
+def heckenschnitt(stunden, entsorgung_cent: int = PREISLISTE["hecke"]["entsorgung_cent"]) -> int:
     """Heckenschnitt nach Aufwand (Höhe > 1,5 m, beidseitig + oben): Stunden × Stundensatz + Entsorgung Schnittgut."""
     return _cent(Decimal(str(stunden)) * PREISE["stunde"] + entsorgung_cent)

@@ -18,7 +18,7 @@ flowchart TB
 | Wann | Wer | Ergebnis |
 |---|---|---|
 | Mo–Fr 5:47 | lead-finder → akquise-texter → qualitaets-pruefer → wachstums-chef | Neue Leads, druckfertige Briefe, Anrufliste, **Tagesbriefing** |
-| Mo 6:41 | wachstums-chef, instagram-manager, facebook-manager, whatsapp-business, angebots-profi | Wochenplan, Instagram- und Facebook-Beiträge der Woche (Vorschau zur Freigabe) |
+| Mo 6:41 | wachstums-chef, instagram-manager, facebook-manager, whatsapp-business, angebots-profi, preis-waechter | Wochenplan, Instagram- und Facebook-Beiträge der Woche (Vorschau zur Freigabe) |
 | Di + Fr 6:13 | webseiten-bauer | Webseiten-Pflege, freitags Ratgeber-Artikel (Freigabe-Übersicht) |
 | Mi 6:29 | personal-recruiter, portal-entwickler | Stellenanzeigen/Bewerber-Entwürfe, nächstes Portal-Paket |
 | Do 6:23 | seo-reichweite, bewertungs-manager | Google-Profil, Beiträge, Bewertungsbitten und -antworten |

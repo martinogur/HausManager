@@ -19,6 +19,30 @@ HEUTE = dt.date.today()
 import hashlib as _h
 ASSET_V = _h.sha1(b"".join((Path(__file__).resolve().parent / "static" / f).read_bytes() for f in ("style.css", "app.js"))).hexdigest()[:8]
 
+# ---------------------------------------------------------------- Preise (einzige Quelle: portal/app/vertrieb/preisliste.json)
+PREISLISTE = json.loads((ROOT.parent / "portal" / "app" / "vertrieb" / "preisliste.json").read_text(encoding="utf-8"))
+P, WD = PREISLISTE["preise"], PREISLISTE["winterdienst_staffel"]
+
+
+def eur(cent, stellen=2) -> str:
+    """Cent (int oder Text) → „12,50 €“ bzw. bei stellen=0 „156 €“."""
+    wert = float(cent) / 100
+    text = f"{wert:,.{stellen}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"{text} €"
+
+
+def cent_m(wert) -> str:
+    """Cent-Werte mit Nachkomma (z. B. „14“ = 0,14 €) als Euro-Text."""
+    return eur(float(wert), 2)
+
+
+TH_BEISPIEL = round((P["th_grund"] + 3 * P["th_etage"]) * 52 / 12)        # 1 Treppenhaus, 3 Etagen, wöchentlich
+WD_BEISPIEL_SAISON = P["wd_grund"] + 25 * P["wd_lfm"]                      # Saisonpauschale bei 25 m
+HECKE_BIS_M = str(PREISLISTE["hecke"]["hoehe_pauschal_bis_m"]).replace(".", ",")
+PREISE_JS = json.dumps({"th_grund": P["th_grund"], "th_etage": P["th_etage"], "th_zuschlag": float(P["th_zuschlag_14taegig"]),
+                        "mu_termin": P["mu_termin"], "mu_leerung": P["mu_leerung"], "wd": WD, "wd_grund": P["wd_grund"],
+                        "wd_lfm": P["wd_lfm"]})
+
 # ---------------------------------------------------------------- Stammdaten
 FIRMA = {
     "name": "Hausmeister Helden",
@@ -80,8 +104,8 @@ LEISTUNGEN = [
     {
         "slug": "treppenhausreinigung-guetersloh", "icon": "reinigung", "name": "Treppenhausreinigung",
         "kurz": "Regelmäßige Reinigung von Treppenhäusern, Fluren und Gemeinschaftsbereichen – sauber, zuverlässig, termingerecht.",
-        "preis": "ab 156 €", "einheit": "netto / Monat · wöchentlich, 3 Etagen",
-        "preisdetail": "12 € je Treppenhaus und Reinigung plus 8 € je Etage (netto). Aufzugkabine 4,45 € je Reinigung. Bei 14-täglicher Reinigung 15 % Aufschlag je Reinigung. Beispiel: 1 Treppenhaus mit 3 Etagen, wöchentlich = ca. 156 € netto im Monat.",
+        "preis": f"ab {eur(TH_BEISPIEL, 0)}", "einheit": "netto / Monat · wöchentlich, 3 Etagen",
+        "preisdetail": f"{eur(P['th_grund'], 0)} je Treppenhaus und Reinigung plus {eur(P['th_etage'], 0)} je Etage (netto). Aufzugkabine {eur(P['th_aufzug'])} je Reinigung. Bei 14-täglicher Reinigung {round(float(P['th_zuschlag_14taegig']) * 100)} % Aufschlag je Reinigung. Beispiel: 1 Treppenhaus mit 3 Etagen, wöchentlich = ca. {eur(TH_BEISPIEL, 0)} netto im Monat.",
         "titel": "Treppenhausreinigung in Gütersloh",
         "intro": "Ein sauberes Treppenhaus ist die Visitenkarte jedes Mehrfamilienhauses. Wir reinigen Treppen, Flure, Handläufe, Eingangsbereiche und Kellergänge nach festem Plan – damit Mieter zufrieden sind und Sie keine Beschwerden mehr bearbeiten müssen.",
         "umfang": ["Treppenstufen und Podeste kehren und feucht wischen", "Handläufe, Geländer, Lichtschalter und Türgriffe reinigen",
@@ -94,14 +118,19 @@ LEISTUNGEN = [
     },
     {
         "slug": "winterdienst-guetersloh", "icon": "winter", "name": "Winterdienst",
-        "kurz": "Schneeräumung, Eisentfernung und Streudienst für sichere Zugänge. Saisonal von Oktober bis März.",
-        "preis": "ab 220 €", "einheit": "netto / Saison + 9,50 € je Meter",
-        "preisdetail": "Grundpauschale 220 € je Objekt und Saison (Bereitschaft, Wetterkontrolle, Kontrollfahrten, Einsatzprotokoll) plus 9,50 € je laufendem Meter Gehweg/Zuweg inkl. Streugut (netto, Saison November–März). Beispiel: 25 m Gehweg = 457,50 € netto pro Saison. Einzeleinsatz ohne Vertrag ab 43,50 €.",
+        "kurz": "Schneeräumung, Eisentfernung und Streudienst für sichere Zugänge. Saison von November bis März.",
+        "preis": f"ab {eur(WD['bereitstellung'], 0)}", "einheit": f"netto / Saison + ab {eur(WD['streu_bis_25m'], 0)} je Einsatz",
+        "preisdetail": (f"Bereitstellung {eur(WD['bereitstellung'])} je Objekt und Saison (Geräte, Streumittel, Wetterkontrolle, Einsatzprotokoll). "
+                        f"Danach zahlen Sie nur tatsächliche Einsätze: Streuen bei Glätte und Schnee bis 3 cm {eur(WD['streu_bis_25m'])}, "
+                        f"Räumen und Streuen bis 15 cm Schnee {eur(WD['raeum_bis_25m'])} je Einsatz (bis {WD['grund_meter']} m Gehweg; "
+                        f"je weiterer Meter {eur(WD['streu_je_weiterer_m'])} bzw. {eur(WD['raeum_je_weiterer_m'])}), darüber nach Aufwand {eur(P['stunde'])} je Stunde. "
+                        f"Planbar statt nach Einsatz: Saisonpauschale {eur(P['wd_grund'], 0)} + {eur(P['wd_lfm'])} je Meter, alle Einsätze inklusive "
+                        f"(25 m = {eur(WD_BEISPIEL_SAISON)}). Alle Preise netto, Saison November–März. Einzeleinsatz ohne Vertrag ab {eur(P['wd_einzeleinsatz'])}."),
         "titel": "Winterdienst in Gütersloh",
         "intro": "Als Eigentümer oder Verwalter tragen Sie die Verkehrssicherungspflicht – rutscht jemand vor Ihrem Haus aus, kann das teuer werden. Wir übernehmen das Räumen und Streuen zuverlässig und dokumentieren jeden Einsatz, damit Sie im Ernstfall einen Nachweis haben.",
         "umfang": ["Räumen von Gehwegen, Hauszugängen, Treppen und Mülltonnenplätzen", "Streuen mit abstumpfenden bzw. zulässigen Streumitteln",
                    "Einsatz zu den in Gütersloh geltenden Räumzeiten", "Kontrollfahrten bei Glätte- und Schneewarnung",
-                   "Einsatzdokumentation mit Datum und Uhrzeit", "Saisonvertrag von Oktober bis März"],
+                   "Einsatzdokumentation mit Datum und Uhrzeit", "Saisonvertrag von November bis März"],
         "fuer": "Hausverwaltungen, Vermieter, Gewerbeobjekte, Praxen und Privathäuser in Gütersloh und Umgebung.",
         "faq": [("Ab wann muss geräumt werden?", "Die genauen Zeiten regelt die Straßenreinigungssatzung der jeweiligen Stadt. Wir richten unsere Einsätze danach aus – sprechen Sie uns an."),
                 ("Übernehmen Sie die Haftung?", "Wir übernehmen die Durchführung des Winterdienstes vertraglich und dokumentieren jeden Einsatz. Details regelt der Winterdienstvertrag."),
@@ -111,7 +140,9 @@ LEISTUNGEN = [
         "slug": "gartenpflege-guetersloh", "icon": "garten", "name": "Gartenarbeit",
         "kurz": "Rasenmähen, Heckenpflege, Laub entfernen – Ihre Grünanlagen gepflegt das ganze Jahr über.",
         "preis": "ab 0,30 €", "einheit": "netto je m² Grünfläche / Monat",
-        "preisdetail": "Abrechnung nach Fläche statt pauschal: 13,50 € je Einsatz plus z. B. 0,14 € je m² Rasen und Mahd, 0,45 € je m² Beet, 1,78 € je Meter Hecke (netto). Als Jahrespauschale ergibt das meist 0,30–0,40 € je m² Grünfläche und Monat.",
+        "preisdetail": (f"Abrechnung nach Fläche statt pauschal: {eur(P['ga_gang'])} je Einsatz plus z. B. {cent_m(P['ga_rasen_qm'])} je m² Rasen und Mahd, "
+                        f"{cent_m(P['ga_beet_qm'])} je m² Beet, Hecke bis {HECKE_BIS_M} m Höhe {cent_m(P['ga_hecke_lfm'])} je Meter, höhere Hecken nach Aufwand "
+                        f"({eur(P['stunde'])} je Stunde + Entsorgung) (netto). Als Jahrespauschale ergibt das meist 0,30–0,40 € je m² Grünfläche und Monat."),
         "titel": "Gartenpflege in Gütersloh",
         "intro": "Gepflegte Außenanlagen steigern den Wert einer Immobilie und sorgen für zufriedene Mieter. Wir kümmern uns um Rasen, Hecken, Beete und Laub – regelmäßig und ohne dass Sie daran denken müssen.",
         "umfang": ["Rasen mähen und Kanten schneiden", "Hecken- und Strauchschnitt", "Laub entfernen im Herbst",
@@ -123,8 +154,8 @@ LEISTUNGEN = [
     {
         "slug": "kleinreparaturen-guetersloh", "icon": "reparatur", "name": "Kleinreparaturen",
         "kurz": "Türen, Beleuchtung, kleine Defekte – wir beheben Schäden schnell und fachgerecht, bevor sie größer werden.",
-        "preis": "53,50 €", "einheit": "netto / Stunde",
-        "preisdetail": "53,50 € netto je Stunde, abgerechnet je angefangene 15 Minuten (mindestens 30 Minuten). Anfahrt Gütersloh 14,50 €, Umland bis 25 km 36,50 € (netto). Material nach Verbrauch.",
+        "preis": eur(P["stunde"]), "einheit": "netto / Stunde",
+        "preisdetail": f"{eur(P['stunde'])} netto je Stunde, abgerechnet je angefangene 15 Minuten (mindestens 30 Minuten). Anfahrt Gütersloh {eur(P['anfahrt_zone1'])}, Umland bis 25 km {eur(P['anfahrt_zone2'])} (netto). Material nach Verbrauch.",
         "titel": "Kleinreparaturen & Hausmeister-Arbeiten in Gütersloh",
         "intro": "Eine klemmende Tür, ein defektes Licht im Flur, eine lose Leiste – kleine Schäden werden schnell zu großen Ärgernissen. Wir erledigen Kleinreparaturen zügig und melden Ihnen, was gemacht wurde.",
         "umfang": ["Leuchtmittel tauschen, Bewegungsmelder prüfen", "Türen, Türschließer und Schlösser einstellen",
@@ -136,8 +167,8 @@ LEISTUNGEN = [
     {
         "slug": "muelltonnen-service-guetersloh", "icon": "muell", "name": "Mülltonnen-Service",
         "kurz": "Bereitstellen, zurückstellen und Sauberhalten der Müllbereiche – ohne dass Sie daran denken müssen.",
-        "preis": "6,50 €", "einheit": "netto je Abfuhrtermin",
-        "preisdetail": "6,50 € je Abfuhrtermin (Bereitstellen und Zurückstellen) plus 1,34 € je Tonnen-Leerung, Müllplatz kehren 4,45 € je Woche (netto). Für ein typisches Mehrfamilienhaus meist 70–100 € im Monat.",
+        "preis": eur(P["mu_termin"]), "einheit": "netto je Abfuhrtermin",
+        "preisdetail": f"{eur(P['mu_termin'])} je Abfuhrtermin (Bereitstellen und Zurückstellen) plus {eur(P['mu_leerung'])} je Tonnen-Leerung, Müllplatz kehren {eur(P['mu_platz_woche'])} je Woche (netto). Für ein typisches Mehrfamilienhaus meist 70–100 € im Monat.",
         "titel": "Mülltonnen-Service in Gütersloh",
         "intro": "Volle Tonnen, die nicht rausgestellt wurden, und unordentliche Müllplätze sind ein Dauerthema in Mehrfamilienhäusern. Wir stellen die Tonnen zu den Abfuhrterminen bereit, holen sie zurück und halten den Müllplatz sauber.",
         "umfang": ["Bereitstellen der Tonnen zu den Abfuhrterminen", "Zurückstellen nach der Leerung", "Müllplatz sauber halten",
@@ -153,7 +184,7 @@ LEISTUNGEN = [
 ]
 
 FAQ = [
-    ("Was kostet ein Hausmeisterservice in Gütersloh?", "Das hängt von Größe und Leistungen ab. Ein Treppenhaus mit 3 Etagen wöchentlich zu reinigen kostet z. B. ca. 156 € netto im Monat, Winterdienst ab 220 € netto pro Saison plus 9,50 € je Meter Gehweg. Wir rechnen nach tatsächlichem Aufwand, nicht pauschal pro Wohnung. Mit unserem Preisrechner sehen Sie sofort einen Richtwert – das konkrete Angebot erhalten Sie nach einer kostenlosen Besichtigung."),
+    ("Was kostet ein Hausmeisterservice in Gütersloh?", "Das hängt von Größe und Leistungen ab. Ein Treppenhaus mit 3 Etagen wöchentlich zu reinigen kostet z. B. ca. " + eur(TH_BEISPIEL, 0) + " netto im Monat, Winterdienst ab " + eur(WD['bereitstellung'], 0) + " netto Bereitstellung pro Saison plus ab " + eur(WD['streu_bis_25m'], 0) + " je Einsatz. Wir rechnen nach tatsächlichem Aufwand, nicht pauschal pro Wohnung. Mit unserem Preisrechner sehen Sie sofort einen Richtwert – das konkrete Angebot erhalten Sie nach einer kostenlosen Besichtigung."),
     ("Wie schnell bekomme ich ein Angebot?", "Sie erhalten innerhalb von 24 Stunden eine Rückmeldung. Nach der kostenlosen Objektbesichtigung erstellen wir Ihnen zügig ein schriftliches Angebot."),
     ("In welchen Orten sind Sie im Einsatz?", "In Gütersloh und Umgebung – unter anderem in " + ", ".join(ORTE[1:6]) + ". Fragen Sie gern auch für andere Orte im Kreis Gütersloh an."),
     ("Arbeiten Sie auch für Hausverwaltungen mit mehreren Objekten?", "Ja, genau darauf sind wir ausgerichtet: ein fester Ansprechpartner für alle Objekte, regelmäßige Kontrollen und Protokolle, die Sie direkt an Eigentümer weitergeben können."),
@@ -263,6 +294,7 @@ def page(slug, title, desc, body, schema=(), nav_home=False):
   <a class="btn btn-wa" href="{wa()}" target="_blank" rel="noopener">{WA_SVG} WhatsApp</a>
 </div>
 <a class="wa-float" href="{wa()}" target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben" style="color:#fff">{WA_SVG}</a>
+<script id="hh-preise" type="application/json">{PREISE_JS}</script>
 <script src="app.js?v={ASSET_V}" defer></script>
 </body>
 </html>
@@ -415,7 +447,7 @@ def startseite(artikel):
         <div class="field" data-for="garten"><label for="r-qm">Grünfläche (m²)</label><input type="number" id="r-qm" min="0" max="10000" value="200" inputmode="numeric"></div>
         <div class="field" data-for="muell"><label for="r-ab">Abfuhrtermine pro Monat</label><input type="number" id="r-ab" min="1" max="20" value="6" inputmode="numeric"></div>
       </div>
-      <p style="color:var(--muted);font-size:.9rem;margin:0">Gebäudekontrolle bei jedem Einsatz inklusive. Kleinreparaturen 53,50 €/Std. netto nach Aufwand.</p>
+      <p style="color:var(--muted);font-size:.9rem;margin:0">Gebäudekontrolle bei jedem Einsatz inklusive. Kleinreparaturen {eur(P['stunde'])}/Std. netto nach Aufwand.</p>
     </div>
     <div class="calc-out" aria-live="polite">
       <span class="eyebrow" style="color:#7ccc13">Richtwert pro Monat (netto)</span>
