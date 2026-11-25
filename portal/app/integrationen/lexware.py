@@ -9,6 +9,8 @@ taxConditions{taxType}, shippingConditions{shippingType, shippingDate}.
 Status lesen: ``GET /v1/invoices/{id}`` → voucherStatus draft | open | paid | voided.
 """
 
+import time
+
 from django.utils import timezone
 
 from auftraege.models import Rechnung
@@ -16,6 +18,7 @@ from auftraege.models import Rechnung
 from .http import IntegrationFehler, anfrage, env, protokollieren
 
 BASIS = "https://api.lexware.io"
+ABSTAND_S = 0.6   # max. 2 Anfragen/s laut Lexware → mit Reserve
 STATUS = {"draft": "entwurf", "open": "offen", "paid": "bezahlt", "voided": "storniert"}
 
 
@@ -60,12 +63,14 @@ def entwurf_anlegen(rechnung_id) -> dict:
     return {"lexware_id": antwort["id"]}
 
 
-def status_abgleichen() -> dict:
+def status_abgleichen(warten=time.sleep) -> dict:
     """Status übertragener Rechnungen aus Lexware übernehmen (Lexware ist führend)."""
     if not eingerichtet():
         return {"hinweis": "Lexware nicht eingerichtet"}
     geaendert = 0
-    for r in Rechnung.objects.filter(lexware_invoice_id__isnull=False).exclude(status__in=["bezahlt", "storniert"])[:50]:
+    for nr, r in enumerate(Rechnung.objects.filter(lexware_invoice_id__isnull=False).exclude(status__in=["bezahlt", "storniert"])[:50]):
+        if nr:
+            warten(ABSTAND_S)
         _, antwort = anfrage("GET", f"{BASIS}/v1/invoices/{r.lexware_invoice_id}", env("LEXWARE_API_KEY"))
         neu = STATUS.get(antwort.get("voucherStatus"))
         if neu and neu != r.status and not (r.status == "ueberfaellig" and neu == "offen"):
