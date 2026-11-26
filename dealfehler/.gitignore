@@ -1,0 +1,12 @@
+.env
+*.env.local
+backend/.venv/
+backend/media/
+backups/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+web/node_modules/
+web/.next/
+web/tsconfig.tsbuildinfo
